@@ -15,8 +15,11 @@ using Igtampe.Neco.Common.UMSAT;
 namespace Igtampe.Neco.Data {
     public class EverythingContext:DbContext {
 
-        public EverythingContext(DbContextOptions<EverythingContext> options) : base(options) { }
+        public EverythingContext() : base() { }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            optionsBuilder.UseSqlServer(@"Data Source=Localhost;Initial Catalog=Neco;Integrated Security=True");
+        }
         //Auth
         public DbSet<UserAuth> UserAuths { get; set; }
 

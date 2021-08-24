@@ -12,69 +12,16 @@ namespace Igtampe.Neco.Data {
     class Program {
 
         static void Main(string[] args) {
-            string DataSource = "Data Source=Localhost;Initial Catalog=Neco;Integrated Security=True";
 
-            DbContextOptions<EverythingContext> O = new DbContextOptionsBuilder<EverythingContext>()
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test")
-                .Options;
-            ;
+            using (var Context = new EverythingContext()) {
+                Console.WriteLine($"\n\nEverything:\n");
 
-            using var Context = new EverythingContext(O); 
-            Context.Contracts.Add(new Contract());
-            Context.SaveChanges();
-
-            //using (var Context = new ContractusContext(DataSource)) {
-            //    Context.Contracts.Add(new Contract());
-            //    Context.SaveChanges();
-            //}
-
-            //using (var Context = new UMSATContext(DataSource)) {
-            //    Context.Assets.Add(new Asset() { CreationDate=DateTime.Now, UpdateDate=DateTime.Now});
-            //    Context.SaveChanges();
-            //}
-
-            //using (var Context = new LandViewContext(DataSource)) {
-            //    Context.Plots.Add(new Plot());
-            //    Context.SaveChanges();
-            //}
-
-            //using (var Context = new EzTaxContext(DataSource)) {
-            //    Context.Businesses.Add(new Business());
-            //    Context.SaveChanges();
-            //}
-
-            //using (var Context = new NecoContext(DataSource)) {
-            //    Context.Users.Add(new User());
-            //    Context.SaveChanges();
-            //}
-
-            //using (var Context = new AuthContext(DataSource)) {
-            //    Context.Users.Add(new UserAuth());
-            //    Context.SaveChanges();
-            //}
-
-            //DbContext[] Contexts = {
-            //    new AuthContext(DataSource),
-            //    new ContractusContext(DataSource),
-            //    new EzTaxContext(DataSource),
-            //    new LandViewContext(DataSource),
-            //    new NecoContext(DataSource),
-            //    new UMSATContext(DataSource)
-            //};
-
-            //foreach (var C in Contexts) {
-
-            //    Type T = Contexts.GetType();
-            //    Console.WriteLine($"\n\n{T.Name}:\n");
-
-            //    foreach (System.Reflection.PropertyInfo Prop in Contexts.GetType().GetProperties()) {
-            //        if (Prop.GetValue(C) is not DbSet<object> D) { continue; }
-            //        Console.WriteLine($"{Prop.Name}: {D}");
-            //    }
-
-            //}
-
-
+                foreach (System.Reflection.PropertyInfo Prop in Context.GetType().GetProperties()) {
+                    Console.WriteLine($"{Prop.Name}: {Prop.GetValue(Context)}");
+                }
+            }
         }
     }
+
+
 }
