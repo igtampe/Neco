@@ -18,12 +18,17 @@ namespace Igtampe.Neco.Common {
         /// <summary>Pin of this user</summary>
         [MaxLength(4)]
         [MinLength(4)]
-        public string Pin { internal get; set; }
+        public string Pin { get; set; }
 
         /// <summary>Checks the provided pin against this user's pin</summary>
         /// <param name="Pin"></param>
         /// <returns>Returns true if the provided pin matches this user's pin</returns>
         public bool CheckPin(string Pin) { return Pin == this.Pin; }
+
+        public override bool Equals(object obj) {
+            if (obj is UserAuth E) { return E.Id == Id && Pin == E.Pin;}
+            return false;
+        }
 
     }
 }

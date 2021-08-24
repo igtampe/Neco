@@ -4,6 +4,18 @@
         <name>Igtampe.Neco.Common</name>
     </assembly>
     <members>
+        <member name="T:Igtampe.Neco.Common.Auth.PasswordChangeRequest">
+            <summary>Request to change a password</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Auth.PasswordChangeRequest.UserID">
+            <summary>ID of the user to change the password of</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Auth.PasswordChangeRequest.CurrentPassword">
+            <summary>User's current password</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Auth.PasswordChangeRequest.NewPassword">
+            <summary>New Password</summary>
+        </member>
         <member name="T:Igtampe.Neco.Common.Bank">
             <summary> A Neco Bank</summary>
         </member>
@@ -547,6 +559,9 @@
         </member>
         <member name="P:Igtampe.Neco.Common.Transaction.Executed">
             <summary>Whether or not this transaciton has been executed</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Transaction.Failed">
+            <summary>Indicates whether the transaction was executed and failed</summary>
         </member>
         <member name="T:Igtampe.Neco.Common.UMSAT.Asset">
             <summary>UMSAT Item</summary>
