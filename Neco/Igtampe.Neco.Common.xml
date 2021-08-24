@@ -402,6 +402,9 @@
             <summary>Country this district belongs to</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.District.Points">
+            <summary>comma separated point strings for storage</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.District.GraphicalPoints">
             <summary>Graphical points that define the corners of this district</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.District.Plots">
@@ -468,7 +471,10 @@
             <summary>District this Plot belongs to</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Plot.Points">
-            <summary>Points that define the corners of this plot</summary>
+            <summary>comma separated point strings for storage</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Plot.GraphicalPoints">
+            <summary>Graphical points that define the corners of this district</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Plot.TiedAccount">
             <summary>Owner of this plot</summary>
