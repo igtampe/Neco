@@ -1,0 +1,627 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Igtampe.Neco.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Igtampe.Neco.Common.Bank">
+            <summary> A Neco Bank</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Bank.Id">
+            <summary>ID of this bank (Short name)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Bank.Name">
+            <summary>Long Name of this bank</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Bank.Accounts">
+            <summary>Accounts in this bank</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Bank.AccountTypes">
+            <summary>Bank Account types available in this bank</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.BankAccount">
+            <summary>Holds a NECO Bank Account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccount.Id">
+            <summary>ID of this bank account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccount.Bank">
+            <summary>Bank this bank account belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccount.Type">
+            <summary>Bank Account type of this bank account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccount.Balance">
+            <summary>Balance in this bank account</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.BankAccount.IsOverdrafted">
+            <summary>Boolean to check if this bank account is overdrafted</summary>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.BankAccountType">
+            <summary>Defines a type of available bank account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccountType.Id">
+            <summary>ID of this bank account type</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccountType.Name">
+            <summary>Name of this bank account type (IE UMSNB Savings)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccountType.Bank">
+            <summary>Bank this type belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccountType.InterestRate">
+            <summary>Interest rate of this bank account type</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.CertifiedItem">
+            <summary>Item in the Certification ledger for NECO</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.CertifiedItem.Id">
+            <summary>ID of this certified item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.CertifiedItem.Text">
+            <summary>Human readable text in case the object fails to load</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.CertifiedItem.CertifiedBy">
+            <summary>User that certified this item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.CertifiedItem.Date">
+            <summary>Date and time at which this was certified</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.CheckbookItem">
+            <summary>Holds a Checkbook 2000 Item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.CheckbookItem.Id">
+            <summary>ID of this item</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.CheckbookItem.ItemType">
+            <summary>Available type of checkbook items</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.CheckbookItem.ItemType.BILL">
+            <summary>Item is a bill and must be approved by the Origin</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.CheckbookItem.ItemType.CHECK">
+            <summary>Item is a check and must be approved by the destination</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.CheckbookItem.AttachedTransaciton">
+            <summary>Attatched transaction to this checkbook item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.CheckbookItem.Type">
+            <summary>Type of transaction held in this Checkbook Item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.CheckbookItem.Variant">
+            <summary>Graphical Variant of the given Checkbook item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.CheckbookItem.Comment">
+            <summary>Comment provided for this checkbook item</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Contractus.Contract">
+            <summary>Holds a Contractus Contract</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Contract.ID">
+            <summary>ID Of this contract</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Contract.Name">
+            <summary>Name of this contract</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Contract.Description">
+            <summary>Description of this contract</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Contract.FromUser">
+            <summary>User who's posted this contract</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Contract.TopBidder">
+            <summary>Top Bidder for this contract </summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Contract.Amount">
+            <summary>Amount bidded by the <see cref="P:Igtampe.Neco.Common.Contractus.Contract.TopBidder"/></summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Contract.UpForAuction">
+            <summary>Whether or not this contract is still up for auction or not</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Contract.Completed">
+            <summary>Whether or not this contract has been completed </summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.EzTax.IncomeItem">
+            <summary>Holds an EzTax income item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.ID">
+            <summary>ID of this income item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.User">
+            <summary>User this income item belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.Subitems">
+            <summary>Subitems in this Item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.MiscIncome">
+            <summary>Other miscellaneous income in this income item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.LocalJurisdiction">
+            <summary>Local Jurisdiction of this IncomeItem (IE: Newpond)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.FederalJurisdiction">
+            <summary>Federal Jurisdiction of this IncomeItem (IE: UMS)</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.IncomeItem.TotalMonthlyIncome">
+            <summary>Returns the sum of all incomes from subitems contained in this item, and miscincome</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.IncomeItem.LocalTax">
+            <summary>Calculates the monthly tax to <see cref="P:Igtampe.Neco.Common.EzTax.IncomeItem.LocalJurisdiction"/></summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.IncomeItem.FederalTax">
+            <summary>Calculates the monthly tax to <see cref="P:Igtampe.Neco.Common.EzTax.IncomeItem.FederalJurisdiction"/></summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.IncomeItem.TotalMonthlyTax">
+            <summary>Calculates the total monthly tax for this item</summary>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.EzTax.Subitems.Apartment">
+            <summary>Subitem that holds data for an appartment complex</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.ID">
+            <summary>ID of this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.IncomeItem">
+            <summary>Attached income item for this appartmen</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.Name">
+            <summary>Name of this Apartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.SUnits">
+            <summary>Studio units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.B1Units">
+            <summary>1 Bedroom units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.B2Units">
+            <summary>2 Bedroom units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.B3Units">
+            <summary>3 Bedroom units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.PUnits">
+            <summary>Penthouse units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.SRent">
+            <summary>Studio monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.B1Rent">
+            <summary>1 Bedroom monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.B2Rent">
+            <summary>2 Bedroom monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.B3Rent">
+            <summary>3 Bedroom monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.PRent">
+            <summary>Penthouse rent in this appartment</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.Subitems.Apartment.Income">
+            <summary>Income of this appartment</summary>
+            <returns>(SRent * SUnits) + (B1Rent * B1Units) + (B2Rent * B2Units) + (B3Rent * B3Units) + (PRent * PUnits)</returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.EzTax.Subitems.Business">
+            <summary>Business subitem that contains details for a business of some kind (Restaurant or store)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.ID">
+            <summary>ID of this business</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.IncomeItem">
+            <summary>Head IncomeItem</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.Name">
+            <summary>Name of this Business</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.Chairs">
+            <summary>Chairs in this business. 1 if the business is a store</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.AvgSpend">
+            <summary>Average spending of a customer in this business</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.CustPerHour">
+            <summary>Average customers per hour in this business</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.HoursOpen">
+            <summary>Hours this business is open a day (should be between 0 and 24)</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.Subitems.Business.Income">
+            <summary>Income of this business. Assumes 50% Proffit</summary>
+            <returns>(((AvgSpend / 2) * CustPerHour * HoursOpen) * Chairs) * 30</returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.EzTax.Subitems.Hotel">
+            <summary>Subitem that can hold breakdown of items for a hotel with suites and rooms</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.ID">
+            <summary>ID of this Hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.IncomeItem">
+            <summary>Head income item of this hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.Name">
+            <summary>Name of this Hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.Rooms">
+            <summary>Number of rooms in this hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.Suites">
+            <summary>Number of suites in this hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.RoomRate">
+            <summary>Nightly rate of a room in this hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.SuiteRate">
+            <summary>Nightly rate of a suite at this hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.MiscIncome">
+            <summary>Misc monthly income for this hotel</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.Subitems.Hotel.Income">
+            <summary>Income of this hotel. Assumes 50% Profit</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.Subitems.Hotel.RateToMonthlyIncome(System.Int32)">
+            <summary>Converts a nightly rate to monthly income. Assumes 50% profit</summary>
+            <param name="Rate"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.EzTax.Subitems.IIncomeSubitem">
+            <summary>Income subitem for an IncomeItem </summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.IIncomeSubitem.ID">
+            <summary>ID of this subitem</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.IIncomeSubitem.IncomeItem">
+            <summary>IncomeItem this Subitem belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.IIncomeSubitem.Name">
+            <summary>Name of this IncomeSubItem</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.Subitems.IIncomeSubitem.Income">
+            <summary>Gets this item's income</summary>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.EzTax.TaxBracket">
+            <summary>Tax Bracket for a <see cref="T:Igtampe.Neco.Common.EzTax.TaxJurisdiction"/></summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxBracket.ID">
+            <summary>ID of this Bracket</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxBracket.Jurisdiction">
+            <summary>Jurisdiction this tax bracket belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxBracket.Name">
+            <summary>Name of this tax bracket</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxBracket.Start">
+            <summary>Income amount at which this bracket begins (Inclusive)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxBracket.End">
+            <summary>Income amount at which this bracket ends (Exclusive)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxBracket.Type">
+            <summary><see cref="T:Igtampe.Neco.Common.UserType"/> This bracket belongs to (IE Corporate)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxBracket.Rate">
+            <summary>Rate of this Tax Bracket</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.EzTax.TaxJurisdiction">
+            <summary>Holds a Jurisdiction that can tax a Neco user</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxJurisdiction.ID">
+            <summary>ID of this jurisdiction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxJurisdiction.Name">
+            <summary>Name of this jurisdiction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxJurisdiction.Brackets">
+            <summary>Brackets in this Jurisdiction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxJurisdiction.Account">
+            <summary>Account to which taxes must be paid out to</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.TaxJurisdiction.CalculateTax(Igtampe.Neco.Common.User,System.Int64)">
+            <summary>Calculates tax on User U with income I in this jurisdiction</summary>
+            <param name="U"></param>
+            <param name="I"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.EzTax.TaxUserInfo">
+            <summary>EZTax User Info</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxUserInfo.Id">
+            <summary>ID of this userinfo</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxUserInfo.User">
+            <summary>User this UserInfo belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxUserInfo.Items">
+            <summary>Items from this user</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.TaxUserInfo.TotalMonthlyIncome">
+            <summary>Calculates this user's Total Monthly Income</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.TaxUserInfo.TotalMonthlyTax">
+            <summary>Calcualtes this user's total monthly tax</summary>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.LandView.Country">
+            <summary>Country for LandView, which holds <see cref="T:Igtampe.Neco.Common.LandView.District"/>s</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Country.ID">
+            <summary>ID of this country</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Country.Name">
+            <summary>Name of this country</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Country.Districts">
+            <summary>Districts in this country</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Country.Width">
+            <summary>Width of this country in meters</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Country.Height">
+            <summary>Height of this country in meters</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Country.PricePerSquareMeter">
+            <summary>Price per square meter of unclaimed terrain</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Country.FederalSalesTax">
+            <summary>Sales tax rate on all land purchases</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Country.FederalBankAccount">
+            <summary>Neco User to direct payments of land to and handle accepting taxes</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Country.Area">
+            <summary>Area of this country in square meters</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Country.Igtampe#Neco#Common#LandView#ILandViewItem#Height">
+            <summary>Height of this country in meters</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Country.Igtampe#Neco#Common#LandView#ILandViewItem#Width">
+            <summary>Width of this country in meters</summary>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.LandView.District">
+            <summary>Districts in landview held in a <see cref="P:Igtampe.Neco.Common.LandView.District.Country"/>, that holds <see cref="T:Igtampe.Neco.Common.LandView.Plot"/>s</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.District.ID">
+            <summary>ID of this </summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.District.Name">
+            <summary>Name of this District</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.District.Country">
+            <summary>Country this district belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.District.Points">
+            <summary>Graphical points that define the corners of this district</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.District.Plots">
+            <summary>Collection of plots that are in this district</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.District.PricePerSquareMeter">
+            <summary>Price per square meter of unclaimed terrain</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.District.DistrictSalesTax">
+            <summary>District sales tax on all land sales in this district</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.District.DistrictBankAccount">
+            <summary>Bank account of this district to handle accepting taxes and accept land payments</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.District.Area">
+            <summary>Area of this District</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.District.Height">
+            <summary>Height of this district</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.District.Width">
+            <summary>Width of this district</summary>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.LandView.ILandViewItem">
+            <summary>Interface that defines LandViewItems that are drawable on screen</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.ILandViewItem.Width">
+            <summary>Width of this item</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.ILandViewItem.Height">
+            <summary>Height of this item</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.ILandViewItem.Area">
+            <summary>Area of this item</summary>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.LandView.Plot">
+            <summary>A plot of land located in a <see cref="P:Igtampe.Neco.Common.LandView.Plot.District"/></summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.LandView.Plot.PlotStatus">
+            <summary>Status of a Plot</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.LandView.Plot.PlotStatus.UNCLAIMED">
+            <summary>Plot is unclaimed and is available for purchase from the <see cref="P:Igtampe.Neco.Common.LandView.Plot.District"/></summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.LandView.Plot.PlotStatus.FOR_SALE">
+            <summary>Plot that is for sale by <see cref="P:Igtampe.Neco.Common.LandView.Plot.TiedAccount"/></summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.LandView.Plot.PlotStatus.NOT_FOR_SALE">
+            <summary>Plot that is owned and is not for  sale</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.LandView.Plot.PlotStatus.BUILT">
+            <summary>Plot that has been built upon and can no longer be resold</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Plot.ID">
+            <summary>ID of this plot</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Plot.District">
+            <summary>District this Plot belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Plot.Points">
+            <summary>Points that define the corners of this plot</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Plot.TiedAccount">
+            <summary>Owner of this plot</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Plot.Name">
+            <summary>Name of this plot</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Plot.Status">
+            <summary>Status of this plot</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Plot.PricePerSquareMeter">
+            <summary>Price per square meter of this plot</summary> 
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Plot.Area">
+            <summary>Area of this plot in square meters</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Plot.Height">
+            <summary>Height of this plot in meters</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Plot.Width">
+            <summary>Width of this plot in meters</summary>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Notification">
+            <summary>Holds a notification for a User</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Notification.Id">
+            <summary>ID of this notification</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Notification.Text">
+            <summary>Text contained in this notification</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Notification.Time">
+            <summary>Time at which this notification occurred</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Notification.User">
+            <summary>User this notification belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Notification.Read">
+            <summary>Whether or not a user has seen this notification or not</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Transaction">
+            <summary>Holds information for a NECO Transaction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Transaction.Id">
+            <summary>ID of this transaction</summary>        
+        </member>
+        <member name="P:Igtampe.Neco.Common.Transaction.Amount">
+            <summary>Amount  transfered by this transaction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Transaction.Time">
+            <summary>Time at which this transaction took place</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Transaction.FromUser">
+            <summary>User this transaction originates from</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Transaction.ToUser">
+            <summary>User this transaction destinates to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Transaction.FromAccount">
+            <summary>Account from which the amount in this transaction will be deducted</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Transaction.ToBankAccount">
+            <summary>Account from which the amount in this transaction will be added to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Transaction.Taxable">
+            <summary>Whether or not this transaction is taxable</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Transaction.Executed">
+            <summary>Whether or not this transaciton has been executed</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.UMSAT.Asset">
+            <summary>UMSAT Item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.ID">
+            <summary>ID of this item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.Name">
+            <summary>Name of this Item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.Description">
+            <summary>Description of this item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.SpecificLocaiton">
+            <summary>Specific location of this item (Like a neighborhood or county name)</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.UMSAT.Asset.Location">
+            <summary>Full location of this item</summary>
+            <returns></returns>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.Owner">
+            <summary>Owner of this item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.Complete">
+            <summary>Whether or not this item is complete</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.IncomeItem">
+            <summary>IncomeItem related to this asset</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.Plot">
+            <summary>Plot of land this item sits on</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.Image">
+            <summary>Image of this item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.CreationDate">
+            <summary>Date of record creation</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.UpdateDate">
+            <summary>Date of last update</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.User">
+            <summary>User in the NECO system</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.User.Id">
+            <summary>UMSWEB ID of this user</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.User.Name">
+            <summary>Name of this user</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.User.Type">
+            <summary><see cref="T:Igtampe.Neco.Common.UserType"/> of this user</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.User.Accounts">
+            <summary>Accoutns this user owns</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.User.Notifications">
+            <summary>Notifications this user has</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.UserAuth">
+            <summary>User used for Authentication</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UserAuth.Id">
+            <summary>UMSWEB ID of this user</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UserAuth.Pin">
+            <summary>Pin of this user</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.UserAuth.CheckPin(System.String)">
+            <summary>Checks the provided pin against this user's pin</summary>
+            <param name="Pin"></param>
+            <returns>Returns true if the provided pin matches this user's pin</returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.UserType">
+            <summary>Type of user in NECO</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UserType.Id">
+            <summary>ID of this User Type</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UserType.Name">
+            <summary>Name of this User Type (IE Standard, Corporate, Government)</summary>
+        </member>
+    </members>
+</doc>

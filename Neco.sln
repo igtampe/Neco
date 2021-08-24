@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.Neco.Common", "Neco\Igtampe.Neco.Common.csproj", "{99425DD7-86D9-4AE4-83FD-E0C58351DD5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igtampe.Neco.Data", "Neco.Data\Igtampe.Neco.Data.csproj", "{5C86E7BE-830D-42BB-BCA9-E772925DEBB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99425DD7-86D9-4AE4-83FD-E0C58351DD5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99425DD7-86D9-4AE4-83FD-E0C58351DD5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99425DD7-86D9-4AE4-83FD-E0C58351DD5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99425DD7-86D9-4AE4-83FD-E0C58351DD5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C86E7BE-830D-42BB-BCA9-E772925DEBB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C86E7BE-830D-42BB-BCA9-E772925DEBB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C86E7BE-830D-42BB-BCA9-E772925DEBB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C86E7BE-830D-42BB-BCA9-E772925DEBB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0D92B99-2CEF-4473-8407-E76AFEE979C2}
+	EndGlobalSection
+EndGlobal
