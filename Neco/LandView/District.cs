@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Igtampe.Neco.Common.LandView {
     
@@ -20,8 +21,28 @@ namespace Igtampe.Neco.Common.LandView {
         /// <summary>Country this district belongs to</summary>
         public Country Country { get; set; }
 
+        /// <summary>comma separated point strings for storage</summary>
+        public string Points { get; set; } //I hope this will save but it probably won't :shrug:
+
         /// <summary>Graphical points that define the corners of this district</summary>
-        public Point[] Points { get; set; } //I hope this will save but it probably won't :shrug:
+        [NotMapped]
+        public Point[] GraphicalPoints { 
+            get {
+                List<Point> Ps = new();
+                foreach (string P in Points.Split(';')) {
+                    int X = int.Parse(P.Split(',')[0]);
+                    int Y = int.Parse(P.Split(',')[1]);
+                    Ps.Add(new Point(X,Y));
+                }
+
+                return Ps.ToArray();
+            } 
+            set {
+                List<string> Ps = new();
+                foreach (Point P in value) {Ps.Add($"{P.X},{P.Y}");}
+                Points = string.Join(";",Ps.ToArray());
+            }
+        }
 
         /// <summary>Collection of plots that are in this district</summary>
         public ICollection<Plot> Plots { get; set; }
@@ -41,21 +62,21 @@ namespace Igtampe.Neco.Common.LandView {
         /// <returns></returns>
         public double Area() {
             //Provided by https://stackoverflow.com/questions/2034540/calculating-area-of-irregular-polygon-in-c-sharp
-            return Math.Abs(Points.Take(Points.Length - 1)
-                .Select((p, i) => (Points[i + 1].X - p.X) * (Points[i + 1].Y + p.Y))
+            return Math.Abs(GraphicalPoints.Take(GraphicalPoints.Length - 1)
+                .Select((p, i) => (GraphicalPoints[i + 1].X - p.X) * (GraphicalPoints[i + 1].Y + p.Y))
                 .Sum() / 2);
         }
 
         /// <summary>Height of this district</summary>
         /// <returns></returns>
         public int Height() {
-            return Points.Max(P => P.Y) - Points.Min(P => P.Y);
+            return GraphicalPoints.Max(P => P.Y) - GraphicalPoints.Min(P => P.Y);
         }
 
         /// <summary>Width of this district</summary>
         /// <returns></returns>
         public int Width() {
-            return Points.Max(P => P.X) - Points.Min(P => P.X);
+            return GraphicalPoints.Max(P => P.X) - GraphicalPoints.Min(P => P.X);
         }
     }
 }

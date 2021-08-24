@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Igtampe.Neco.Common.EzTax {
         public User User { get; set; }
 
         /// <summary>Subitems in this Item</summary>
+        [NotMapped]
         public ICollection<Subitems.IIncomeSubitem> Subitems { get; set; }
 
         /// <summary>Other miscellaneous income in this income item</summary>
