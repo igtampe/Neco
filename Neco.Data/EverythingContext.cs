@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ using Igtampe.Neco.Common.UMSAT;
 namespace Igtampe.Neco.Data {
     public class EverythingContext:DbContext {
 
-        public EverythingContext(string ConnectionString) : base(ConnectionString) { }
+        public EverythingContext(DbContextOptions<EverythingContext> options) : base(options) { }
 
         //Auth
         public DbSet<UserAuth> UserAuths { get; set; }

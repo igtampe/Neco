@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
 using Igtampe.Neco.Common;
 using Igtampe.Neco.Common.Contractus;
 using Igtampe.Neco.Common.EzTax.Subitems;
@@ -13,7 +14,12 @@ namespace Igtampe.Neco.Data {
         static void Main(string[] args) {
             string DataSource = "Data Source=Localhost;Initial Catalog=Neco;Integrated Security=True";
 
-            using var Context = new EverythingContext(DataSource); 
+            DbContextOptions<EverythingContext> O = new DbContextOptionsBuilder<EverythingContext>()
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test")
+                .Options;
+            ;
+
+            using var Context = new EverythingContext(O); 
             Context.Contracts.Add(new Contract());
             Context.SaveChanges();
 

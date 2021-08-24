@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ using Igtampe.Neco.Common;
 namespace Igtampe.Neco.Data {
     public class NecoContext:DbContext {
 
-        public NecoContext(string ConnectionString) : base(ConnectionString) { }
+        public NecoContext(DbContextOptions<NecoContext> options) : base(options) { }
 
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<User> Users { get; set; }
