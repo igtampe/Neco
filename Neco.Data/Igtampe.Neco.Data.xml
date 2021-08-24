@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Igtampe.Neco.Data</name>
+    </assembly>
+    <members>
+        <member name="T:Igtampe.Neco.Data.AuthContext">
+            <summary>Context used for Authorization</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.AuthContext.#ctor">
+            <summary>Creates an AuthContext</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.AuthContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>Overrides onConfiguring to use <see cref="P:Igtampe.Neco.Data.Constants.ConnectionString"/></summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="P:Igtampe.Neco.Data.AuthContext.Users">
+            <summary>A view of the Users Table that returns <see cref="T:Igtampe.Neco.Common.UserAuth"/></summary>
+        </member>
+        <member name="T:Igtampe.Neco.Data.CheckbookContext">
+            <summary>Context for handling Checkbook2000 items </summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.CheckbookContext.#ctor">
+            <summary>Creates a checkbook context</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.CheckbookContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>Overrides onConfiguring to use <see cref="P:Igtampe.Neco.Data.Constants.ConnectionString"/></summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="P:Igtampe.Neco.Data.CheckbookContext.CheckbookItems">
+            <summary>Table that contains all checkbook items</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.Constants.ConnectionString">
+            <summary>Connection string used by all contexts</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Data.ContractusContext">
+            <summary>Context for handling Contractus items</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.ContractusContext.#ctor">
+            <summary>Creates a contractus context</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.ContractusContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>Overrides onConfiguring to use <see cref="P:Igtampe.Neco.Data.Constants.ConnectionString"/></summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="P:Igtampe.Neco.Data.ContractusContext.Contracts">
+            <summary>Table which holds all contracts</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Data.EverythingContext">
+            <summary>Context that has every table. Used for generating database tables and for testing.</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.EverythingContext.#ctor">
+            <summary>Creates an EverythingContext</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.EverythingContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>Overrides onConfiguring to use <see cref="P:Igtampe.Neco.Data.Constants.ConnectionString"/></summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.UserAuths">
+            <summary>View of the Users table that returns <see cref="T:Igtampe.Neco.Common.UserAuth"/></summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.UserTypes">
+            <summary>Table of all user types</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Users">
+            <summary>Table of all users</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Transactions">
+            <summary>Table of all transactions</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Notifications">
+            <summary>Table of all Notifications</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.CertifiedItems">
+            <summary>Table of all certified items</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.BankAccountTypes">
+            <summary>Table of all Bank Account Types</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.BankAccounts">
+            <summary>Table of all Bank Accounts</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Banks">
+            <summary>Table of all Banks</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Contracts">
+            <summary>Table of all contracts</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.IncomeItems">
+            <summary>Table of all EZTax Income Items</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.TaxBrackets">
+            <summary>Table of all Tax Brackets</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.TaxJurisdictions">
+            <summary>Table of all Tax Jurisdictions</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.TaxUserInfos">
+            <summary>Table of all Tax User Infos</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Appartments">
+            <summary>Table of all Apartments</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Businesses">
+            <summary>Table of all Businesses</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Hotels">
+            <summary>Table of all hotels</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Countries">
+            <summary>Table of all Countries</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Districts">
+            <summary>Table of all Districts</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Plots">
+            <summary>Table of all Plots</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Assets">
+            <summary>Table of all Assets</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Data.EzTaxContext">
+            <summary>Context for handling EzTax Items</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.EzTaxContext.#ctor">
+            <summary>Creates an EzTax Context</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.EzTaxContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>Overrides onConfiguring to use <see cref="P:Igtampe.Neco.Data.Constants.ConnectionString"/></summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EzTaxContext.IncomeItems">
+            <summary>Table of all EzTax income items</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EzTaxContext.TaxBrackets">
+            <summary>Table of all Tax Brackets</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EzTaxContext.TaxJurisdictions">
+            <summary>Table of all Tax Jurisdictions</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EzTaxContext.TaxUserInfos">
+            <summary>Table of all Tax User Infos</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EzTaxContext.Apartments">
+            <summary>Table of all Apartments</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EzTaxContext.Businesses">
+            <summary>Table of all Businesses</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.EzTaxContext.Hotels">
+            <summary>Table of all Hotels</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Data.LandViewContext">
+            <summary>Context to use to handle LandView Items</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.LandViewContext.#ctor">
+            <summary>Creates a LandView Context</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.LandViewContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>Overrides onConfiguring to use <see cref="P:Igtampe.Neco.Data.Constants.ConnectionString"/></summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="P:Igtampe.Neco.Data.LandViewContext.Countries">
+            <summary>Table of all countries</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.LandViewContext.Districts">
+            <summary>Table of all Districts</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.LandViewContext.Plots">
+            <summary>Table of all plots</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Data.NecoContext">
+            <summary>Context for use of main Neco operations and items</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor">
+            <summary>Creates a NecoContext</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.NecoContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>Overrides onConfiguring to use <see cref="P:Igtampe.Neco.Data.Constants.ConnectionString"/></summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="P:Igtampe.Neco.Data.NecoContext.UserTypes">
+            <summary>Table of all User Types</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.NecoContext.Users">
+            <summary>Table of all users</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.NecoContext.Transactions">
+            <summary>Table of all transactions</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.NecoContext.Notifications">
+            <summary>Table of all Notifications</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.NecoContext.CertifiedItems">
+            <summary>Table of all Certified Items </summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.NecoContext.BankAccountTypes">
+            <summary>Table of all Bank Account Types</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.NecoContext.BankAccounts">
+            <summary>Table of all Bank Accounts</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.NecoContext.Banks">
+            <summary>Table of all Banks</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Data.UMSATContext">
+            <summary>Context to use to handle all UMSAT items</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.UMSATContext.#ctor">
+            <summary>Creates an UMSAT Context</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.UMSATContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>Overrides onConfiguring to use <see cref="P:Igtampe.Neco.Data.Constants.ConnectionString"/></summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="P:Igtampe.Neco.Data.UMSATContext.Assets">
+            <summary>Table of all UMSAT Assets</summary>
+        </member>
+    </members>
+</doc>

@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using Igtampe.Neco.Common;
 
 namespace Igtampe.Neco.Data {
+
+    /// <summary>Context used for Authorization</summary>
     public class AuthContext: DbContext {
 
-        public AuthContext(DbContextOptions<AuthContext> options) : base(options) { }
+        /// <summary>Creates an AuthContext</summary>
+        public AuthContext() : base() { }
 
+        /// <summary>Overrides onConfiguring to use <see cref="Constants.ConnectionString"/></summary>
+        /// <param name="optionsBuilder"></param>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { optionsBuilder.UseSqlServer(Constants.ConnectionString); }
+
+        /// <summary>A view of the Users Table that returns <see cref="UserAuth"/></summary>
         public DbSet<UserAuth> Users { get; set; }
 
     }
