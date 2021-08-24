@@ -15,22 +15,18 @@ namespace Igtampe.Neco.Backend.Controllers {
     public class AssetsController: Controller {
 
         private readonly UMSATContext _context;
-
         public AssetsController(UMSATContext context) {_context = context;}
 
         // GET: UMSAT
         [HttpGet]
-        public async Task<IActionResult> Index() {
-            return Ok(await _context.Assets.ToListAsync());
-        }
+        public async Task<IActionResult> Index() { return Ok(await _context.Assets.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Details(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.Assets
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var asset = await _context.Assets .FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -46,11 +42,8 @@ namespace Igtampe.Neco.Backend.Controllers {
             return Created($"UMSAT/{asset.ID}", asset);
         }
 
-        // POST: Assets/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // PUT: UMSAT/5
         [HttpPut("{id}")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, Asset asset) {
             if (id != asset.ID) { return NotFound(); }
 
@@ -64,7 +57,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             return Ok(asset);
         }
 
-        // POST
+        //DELETE: UMSAT/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfirmed(Guid id) {
             var asset = await _context.Assets.FindAsync(id);
