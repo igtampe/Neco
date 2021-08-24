@@ -38,5 +38,8 @@ namespace Igtampe.Neco.Common {
         /// <summary>Whether or not this transaciton has been executed</summary>
         public bool Executed { get; set; } = false;
 
+        /// <summary>Indicates whether the transaction was executed and failed</summary>
+        public bool Failed { get; set; } = false;
+
     }
 }
