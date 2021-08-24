@@ -24,6 +24,11 @@ namespace Igtampe.Neco.Data {
         /// <summary>View of the Users table that returns <see cref="UserAuth"/></summary>
         public DbSet<UserAuth> UserAuths { get; set; }
 
+        //Checkbook
+
+        /// <summary>Table that contains all checkbook items</summary>
+        public DbSet<CheckbookItem> CheckbookItems { get; set; }
+
         //Neco
 
         /// <summary>Table of all user types</summary>

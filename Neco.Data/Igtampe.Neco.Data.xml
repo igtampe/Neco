@@ -59,6 +59,9 @@
         <member name="P:Igtampe.Neco.Data.EverythingContext.UserAuths">
             <summary>View of the Users table that returns <see cref="T:Igtampe.Neco.Common.UserAuth"/></summary>
         </member>
+        <member name="P:Igtampe.Neco.Data.EverythingContext.CheckbookItems">
+            <summary>Table that contains all checkbook items</summary>
+        </member>
         <member name="P:Igtampe.Neco.Data.EverythingContext.UserTypes">
             <summary>Table of all user types</summary>
         </member>
