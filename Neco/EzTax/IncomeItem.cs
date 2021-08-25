@@ -14,6 +14,9 @@ namespace Igtampe.Neco.Common.EzTax {
         /// <summary>ID of this income item</summary>
         public Guid ID { get; set; }
 
+        /// <summary>Name of this IncomeItem</summary>
+        public string Name { get; set; }
+
         /// <summary>User this income item belongs to</summary>
         public User User { get; set; }
 

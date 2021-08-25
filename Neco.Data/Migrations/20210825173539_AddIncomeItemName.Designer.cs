@@ -4,14 +4,16 @@ using Igtampe.Neco.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Igtampe.Neco.Data.Migrations
 {
     [DbContext(typeof(EverythingContext))]
-    partial class EverythingContextModelSnapshot : ModelSnapshot
+    [Migration("20210825173539_AddIncomeItemName")]
+    partial class AddIncomeItemName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -483,28 +485,6 @@ namespace Igtampe.Neco.Data.Migrations
                     b.ToTable("Plots");
                 });
 
-            modelBuilder.Entity("Igtampe.Neco.Common.LandView.Road", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CountryID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Points")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CountryID");
-
-                    b.ToTable("Road");
-                });
-
             modelBuilder.Entity("Igtampe.Neco.Common.Notification", b =>
                 {
                     b.Property<Guid>("Id")
@@ -858,15 +838,6 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Navigation("TiedAccount");
                 });
 
-            modelBuilder.Entity("Igtampe.Neco.Common.LandView.Road", b =>
-                {
-                    b.HasOne("Igtampe.Neco.Common.LandView.Country", "Country")
-                        .WithMany("Roads")
-                        .HasForeignKey("CountryID");
-
-                    b.Navigation("Country");
-                });
-
             modelBuilder.Entity("Igtampe.Neco.Common.Notification", b =>
                 {
                     b.HasOne("Igtampe.Neco.Common.User", "User")
@@ -953,8 +924,6 @@ namespace Igtampe.Neco.Data.Migrations
             modelBuilder.Entity("Igtampe.Neco.Common.LandView.Country", b =>
                 {
                     b.Navigation("Districts");
-
-                    b.Navigation("Roads");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.LandView.District", b =>

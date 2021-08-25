@@ -21,5 +21,8 @@ namespace Igtampe.Neco.Data {
         /// <summary>Table of all plots</summary>
         public DbSet<Plot> Plots { get; set; }
 
+        /// <summary>Table of all roads</summary>
+        public DbSet<Road> Road { get; set; }
+
     }
 }

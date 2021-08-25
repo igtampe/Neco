@@ -31,9 +31,6 @@
         <member name="P:Igtampe.Neco.Common.Bank.AccountTypes">
             <summary>Bank Account types available in this bank</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.Bank.CorporateAccount">
-            <summary>This Bank's corpoate bank account (Used to pay out interests)</summary>
-        </member>
         <member name="T:Igtampe.Neco.Common.BankAccount">
             <summary>Holds a NECO Bank Account</summary>
         </member>
@@ -145,6 +142,9 @@
         </member>
         <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.ID">
             <summary>ID of this income item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.Name">
+            <summary>Name of this IncomeItem</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.User">
             <summary>User this income item belongs to</summary>
@@ -380,6 +380,9 @@
         <member name="P:Igtampe.Neco.Common.LandView.Country.Districts">
             <summary>Districts in this country</summary>
         </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Country.Roads">
+            <summary>Roads in this country</summary>
+        </member>
         <member name="P:Igtampe.Neco.Common.LandView.Country.Width">
             <summary>Width of this country in meters</summary>
         </member>
@@ -517,6 +520,24 @@
         <member name="M:Igtampe.Neco.Common.LandView.Plot.Width">
             <summary>Width of this plot in meters</summary>
             <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.LandView.Road">
+            <summary>Holds a road to display on a LandView map</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Road.ID">
+            <summary>ID of this road</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Road.Name">
+            <summary>Name of this road</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Road.Points">
+            <summary>comma separated point strings for storage</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Road.GraphicalPoints">
+            <summary>Graphical points that define beginning, turns, and end of this road</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Road.Country">
+            <summary>Country this Road belongs to</summary>
         </member>
         <member name="T:Igtampe.Neco.Common.Notification">
             <summary>Holds a notification for a User</summary>
