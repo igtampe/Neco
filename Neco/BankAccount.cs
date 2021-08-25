@@ -18,6 +18,9 @@ namespace Igtampe.Neco.Common {
         /// <summary>Bank Account type of this bank account</summary>
         public BankAccountType Type { get; set; }
 
+        /// <summary>Owner of this bank account</summary>
+        public User Owner { get; set; }
+
         /// <summary>Balance in this bank account</summary>
         public long Balance { get; set; } = 0;
 

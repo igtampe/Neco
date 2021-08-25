@@ -31,6 +31,9 @@
         <member name="P:Igtampe.Neco.Common.Bank.AccountTypes">
             <summary>Bank Account types available in this bank</summary>
         </member>
+        <member name="P:Igtampe.Neco.Common.Bank.CorporateAccount">
+            <summary>This Bank's corpoate bank account (Used to pay out interests)</summary>
+        </member>
         <member name="T:Igtampe.Neco.Common.BankAccount">
             <summary>Holds a NECO Bank Account</summary>
         </member>
@@ -42,6 +45,9 @@
         </member>
         <member name="P:Igtampe.Neco.Common.BankAccount.Type">
             <summary>Bank Account type of this bank account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccount.Owner">
+            <summary>Owner of this bank account</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.BankAccount.Balance">
             <summary>Balance in this bank account</summary>
