@@ -12,10 +12,10 @@ namespace Igtampe.Neco.Backend.Controllers {
 
     [Route("UMSAT")]
     [ApiController]
-    public class AssetsController: Controller {
+    public class UMSATController: Controller {
 
         private readonly UMSATContext _context;
-        public AssetsController(UMSATContext context) {_context = context;}
+        public UMSATController(UMSATContext context) {_context = context;}
 
         // GET: UMSAT
         [HttpGet]
