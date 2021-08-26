@@ -75,7 +75,7 @@ namespace Igtampe.Neco.Data {
         public DbSet<TaxUserInfo> TaxUserInfos { get; set; }
 
         /// <summary>Table of all Apartments</summary>
-        public DbSet<Apartment> Appartments { get; set; }
+        public DbSet<Apartment> Apartments { get; set; }
 
         /// <summary>Table of all Businesses</summary>
         public DbSet<Business> Businesses { get; set; }

@@ -101,7 +101,7 @@
         <member name="P:Igtampe.Neco.Data.EverythingContext.TaxUserInfos">
             <summary>Table of all Tax User Infos</summary>
         </member>
-        <member name="P:Igtampe.Neco.Data.EverythingContext.Appartments">
+        <member name="P:Igtampe.Neco.Data.EverythingContext.Apartments">
             <summary>Table of all Apartments</summary>
         </member>
         <member name="P:Igtampe.Neco.Data.EverythingContext.Businesses">
@@ -171,6 +171,9 @@
         </member>
         <member name="P:Igtampe.Neco.Data.LandViewContext.Plots">
             <summary>Table of all plots</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.LandViewContext.Road">
+            <summary>Table of all roads</summary>
         </member>
         <member name="T:Igtampe.Neco.Data.NecoContext">
             <summary>Context for use of main Neco operations and items</summary>
