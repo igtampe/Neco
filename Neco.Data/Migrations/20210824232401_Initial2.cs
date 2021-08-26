@@ -3,8 +3,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Igtampe.Neco.Data.Migrations
 {
+    /// <summary>Holds 2nd initial that I did</summary>
     public partial class Initial2 : Migration
     {
+        /// <summary>Puts up this migration</summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
@@ -277,6 +280,8 @@ namespace Igtampe.Neco.Data.Migrations
                 onDelete: ReferentialAction.Restrict);
         }
 
+        /// <summary>Puts down migration</summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(

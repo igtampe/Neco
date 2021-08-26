@@ -169,7 +169,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // PUT: UMSAT/5
         [HttpPut("IncomeItem/{id}")]
-        public async Task<IActionResult> Edit(Guid id, IncomeItem asset) {
+        public async Task<IActionResult> IncomeItemEdit(Guid id, IncomeItem asset) {
             if (id != asset.ID) { return NotFound(); }
 
             try {
@@ -222,7 +222,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // PUT: UMSAT/5
         [HttpPut("Apartment/{id}")]
-        public async Task<IActionResult> Edit(Guid id, Apartment asset) {
+        public async Task<IActionResult> ApartmentEdit(Guid id, Apartment asset) {
             if (id != asset.ID) { return NotFound(); }
 
             try {
@@ -318,7 +318,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // POST: UMSAT
         [HttpPost("Hotel")]
-        public async Task<IActionResult> Create(Hotel asset) {
+        public async Task<IActionResult> HotelCreate(Hotel asset) {
             if (asset.ID != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
             asset.ID = Guid.NewGuid();
             _context.Add(asset);
@@ -328,7 +328,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // PUT: UMSAT/5
         [HttpPut("Hotel/{id}")]
-        public async Task<IActionResult> Edit(Guid id, Hotel asset) {
+        public async Task<IActionResult> HotelEdit(Guid id, Hotel asset) {
             if (id != asset.ID) { return NotFound(); }
 
             try {

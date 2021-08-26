@@ -20,12 +20,11 @@ namespace SmokeSignal {
             string ServerMSG = "E";
 
             //make sure we have a message and an IP. We don't have to check if the port is empty because int cannot be null
-            if (string.IsNullOrEmpty(Message) || 
-                string.IsNullOrEmpty(IP)) { 
-                throw new ArgumentNullException("I need something to send and somewhere to send it and I don't have one of them."); }
+            if (string.IsNullOrEmpty(Message)) { throw new ArgumentNullException(nameof(Message)); }
+            if (string.IsNullOrEmpty(IP)) { throw new ArgumentNullException(nameof(IP)); }
 
             //Try to connect. The only real exception that should occur here is socketexception.
-            try { TC.Connect(IP, Port); } catch (SocketException) { throw new Exception("Unable to connect to the server"); }
+            try { TC.Connect(IP, Port); } catch (SocketException) { throw new ArgumentException("Unable to connect to the server"); }
 
             //If we managed to connect, which we should've but just in case...
             if (TC.Connected) {

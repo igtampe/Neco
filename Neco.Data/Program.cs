@@ -1,16 +1,15 @@
 ﻿using System;
 
 namespace Igtampe.Neco.Data {
-    class Program {
+    /// <summary>test program to see NecoData in action</summary>
+    public static class Program {
 
-        static void Main(string[] args) {
+        static void Main() {
 
-            using (var Context = new NecoContext()) {
-                Console.WriteLine($"\n\nEverything:\n");
+            using var Context = new NecoContext(); Console.WriteLine($"\n\nEverything:\n");
 
-                foreach (System.Reflection.PropertyInfo Prop in Context.GetType().GetProperties()) {
-                    Console.WriteLine($"{Prop.Name}: {Prop.GetValue(Context)}");
-                }
+            foreach (System.Reflection.PropertyInfo Prop in Context.GetType().GetProperties()) {
+                Console.WriteLine($"{Prop.Name}: {Prop.GetValue(Context)}");
             }
         }
     }

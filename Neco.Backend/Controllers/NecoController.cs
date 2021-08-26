@@ -14,7 +14,7 @@ namespace Igtampe.Neco.Backend.Controllers {
     public class NecoController: Controller {
         private readonly NecoContext _context;
 
-        private Random UserIDRandomizer = new();
+        private readonly Random UserIDRandomizer = new();
 
         public NecoController(NecoContext context) { _context = context; }
 
@@ -25,7 +25,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // GET: UMSAT/5
         [HttpGet("Bank/{id}")]
-        public async Task<IActionResult> BankDetails(string? id) {
+        public async Task<IActionResult> BankDetails(string id) {
             if (id == null) { return NotFound(); }
 
             var asset = await _context.Bank.FirstOrDefaultAsync(m => m.Id == id);
@@ -72,7 +72,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // POST: UMSAT
         [HttpPost("BankAccount")]
-        public async Task<IActionResult> Create(BankAccount asset) {
+        public async Task<IActionResult> CreateBankAccount(BankAccount asset) {
             if (asset.Id != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
             asset.Id = Guid.NewGuid();
             _context.Add(asset);
@@ -126,7 +126,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // POST: UMSAT
         [HttpPost("CertifiedItem")]
-        public async Task<IActionResult> Create(CertifiedItem asset) {
+        public async Task<IActionResult> CreateNotification(CertifiedItem asset) {
             if (asset.Id != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
             asset.Id = Guid.NewGuid();
             _context.Add(asset);
@@ -191,7 +191,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // POST: UMSAT
         [HttpPost("Transaction")]
-        public async Task<IActionResult> Create(Transaction asset) {
+        public async Task<IActionResult> TransactionCreate(Transaction asset) {
             if (asset.Id != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
             asset.Id = Guid.NewGuid();
             _context.Add(asset);
@@ -227,11 +227,11 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (!transaction.FromUser.Equals(transaction.ToUser)) {
                 if (transaction.ToUser.Notifications == null) { transaction.ToUser.Notifications = new List<Notification>(); }
                 transaction.ToUser.Notifications.Add(new Notification() {
-                    Id = new Guid(),
+                    Id = Guid.NewGuid(),
                     Read = false,
                     Time = DateTime.Now,
                     User = transaction.ToUser,
-                    Text = $"{transaction.FromUser} sent you {transaction.Amount.ToString("N0")}p to your {transaction.ToBankAccount.Type.Name} account"
+                    Text = $"{transaction.FromUser} sent you {transaction.Amount:N0}p to your {transaction.ToBankAccount.Type.Name} account"
                 }) ;
             
             }
@@ -264,7 +264,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // POST: UMSAT
         [HttpPost("User")]
-        public async Task<IActionResult> Create(User asset) {
+        public async Task<IActionResult> UserCreate(User asset) {
             if (string.IsNullOrEmpty(asset.Id)) { BadRequest("User has an ID. Did you mean to edit it?"); }
             string ID;
             do {

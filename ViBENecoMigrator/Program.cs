@@ -19,11 +19,9 @@ namespace ViBENecoMigrator {
 
         private static NecoContext C;
 
-        private static Graphic V2NGraphic;
+        private static readonly string[] SpinnerCycle = { "|", "/", "-", "\\" };
 
-        private static string[] SpinnerCycle = { "|", "/", "-", "\\" };
-
-        private static Cycler SpinnerCycler = new Cycler(SpinnerCycle);
+        private static readonly Cycler SpinnerCycler = new(SpinnerCycle);
 
         private static int X;
         private static int TopTextHeight;
@@ -32,7 +30,7 @@ namespace ViBENecoMigrator {
 
             #region Visual Setup
             Console.Clear();
-            V2NGraphic = HiColorGraphic.LoadFromResource(Properties.Resources.V2N);
+            Graphic V2NGraphic = HiColorGraphic.LoadFromResource(Properties.Resources.V2N);
 
             //Determine the position to display the gaphic
             X = (Console.WindowWidth - V2NGraphic.GetWidth()) / 2;
@@ -219,19 +217,19 @@ namespace ViBENecoMigrator {
             UpdateLocal("EzTax Jurisdictions", 0);
 
             //Define these hardcoded since we have them
-            TaxJurisdiction UMSJurisdiction = new TaxJurisdiction() { ID = Guid.NewGuid(), Name = "The UMS", Account = AccUMSGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction UMSJurisdiction = new() { ID = Guid.NewGuid(), Name = "The UMS", Account = AccUMSGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction NewJurisdiction = new TaxJurisdiction() { ID = Guid.NewGuid(), Name = "Newpond", Account = AccNewpondGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction NewJurisdiction = new() { ID = Guid.NewGuid(), Name = "Newpond", Account = AccNewpondGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction ParJurisdiction = new TaxJurisdiction() { ID = Guid.NewGuid(), Name = "Paradisus", Account = AccParadisusGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction ParJurisdiction = new() { ID = Guid.NewGuid(), Name = "Paradisus", Account = AccParadisusGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction UrbJurisdiction = new TaxJurisdiction() { ID = Guid.NewGuid(), Name = "Urbia", Account = AccUrbiaGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction UrbJurisdiction = new() { ID = Guid.NewGuid(), Name = "Urbia", Account = AccUrbiaGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction LaeJurisdiction = new TaxJurisdiction() { ID = Guid.NewGuid(), Name = "Laertes", Account = AccLaertesGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction LaeJurisdiction = new() { ID = Guid.NewGuid(), Name = "Laertes", Account = AccLaertesGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction NosJurisdiction = new TaxJurisdiction() { ID = Guid.NewGuid(), Name = "North Osten", Account = AccNOstenGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction NosJurisdiction = new() { ID = Guid.NewGuid(), Name = "North Osten", Account = AccNOstenGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction SosJurisdiction = new TaxJurisdiction() { ID = Guid.NewGuid(), Name = "South Osten", Account = AccSOstenGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction SosJurisdiction = new() { ID = Guid.NewGuid(), Name = "South Osten", Account = AccSOstenGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
 
 
@@ -521,7 +519,7 @@ namespace ViBENecoMigrator {
                                 break;
                         }
 
-                        IncomeItem I = new IncomeItem() {
+                        IncomeItem I = new() {
                             ID = Guid.NewGuid(), Name = Name, FederalJurisdiction = UMSJurisdiction,
                             LocalJurisdiction = Jurisdiction, MiscIncome = MiscIncome, User = U,
                             Subitems = new List<IIncomeSubitem>()

@@ -5,6 +5,8 @@ namespace Igtampe.Neco.Data.Migrations
 {
     public partial class AddRoads : Migration
     {
+        /// <summary>Ups the migration</summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -33,6 +35,8 @@ namespace Igtampe.Neco.Data.Migrations
                 column: "CountryID");
         }
 
+        /// <summary>Downs the migration</summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

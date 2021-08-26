@@ -4,6 +4,8 @@ namespace Igtampe.Neco.Data.Migrations
 {
     public partial class BankAddOwner : Migration
     {
+        /// <summary>Ups migration</summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
@@ -29,6 +31,8 @@ namespace Igtampe.Neco.Data.Migrations
                 onDelete: ReferentialAction.Restrict);
         }
 
+        /// <summary>Downs migration</summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(

@@ -4,6 +4,8 @@ namespace Igtampe.Neco.Data.Migrations
 {
     public partial class AddFailedTransaction : Migration
     {
+        /// <summary>Ups the migration</summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
@@ -14,6 +16,8 @@ namespace Igtampe.Neco.Data.Migrations
                 defaultValue: false);
         }
 
+        /// <summary>Downs the migration</summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(

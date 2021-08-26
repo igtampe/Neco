@@ -25,10 +25,16 @@ namespace Igtampe.Neco.Common {
         /// <returns>Returns true if the provided pin matches this user's pin</returns>
         public bool CheckPin(string Pin) { return Pin == this.Pin; }
 
+        /// <summary>Checks if this and another <see cref="UserAuth"/> object are the same</summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj) {
             if (obj is UserAuth E) { return E.Id == Id && Pin == E.Pin;}
             return false;
         }
 
+        /// <summary>Gets a Hashcode for this UserAuth (Delegated to <see cref="Id"/>)</summary>
+        /// <returns></returns>
+        public override int GetHashCode() { return Id.GetHashCode(); }
     }
 }
