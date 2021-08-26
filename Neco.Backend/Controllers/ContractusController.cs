@@ -13,20 +13,20 @@ namespace Igtampe.Neco.Backend.Controllers {
     [Route("Contractus")]
     [ApiController]
     public class ContractusController: Controller {
-        private readonly ContractusContext _context;
+        private readonly NecoContext _context;
 
-        public ContractusController(ContractusContext context) { _context = context; }
+        public ContractusController(NecoContext context) { _context = context; }
 
         // GET: UMSAT
         [HttpGet]
-        public async Task<IActionResult> Index() { return Ok(await _context.Contracts.ToListAsync()); }
+        public async Task<IActionResult> Index() { return Ok(await _context.Contract.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Details(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var contract = await _context.Contracts.FirstOrDefaultAsync(m => m.ID == id);
+            var contract = await _context.Contract.FirstOrDefaultAsync(m => m.ID == id);
             if (contract == null) { return NotFound(); }
 
             return Ok(contract);
@@ -60,12 +60,12 @@ namespace Igtampe.Neco.Backend.Controllers {
         //DELETE: UMSAT/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfirmed(Guid id) {
-            var asset = await _context.Contracts.FindAsync(id);
-            _context.Contracts.Remove(asset);
+            var asset = await _context.Contract.FindAsync(id);
+            _context.Contract.Remove(asset);
             await _context.SaveChangesAsync();
             return Ok(asset);
         }
 
-        private bool AssetExists(Guid id) { return _context.Contracts.Any(e => e.ID == id); }
+        private bool AssetExists(Guid id) { return _context.Contract.Any(e => e.ID == id); }
     }
 }

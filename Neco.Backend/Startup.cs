@@ -38,14 +38,7 @@ namespace Igtampe.Neco.Backend {
             });
 
             services.AddControllers();
-            services.AddDbContext<AuthContext>();
-            services.AddDbContext<CheckbookContext>();
-            services.AddDbContext<ContractusContext>();
-            services.AddDbContext<EverythingContext>();
-            services.AddDbContext<EzTaxContext>();
-            services.AddDbContext<LandViewContext>();
             services.AddDbContext<NecoContext>();
-            services.AddDbContext<UMSATContext>();
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Neco.Backend", Version = "v1" });

@@ -3,25 +3,21 @@ using System.IO;
 using Igtampe.BasicRender;
 using Igtampe.BasicGraphics;
 using Igtampe.Neco.Common;
-using Igtampe.Neco.Common.Auth;
-using Igtampe.Neco.Common.Contractus;
 using Igtampe.Neco.Common.EzTax;
 using Igtampe.Neco.Common.EzTax.Subitems;
-using Igtampe.Neco.Common.LandView;
 using Igtampe.Neco.Common.UMSAT;
 using System.Linq;
 using System.Data.OleDb;
 using Igtampe.Neco.Data;
 
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ViBENecoMigrator {
     static class Program {
         private static ProgressBar LocalProgressBar;
         private static ProgressBar MainProgressBar;
 
-        private static EverythingContext C;
+        private static NecoContext C;
 
         private static Graphic V2NGraphic;
 
@@ -54,7 +50,7 @@ namespace ViBENecoMigrator {
             UpdateLocal("Setting up EverythingContext", 0);
             UpdateMain("Setting up", 0);
 
-            C = new EverythingContext();
+            C = new NecoContext();
 
             //Banks
             UpdateLocal("Banks", 0);
@@ -456,7 +452,7 @@ namespace ViBENecoMigrator {
                 if (csvname.Length != 3) { continue; }
 
                 //Find an attatched user
-                User U = C.Users.Find(csvname[0].Substring(csvname[0].Length - 5, 5));
+                User U = C.User.Find(csvname[0].Substring(csvname[0].Length - 5, 5));
                 if (U is null) { continue; }
 
                 //Create a TaxUserInfo for that user
@@ -580,7 +576,7 @@ namespace ViBENecoMigrator {
                     if (!DateTime.TryParse((string)Reader[5], out DateTime DOC)) { DOC = DateTime.MinValue; }
                     if (!DateTime.TryParse((string)Reader[6], out DateTime DOLU)) { DOLU = DateTime.Now; }
                     Asset A = new() {
-                        ID = Guid.NewGuid(), Name = (string)Reader[0], Owner = C.Users.Find((string)Reader[1]),
+                        ID = Guid.NewGuid(), Name = (string)Reader[0], Owner = C.User.Find((string)Reader[1]),
                         SpecificLocaiton = (string)Reader[2], Image = new System.Net.WebClient().DownloadData((string)Reader[3]),
                         Description = (string)Reader[4], CreationDate = DOC,  UpdateDate = DOLU, Complete = bool.Parse((string)Reader[7]), 
                         IncomeItem = null, Plot = null

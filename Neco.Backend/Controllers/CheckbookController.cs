@@ -11,19 +11,19 @@ namespace Igtampe.Neco.Backend.Controllers {
     [Route("Checkbook")]
     [ApiController]
     public class CheckbookController: Controller {
-        private readonly CheckbookContext _context;
+        private readonly NecoContext _context;
 
-        public CheckbookController(CheckbookContext context) { _context = context; }
+        public CheckbookController(NecoContext context) { _context = context; }
 
         // GET: Checkbook
         [HttpGet]
-        public async Task<IActionResult> Index() { return Ok(await _context.CheckbookItems.ToListAsync()); }
+        public async Task<IActionResult> Index() { return Ok(await _context.CheckbookItem.ToListAsync()); }
 
         // GET: Checkbook/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Details(Guid? id) {
             if (id == null) { return NotFound(); }
-            var asset = await _context.CheckbookItems.FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await _context.CheckbookItem.FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
             return Ok(asset);
         }
@@ -56,12 +56,12 @@ namespace Igtampe.Neco.Backend.Controllers {
         //DELETE: UMSAT/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfirmed(Guid id) {
-            var asset = await _context.CheckbookItems.FindAsync(id);
-            _context.CheckbookItems.Remove(asset);
+            var asset = await _context.CheckbookItem.FindAsync(id);
+            _context.CheckbookItem.Remove(asset);
             await _context.SaveChangesAsync();
             return Ok(asset);
         }
 
-        private bool CheckbookItemExists(Guid id) { return _context.CheckbookItems.Any(e => e.Id == id); }
+        private bool CheckbookItemExists(Guid id) { return _context.CheckbookItem.Any(e => e.Id == id); }
     }
 }

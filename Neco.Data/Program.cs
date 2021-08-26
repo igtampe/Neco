@@ -5,7 +5,7 @@ namespace Igtampe.Neco.Data {
 
         static void Main(string[] args) {
 
-            using (var Context = new EverythingContext()) {
+            using (var Context = new NecoContext()) {
                 Console.WriteLine($"\n\nEverything:\n");
 
                 foreach (System.Reflection.PropertyInfo Prop in Context.GetType().GetProperties()) {

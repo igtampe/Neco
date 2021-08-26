@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Igtampe.Neco.Data.Migrations
 {
-    [DbContext(typeof(EverythingContext))]
+    [DbContext(typeof(NecoContext))]
     partial class EverythingContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

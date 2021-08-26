@@ -21,14 +21,14 @@ namespace Igtampe.Neco.Backend.Controllers {
         #region Bank
         // GET: UMSAT
         [HttpGet("Bank")]
-        public async Task<IActionResult> BankIndex() { return Ok(await _context.Banks.ToListAsync()); }
+        public async Task<IActionResult> BankIndex() { return Ok(await _context.Bank.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("Bank/{id}")]
         public async Task<IActionResult> BankDetails(string? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.Banks.FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await _context.Bank.FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -39,14 +39,14 @@ namespace Igtampe.Neco.Backend.Controllers {
         #region BankAccountType
         // GET: UMSAT
         [HttpGet("BankAccountType")]
-        public async Task<IActionResult> BankAccountTypeIndex() { return Ok(await _context.BankAccountTypes.ToListAsync()); }
+        public async Task<IActionResult> BankAccountTypeIndex() { return Ok(await _context.BankAccountType.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("BankAccountType/{id}")]
         public async Task<IActionResult> BankAccountTypeDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.BankAccountTypes.FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await _context.BankAccountType.FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -57,14 +57,14 @@ namespace Igtampe.Neco.Backend.Controllers {
         #region BankAccount
         // GET: UMSAT
         [HttpGet("BankAccount")] //TODO: Remove before release
-        public async Task<IActionResult> Index() { return Ok(await _context.BankAccounts.ToListAsync()); }
+        public async Task<IActionResult> Index() { return Ok(await _context.BankAccount.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("BankAccount/{id}")]
         public async Task<IActionResult> Details(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.BankAccounts.FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await _context.BankAccount.FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -98,27 +98,27 @@ namespace Igtampe.Neco.Backend.Controllers {
         //DELETE: UMSAT/5
         [HttpDelete("BankAccount/{id}")]
         public async Task<IActionResult> DeleteConfirmed(Guid id) {
-            var asset = await _context.BankAccounts.FindAsync(id);
+            var asset = await _context.BankAccount.FindAsync(id);
             if (asset.Balance > 0) { return BadRequest("Bank account is not empty. Empty it out before trying to remove it"); }
-            _context.BankAccounts.Remove(asset);
+            _context.BankAccount.Remove(asset);
             await _context.SaveChangesAsync();
             return Ok(asset);
         }
 
-        private bool BankAccountExists(Guid id) { return _context.BankAccounts.Any(e => e.Id == id); }
+        private bool BankAccountExists(Guid id) { return _context.BankAccount.Any(e => e.Id == id); }
         #endregion
 
         #region CertifiedItem
         // GET: UMSAT
         [HttpGet("CertifiedItem")]
-        public async Task<IActionResult> CertifiedItemIndex() { return Ok(await _context.CertifiedItems.ToListAsync()); }
+        public async Task<IActionResult> CertifiedItemIndex() { return Ok(await _context.CertifiedItem.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("CertifiedItem/{id}")]
         public async Task<IActionResult> CertifiedItemDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.CertifiedItems.FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await _context.CertifiedItem.FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -139,14 +139,14 @@ namespace Igtampe.Neco.Backend.Controllers {
         #region Notification
         // GET: UMSAT
         [HttpGet("Notification")] //TODO: Remove later
-        public async Task<IActionResult> NotificationIndex() { return Ok(await _context.Notifications.ToListAsync()); }
+        public async Task<IActionResult> NotificationIndex() { return Ok(await _context.Notification.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("Notification/{id}")]
         public async Task<IActionResult> NotificationDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.Notifications.FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await _context.Notification.FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -165,8 +165,8 @@ namespace Igtampe.Neco.Backend.Controllers {
         //DELETE: UMSAT/5
         [HttpDelete("Notification/{id}")]
         public async Task<IActionResult> NotificationDelete(Guid id) {
-            var asset = await _context.Notifications.FindAsync(id);
-            _context.Notifications.Remove(asset);
+            var asset = await _context.Notification.FindAsync(id);
+            _context.Notification.Remove(asset);
             await _context.SaveChangesAsync();
             return Ok(asset);
         }
@@ -176,14 +176,14 @@ namespace Igtampe.Neco.Backend.Controllers {
         #region Transaction
         // GET: UMSAT
         [HttpGet("Transaction")] //TODO: Also remove
-        public async Task<IActionResult> TransactionIndex() { return Ok(await _context.Transactions.ToListAsync()); }
+        public async Task<IActionResult> TransactionIndex() { return Ok(await _context.Transaction.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("Transaction/{id}")]
         public async Task<IActionResult> TransactionDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.Transactions.FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await _context.Transaction.FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -203,7 +203,7 @@ namespace Igtampe.Neco.Backend.Controllers {
         [HttpPost("Transaction/Execute/{id}")]
         public async Task<IActionResult> ExecuteTransaction(Guid id) {
 
-            var transaction = await _context.Transactions.FirstOrDefaultAsync(m => m.Id == id);
+            var transaction = await _context.Transaction.FirstOrDefaultAsync(m => m.Id == id);
             if (transaction == null) { return NotFound(); }
 
             //Now then:
@@ -249,14 +249,14 @@ namespace Igtampe.Neco.Backend.Controllers {
         #region User
         // GET: UMSAT
         [HttpGet("User")]
-        public async Task<IActionResult> UserIndex() { return Ok(await _context.Users.ToListAsync()); }
+        public async Task<IActionResult> UserIndex() { return Ok(await _context.User.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("User/{id}")]
         public async Task<IActionResult> UserDetails(string id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await _context.User.FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -278,20 +278,20 @@ namespace Igtampe.Neco.Backend.Controllers {
             return Created($"User/{asset.Id}", asset);
         }
 
-        private bool UserExists(string id) { return _context.Users.Any(e => e.Id == id); }
+        private bool UserExists(string id) { return _context.User.Any(e => e.Id == id); }
         #endregion
 
         #region UserType       
         // GET: UMSAT
         [HttpGet("UserType")]
-        public async Task<IActionResult> UserTypeIndex() { return Ok(await _context.UserTypes.ToListAsync()); }
+        public async Task<IActionResult> UserTypeIndex() { return Ok(await _context.UserType.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("UserType/{id}")]
         public async Task<IActionResult> UserTypeDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.UserTypes.FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await _context.UserType.FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);

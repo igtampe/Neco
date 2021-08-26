@@ -13,22 +13,22 @@ namespace Igtampe.Neco.Backend.Controllers {
     [Route("LandView")]
     [ApiController]
     public class LandViewController: Controller {
-        private readonly LandViewContext _context;
+        private readonly NecoContext _context;
 
-        public LandViewController(LandViewContext context) { _context = context; }
+        public LandViewController(NecoContext context) { _context = context; }
 
         #region Country
 
         // GET: Country
         [HttpGet("Country")]
-        public async Task<IActionResult> CountryIndex() { return Ok(await _context.Countries.ToListAsync()); }
+        public async Task<IActionResult> CountryIndex() { return Ok(await _context.Country.ToListAsync()); }
 
         // GET: Country/5
         [HttpGet("Country/{id}")]
         public async Task<IActionResult> CountryDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.Countries.FirstOrDefaultAsync(m => m.ID == id);
+            var asset = await _context.Country.FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -40,14 +40,14 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // GET: District
         [HttpGet("District")]
-        public async Task<IActionResult> DistrictIndex() { return Ok(await _context.Districts.ToListAsync()); }
+        public async Task<IActionResult> DistrictIndex() { return Ok(await _context.District.ToListAsync()); }
 
         // GET: District/5
         [HttpGet("District/{id}")]
         public async Task<IActionResult> DistrictDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.Districts.FirstOrDefaultAsync(m => m.ID == id);
+            var asset = await _context.District.FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -59,14 +59,14 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // GET: District
         [HttpGet("Plot")]
-        public async Task<IActionResult> PlotIndex() { return Ok(await _context.Plots.ToListAsync()); }
+        public async Task<IActionResult> PlotIndex() { return Ok(await _context.Plot.ToListAsync()); }
 
         // GET: District/5
         [HttpGet("Plot/{id}")]
         public async Task<IActionResult> PlotDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.Plots.FirstOrDefaultAsync(m => m.ID == id);
+            var asset = await _context.Plot.FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -100,13 +100,13 @@ namespace Igtampe.Neco.Backend.Controllers {
         //DELETE: Plot/5
         [HttpDelete("Plot/{id}")]
         public async Task<IActionResult> PlotDelete(Guid id) {
-            var asset = await _context.Plots.FindAsync(id);
-            _context.Plots.Remove(asset);
+            var asset = await _context.Plot.FindAsync(id);
+            _context.Plot.Remove(asset);
             await _context.SaveChangesAsync();
             return Ok(asset);
         }
 
-        private bool PlotExists(Guid id) { return _context.Plots.Any(e => e.ID == id); }
+        private bool PlotExists(Guid id) { return _context.Plot.Any(e => e.ID == id); }
 
         #endregion
 

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Igtampe.Neco.Data.Migrations
 {
-    [DbContext(typeof(EverythingContext))]
+    [DbContext(typeof(NecoContext))]
     [Migration("20210825212534_AddRoads")]
     partial class AddRoads
     {
