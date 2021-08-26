@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.Neco.Common", "Neco
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.Neco.Data", "Neco.Data\Igtampe.Neco.Data.csproj", "{5C86E7BE-830D-42BB-BCA9-E772925DEBB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igtampe.Neco.Backend", "Neco.Backend\Igtampe.Neco.Backend.csproj", "{DE468C35-CB23-4EE6-A704-B30022B6192C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.Neco.Backend", "Neco.Backend\Igtampe.Neco.Backend.csproj", "{DE468C35-CB23-4EE6-A704-B30022B6192C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViBENecoMigrator", "ViBENecoMigrator\ViBENecoMigrator.csproj", "{09AE3832-8CD2-4BB9-AF3A-92752B648B61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViBENecoMigrator", "ViBENecoMigrator\ViBENecoMigrator.csproj", "{09AE3832-8CD2-4BB9-AF3A-92752B648B61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igtampe.LandViewPlotter", "LandViewPlotter\Igtampe.LandViewPlotter.csproj", "{2F6D193D-4DBD-4C74-A4DF-3F1A2B1BEE45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{09AE3832-8CD2-4BB9-AF3A-92752B648B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09AE3832-8CD2-4BB9-AF3A-92752B648B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09AE3832-8CD2-4BB9-AF3A-92752B648B61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F6D193D-4DBD-4C74-A4DF-3F1A2B1BEE45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F6D193D-4DBD-4C74-A4DF-3F1A2B1BEE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F6D193D-4DBD-4C74-A4DF-3F1A2B1BEE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F6D193D-4DBD-4C74-A4DF-3F1A2B1BEE45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
