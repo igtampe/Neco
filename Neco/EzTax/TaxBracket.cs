@@ -34,5 +34,21 @@ namespace Igtampe.Neco.Common.EzTax {
         [Range(0.0, 1.0)]
         public double Rate { get; set; } = 0.0;
 
+        /// <summary>Compares this TaxBracket to another object</summary>
+        /// <param name="obj"></param>
+        /// <returns>True if and only if the object is a TaxBracket and the <see cref="ID"/> matches with this one's</returns>
+        public override bool Equals(object obj) {
+            if (obj is TaxBracket C) { return C.ID == ID; }
+            return false;
+        }
+
+        /// <summary>Gets a hash code for this TaxBracket. Delegates to <see cref="ID"/></summary>
+        /// <returns></returns>
+        public override int GetHashCode() { return ID.GetHashCode(); }
+
+        /// <summary>Creates a string representation of this TaxBracket</summary>
+        /// <returns>{ID} : {Name}, From {Start} to {End} at {Rate}%</returns>
+        public override string ToString() { return $"{ID} : {Name}, From {Start} to {End} at {Rate}%"; }
+
     }
 }

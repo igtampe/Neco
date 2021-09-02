@@ -31,5 +31,22 @@ namespace Igtampe.Neco.Common.EzTax {
             return Convert.ToInt64(I * T.Rate);
         }
 
+        /// <summary>Compares this TaxJurisdiction to another object</summary>
+        /// <param name="obj"></param>
+        /// <returns>True if and only if the object is a TaxJurisdiction and the <see cref="ID"/> matches with this one's</returns>
+        public override bool Equals(object obj) {
+            if (obj is TaxJurisdiction C) { return C.ID == ID; }
+            return false;
+        }
+
+        /// <summary>Gets a hash code for this TaxJurisdiction. Delegates to <see cref="ID"/></summary>
+        /// <returns></returns>
+        public override int GetHashCode() { return ID.GetHashCode(); }
+
+        /// <summary>Creates a string representation of this TaxJurisdiction</summary>
+        /// <returns>{ID} : {Name}</returns>
+        public override string ToString() { return $"{ID} : {Name}"; }
+
+
     }
 }

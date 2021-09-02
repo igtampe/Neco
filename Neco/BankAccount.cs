@@ -28,5 +28,21 @@ namespace Igtampe.Neco.Common {
         /// <returns></returns>
         public bool IsOverdrafted() { return Balance < 0; }
 
+        /// <summary>Compares this BankAccount item to another object</summary>
+        /// <param name="obj"></param>
+        /// <returns>True if and only if the object is a BankAccount item and the <see cref="Id"/> matches with this one's</returns>
+        public override bool Equals(object obj) {
+            if (obj is BankAccount C) { return C.Id == Id; }
+            return false;
+        }
+
+        /// <summary>Gets a hash code for this BankAccount item. Delegates to <see cref="Id"/></summary>
+        /// <returns></returns>
+        public override int GetHashCode() { return Id.GetHashCode(); }
+
+        /// <summary>Creates a string representation of this BankAccount item</summary>
+        /// <returns>{Id} : {Owner?.Name}'s {Type?.Name} account with balance {Balance:N0}p</returns>
+        public override string ToString() { return $"{Id} : {Owner?.Name}'s {Type?.Name} account with balance {Balance:N0}p"; }
+
     }
 }

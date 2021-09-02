@@ -41,5 +41,21 @@ namespace Igtampe.Neco.Common {
         /// <summary>Indicates whether the transaction was executed and failed</summary>
         public bool Failed { get; set; } = false;
 
+        /// <summary>Compares this Transaction to another object</summary>
+        /// <param name="obj"></param>
+        /// <returns>return true if the object is a transaction, and if its <see cref="Id"/> matches with this one's</returns>
+        public override bool Equals(object obj) {
+            if (obj is Transaction T) { return T.Id == Id; }
+            return false;
+        }
+
+        /// <summary>Gets a hashcode for this transaction. Delegates to <see cref="Id"/></summary>
+        /// <returns></returns>
+        public override int GetHashCode() { return Id.GetHashCode(); }
+
+        /// <summary>Creates a string representation of this transaction</summary>
+        /// <returns>{Id} : {Amount} from {FromUser?.Id} to {ToUser?.Id}</returns>
+        public override string ToString() { return $"{Id} : {Amount} from {FromUser?.Id} to {ToUser?.Id}";}
+
     }
 }

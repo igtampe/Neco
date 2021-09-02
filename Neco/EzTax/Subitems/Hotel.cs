@@ -4,16 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Igtampe.Neco.Common.EzTax.Subitems {
 
     /// <summary>Subitem that can hold breakdown of items for a hotel with suites and rooms</summary>
-    public class Hotel:IIncomeSubitem {
-
-        /// <summary>ID of this Hotel</summary>
-        public Guid ID { get; set; }
-
-        /// <summary>Head income item of this hotel</summary>
-        public IncomeItem IncomeItem { get; set; }
-
-        /// <summary>Name of this Hotel</summary>
-        public string Name { get; set; } = "";
+    public class Hotel:IncomeSubitem {
 
         /// <summary>Number of rooms in this hotel</summary>
         [Range(0, int.MaxValue)]
@@ -37,7 +28,7 @@ namespace Igtampe.Neco.Common.EzTax.Subitems {
 
         /// <summary>Income of this hotel. Assumes 50% Profit</summary>
         /// <returns></returns>
-        public int Income() { return (RateToMonthlyIncome(RoomRate) * Rooms) + (RateToMonthlyIncome(SuiteRate) * Suites); } 
+        public override int Income() { return (RateToMonthlyIncome(RoomRate) * Rooms) + (RateToMonthlyIncome(SuiteRate) * Suites); } 
 
         /// <summary>Converts a nightly rate to monthly income. Assumes 50% profit</summary>
         /// <param name="Rate"></param>

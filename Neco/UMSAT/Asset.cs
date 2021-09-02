@@ -48,5 +48,21 @@ namespace Igtampe.Neco.Common.UMSAT {
         /// <summary>Date of last update</summary>
         public DateTime UpdateDate { get; set; } = DateTime.Now;
 
+        /// <summary>Compares this Asset to another object</summary>
+        /// <param name="obj"></param>
+        /// <returns>True if and only if the object is an Asset and the <see cref="ID"/> matches with this one's</returns>
+        public override bool Equals(object obj) {
+            if (obj is Asset C) { return C.ID == ID; }
+            return false;
+        }
+
+        /// <summary>Gets a hash code for this Asset. Delegates to <see cref="ID"/></summary>
+        /// <returns></returns>
+        public override int GetHashCode() { return ID.GetHashCode(); }
+
+        /// <summary>Creates a string representation of this Asset</summary>
+        /// <returns>{ID} : {Name}</returns>
+        public override string ToString() { return $"{ID} : {Name}"; }
+
     }
 }

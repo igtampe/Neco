@@ -22,7 +22,7 @@ namespace Igtampe.Neco.Common.EzTax {
 
         /// <summary>Subitems in this Item</summary>
         [NotMapped]
-        public ICollection<Subitems.IIncomeSubitem> Subitems { get; set; }
+        public ICollection<Subitems.IncomeSubitem> Subitems { get; set; }
 
         /// <summary>Other miscellaneous income in this income item</summary>
         [Range(0, long.MaxValue)]
@@ -52,6 +52,23 @@ namespace Igtampe.Neco.Common.EzTax {
             long TMI = TotalMonthlyIncome();
             return LocalJurisdiction.CalculateTax(User, TMI) + FederalJurisdiction.CalculateTax(User, TMI);
         }
+
+        /// <summary>Compares this IncomeItem to another object</summary>
+        /// <param name="obj"></param>
+        /// <returns>True if and only if the object is a IncomeItem and the <see cref="ID"/> matches with this one's</returns>
+        public override bool Equals(object obj) {
+            if (obj is IncomeItem C) { return C.ID == ID; }
+            return false;
+        }
+
+        /// <summary>Gets a hash code for this IncomeItem. Delegates to <see cref="ID"/></summary>
+        /// <returns></returns>
+        public override int GetHashCode() { return ID.GetHashCode(); }
+
+        /// <summary>Creates a string representation of this IncoemItem</summary>
+        /// <returns>{ID} : {Name}</returns>
+        public override string ToString() { return $"{ID} : {Name}"; }
+
 
     }
 }

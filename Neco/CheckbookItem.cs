@@ -33,6 +33,21 @@ namespace Igtampe.Neco.Common {
         /// <summary>Comment provided for this checkbook item</summary>
         public string Comment { get; set; } = "";
 
+        /// <summary>Compares this Checkbook item to another object</summary>
+        /// <param name="obj"></param>
+        /// <returns>True if and only if the object is a checkbook item and the <see cref="Id"/> matches with this one's</returns>
+        public override bool Equals(object obj) {
+            if (obj is CheckbookItem C) { return C.Id == Id; }
+            return false;
+        }
+         
+        /// <summary>Gets a hash code for this Checkbook item. Delegates to <see cref="Id"/></summary>
+        /// <returns></returns>
+        public override int GetHashCode() { return Id.GetHashCode();}
+
+        /// <summary>Creates a string representation of this checkbook item</summary>
+        /// <returns>{Id} : {AttachedTransaciton}</returns>
+        public override string ToString() { return $"{Id} : {AttachedTransaciton}"; }
 
     }
 }

@@ -4,17 +4,8 @@ using System.ComponentModel.DataAnnotations;
 namespace Igtampe.Neco.Common.EzTax.Subitems {
 
     /// <summary>Subitem that holds data for an appartment complex</summary>
-    public class Apartment:IIncomeSubitem {
+    public class Apartment:IncomeSubitem {
         
-        /// <summary>ID of this appartment</summary>
-        public Guid ID { get; set; }
-
-        /// <summary>Attached income item for this appartmen</summary>
-        public IncomeItem IncomeItem { get; set; }
-
-        /// <summary>Name of this Apartment</summary>
-        public string Name { get; set; } = "";
-
         /// <summary>Studio units in this appartment</summary>
         [Range(0, int.MaxValue)]
         public int SUnits { get; set; } = 0;
@@ -57,7 +48,7 @@ namespace Igtampe.Neco.Common.EzTax.Subitems {
 
         /// <summary>Income of this appartment</summary>
         /// <returns>(SRent * SUnits) + (B1Rent * B1Units) + (B2Rent * B2Units) + (B3Rent * B3Units) + (PRent * PUnits)</returns>
-        public int Income() { return (SRent * SUnits) + (B1Rent * B1Units) + (B2Rent * B2Units) + (B3Rent * B3Units) + (PRent * PUnits); }
+        public override int Income() { return (SRent * SUnits) + (B1Rent * B1Units) + (B2Rent * B2Units) + (B3Rent * B3Units) + (PRent * PUnits); }
 
     }
 }

@@ -85,5 +85,21 @@ namespace Igtampe.Neco.Common.LandView {
         /// <returns></returns>
         public int Width() { return GraphicalPoints.Max(P => P.X) - GraphicalPoints.Min(P => P.X); }
 
+        /// <summary>Compares this Plot to another object</summary>
+        /// <param name="obj"></param>
+        /// <returns>True if and only if the object is a Plot and the <see cref="ID"/> matches with this one's</returns>
+        public override bool Equals(object obj) {
+            if (obj is Plot C) { return C.ID == ID; }
+            return false;
+        }
+
+        /// <summary>Gets a hash code for this Plot. Delegates to <see cref="ID"/></summary>
+        /// <returns></returns>
+        public override int GetHashCode() { return ID.GetHashCode(); }
+
+        /// <summary>Creates a string representation of this Plot</summary>
+        /// <returns>{ID} : {Name}</returns>
+        public override string ToString() { return $"{ID} : {Name}"; }
+
     }
 }

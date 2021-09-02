@@ -36,5 +36,10 @@ namespace Igtampe.Neco.Common {
         /// <summary>Gets a Hashcode for this UserAuth (Delegated to <see cref="Id"/>)</summary>
         /// <returns></returns>
         public override int GetHashCode() { return Id.GetHashCode(); }
+
+        /// <summary>Returns ID for this user auth</summary>
+        /// <returns></returns>
+        public override string ToString() { return Id; }
+
     }
 }
