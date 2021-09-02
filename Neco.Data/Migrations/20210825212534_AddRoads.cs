@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Igtampe.Neco.Data.Migrations
 {
+    /// <summary>Ads road</summary>
     public partial class AddRoads : Migration
     {
         /// <summary>Ups the migration</summary>

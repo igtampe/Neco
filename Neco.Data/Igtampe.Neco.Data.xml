@@ -7,6 +7,73 @@
         <member name="P:Igtampe.Neco.Data.Constants.ConnectionString">
             <summary>Connection string used by all contexts</summary>
         </member>
+        <member name="T:Igtampe.Neco.Data.Migrations.Initial">
+            <summary>Holds initial migration</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.Initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Puts up this migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.Initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Takes down this migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.Initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>Builds the target model</summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:Igtampe.Neco.Data.Migrations.Initial2">
+            <summary>Holds 2nd initial that I did</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.Initial2.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Puts up this migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.Initial2.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Puts down migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="T:Igtampe.Neco.Data.Migrations.AddFailedTransaction">
+            <summary>Adds Failed transaction</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.AddFailedTransaction.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Ups the migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.AddFailedTransaction.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Downs the migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.BankAddOwner.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Ups migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.BankAddOwner.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Downs migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="T:Igtampe.Neco.Data.Migrations.AddIncomeItemName">
+            <summary>Add income item name migration</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.AddIncomeItemName.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Ups the migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.AddIncomeItemName.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Downs the migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="T:Igtampe.Neco.Data.Migrations.AddRoads">
+            <summary>Ads road</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.AddRoads.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Ups the migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.AddRoads.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>Downs the migration</summary>
+            <param name="migrationBuilder"></param>
+        </member>
         <member name="T:Igtampe.Neco.Data.NecoContext">
             <summary>Context that has every table. Used for generating database tables and for testing.</summary>
         </member>
@@ -86,6 +153,9 @@
         </member>
         <member name="P:Igtampe.Neco.Data.NecoContext.Asset">
             <summary>Table of all Assets</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Data.Program">
+            <summary>test program to see NecoData in action</summary>
         </member>
     </members>
 </doc>

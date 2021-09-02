@@ -2,6 +2,7 @@
 
 namespace Igtampe.Neco.Data.Migrations
 {
+    /// <summary>Adds Failed transaction</summary>
     public partial class AddFailedTransaction : Migration
     {
         /// <summary>Ups the migration</summary>
