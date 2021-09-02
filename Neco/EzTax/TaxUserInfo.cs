@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Igtampe.Neco.Common.EzTax {
@@ -16,6 +17,7 @@ namespace Igtampe.Neco.Common.EzTax {
         public User User { get; set; }
 
         /// <summary>Items from this user</summary>
+        [JsonIgnore]
         public ICollection<IncomeItem> Items { get; set; }
 
         /// <summary>Calculates this user's Total Monthly Income</summary>

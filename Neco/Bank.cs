@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Igtampe.Neco.Common {
@@ -19,9 +20,11 @@ namespace Igtampe.Neco.Common {
         public string Name { get; set; } = "";
 
         /// <summary>Accounts in this bank</summary>
+        [JsonIgnore]
         public ICollection<BankAccount> Accounts { get; set; }
 
         /// <summary>Bank Account types available in this bank</summary>
+        [JsonIgnore]
         public ICollection<BankAccountType> AccountTypes { get; set; }
 
         /// <summary>Compares this Bank to another object</summary>

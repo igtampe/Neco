@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Igtampe.Neco.Common.LandView {
@@ -17,9 +18,11 @@ namespace Igtampe.Neco.Common.LandView {
         public string Name { get; set; } = "";
 
         /// <summary>Districts in this country</summary>
+        [JsonIgnore]
         public ICollection<District> Districts{ get; set; }
 
         /// <summary>Roads in this country</summary>
+        [JsonIgnore]
         public ICollection<Road> Roads { get; set; }
 
         /// <summary>Width of this country in meters</summary>

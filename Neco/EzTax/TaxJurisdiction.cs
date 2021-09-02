@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Igtampe.Neco.Common.EzTax {
@@ -16,6 +17,7 @@ namespace Igtampe.Neco.Common.EzTax {
         public string Name { get; set; } = "";
 
         /// <summary>Brackets in this Jurisdiction</summary>
+        [JsonIgnore]
         public ICollection<TaxBracket> Brackets { get; set; }
 
         /// <summary>Account to which taxes must be paid out to</summary>

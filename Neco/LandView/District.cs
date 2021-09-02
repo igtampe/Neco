@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Igtampe.Neco.Common.LandView {
     
@@ -45,6 +46,7 @@ namespace Igtampe.Neco.Common.LandView {
         }
 
         /// <summary>Collection of plots that are in this district</summary>
+        [JsonIgnore]
         public ICollection<Plot> Plots { get; set; }
 
         /// <summary>Price per square meter of unclaimed terrain</summary>
