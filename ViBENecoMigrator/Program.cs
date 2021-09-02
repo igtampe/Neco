@@ -522,7 +522,7 @@ namespace ViBENecoMigrator {
                         IncomeItem I = new() {
                             ID = Guid.NewGuid(), Name = Name, FederalJurisdiction = UMSJurisdiction,
                             LocalJurisdiction = Jurisdiction, MiscIncome = MiscIncome, User = U,
-                            Subitems = new List<IIncomeSubitem>()
+                            Subitems = new List<IncomeSubitem>()
                         };
 
                         if (Apt.Income() > 0) {
