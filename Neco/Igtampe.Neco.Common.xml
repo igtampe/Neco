@@ -19,10 +19,10 @@
         <member name="M:Igtampe.Neco.Common.Auth.PasswordChangeRequest.Equals(System.Object)">
             <summary>Compares this PasswordChangeRequest to another object</summary>
             <param name="obj"></param>
-            <returns>True if and only if the object is a TaxBracket and the <see cref="!:ID"/> matches with this one's</returns>
+            <returns>True if and only if the object is a Password Change Request, and all fields match</returns>
         </member>
         <member name="M:Igtampe.Neco.Common.Auth.PasswordChangeRequest.GetHashCode">
-            <summary>Gets a hash code for this TaxBracket. Delegates to <see cref="!:ID"/></summary>
+            <summary>Gets a hash code for this TaxBracket. Delegates to <see cref="P:Igtampe.Neco.Common.Auth.PasswordChangeRequest.UserID"/></summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.Auth.PasswordChangeRequest.ToString">
