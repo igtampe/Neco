@@ -1,10 +1,21 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Igtampe.Neco.Common.EzTax.Subitems {
 
     /// <summary>Subitem that can hold breakdown of items for a hotel with suites and rooms</summary>
     public class Hotel:IncomeSubitem {
+
+        /// <summary>ID of this subitem</summary>
+        public override Guid ID { get; set; }
+
+        /// <summary>IncomeItem this Subitem belongs to</summary>
+        [JsonIgnore]
+        public override IncomeItem IncomeItem { get; set; }
+
+        /// <summary>Name of this IncomeSubItem</summary>
+        public override string Name { get; set; }
 
         /// <summary>Number of rooms in this hotel</summary>
         [Range(0, int.MaxValue)]
