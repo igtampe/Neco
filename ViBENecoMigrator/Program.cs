@@ -137,11 +137,14 @@ namespace ViBENecoMigrator {
 
                 if (Directory.Exists($"{CD}/UMSNB")) {
                     BankAccount Acc = new();
-                    Acc.Id = Guid.NewGuid();
+                    Acc.ID = U.Id.Substring(0,4)+"1";
                     Acc.Type = UMSNBChecking;
                     Acc.Bank = UMSNB;
-                    Acc.Balance = long.Parse(GetFirstLine($"{CD}/UMSNB/Balance.dll"));
-                    Acc.Owner = U;
+
+                    Acc.Details = new ();
+                    Acc.Details.Id = Guid.NewGuid();
+                    Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/UMSNB/Balance.dll"));
+                    Acc.Details.Owner = U;
                     U.Accounts.Add(Acc);
                 }
                 Spin();
@@ -149,22 +152,28 @@ namespace ViBENecoMigrator {
 
                 if (Directory.Exists($"{CD}/GBANK")) {
                     BankAccount Acc = new();
-                    Acc.Id = Guid.NewGuid();
+                    Acc.ID = U.Id.Substring(0, 4) + "2";
                     Acc.Type = GBANKChecking;
                     Acc.Bank = GBANK;
-                    Acc.Balance = long.Parse(GetFirstLine($"{CD}/GBANK/Balance.dll"));
-                    Acc.Owner = U;
+
+                    Acc.Details = new();
+                    Acc.Details.Id = Guid.NewGuid();
+                    Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/GBANK/Balance.dll"));
+                    Acc.Details.Owner = U;
                     U.Accounts.Add(Acc);
                 }
                 Spin();
 
                 if (Directory.Exists($"{CD}/RIVER")) {
                     BankAccount Acc = new();
-                    Acc.Id = Guid.NewGuid();
+                    Acc.ID = U.Id.Substring(0, 4) + "1";
                     Acc.Type = RIVERChecking;
                     Acc.Bank = RIVER;
-                    Acc.Balance = long.Parse(GetFirstLine($"{CD}/RIVER/Balance.dll"));
-                    Acc.Owner = U;
+
+                    Acc.Details = new();
+                    Acc.Details.Id = Guid.NewGuid();
+                    Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/RIVER/Balance.dll"));
+                    Acc.Details.Owner = U;
                     U.Accounts.Add(Acc);
                 }
                 Spin();

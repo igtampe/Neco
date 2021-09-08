@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Igtampe.Neco.Common {
@@ -19,6 +20,7 @@ namespace Igtampe.Neco.Common {
         public DateTime Time { get; set; } = DateTime.Now;
 
         /// <summary>User this notification belongs to</summary>
+        [JsonIgnore]
         public User User { get; set; }
 
         /// <summary>Whether or not a user has seen this notification or not</summary>

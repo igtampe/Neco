@@ -58,6 +58,9 @@ namespace Igtampe.Neco.Data {
 
         /// <summary>Table of all Bank Accounts</summary>
         public DbSet<BankAccount> BankAccount { get; set; }
+        
+        /// <summary>Table of all Bank Accounts</summary>
+        public DbSet<BankAccountDetail> BankAccountDetail { get; set; }
 
         /// <summary>Table of all Banks</summary>
         public DbSet<Bank> Bank { get; set; }
