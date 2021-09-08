@@ -284,6 +284,15 @@
         <member name="T:Igtampe.Neco.Common.EzTax.Subitems.Apartment">
             <summary>Subitem that holds data for an appartment complex</summary>
         </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.ID">
+            <summary>ID of this subitem</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.IncomeItem">
+            <summary>IncomeItem this Subitem belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.Name">
+            <summary>Name of this IncomeSubItem</summary>
+        </member>
         <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Apartment.SUnits">
             <summary>Studio units in this appartment</summary>
         </member>
@@ -321,6 +330,15 @@
         <member name="T:Igtampe.Neco.Common.EzTax.Subitems.Business">
             <summary>Business subitem that contains details for a business of some kind (Restaurant or store)</summary>
         </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.ID">
+            <summary>ID of this subitem</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.IncomeItem">
+            <summary>IncomeItem this Subitem belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.Name">
+            <summary>Name of this IncomeSubItem</summary>
+        </member>
         <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Business.Chairs">
             <summary>Chairs in this business. 1 if the business is a store</summary>
         </member>
@@ -339,6 +357,15 @@
         </member>
         <member name="T:Igtampe.Neco.Common.EzTax.Subitems.Hotel">
             <summary>Subitem that can hold breakdown of items for a hotel with suites and rooms</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.ID">
+            <summary>ID of this subitem</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.IncomeItem">
+            <summary>IncomeItem this Subitem belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.Name">
+            <summary>Name of this IncomeSubItem</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.EzTax.Subitems.Hotel.Rooms">
             <summary>Number of rooms in this hotel</summary>
