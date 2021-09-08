@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Igtampe.Neco.Common.EzTax.Subitems {
 
@@ -6,13 +7,14 @@ namespace Igtampe.Neco.Common.EzTax.Subitems {
     public abstract class IncomeSubitem {
 
         /// <summary>ID of this subitem</summary>
-        public Guid ID { get; set; }
+        public abstract Guid ID { get; set; }
 
         /// <summary>IncomeItem this Subitem belongs to</summary>
-        public IncomeItem IncomeItem { get; set; }
+        [JsonIgnore]
+        public abstract IncomeItem IncomeItem { get; set; }
 
         /// <summary>Name of this IncomeSubItem</summary>
-        public string Name { get; set; }
+        public abstract string Name { get; set; }
 
         /// <summary>Gets this item's income</summary>
         /// <returns></returns>
