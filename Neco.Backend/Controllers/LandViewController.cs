@@ -34,23 +34,57 @@ namespace Igtampe.Neco.Backend.Controllers {
             return Ok(asset);
         }
 
+        // GET: Country/5/Districts
+        [HttpGet("Country/{id}/Districts")]
+        public async Task<IActionResult> CountryDistricts(Guid? id) {
+            if (id == null) { return NotFound(); }
+
+            var Districts = await _context.District.Where(m => m.Country.ID == id).ToListAsync();
+
+            return Ok(Districts);
+        }
+
+        // GET: Country/5/Roads
+        [HttpGet("Country/{id}/Roads")]
+        public async Task<IActionResult> CountryRoads(Guid? id) { //take me home!
+            if (id == null) { return NotFound(); }
+
+            var Roads = await _context.District.Where(m => m.Country.ID == id).ToListAsync();
+
+            return Ok(Roads);
+        }
+
+
+
         #endregion
 
         #region District
 
         // GET: District
         [HttpGet("District")]
-        public async Task<IActionResult> DistrictIndex() { return Ok(await _context.District.ToListAsync()); }
+        public async Task<IActionResult> DistrictIndex() { return Ok(await _context.District.Include(m=> m.Country).ToListAsync()); }
 
         // GET: District/5
         [HttpGet("District/{id}")]
         public async Task<IActionResult> DistrictDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.District.FirstOrDefaultAsync(m => m.ID == id);
+            var asset = await _context.District
+                .Include(m => m.Country)
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
+        }
+
+        // GET: District/5/Plots
+        [HttpGet("District/{id}/Plots")]
+        public async Task<IActionResult> DistrictPlots(Guid? id) { 
+            if (id == null) { return NotFound(); }
+
+            var Plots = await _context.Plot.Where(m => m.District.ID == id).ToListAsync();
+
+            return Ok(Plots);
         }
 
         #endregion
@@ -59,14 +93,22 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // GET: District
         [HttpGet("Plot")]
-        public async Task<IActionResult> PlotIndex() { return Ok(await _context.Plot.ToListAsync()); }
+        public async Task<IActionResult> PlotIndex() { return Ok(await _context.Plot
+            .Include(m => m.District)
+            .Include(m => m.District).ThenInclude(m => m.Country)
+            .Include(m=>m.TiedAccount).ThenInclude(m=>m.Type)
+            .ToListAsync()); }
 
         // GET: District/5
         [HttpGet("Plot/{id}")]
         public async Task<IActionResult> PlotDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.Plot.FirstOrDefaultAsync(m => m.ID == id);
+            var asset = await _context.Plot
+                .Include(m => m.District).ThenInclude(m => m.DistrictBankAccount.Id)
+                .Include(m => m.District).ThenInclude(m => m.Country).ThenInclude(m => m.FederalBankAccount.Id)
+                .Include(m => m.TiedAccount).ThenInclude(m => m.Type)
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);

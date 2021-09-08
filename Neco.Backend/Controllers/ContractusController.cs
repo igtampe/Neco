@@ -19,14 +19,20 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         // GET: UMSAT
         [HttpGet]
-        public async Task<IActionResult> Index() { return Ok(await _context.Contract.ToListAsync()); }
+        public async Task<IActionResult> Index() { return Ok(await _context.Contract
+            .Include(m=>m.FromUser).ThenInclude(m=>m.Type)
+            .Include(m=>m.TopBidder).ThenInclude(m => m.Type)
+            .ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Details(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var contract = await _context.Contract.FirstOrDefaultAsync(m => m.ID == id);
+            var contract = await _context.Contract
+                .Include(m => m.FromUser).ThenInclude(m => m.Type)
+                .Include(m => m.TopBidder).ThenInclude(m => m.Type)
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (contract == null) { return NotFound(); }
 
             return Ok(contract);

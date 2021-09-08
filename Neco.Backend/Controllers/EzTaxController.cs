@@ -19,94 +19,29 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         public EzTaxController(NecoContext context) { _context = context; }
 
-        #region TaxUserInfo
-
-        // GET: UMSAT
-        [HttpGet("TaxUserInfo")]
-        public async Task<IActionResult> TaxUserInfoIndex() { return Ok(await _context.TaxUserInfo.Include(m=> m.User).ToListAsync()); }
-
-        // GET: UMSAT/5
-        [HttpGet("TaxUserInfo/{id}")]
-        public async Task<IActionResult> TaxUserInfoDetails(Guid? id) {
-            if (id == null) { return NotFound(); }
-
-            var asset = await _context.TaxUserInfo
-                .Include(m=>m.User)
-                .Include(m=>m.Items).ThenInclude(m=> m.FederalJurisdiction)
-                .Include(m => m.Items).ThenInclude(m => m.LocalJurisdiction)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (asset == null) { return NotFound(); }
-
-            return Ok(asset);
-        }
-
-        // GET: UMSAT/5
-        [HttpPost("TaxUserInfo/User")]
-        public async Task<IActionResult> TaxUserInfoByUser(User U) {
-            if (U == null) { return NotFound(); }
-
-            var asset = await _context.TaxUserInfo.FirstOrDefaultAsync(m => m.User.Equals(U));
-            if (asset == null) { return NotFound(); }
-
-            return Ok(asset);
-        }
-
-
-
-        // POST: UMSAT
-        [HttpPost("TaxUserInfo")]
-        public async Task<IActionResult> TaxUserInfoCreate(TaxUserInfo UserInfo) {
-            if (UserInfo.Id != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
-            UserInfo.Id = Guid.NewGuid();
-            _context.Add(UserInfo);
-            await _context.SaveChangesAsync();
-            return Created($"EzTax/TaxUserInfo/{UserInfo.Id}", UserInfo);
-        }
-
-        // PUT: UMSAT/5
-        [HttpPut("TaxUserInfo/{id}")]
-        public async Task<IActionResult> TaxUserInfoEdit(Guid id, TaxUserInfo UserInfo) {
-            if (id != UserInfo.Id) { return NotFound(); }
-
-            try {
-                _context.Update(UserInfo);
-                await _context.SaveChangesAsync();
-            } catch (DbUpdateConcurrencyException) {
-                if (!TaxUserInfoExists(UserInfo.Id)) { return NotFound(); } else { throw; }
-            }
-
-            return Ok(UserInfo);
-        }
-
-        //DELETE: UMSAT/5
-        [HttpDelete("TaxUserInfo/{id}")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id) {
-            var asset = await _context.TaxUserInfo.FindAsync(id);
-            _context.TaxUserInfo.Remove(asset);
-            await _context.SaveChangesAsync();
-            return Ok(asset);
-        }
-
-        private bool TaxUserInfoExists(Guid id) { return _context.TaxUserInfo.Any(e => e.Id == id); }
-
-        #endregion
-
         #region TaxJurisdiction
         // GET: UMSAT
         [HttpGet("TaxJurisdiction")]
-        public async Task<IActionResult> TaxJurisdictionIndex() { return Ok(await _context.TaxJurisdiction.Include(m=> m.Account).ToListAsync()); }
+        public async Task<IActionResult> TaxJurisdictionIndex() { return Ok(await _context.TaxJurisdiction.ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("TaxJurisdiction/{id}")]
-        public async Task<IActionResult> Details(Guid? id) {
+        public async Task<IActionResult> TaxJurisdictionDetails(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.TaxJurisdiction.Include(m => m.Account).Include(m => m.Brackets).FirstOrDefaultAsync(m => m.ID == id);
+            var asset = await _context.TaxJurisdiction.FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
 
-            //Manually get the brackets TODO
-            asset.Brackets = await _context.TaxBracket.Where(m => m.Jurisdiction == asset).ToListAsync();
+            return Ok(asset);
+        }
 
+        // GET: TaxJurisdiction/5/Brackets
+        [HttpGet("TaxJurisdiction/{id}/Brackets")]
+        public async Task<IActionResult> TaxJurisdictionBrackets(Guid? id) {
+            if (id == null) { return NotFound(); }
+
+            var asset = await _context.TaxBracket.Include(m=>m.Type).Where(m => m.Jurisdiction.ID == id).ToListAsync();
+            if (asset == null) { return NotFound(); }
 
             return Ok(asset);
         }
@@ -116,7 +51,7 @@ namespace Igtampe.Neco.Backend.Controllers {
         #region TaxBracket
         // GET: UMSAT
         [HttpGet("TaxBracket")]
-        public async Task<IActionResult> TaxBracketIndex() { return Ok(await _context.TaxBracket.Include(m=> m.Type).Include(m=> m.Jurisdiction).ToListAsync()); }
+        public async Task<IActionResult> TaxBracketIndex() { return Ok(await _context.TaxBracket.Include(m=> m.Type).Include(m=> m.Jurisdiction).OrderBy(m=>m.Jurisdiction.ID).ToListAsync()); }
 
         // GET: UMSAT/5
         [HttpGet("TaxBracket/{id}")]
@@ -135,7 +70,7 @@ namespace Igtampe.Neco.Backend.Controllers {
         // GET: UMSAT
         [HttpGet("IncomeItem")]
         public async Task<IActionResult> IncomeItemIndex() { return Ok(await _context.IncomeItem
-                .Include(m => m.User)
+                .Include(m => m.User).ThenInclude(m=>m.Type)
                 .Include(m => m.FederalJurisdiction)
                 .Include(m => m.LocalJurisdiction)
                 .ToListAsync()); }
@@ -153,8 +88,27 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (asset == null) { return NotFound(); }
 
             //Find all related subitems manually here TODO
+            List<IncomeSubitem> Subs = new();
+            Subs.AddRange(await _context.Apartment.Where(m => m.IncomeItem.ID == asset.ID).ToListAsync());
+            Subs.AddRange(await _context.Hotel.Where(m => m.IncomeItem.ID == asset.ID).ToListAsync());
+            Subs.AddRange(await _context.Business.Where(m => m.IncomeItem.ID == asset.ID).ToListAsync());
+            asset.Subitems = Subs;
+
 
             return Ok(asset);
+        }
+
+        // POST: IncomeItem/User
+        [HttpPost("IncomeItem/User")]
+        public async Task<IActionResult> IncomeItemsFromUser(User U) {
+            if (string.IsNullOrEmpty(U?.Id)) { return NotFound(); }
+
+            return Ok(await _context.IncomeItem
+                            .Include(m => m.User)
+                            .Include(m => m.FederalJurisdiction)
+                            .Include(m => m.LocalJurisdiction)
+                            .Where(i=> i.User.Id==U.Id)
+                            .ToListAsync());
         }
 
         // POST: UMSAT
@@ -165,6 +119,8 @@ namespace Igtampe.Neco.Backend.Controllers {
             _context.Add(asset);
             await _context.SaveChangesAsync();
             return Created($"EzTax/IncomeItem/UMSAT/{asset.ID}", asset);
+
+            //TODO Handle saving of income subitems
         }
 
         // PUT: UMSAT/5
@@ -178,6 +134,8 @@ namespace Igtampe.Neco.Backend.Controllers {
             } catch (DbUpdateConcurrencyException) {
                 if (!IncomeItemExists(asset.ID)) { return NotFound(); } else { throw; }
             }
+
+            //TODO Handle saving of income subitems
 
             return Ok(asset);
         }
@@ -194,6 +152,8 @@ namespace Igtampe.Neco.Backend.Controllers {
         private bool IncomeItemExists(Guid id) { return _context.IncomeItem.Any(e => e.ID == id); }
         #endregion
 
+        //We're going to remove access to income subitems directly via API since we  should really just have those ONLY be interacted through the IncomeItem thing
+        /**
         #region Apartment
         // GET: UMSAT
         [HttpGet("Apartment")]
@@ -353,5 +313,6 @@ namespace Igtampe.Neco.Backend.Controllers {
         private bool HotelExists(Guid id) { return _context.Hotel.Any(e => e.ID == id); }
         #endregion
 
+        **/
     }
 }
