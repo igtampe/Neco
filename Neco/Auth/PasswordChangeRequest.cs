@@ -14,7 +14,7 @@
 
         /// <summary>Compares this PasswordChangeRequest to another object</summary>
         /// <param name="obj"></param>
-        /// <returns>True if and only if the object is a TaxBracket and the <see cref="ID"/> matches with this one's</returns>
+        /// <returns>True if and only if the object is a Password Change Request, and all fields match</returns>
         public override bool Equals(object obj) {
             if (obj is PasswordChangeRequest C) {
                 return C.UserID == UserID &&
@@ -24,7 +24,7 @@
             return false;
         }
 
-        /// <summary>Gets a hash code for this TaxBracket. Delegates to <see cref="ID"/></summary>
+        /// <summary>Gets a hash code for this TaxBracket. Delegates to <see cref="UserID"/></summary>
         /// <returns></returns>
         public override int GetHashCode() { return UserID.GetHashCode(); }
 
