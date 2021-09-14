@@ -138,6 +138,19 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (FromBank.Details.Balance < TransactRequest.Amount) { return BadRequest("Insufficient Funds"); }
             if (FromBank.Closed || ToBank.Closed) { return BadRequest("One or more of the bank acounts in this transaction are closed."); }
 
+            Notification N = null;
+
+            if (FromBank.Owner.ID.Equals(ToBank.Owner.ID)) {
+                N = new() {
+                    ID = Guid.NewGuid(),
+                    Read = false,
+                    Text = $"{FromBank.Owner.Name} sent a Neco with {TransactRequest.Amount : N0}p to Bank {ToBank.ID}",
+                    Time = DateTime.Now,
+                    User = ToBank.Owner
+                };
+            }
+
+
             //Create a transaction to update
             Transaction T = new() {
                 Amount = TransactRequest.Amount,
@@ -154,6 +167,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
             //Add/update entities
             NecoDB.Add(T);
+            if (N != null) { NecoDB.Add(N); }
             NecoDB.Update(FromBank);
             NecoDB.Update(ToBank);
 
