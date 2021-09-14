@@ -145,7 +145,6 @@ namespace Igtampe.Neco.Backend.Controllers {
                 FromAccount = FromBank,
                 ToAccount = ToBank,
                 ID = Guid.NewGuid(),
-                Taxable = !FromBank.Owner.Equals(ToBank.Owner),
                 Time = DateTime.Now
             };
 
