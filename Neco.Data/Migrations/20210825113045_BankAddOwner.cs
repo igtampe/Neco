@@ -2,6 +2,7 @@
 
 namespace Igtampe.Neco.Data.Migrations
 {
+    /// <summary>Adds Bank Owner to the migration</summary>
     public partial class BankAddOwner : Migration
     {
         /// <summary>Ups migration</summary>
