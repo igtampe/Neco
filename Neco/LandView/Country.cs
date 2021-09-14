@@ -32,10 +32,6 @@ namespace Igtampe.Neco.Common.LandView {
         [Range(0,int.MaxValue)]
         public int PricePerSquareMeter { get; set; } = 0;
 
-        /// <summary>Sales tax rate on all land purchases</summary>
-        [Range(0.0,1.0)]
-        public double FederalSalesTax { get; set; } = 0.0;
-
         /// <summary>Neco User to direct payments of land to and handle accepting taxes</summary>
         public BankAccount FederalBankAccount { get; set; }
 

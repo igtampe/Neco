@@ -51,10 +51,6 @@ namespace Igtampe.Neco.Common.LandView {
         [Range(0, int.MaxValue)]
         public int PricePerSquareMeter { get; set; } = 0;
 
-        /// <summary>District sales tax on all land sales in this district</summary>
-        [Range(0.0, 1.0)]
-        public double DistrictSalesTax { get; set; } = 0.0;
-
         /// <summary>Bank account of this district to handle accepting taxes and accept land payments</summary>
         public BankAccount DistrictBankAccount { get; set; }
 
