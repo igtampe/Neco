@@ -3,6 +3,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Igtampe.Neco.Common {
 
+    /// <summary>Holds all states of a Transaction</summary>
+    public enum TransactionState { 
+
+        /// <summary>Transaction has not yet been completed</summary>
+        PENDING,
+
+        /// <summary>Transaction was completed successfully</summary>
+        COMPLETED,
+
+        /// <summary>Transaction was attempted, and failed</summary>
+        FAILED
+    }
+
     /// <summary>Holds information for a NECO Transaction</summary>
     public class Transaction {
 
@@ -26,10 +39,7 @@ namespace Igtampe.Neco.Common {
         public bool Taxable { get; set; } = true;
 
         /// <summary>Whether or not this transaciton has been executed</summary>
-        public bool Executed { get; set; } = false;
-
-        /// <summary>Indicates whether the transaction was executed and failed</summary>
-        public bool Failed { get; set; } = false;
+        public TransactionState State { get; set; } = TransactionState.PENDING;
 
         /// <summary>Compares this Transaction to another object</summary>
         /// <param name="obj"></param>
