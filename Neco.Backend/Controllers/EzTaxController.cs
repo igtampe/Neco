@@ -96,7 +96,7 @@ namespace Igtampe.Neco.Backend.Controllers {
         // POST: IncomeItem/User
         [HttpPost("IncomeItem/User")]
         public async Task<IActionResult> IncomeItemsFromUser(User U) {
-            if (string.IsNullOrEmpty(U?.Id)) { return NotFound(); }
+            if (string.IsNullOrEmpty(U?.ID)) { return NotFound(); }
 
             return Ok(await _context.IncomeItem
                             .Include(m => m.User)
@@ -105,7 +105,7 @@ namespace Igtampe.Neco.Backend.Controllers {
                             .Include(m => m.Apartments)
                             .Include(m => m.Hotels)
                             .Include(m => m.Businesses)
-                            .Where(i=> i.User.Id==U.Id)
+                            .Where(i=> i.User.ID==U.ID)
                             .ToListAsync());
         }
 

@@ -36,7 +36,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             var asset = await NecoDB.User
                 .Include(m => m.Type)
                 .Include(m => m.Accounts).ThenInclude(m => m.Type)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
@@ -56,13 +56,13 @@ namespace Igtampe.Neco.Backend.Controllers {
             } while (UserExists(ID));
 
             User U = new() {
-                Id = ID,
+                ID = ID,
                 Name = NewUser.Name,
                 Type = NewUser.Type,
             };
 
             UserAuth UA = new() {
-                Id = ID,
+                ID = ID,
                 Pin = NewUser.Pin
             };
 
@@ -90,7 +90,7 @@ namespace Igtampe.Neco.Backend.Controllers {
         [HttpGet("Cert/{id}")]
         public async Task<IActionResult> GetCertification(Guid? id) {
             if (id == null) { return NotFound(); }
-            var asset = await NecoDB.CertifiedItem.Include(m => m.CertifiedBy).ThenInclude(m => m.Type).FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await NecoDB.CertifiedItem.Include(m => m.CertifiedBy).ThenInclude(m => m.Type).FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
             return Ok(asset);
         }
@@ -101,7 +101,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (id == null) { return NotFound(); }
             var asset = await NecoDB.Transaction
                 .Include(T=> T.FromAccount).Include(T => T.ToAccount)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
             return Ok(asset);
         }
@@ -130,7 +130,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             BankAccount FromBank = await NecoDB.BankAccount.Include(b => b.Details).Include(d => d.Owner).FirstOrDefaultAsync(B => B.ID == TransactRequest.FromBankID);
             BankAccount ToBank   = await NecoDB.BankAccount.Include(b => b.Details).Include(d => d.Owner).FirstOrDefaultAsync(B => B.ID == TransactRequest.ToBankID);
 
-            if (FromBank.Owner.Id != S.UserID) { return Unauthorized("From bank account does not belong to the user in this session"); }
+            if (FromBank.Owner.ID != S.UserID) { return Unauthorized("From bank account does not belong to the user in this session"); }
             if (FromBank.Details.Balance < TransactRequest.Amount) { return BadRequest("Insufficient Funds"); }
             if (FromBank.Closed || ToBank.Closed) { return BadRequest("One or more of the bank acounts in this transaction are closed."); }
 
@@ -141,7 +141,7 @@ namespace Igtampe.Neco.Backend.Controllers {
                 Failed = false,
                 FromAccount = FromBank,
                 ToAccount = ToBank,
-                Id = Guid.NewGuid(),
+                ID = Guid.NewGuid(),
                 Taxable = !FromBank.Owner.Equals(ToBank.Owner),
                 Time = DateTime.Now
             };
@@ -158,7 +158,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             //Save context
             await NecoDB.SaveChangesAsync();
 
-            return Ok(T.Id);
+            return Ok(T.ID);
         }
 
 
@@ -173,7 +173,7 @@ namespace Igtampe.Neco.Backend.Controllers {
                 .Include(u => u.Accounts).ThenInclude(b => b.Type)
                 .Include(u => u.Accounts).ThenInclude(b=> b.Details)
                 .Include(u=> u.Notifications)
-                .FirstOrDefaultAsync(m => m.Id == S.UserID);
+                .FirstOrDefaultAsync(m => m.ID == S.UserID);
             if (User == null) { return NotFound(); }
 
             //Sort the lists
@@ -191,9 +191,9 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (S == null) { return Unauthorized("Invalid session"); }
 
             CertifiedItem C = new() {
-                CertifiedBy = await NecoDB.User.FirstOrDefaultAsync(u => u.Id == S.UserID),
+                CertifiedBy = await NecoDB.User.FirstOrDefaultAsync(u => u.ID == S.UserID),
                 Date = DateTime.Now,
-                Id = Guid.NewGuid(),
+                ID = Guid.NewGuid(),
                 Text = CertRequest.Text
             };
 
@@ -211,10 +211,10 @@ namespace Igtampe.Neco.Backend.Controllers {
             //Load Notif
             Notification N = await NecoDB.Notification
                 .Include(N=>N.User)
-                .FirstOrDefaultAsync(N=>N.Id==NotifID);
+                .FirstOrDefaultAsync(N=>N.ID==NotifID);
             if (N == null) { return NotFound(); }
 
-            if (N.User.Id != S.UserID) { return Unauthorized("Notification does not belong to this user"); }
+            if (N.User.ID != S.UserID) { return Unauthorized("Notification does not belong to this user"); }
             N.Read = true;
 
             NecoDB.Update(N);
@@ -230,7 +230,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
             BankAccountType Type = await NecoDB.BankAccountType
                 .Include(T => T.Bank)
-                .FirstOrDefaultAsync(T => T.Id == BNKORequest.BankAccountTypeID);
+                .FirstOrDefaultAsync(T => T.ID == BNKORequest.BankAccountTypeID);
             if (Type == null) { return NotFound("Requested Bank account type not found"); }
 
             string ID;
@@ -245,10 +245,10 @@ namespace Igtampe.Neco.Backend.Controllers {
                 Closed = false,
                 Details = new() {
                     Balance = 0,
-                    Id = Guid.NewGuid()
+                    ID = Guid.NewGuid()
                 },
                 ID = ID,
-                Owner = await NecoDB.User.FirstOrDefaultAsync(U=>U.Id==S.UserID),
+                Owner = await NecoDB.User.FirstOrDefaultAsync(U=>U.ID==S.UserID),
                 Type = Type
             };
 
@@ -268,7 +268,7 @@ namespace Igtampe.Neco.Backend.Controllers {
                 .Include(A=>A.Details)
                 .FirstOrDefaultAsync(T => T.ID == BNKCRequest.BankAccountID);
             if (Account == null) { return NotFound("Requested Bank account not found"); }
-            if (Account.Owner.Id != S.UserID) { return Unauthorized("Bank account does not belong to the session holder"); }
+            if (Account.Owner.ID != S.UserID) { return Unauthorized("Bank account does not belong to the session holder"); }
             if (Account.Details.Balance > 0) { return BadRequest("Bank account is holding funds. These must be moved before closing the account"); }
             if (Account.Details.Balance < 0) { return BadRequest("Bank account is overdrafted. Debts must be paid before closing the account"); }
 
@@ -289,7 +289,7 @@ namespace Igtampe.Neco.Backend.Controllers {
                 .Include(A => A.Owner)
                 .FirstOrDefaultAsync(T => T.ID == BNKLogRequest.BankAccountID);
             if (Account == null) { return NotFound("Requested Bank account not found"); }
-            if (Account.Owner.Id != S.UserID) { return Unauthorized("Bank account does not belong to the session holder"); }
+            if (Account.Owner.ID != S.UserID) { return Unauthorized("Bank account does not belong to the session holder"); }
 
             //Now that we have the bank accoutn and have verified everything, let's get the transactions
             List<Transaction> Transacts = await NecoDB.Transaction
@@ -301,6 +301,6 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         private bool BankAccountExists(string id) { return NecoDB.BankAccount.Any(e => e.ID == id); }
 
-        private bool UserExists(string id) { return NecoDB.User.Any(e => e.Id == id); }
+        private bool UserExists(string id) { return NecoDB.User.Any(e => e.ID == id); }
     }
 }

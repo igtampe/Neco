@@ -10,7 +10,7 @@ namespace Igtampe.Neco.Common {
         /// <summary>ID of this bank (Short name)</summary>
         [MaxLength(5)]
         [MinLength(5)]
-        public string Id { get; set; }
+        public string ID { get; set; }
 
         /// <summary>Long Name of this bank</summary>
         public string Name { get; set; } = "";
@@ -24,18 +24,18 @@ namespace Igtampe.Neco.Common {
 
         /// <summary>Compares this Bank to another object</summary>
         /// <param name="obj"></param>
-        /// <returns>True if and only if the object is a Bank and the <see cref="Id"/> matches with this one's</returns>
+        /// <returns>True if and only if the object is a Bank and the <see cref="ID"/> matches with this one's</returns>
         public override bool Equals(object obj) {
-            if (obj is Bank C) { return C.Id == Id; }
+            if (obj is Bank C) { return C.ID == ID; }
             return false;
         }
 
-        /// <summary>Gets a hash code for this Bank. Delegates to <see cref="Id"/></summary>
+        /// <summary>Gets a hash code for this Bank. Delegates to <see cref="ID"/></summary>
         /// <returns></returns>
-        public override int GetHashCode() { return Id.GetHashCode(); }
+        public override int GetHashCode() { return ID.GetHashCode(); }
 
         /// <summary>Creates a string representation of this Bank</summary>
         /// <returns>{Id} : {Name}</returns>
-        public override string ToString() { return $"{Id} : {Name}"; }
+        public override string ToString() { return $"{ID} : {Name}"; }
     }
 }

@@ -7,7 +7,7 @@ namespace Igtampe.Neco.Common {
     public class Transaction {
 
         /// <summary>ID of this transaction</summary>        
-        public Guid Id { get; set; }
+        public Guid ID { get; set; }
 
         /// <summary>Amount  transfered by this transaction</summary>
         [Range(0,long.MaxValue)]
@@ -33,19 +33,19 @@ namespace Igtampe.Neco.Common {
 
         /// <summary>Compares this Transaction to another object</summary>
         /// <param name="obj"></param>
-        /// <returns>return true if the object is a transaction, and if its <see cref="Id"/> matches with this one's</returns>
+        /// <returns>return true if the object is a transaction, and if its <see cref="ID"/> matches with this one's</returns>
         public override bool Equals(object obj) {
-            if (obj is Transaction T) { return T.Id == Id; }
+            if (obj is Transaction T) { return T.ID == ID; }
             return false;
         }
 
-        /// <summary>Gets a hashcode for this transaction. Delegates to <see cref="Id"/></summary>
+        /// <summary>Gets a hashcode for this transaction. Delegates to <see cref="ID"/></summary>
         /// <returns></returns>
-        public override int GetHashCode() { return Id.GetHashCode(); }
+        public override int GetHashCode() { return ID.GetHashCode(); }
 
         /// <summary>Creates a string representation of this transaction</summary>
         /// <returns>{Id} : {Amount} from {FromUser?.Id} to {ToUser?.Id}</returns>
-        public override string ToString() { return $"{Id} : {Amount} from {FromAccount?.ID} to {ToAccount?.ID}";}
+        public override string ToString() { return $"{ID} : {Amount} from {FromAccount?.ID} to {ToAccount?.ID}";}
 
     }
 }

@@ -54,18 +54,18 @@ namespace ViBENecoMigrator {
             UpdateLocal("Banks", 0);
             UpdateMain("Setting up some Constants", 0.05);
 
-            Bank UMSNB = new() { Id = "UMSNB", Name = "The UMS National Bank", AccountTypes = new List<BankAccountType>() };
-            BankAccountType UMSNBChecking = new() { Id = Guid.NewGuid(), Bank = UMSNB, Name = "UMSNB EveryDay(tm) Checking", InterestRate = 0.02 };
+            Bank UMSNB = new() { ID = "UMSNB", Name = "The UMS National Bank", AccountTypes = new List<BankAccountType>() };
+            BankAccountType UMSNBChecking = new() { ID = Guid.NewGuid(), Bank = UMSNB, Name = "UMSNB EveryDay(tm) Checking", InterestRate = 0.02 };
             UMSNB.AccountTypes.Add(UMSNBChecking);
             Spin();
 
-            Bank GBANK = new() { Id = "GBANK", Name = "G-Bank", AccountTypes = new List<BankAccountType>() };
-            BankAccountType GBANKChecking = new() { Id = Guid.NewGuid(), Bank = GBANK, Name = "G-Bank Checking", InterestRate = 0.00 };
+            Bank GBANK = new() { ID = "GBANK", Name = "G-Bank", AccountTypes = new List<BankAccountType>() };
+            BankAccountType GBANKChecking = new() { ID = Guid.NewGuid(), Bank = GBANK, Name = "G-Bank Checking", InterestRate = 0.00 };
             GBANK.AccountTypes.Add(GBANKChecking);
             Spin();
 
-            Bank RIVER = new() { Id = "RIVER", Name = "Riverside Bank", AccountTypes = new List<BankAccountType>() };
-            BankAccountType RIVERChecking = new() { Id = Guid.NewGuid(), Bank = RIVER, Name = "Riverside Checking", InterestRate = 0.05 };
+            Bank RIVER = new() { ID = "RIVER", Name = "Riverside Bank", AccountTypes = new List<BankAccountType>() };
+            BankAccountType RIVERChecking = new() { ID = Guid.NewGuid(), Bank = RIVER, Name = "Riverside Checking", InterestRate = 0.05 };
             GBANK.AccountTypes.Add(RIVERChecking);
             Spin();
 
@@ -75,9 +75,9 @@ namespace ViBENecoMigrator {
             Spin();
 
             UpdateLocal("User Types", .5);
-            UserType STANDARD = new() { Id = Guid.NewGuid(), Name = "Standard" };
-            UserType CORPORATE = new() { Id = Guid.NewGuid(), Name = "Corporate" };
-            UserType GOVERNMENT = new() { Id = Guid.NewGuid(), Name = "Government" };
+            UserType STANDARD = new() { ID = Guid.NewGuid(), Name = "Standard" };
+            UserType CORPORATE = new() { ID = Guid.NewGuid(), Name = "Corporate" };
+            UserType GOVERNMENT = new() { ID = Guid.NewGuid(), Name = "Government" };
             Spin();
 
             C.Add(STANDARD);
@@ -117,8 +117,8 @@ namespace ViBENecoMigrator {
                 Spin();
 
                 //Get ID and Username
-                U.Id = userfolder.Substring(userfolder.Length - 5, 5);
-                UA.Id = U.Id;
+                U.ID = userfolder.Substring(userfolder.Length - 5, 5);
+                UA.ID = U.ID;
                 UA.Pin = GetFirstLine($"{CD}/pin.dll");
                 U.Name = GetFirstLine($"{CD}/Name.dll");
                 Spin();
@@ -137,12 +137,12 @@ namespace ViBENecoMigrator {
 
                 if (Directory.Exists($"{CD}/UMSNB")) {
                     BankAccount Acc = new();
-                    Acc.ID = U.Id.Substring(0,4)+"1";
+                    Acc.ID = U.ID.Substring(0,4)+"1";
                     Acc.Type = UMSNBChecking;
                     Acc.Bank = UMSNB;
 
                     Acc.Details = new ();
-                    Acc.Details.Id = Guid.NewGuid();
+                    Acc.Details.ID = Guid.NewGuid();
                     Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/UMSNB/Balance.dll"));
                     Acc.Details.Owner = U;
                     U.Accounts.Add(Acc);
@@ -152,12 +152,12 @@ namespace ViBENecoMigrator {
 
                 if (Directory.Exists($"{CD}/GBANK")) {
                     BankAccount Acc = new();
-                    Acc.ID = U.Id.Substring(0, 4) + "2";
+                    Acc.ID = U.ID.Substring(0, 4) + "2";
                     Acc.Type = GBANKChecking;
                     Acc.Bank = GBANK;
 
                     Acc.Details = new();
-                    Acc.Details.Id = Guid.NewGuid();
+                    Acc.Details.ID = Guid.NewGuid();
                     Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/GBANK/Balance.dll"));
                     Acc.Details.Owner = U;
                     U.Accounts.Add(Acc);
@@ -166,12 +166,12 @@ namespace ViBENecoMigrator {
 
                 if (Directory.Exists($"{CD}/RIVER")) {
                     BankAccount Acc = new();
-                    Acc.ID = U.Id.Substring(0, 4) + "1";
+                    Acc.ID = U.ID.Substring(0, 4) + "1";
                     Acc.Type = RIVERChecking;
                     Acc.Bank = RIVER;
 
                     Acc.Details = new();
-                    Acc.Details.Id = Guid.NewGuid();
+                    Acc.Details.ID = Guid.NewGuid();
                     Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/RIVER/Balance.dll"));
                     Acc.Details.Owner = U;
                     U.Accounts.Add(Acc);
@@ -182,7 +182,7 @@ namespace ViBENecoMigrator {
                 C.Add(UA);
 
                 //Save accounts that we'll need later
-                switch (U.Id) {
+                switch (U.ID) {
                     case "33118":
                         AccUMSGov = U;
                         break;
@@ -463,7 +463,7 @@ namespace ViBENecoMigrator {
                 if (U is null) { continue; }
 
                 //Create a TaxUserInfo for that user
-                TaxUserInfo TUI = new() { Id = Guid.NewGuid(), User = U, Items = new List<IncomeItem>() };
+                TaxUserInfo TUI = new() { ID = Guid.NewGuid(), User = U, Items = new List<IncomeItem>() };
 
                 string[] csvAllLines = File.ReadAllLines($"{csv}");
 

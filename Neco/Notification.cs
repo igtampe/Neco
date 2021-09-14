@@ -7,7 +7,7 @@ namespace Igtampe.Neco.Common {
     public class Notification {
 
         /// <summary>ID of this notification</summary>
-        public Guid Id { get; set; }
+        public Guid ID { get; set; }
 
         /// <summary>Text contained in this notification</summary>
         public string Text { get; set; } = "";
@@ -24,20 +24,20 @@ namespace Igtampe.Neco.Common {
 
         /// <summary>Compares this notification to another object</summary>
         /// <param name="obj"></param>
-        /// <returns>True if and only if other object is a notification and its <see cref="Id"/> matches</returns>
+        /// <returns>True if and only if other object is a notification and its <see cref="ID"/> matches</returns>
         public override bool Equals(object obj) {
-            if (obj is Notification N) { return N.Id == Id; }
+            if (obj is Notification N) { return N.ID == ID; }
             return false;
         }
 
-        /// <summary>Gets a hashcode for this notification. Delegates to <see cref="Id"/></summary>
+        /// <summary>Gets a hashcode for this notification. Delegates to <see cref="ID"/></summary>
         /// <returns></returns>
-        public override int GetHashCode() { return Id.GetHashCode();}
+        public override int GetHashCode() { return ID.GetHashCode();}
 
         /// <summary>Creates a string representation of this Notification</summary>
         /// <returns>{Id} : [{Time}] {Text}</returns>
         public override string ToString() {
-            return $"{Id} : [{Time}] {Text}";
+            return $"{ID} : [{Time}] {Text}";
         }
 
     }

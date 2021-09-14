@@ -29,7 +29,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             var asset = await _context.CheckbookItem
                 //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.FromUser).ThenInclude(m => m.Type)
                 //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.ToUser).ThenInclude(m => m.Type)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
             return Ok(asset);
         }
@@ -37,7 +37,7 @@ namespace Igtampe.Neco.Backend.Controllers {
         // GET: Checkbook/User
         [HttpPost("User")]
         public async Task<IActionResult> IndexFromUser(User U) {
-            if (string.IsNullOrEmpty(U?.Id)) { return NotFound(); }
+            if (string.IsNullOrEmpty(U?.ID)) { return NotFound(); }
 
             var asset = await _context.CheckbookItem
                 //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.FromUser).ThenInclude(m => m.Type)
@@ -53,23 +53,23 @@ namespace Igtampe.Neco.Backend.Controllers {
         // Checkbook: UMSAT
         [HttpPost]
         public async Task<IActionResult> Create(CheckbookItem asset) {
-            if (asset.Id != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
-            asset.Id = Guid.NewGuid();
+            if (asset.ID != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
+            asset.ID = Guid.NewGuid();
             _context.Add(asset);
             await _context.SaveChangesAsync();
-            return Created($"Checkbook/{asset.Id}", asset);
+            return Created($"Checkbook/{asset.ID}", asset);
         }
 
         // PUT: UMSAT/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Edit(Guid id, CheckbookItem asset) {
-            if (id != asset.Id) { return NotFound(); }
+            if (id != asset.ID) { return NotFound(); }
 
             try {
                 _context.Update(asset);
                 await _context.SaveChangesAsync();
             } catch (DbUpdateConcurrencyException) {
-                if (!CheckbookItemExists(asset.Id)) { return NotFound(); } else { throw; }
+                if (!CheckbookItemExists(asset.ID)) { return NotFound(); } else { throw; }
             }
 
             return Ok(asset);
@@ -84,6 +84,6 @@ namespace Igtampe.Neco.Backend.Controllers {
             return Ok(asset);
         }
 
-        private bool CheckbookItemExists(Guid id) { return _context.CheckbookItem.Any(e => e.Id == id); }
+        private bool CheckbookItemExists(Guid id) { return _context.CheckbookItem.Any(e => e.ID == id); }
     }
 }

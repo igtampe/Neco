@@ -8,7 +8,7 @@ namespace Igtampe.Neco.Common {
         /// <summary>UMSWEB ID of this user</summary>
         [MaxLength(5)]
         [MinLength(5)]
-        public string Id { get; set; }
+        public string ID { get; set; }
 
         /// <summary>Pin of this user</summary>
         [MaxLength(4)]
@@ -24,17 +24,17 @@ namespace Igtampe.Neco.Common {
         /// <param name="obj"></param>
         /// <returns></returns>
         public override bool Equals(object obj) {
-            if (obj is UserAuth E) { return E.Id == Id && Pin == E.Pin;}
+            if (obj is UserAuth E) { return E.ID == ID && Pin == E.Pin;}
             return false;
         }
 
-        /// <summary>Gets a Hashcode for this UserAuth (Delegated to <see cref="Id"/>)</summary>
+        /// <summary>Gets a Hashcode for this UserAuth (Delegated to <see cref="ID"/>)</summary>
         /// <returns></returns>
-        public override int GetHashCode() { return Id.GetHashCode(); }
+        public override int GetHashCode() { return ID.GetHashCode(); }
 
         /// <summary>Returns ID for this user auth</summary>
         /// <returns></returns>
-        public override string ToString() { return Id; }
+        public override string ToString() { return ID; }
 
     }
 }

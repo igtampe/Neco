@@ -16,10 +16,10 @@ namespace Igtampe.Neco.Backend.Controllers {
         // POST: Auth
         [HttpPost]
         public async Task<IActionResult> Check(UserAuth U) {
-            if (string.IsNullOrEmpty(U.Id)) { return BadRequest("Blank User Auth object"); }
+            if (string.IsNullOrEmpty(U.ID)) { return BadRequest("Blank User Auth object"); }
 
             //Find a user:
-            UserAuth DBU = await _context.UserAuth.FindAsync(U.Id);
+            UserAuth DBU = await _context.UserAuth.FindAsync(U.ID);
             return Ok(DBU.Equals(U));
         }
 
