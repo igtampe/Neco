@@ -35,9 +35,6 @@ namespace Igtampe.Neco.Common {
         /// <summary>Account from which the amount in this transaction will be added to</summary>
         public BankAccount ToAccount { get; set; }
 
-        /// <summary>Whether or not this transaction is taxable</summary>
-        public bool Taxable { get; set; } = true;
-
         /// <summary>Whether or not this transaciton has been executed</summary>
         public TransactionState State { get; set; } = TransactionState.PENDING;
 
