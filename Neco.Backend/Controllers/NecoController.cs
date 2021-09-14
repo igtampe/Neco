@@ -141,8 +141,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             //Create a transaction to update
             Transaction T = new() {
                 Amount = TransactRequest.Amount,
-                Executed = true,
-                Failed = false,
+                State = TransactionState.COMPLETED,
                 FromAccount = FromBank,
                 ToAccount = ToBank,
                 ID = Guid.NewGuid(),
