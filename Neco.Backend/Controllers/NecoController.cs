@@ -7,370 +7,300 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Igtampe.Neco.Common;
 using Igtampe.Neco.Data;
+using Igtampe.Neco.Common.Requests;
 
 namespace Igtampe.Neco.Backend.Controllers {
     [Route("")]
     [ApiController]
     public class NecoController: Controller {
-        private readonly NecoContext _context;
+        private readonly NecoContext NecoDB;
 
-        private readonly Random UserIDRandomizer = new();
+        private readonly Random Randomizer = new();
 
-        public NecoController(NecoContext context) { _context = context; }
+        public NecoController(NecoContext context) { NecoDB = context; }
 
-        #region Bank
-        // GET: UMSAT
-        [HttpGet("Bank")]
-        public async Task<IActionResult> BankIndex() { return Ok(await _context.Bank.ToListAsync()); }
-
-        // GET: Banks/UMSNB
-        [HttpGet("Bank/{id}")]
-        public async Task<IActionResult> BankDetails(string id) {
-            if (id == null) { return NotFound(); }
-
-            var asset = await _context.Bank.FirstOrDefaultAsync(m => m.Id == id);
-            if (asset == null) { return NotFound(); }
-
-            return Ok(asset);
-        }
-
-        // GET: Bank/UMSNB/Accs
-        [HttpGet("Bank/{id}/Accs")]
-        public async Task<IActionResult> BankBankAccs(string id) {
-            if (id == null) { return NotFound(); }
-
-            var Types = await _context.BankAccount
-                //.Include(m=>m.Type)
-                //.Where(m => m.Bank.Id == id)
-                .ToListAsync();
-
-            return Ok(Types);
-        }
-
-        // GET: Bank/UMSNB/Types
-        [HttpGet("Bank/{id}/Types")]
-        public async Task<IActionResult> BankBankAccountTypes(string id) {
-            if (id == null) { return NotFound(); }
-
-            var Types = await _context.BankAccountType.Where(m => m.Bank.Id == id).ToListAsync();
-
-            return Ok(Types);
-        }
-
-        #endregion
-
-        #region BankAccountType
-        // GET: UMSAT
-        [HttpGet("BankAccountType")]
-        public async Task<IActionResult> BankAccountTypeIndex() { return Ok(await _context.BankAccountType.Include(M => M.Bank).ToListAsync()); }
-
-        // GET: UMSAT/5
-        [HttpGet("BankAccountType/{id}")]
-        public async Task<IActionResult> BankAccountTypeDetails(Guid? id) {
-            if (id == null) { return NotFound(); }
-
-            var asset = await _context.BankAccountType.Include(M => M.Bank).FirstOrDefaultAsync(m => m.Id == id);
-            if (asset == null) { return NotFound(); }
-
-            return Ok(asset);
-        }
-
-        #endregion
-
-        #region BankAccount
-        // GET: UMSAT
-        [HttpGet("BankAccount")] //TODO: Remove before release
-        public async Task<IActionResult> Index() {
-            return Ok(await _context.BankAccount
-                .Include(m => m.Owner).ThenInclude(m => m.Type)
-                //.Include(m => m.Bank)
-                //.Include(m => m.Type)
+        // GET: Dir
+        [HttpGet("dir")]
+        public async Task<IActionResult> Directory() {
+            return Ok(await NecoDB.User
+                .Include(m => m.Type)
+                .Include(m => m.Accounts).ThenInclude(m => m.Type)
                 .ToListAsync());
         }
 
-        // GET: UMSAT/5
-        [HttpGet("BankAccount/{id}")]
-        public async Task<IActionResult> Details(Guid? id) {
+        // GET: INFO/5
+        [HttpGet("INFO/{id}")]
+        public async Task<IActionResult> UserDetails(string id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.BankAccount
-                .Include(m => m.Owner).ThenInclude(m => m.Type)
-                //.Include(m => m.Bank)
-                //.Include(m => m.Type)
+            var asset = await NecoDB.User
+                .Include(m => m.Type)
+                .Include(m => m.Accounts).ThenInclude(m => m.Type)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
 
             return Ok(asset);
         }
 
-        // POST: UMSAT
-        [HttpPost("BankAccount")]
-        public async Task<IActionResult> CreateBankAccount(BankAccountDetail asset) {
-            if (asset.Id != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
-            asset.Id = Guid.NewGuid();
-            _context.Add(asset);
-            await _context.SaveChangesAsync();
-            return Created($"BankAccount/{asset.Id}", asset);
-        }
+        // POST: Register
+        [HttpPost("Register")]
+        public async Task<IActionResult> Registration(NewUserRequest NewUser) {
+            if (string.IsNullOrWhiteSpace(NewUser.Name) ||
+                string.IsNullOrWhiteSpace(NewUser.Pin) ||
+                NewUser.Type == null) { return BadRequest("All fields of a New User Request must be filled"); }
 
-        // PUT: UMSAT/5
-        [HttpPut("BankAccount/{id}")]
-        public async Task<IActionResult> Edit(Guid id, BankAccountDetail asset) {
-            if (id != asset.Id) { return NotFound(); }
-
-            try {
-                _context.Update(asset);
-                await _context.SaveChangesAsync();
-            } catch (DbUpdateConcurrencyException) {
-                if (!BankAccountExists(asset.Id)) { return NotFound(); } else { throw; }
-            }
-
-            return Ok(asset);
-        }
-
-        //DELETE: UMSAT/5
-        [HttpDelete("BankAccount/{id}")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id) {
-            var asset = await _context.BankAccount.FindAsync(id);
-            if (asset.Balance > 0) { return BadRequest("Bank account is not empty. Empty it out before trying to remove it"); }
-            _context.BankAccount.Remove(asset);
-            await _context.SaveChangesAsync();
-            return Ok(asset);
-        }
-
-        private bool BankAccountExists(Guid id) { return _context.BankAccount.Any(e => e.Id == id); }
-        #endregion
-
-        #region CertifiedItem
-        // GET: UMSAT
-        [HttpGet("CertifiedItem")]
-        public async Task<IActionResult> CertifiedItemIndex() {
-            return Ok(await _context.CertifiedItem
-                .Include(m => m.CertifiedBy).ThenInclude(m => m.Type)
-                .ToListAsync());
-        }
-
-        // GET: UMSAT/5
-        [HttpGet("CertifiedItem/{id}")]
-        public async Task<IActionResult> CertifiedItemDetails(Guid? id) {
-            if (id == null) { return NotFound(); }
-
-            var asset = await _context.CertifiedItem.Include(m => m.CertifiedBy).ThenInclude(m => m.Type).FirstOrDefaultAsync(m => m.Id == id);
-            if (asset == null) { return NotFound(); }
-
-            return Ok(asset);
-        }
-
-        // POST: UMSAT
-        [HttpPost("CertifiedItem")]
-        public async Task<IActionResult> CreateNotification(CertifiedItem asset) {
-            if (asset.Id != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
-            asset.Id = Guid.NewGuid();
-            _context.Add(asset);
-            await _context.SaveChangesAsync();
-            return Created($"CertifiedItem/{asset.Id}", asset);
-        }
-
-        #endregion
-
-        #region Notification
-        // GET: UMSAT
-        [HttpGet("Notification")] //TODO: Remove later
-        public async Task<IActionResult> NotificationIndex() {
-            return Ok(await _context.Notification
-                .Include(m => m.User).ThenInclude(m => m.Type)
-                .ToListAsync());
-        }
-
-        // GET: UMSAT/5
-        [HttpGet("Notification/{id}")]
-        public async Task<IActionResult> NotificationDetails(Guid? id) {
-            if (id == null) { return NotFound(); }
-
-            var asset = await _context.Notification.Include(m => m.User).ThenInclude(m => m.Type)
-            .FirstOrDefaultAsync(m => m.Id == id);
-            if (asset == null) { return NotFound(); }
-
-            return Ok(asset);
-        }
-
-        // POST: UMSAT
-        [HttpPost("Notification")]
-        public async Task<IActionResult> NotificationCreate(Notification asset) {
-            if (asset.Id != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
-            asset.Id = Guid.NewGuid();
-            _context.Add(asset);
-            await _context.SaveChangesAsync();
-            return Created($"Notification/{asset.Id}", asset);
-        }
-
-        //DELETE: UMSAT/5
-        [HttpDelete("Notification/{id}")]
-        public async Task<IActionResult> NotificationDelete(Guid id) {
-            var asset = await _context.Notification.FindAsync(id);
-            _context.Notification.Remove(asset);
-            await _context.SaveChangesAsync();
-            return Ok(asset);
-        }
-
-        #endregion
-
-        #region Transaction
-        // GET: UMSAT
-        [HttpGet("Transaction")] //TODO: Also remove
-        public async Task<IActionResult> TransactionIndex() {
-            return Ok(await _context.Transaction
-                //.Include(m => m.FromAccount.Id)
-                .Include(m => m.FromUser).ThenInclude(m => m.Type)
-                //.Include(m => m.ToBankAccount.Id)
-                .Include(m => m.ToUser).ThenInclude(m => m.Type)
-                .ToListAsync());
-        }
-
-        // GET: UMSAT/5
-        [HttpGet("Transaction/{id}")]
-        public async Task<IActionResult> TransactionDetails(Guid? id) {
-            if (id == null) { return NotFound(); }
-
-            var asset = await _context.Transaction
-                    //.Include(m => m.FromAccount.Id)
-                    .Include(m => m.FromUser).ThenInclude(m => m.Type)
-                    .Include(m => m.ToBankAccount)
-                    .Include(m => m.ToUser).ThenInclude(m => m.Type)
-                    .FirstOrDefaultAsync(m => m.Id == id);
-            if (asset == null) { return NotFound(); }
-
-            return Ok(asset);
-        }
-
-        // POST: UMSAT
-        [HttpPost("Transaction")]
-        public async Task<IActionResult> TransactionCreate(Transaction asset) {
-            if (asset.Id != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
-            asset.Id = Guid.NewGuid();
-            _context.Add(asset);
-            await _context.SaveChangesAsync();
-            return Created($"Transaction/{asset.Id}", asset);
-        }
-
-        // PUT: UMSAT/5
-        [HttpPost("Transaction/Execute/{id}")]
-        public async Task<IActionResult> ExecuteTransaction(Guid id) {
-
-//            var transaction = await _context.Transaction.FirstOrDefaultAsync(m => m.Id == id);
-//            if (transaction == null) { return NotFound(); }
-//
-//            //Now then:
-//            if (transaction.FromAccount.Balance < transaction.Amount) {
-//
-//                transaction.Failed = true;
-//                _context.Update(transaction);
-//                await _context.SaveChangesAsync();
-//
-//                return BadRequest("Origin of this transaction does not have enough funds");
-//            }
-//
-//            if (transaction.FromUser.Equals(transaction.ToUser)) { transaction.Taxable = false; }
-//            //Ensure transfers are non-taxed when users are transfering money between their accounts
-//
-//            //Actually do the transaction
-//            transaction.FromAccount.Balance -= transaction.Amount;
-//            transaction.ToBankAccount.Balance += transaction.Amount;
-//
-//            //Add a notification to the to user if it's not the same
-//            if (!transaction.FromUser.Equals(transaction.ToUser)) {
-//                if (transaction.ToUser.Notifications == null) { transaction.ToUser.Notifications = new List<Notification>(); }
-//                transaction.ToUser.Notifications.Add(new Notification() {
-//                    Id = Guid.NewGuid(),
-//                    Read = false,
-//                    Time = DateTime.Now,
-//                    User = transaction.ToUser,
-//                    Text = $"{transaction.FromUser} sent you {transaction.Amount:N0}p to your {transaction.ToBankAccount.Type.Name} account"
-//                });
-//
-//            }
-//
-//            transaction.Executed = true;
-//
-//            _context.Update(transaction);
-//            await _context.SaveChangesAsync();
-//
-            return Ok();
-        }
-
-        #endregion
-
-        #region User
-        // GET: USER
-        [HttpGet("User")]
-        public async Task<IActionResult> UserIndex() { return Ok(await _context.User.Include(m=> m.Type).ToListAsync()); }
-
-        // GET: USER/5
-        [HttpGet("User/{id}")]
-        public async Task<IActionResult> UserDetails(string id) {
-            if (id == null) { return NotFound(); }
-
-            var asset = await _context.User.Include(m => m.Type).FirstOrDefaultAsync(m => m.Id == id);
-            if (asset == null) { return NotFound(); }
-
-            return Ok(asset);
-        }
-
-        // GET: USER/57174/NOTIFS
-        [HttpGet("User/{id}/Notifs")]
-        public async Task<IActionResult> UserNotifications(string id) {
-            if (id == null) { return NotFound(); }
-
-            var Types = await _context.Notification.Where(m => m.User.Id == id).ToListAsync();
-
-            return Ok(Types);
-        }
-
-        // GET: USER/57174/Accs
-        [HttpGet("User/{id}/Accs")]
-        public async Task<IActionResult> UserAccounts(string id) {
-            if (id == null) { return NotFound(); }
-
-            var Types = await _context.BankAccount.Where(m => m.Owner.Id == id).ToListAsync();
-
-            return Ok(Types);
-        }
-
-        // POST: UMSAT
-        [HttpPost("User")]
-        public async Task<IActionResult> UserCreate(User asset) {
-            if (string.IsNullOrEmpty(asset.Id)) { BadRequest("User has an ID. Did you mean to edit it?"); }
             string ID;
             do {
                 ID = "";
-                while (ID.Length < 5) { ID += UserIDRandomizer.Next(10); }
+                while (ID.Length < 5) { ID += Randomizer.Next(10); }
             } while (UserExists(ID));
 
-            asset.Id = ID;
-            _context.Add(asset);
-            await _context.SaveChangesAsync();
-            return Created($"User/{asset.Id}", asset);
+            User U = new() {
+                Id = ID,
+                Name = NewUser.Name,
+                Type = NewUser.Type,
+            };
+
+            UserAuth UA = new() {
+                Id = ID,
+                Pin = NewUser.Pin
+            };
+
+            NecoDB.Add(U);
+            NecoDB.Add(UA);
+
+            await NecoDB.SaveChangesAsync();
+
+            return Ok(U);
         }
 
-        private bool UserExists(string id) { return _context.User.Any(e => e.Id == id); }
-        #endregion
+        // GET: Cert
+        [HttpGet("Cert")]
+        public async Task<IActionResult> Certifications(int? Start, int? End) {
+            int realstart = Start != null ? (int)Start : 0;
+            int realend = End != null ? (int)End : 20;
+            return Ok(await NecoDB.CertifiedItem //Get all the certified items
+                .Include(m => m.CertifiedBy).ThenInclude(m => m.Type) //include who certified it and their type jic
+                .OrderByDescending(C => C.Date) //Sort in descending order by date
+                .Skip(realstart).Take(realend-realstart) //take only the specified amount
+                .ToListAsync()); //To list async
+        }
 
-        #region UserType       
-        // GET: UMSAT
-        [HttpGet("UserType")]
-        public async Task<IActionResult> UserTypeIndex() { return Ok(await _context.UserType.ToListAsync()); }
-
-        // GET: UMSAT/5
-        [HttpGet("UserType/{id}")]
-        public async Task<IActionResult> UserTypeDetails(Guid? id) {
+        // GET: Cert/5
+        [HttpGet("Cert/{id}")]
+        public async Task<IActionResult> GetCertification(Guid? id) {
             if (id == null) { return NotFound(); }
-
-            var asset = await _context.UserType.FirstOrDefaultAsync(m => m.Id == id);
+            var asset = await NecoDB.CertifiedItem.Include(m => m.CertifiedBy).ThenInclude(m => m.Type).FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
-
             return Ok(asset);
         }
-        #endregion
 
+        //Get; Transaction/5
+        [HttpGet("Transactions/{id}")]
+        public async Task<IActionResult> GetTransaction(Guid? id) {
+            if (id == null) { return NotFound(); }
+            var asset = await NecoDB.Transaction
+                .Include(T=> T.FromAccount).Include(T => T.ToAccount)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (asset == null) { return NotFound(); }
+            return Ok(asset);
+        }
+
+        // GET: Banks
+        [HttpGet("Banks")]
+        public async Task<IActionResult> Banks() {
+            return Ok(await NecoDB.Bank
+                .Include(b => b.AccountTypes)
+                .ToListAsync());
+        }
+
+        // GET: UMSAT
+        [HttpGet("UserType")]
+        public async Task<IActionResult> UserTypeIndex() { return Ok(await NecoDB.UserType.ToListAsync()); }
+
+
+        //Session Required Actions
+
+        //POST: Transaction
+        [HttpPost("SM")]
+        public async Task<IActionResult> ExecuteTransaction(TransactionRequest TransactRequest) {
+            Session S = SessionManager.Manager.FindSession(TransactRequest.SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            BankAccount FromBank = await NecoDB.BankAccount.Include(b => b.Details).Include(d => d.Owner).FirstOrDefaultAsync(B => B.ID == TransactRequest.FromBankID);
+            BankAccount ToBank   = await NecoDB.BankAccount.Include(b => b.Details).Include(d => d.Owner).FirstOrDefaultAsync(B => B.ID == TransactRequest.ToBankID);
+
+            if (FromBank.Owner.Id != S.UserID) { return Unauthorized("From bank account does not belong to the user in this session"); }
+            if (FromBank.Details.Balance < TransactRequest.Amount) { return BadRequest("Insufficient Funds"); }
+            if (FromBank.Closed || ToBank.Closed) { return BadRequest("One or more of the bank acounts in this transaction are closed."); }
+
+            //Create a transaction to update
+            Transaction T = new() {
+                Amount = TransactRequest.Amount,
+                Executed = true,
+                Failed = false,
+                FromAccount = FromBank,
+                ToAccount = ToBank,
+                Id = Guid.NewGuid(),
+                Taxable = !FromBank.Owner.Equals(ToBank.Owner),
+                Time = DateTime.Now
+            };
+
+            //Execute the transaction
+            FromBank.Details.Balance -= TransactRequest.Amount;
+            ToBank.Details.Balance += TransactRequest.Amount;
+
+            //Add/update entities
+            NecoDB.Add(T);
+            NecoDB.Update(FromBank);
+            NecoDB.Update(ToBank);
+
+            //Save context
+            await NecoDB.SaveChangesAsync();
+
+            return Ok(T.Id);
+        }
+
+
+        // POST: INFO
+        [HttpPost("INFO")]
+        public async Task<IActionResult> UserDetailsWithSessionID(Guid SessionID) {
+            Session S = SessionManager.Manager.FindSession(SessionID);
+            if (S == null) { return BadRequest("Session Invalid"); }
+
+            var User = await NecoDB.User
+                .Include(u => u.Type)
+                .Include(u => u.Accounts).ThenInclude(b => b.Type)
+                .Include(u => u.Accounts).ThenInclude(b=> b.Details)
+                .Include(u=> u.Notifications)
+                .FirstOrDefaultAsync(m => m.Id == S.UserID);
+            if (User == null) { return NotFound(); }
+
+            //Sort the lists
+            User.Accounts = User.Accounts.OrderBy(B => B.ID).ToList();
+            User.Notifications = User.Notifications.OrderByDescending(N => N.Time).ToList();
+            
+            //Return it 
+            return Ok(User);
+        }
+
+        //POST:CERT
+        [HttpPost("Cert")]
+        public async Task<IActionResult> Certify(CertificationRequest CertRequest) {
+            Session S = SessionManager.Manager.FindSession(CertRequest.SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            CertifiedItem C = new() {
+                CertifiedBy = await NecoDB.User.FirstOrDefaultAsync(u => u.Id == S.UserID),
+                Date = DateTime.Now,
+                Id = Guid.NewGuid(),
+                Text = CertRequest.Text
+            };
+
+            NecoDB.Add(C);
+            await NecoDB.SaveChangesAsync();
+            return Ok(C);
+        }
+
+        //POST ReadNotif/5
+        [HttpPost("ReadNotif/{NotifID}")]
+        public async Task<IActionResult> ReadNotif(Guid NotifID, [FromBody]Guid SessionID) {
+            Session S = SessionManager.Manager.FindSession(SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            //Load Notif
+            Notification N = await NecoDB.Notification
+                .Include(N=>N.User)
+                .FirstOrDefaultAsync(N=>N.Id==NotifID);
+            if (N == null) { return NotFound(); }
+
+            if (N.User.Id != S.UserID) { return Unauthorized("Notification does not belong to this user"); }
+            N.Read = true;
+
+            NecoDB.Update(N);
+            await NecoDB.SaveChangesAsync();
+            return Ok(N);
+        }
+        
+        //POST: BNKO
+        [HttpPost("BNKO")]
+        public async Task<IActionResult> BNKOpen(BankAccountOpenRequest BNKORequest) {
+            Session S = SessionManager.Manager.FindSession(BNKORequest.SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            BankAccountType Type = await NecoDB.BankAccountType
+                .Include(T => T.Bank)
+                .FirstOrDefaultAsync(T => T.Id == BNKORequest.BankAccountTypeID);
+            if (Type == null) { return NotFound("Requested Bank account type not found"); }
+
+            string ID;
+
+            do {
+                ID = "";
+                while (ID.Length < 9) { ID += Randomizer.Next(10); }
+            } while (BankAccountExists(ID));
+
+            BankAccount A = new() {
+                Bank = Type.Bank,
+                Closed = false,
+                Details = new() {
+                    Balance = 0,
+                    Id = Guid.NewGuid()
+                },
+                ID = ID,
+                Owner = await NecoDB.User.FirstOrDefaultAsync(U=>U.Id==S.UserID),
+                Type = Type
+            };
+
+            NecoDB.Add(A);
+            await NecoDB.SaveChangesAsync();
+            return Ok(A);
+        }
+
+        //POST: BNKC
+        [HttpPost("BNKC")]
+        public async Task<IActionResult> BNKClose(BankAccountActionRequest BNKCRequest) {
+            Session S = SessionManager.Manager.FindSession(BNKCRequest.SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            BankAccount Account = await NecoDB.BankAccount
+                .Include(A=> A.Owner)
+                .Include(A=>A.Details)
+                .FirstOrDefaultAsync(T => T.ID == BNKCRequest.BankAccountID);
+            if (Account == null) { return NotFound("Requested Bank account not found"); }
+            if (Account.Owner.Id != S.UserID) { return Unauthorized("Bank account does not belong to the session holder"); }
+            if (Account.Details.Balance > 0) { return BadRequest("Bank account is holding funds. These must be moved before closing the account"); }
+            if (Account.Details.Balance < 0) { return BadRequest("Bank account is overdrafted. Debts must be paid before closing the account"); }
+
+            Account.Closed = true;
+            NecoDB.Update(Account);
+            await NecoDB.SaveChangesAsync();
+
+            return Ok(Account);
+        }
+
+        //POST: BNKL
+        [HttpPost("BNKL")]
+        public async Task<IActionResult> BNKLog(BankAccountActionRequest BNKLogRequest) {
+            Session S = SessionManager.Manager.FindSession(BNKLogRequest.SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            BankAccount Account = await NecoDB.BankAccount
+                .Include(A => A.Owner)
+                .FirstOrDefaultAsync(T => T.ID == BNKLogRequest.BankAccountID);
+            if (Account == null) { return NotFound("Requested Bank account not found"); }
+            if (Account.Owner.Id != S.UserID) { return Unauthorized("Bank account does not belong to the session holder"); }
+
+            //Now that we have the bank accoutn and have verified everything, let's get the transactions
+            List<Transaction> Transacts = await NecoDB.Transaction
+                                          .Where(T => T.FromAccount.ID == Account.ID || T.ToAccount.ID == Account.ID)
+                                          .OrderByDescending(T => T.Time).ToListAsync();
+            return Ok(Transacts);
+        }
+
+
+        private bool BankAccountExists(string id) { return NecoDB.BankAccount.Any(e => e.ID == id); }
+
+        private bool UserExists(string id) { return NecoDB.User.Any(e => e.Id == id); }
     }
 }
