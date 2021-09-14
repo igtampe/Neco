@@ -2,6 +2,23 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Igtampe.Neco.Common.Contractus {
+
+    /// <summary>Status of a given contract</summary>
+    public enum ContractStatus { 
+
+        /// <summary>Contract is currently up for auction</summary>
+        AUCTION,
+
+        /// <summary>Contract has been awarded and is currently being worked on</summary>
+        AWARDED,
+
+        /// <summary>Contract is completed and is pending payment</summary>
+        PENDING_PAYMENT,
+
+        /// <summary>Contract has been paid and is complete</summary>
+        COMPELTED    
+    }
+
     /// <summary>Holds a Contractus Contract</summary>
     public class Contract {
 
@@ -24,11 +41,8 @@ namespace Igtampe.Neco.Common.Contractus {
         [Range(1, long.MaxValue)]
         public long Amount { get; set; } = long.MaxValue;
 
-        /// <summary>Whether or not this contract is still up for auction or not</summary>
-        public bool UpForAuction { get; set; } = true;
-
-        /// <summary>Whether or not this contract has been completed </summary>
-        public bool Completed { get; set; } = false;
+        /// <summary>Current status of this contract</summary>
+        public ContractStatus Status { get; set; } = ContractStatus.AUCTION;
 
         /// <summary>Compares this Contract to another object</summary>
         /// <param name="obj"></param>
