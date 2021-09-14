@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Igtampe.Neco.Common.LandView {
@@ -61,10 +60,6 @@ namespace Igtampe.Neco.Common.LandView {
 
         /// <summary>Status of this plot</summary>
         public PlotStatus Status { get; set; } = PlotStatus.UNCLAIMED;
-
-        /// <summary>Price per square meter of this plot</summary> 
-        [Range(0,int.MaxValue)]
-        public int PricePerSquareMeter { get; set; }
 
         /// <summary>Area of this plot in square meters</summary>
         /// <returns></returns>
