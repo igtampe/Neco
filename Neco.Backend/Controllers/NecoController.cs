@@ -158,7 +158,10 @@ namespace Igtampe.Neco.Backend.Controllers {
                 FromAccount = FromBank,
                 ToAccount = ToBank,
                 ID = Guid.NewGuid(),
-                Time = DateTime.Now
+                Time = DateTime.Now,
+                Name = string.IsNullOrWhiteSpace(TransactRequest.Name) 
+                ? $"TRANSFER FROM {FromBank.ID} TO {ToBank.ID}"
+                : TransactRequest.Name 
             };
 
             //Execute the transaction

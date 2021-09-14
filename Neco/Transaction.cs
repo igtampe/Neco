@@ -29,6 +29,9 @@ namespace Igtampe.Neco.Common {
         /// <summary>Time at which this transaction took place</summary>
         public DateTime Time { get; set; } = DateTime.Now;
 
+        /// <summary>Name of ths transaction</summary>
+        public string Name { get; set; }
+
         /// <summary>Account from which the amount in this transaction will be deducted</summary>
         public BankAccount FromAccount { get; set; }
 

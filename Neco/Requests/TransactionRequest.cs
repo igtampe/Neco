@@ -5,6 +5,9 @@
         /// <summary>Session that's executing this request</summary>
         public System.Guid SessionID { get; set; }
 
+        /// <summary>Name of this transaction</summary>
+        public string Name { get; set; }
+
         /// <summary>Bank this transaction will originate from</summary>
         public string FromBankID { get; set; }
 
@@ -13,5 +16,6 @@
 
         /// <summary>Amount to transfer in this transaction</summary>
         public long Amount { get; set; }
+
     }
 }
