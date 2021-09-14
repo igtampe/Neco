@@ -25,8 +25,11 @@ namespace Igtampe.Neco.Backend.Controllers {
             return Ok(await _context.Asset
                 .Include(a => a.IncomeItem).ThenInclude(m => m.LocalJurisdiction)
                 .Include(a => a.IncomeItem).ThenInclude(m => m.FederalJurisdiction)
+                .Include(a => a.IncomeItem).ThenInclude(m => m.Apartments)
+                .Include(a => a.IncomeItem).ThenInclude(m => m.Businesses)
+                .Include(a => a.IncomeItem).ThenInclude(m => m.Hotels)
                 .Include(a => a.Plot).ThenInclude(m => m.District).ThenInclude(m => m.Country)
-                .Include(a => a.Owner).Skip(realstart).Take(realend-realstart).ToListAsync()); 
+                .Include(a => a.Owner).ThenInclude(m=>m.Type).Skip(realstart).Take(realend-realstart).ToListAsync()); 
         }
 
         // GET: UMSAT/5
@@ -34,12 +37,13 @@ namespace Igtampe.Neco.Backend.Controllers {
         public async Task<IActionResult> Details(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await _context.Asset
-                .Include(a => a.IncomeItem).ThenInclude(m=>m.LocalJurisdiction)
+            var asset = await _context.Asset.Include(a => a.IncomeItem).ThenInclude(m => m.LocalJurisdiction)
                 .Include(a => a.IncomeItem).ThenInclude(m => m.FederalJurisdiction)
-                .Include(a => a.Plot).ThenInclude(m=>m.District).ThenInclude(m=>m.Country)
-                .Include(a=> a.Owner)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .Include(a => a.IncomeItem).ThenInclude(m => m.Apartments)
+                .Include(a => a.IncomeItem).ThenInclude(m => m.Businesses)
+                .Include(a => a.IncomeItem).ThenInclude(m => m.Hotels)
+                .Include(a => a.Plot).ThenInclude(m => m.District).ThenInclude(m => m.Country)
+                .Include(a => a.Owner).ThenInclude(m => m.Type).FirstOrDefaultAsync(m => m.ID == id);
 
             if (asset == null) { return NotFound(); }
 
