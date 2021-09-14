@@ -19,6 +19,10 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         public NecoController(NecoContext context) { NecoDB = context; }
 
+        //GET:
+        [HttpGet]
+        public IActionResult Ping() {return Ok("You've connected to the server! Congrats.");}
+
         // GET: Dir
         [HttpGet("dir")]
         public async Task<IActionResult> Directory() {
