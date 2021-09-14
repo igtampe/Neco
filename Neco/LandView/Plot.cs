@@ -14,7 +14,7 @@ namespace Igtampe.Neco.Common.LandView {
             /// <summary>Plot is unclaimed and is available for purchase from the <see cref="District"/></summary>
             UNCLAIMED, 
 
-            /// <summary>Plot that is for sale by <see cref="TiedAccount"/></summary>
+            /// <summary>Plot that is for sale by <see cref="Owner"/></summary>
             FOR_SALE, 
             
             /// <summary>Plot that is owned and is not for  sale</summary>
