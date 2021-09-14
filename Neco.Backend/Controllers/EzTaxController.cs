@@ -84,16 +84,11 @@ namespace Igtampe.Neco.Backend.Controllers {
                 .Include(m => m.User)
                 .Include(m => m.FederalJurisdiction)
                 .Include(m => m.LocalJurisdiction)
+                .Include(m => m.Apartments)
+                .Include(m => m.Hotels)
+                .Include(m => m.Businesses)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }
-
-            //Find all related subitems manually here TODO
-            List<IncomeSubitem> Subs = new();
-            Subs.AddRange(await _context.Apartment.Where(m => m.IncomeItem.ID == asset.ID).ToListAsync());
-            Subs.AddRange(await _context.Hotel.Where(m => m.IncomeItem.ID == asset.ID).ToListAsync());
-            Subs.AddRange(await _context.Business.Where(m => m.IncomeItem.ID == asset.ID).ToListAsync());
-            asset.Subitems = Subs;
-
 
             return Ok(asset);
         }
@@ -107,6 +102,9 @@ namespace Igtampe.Neco.Backend.Controllers {
                             .Include(m => m.User)
                             .Include(m => m.FederalJurisdiction)
                             .Include(m => m.LocalJurisdiction)
+                            .Include(m => m.Apartments)
+                            .Include(m => m.Hotels)
+                            .Include(m => m.Businesses)
                             .Where(i=> i.User.Id==U.Id)
                             .ToListAsync());
         }
@@ -119,8 +117,6 @@ namespace Igtampe.Neco.Backend.Controllers {
             _context.Add(asset);
             await _context.SaveChangesAsync();
             return Created($"EzTax/IncomeItem/UMSAT/{asset.ID}", asset);
-
-            //TODO Handle saving of income subitems
         }
 
         // PUT: UMSAT/5
@@ -134,8 +130,6 @@ namespace Igtampe.Neco.Backend.Controllers {
             } catch (DbUpdateConcurrencyException) {
                 if (!IncomeItemExists(asset.ID)) { return NotFound(); } else { throw; }
             }
-
-            //TODO Handle saving of income subitems
 
             return Ok(asset);
         }

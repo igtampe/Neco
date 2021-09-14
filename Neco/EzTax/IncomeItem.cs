@@ -4,7 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Igtampe.Neco.Common.EzTax.Subitems;
 
 namespace Igtampe.Neco.Common.EzTax {
 
@@ -22,7 +24,25 @@ namespace Igtampe.Neco.Common.EzTax {
 
         /// <summary>Subitems in this Item</summary>
         [NotMapped]
-        public ICollection<Subitems.IncomeSubitem> Subitems { get; set; }
+        [JsonIgnore] //While this won't be used in the backend due to serialization and mapping issues, it will be left for the frontend
+        public ICollection<IncomeSubitem> Subitems { 
+            get {
+                List<IncomeSubitem> L = new();
+                L.AddRange(Apartments);
+                L.AddRange(Businesses);
+                L.AddRange(Hotels);
+                return L; //This is REALLY stretching the definition of a Property but OK.
+            } 
+        }
+
+        /// <summary>Apartments in this IncomeItem</summary>
+        public ICollection<Apartment> Apartments { get; set; }
+
+        /// <summary>Businesses in this IncomeItem</summary>
+        public ICollection<Business> Businesses { get; set; }
+
+        /// <summary>Hotels in this IncomeItem</summary>
+        public ICollection<Hotel> Hotels { get; set; }
 
         /// <summary>Other miscellaneous income in this income item</summary>
         [Range(0, long.MaxValue)]
