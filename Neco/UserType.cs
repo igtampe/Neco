@@ -1,5 +1,25 @@
 ﻿namespace Igtampe.Neco.Common {
 
+    /// <summary>Determines the taxability of transactions to or from accounts held by users of this user type</summary>
+    public enum TaxationType { 
+
+        /// <summary>Transactions are taxable to and from this account
+        /// Users of this type should be taxed by EzTax
+        /// This taxation type should be used by general users</summary>
+        Taxable,
+
+        /// <summary>Transactions are NOT taxable if this account is the destination<br/><br/>
+        /// IE: Money sent to this account is NOT COUNTED TOWARDS INCOME of the sender.<br/><br/>
+        /// Users of this type should NOT be taxed by EzTax<br/>
+        /// This taxation type should be used by Charities</summary>
+        NonTaxableDestination,
+
+        /// <summary>Transactions to and from this account are NOT taxable
+        /// IE: Money received from this account is not counted towards income of the recipient, and this account should never pay taxes
+        /// and this account is </summary>
+        Nontaxable
+    }
+
     /// <summary>Type of user in NECO</summary>
     public class UserType {
 
@@ -8,6 +28,9 @@
 
         /// <summary>Name of this User Type (IE Standard, Corporate, Government)</summary>
         public string Name { get; set; } = "";
+
+        /// <summary>Identifies how to handle taxes to and from this account</summary>
+        public TaxationType Taxation { get; set; }
 
         /// <summary>Check if an object is equal to this user type</summary>
         /// <param name="obj"></param>
