@@ -56,14 +56,6 @@ namespace Igtampe.Neco.Common.EzTax {
         /// <returns></returns>
         public long TotalMonthlyIncome() { return Subitems.Sum(I => I.Income()) + MiscIncome; } //MIRATE QUE BELLEZA
 
-        /// <summary>Calculates the monthly tax to <see cref="LocalJurisdiction"/></summary>
-        /// <returns></returns>
-        public long LocalTax() { return LocalJurisdiction.CalculateTax(User, TotalMonthlyIncome()); }
-
-        /// <summary>Calculates the monthly tax to <see cref="FederalJurisdiction"/></summary>
-        /// <returns></returns>
-        public long FederalTax() { return FederalJurisdiction.CalculateTax(User, TotalMonthlyIncome()); }
-
         /// <summary>Calculates the total monthly tax for this item</summary>
         /// <returns></returns>
         public long TotalMonthlyTax() {
