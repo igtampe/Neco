@@ -26,7 +26,7 @@ namespace ViBENecoMigrator {
         private static int X;
         private static int TopTextHeight;
 
-        static void Main(string[] args) {
+        static void Main() {
 
             #region Visual Setup
             Console.Clear();
@@ -463,7 +463,7 @@ namespace ViBENecoMigrator {
                 if (U is null) { continue; }
 
                 //Create a TaxUserInfo for that user
-                TaxUserInfo TUI = new() { ID = Guid.NewGuid(), User = U, Items = new List<IncomeItem>() };
+                TaxUserInfo TUI = new() { Items = new List<IncomeItem>() };
 
                 string[] csvAllLines = File.ReadAllLines($"{csv}");
 
@@ -475,7 +475,7 @@ namespace ViBENecoMigrator {
                     if (currentline.Length < 2) { continue; }
                     if (currentline.Length == 2) {
                         //Legacy Item
-                        TUI.Items.Add(new IncomeItem() { ID = Guid.NewGuid(), Name = currentline[0], FederalJurisdiction = UMSJurisdiction, LocalJurisdiction = null, MiscIncome = long.Parse(currentline[1]), User = U });
+                        TUI.Items.Add(new IncomeItem() { ID = Guid.NewGuid(), Name = currentline[0], FederalJurisdiction = UMSJurisdiction, LocalJurisdiction = null, MiscIncome = long.Parse(currentline[1]), User = U, });
                     } else {
                         //New Item
 
@@ -560,7 +560,7 @@ namespace ViBENecoMigrator {
                     UpdateLocal($"Added item {currentline[0]}", LocalProgressBar.Percent + perItem);
                 }
 
-                C.Add(TUI);
+                C.AddRange(TUI.Items);
 
             }
 
