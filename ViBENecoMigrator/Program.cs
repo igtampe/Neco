@@ -144,7 +144,7 @@ namespace ViBENecoMigrator {
                     Acc.Details = new ();
                     Acc.Details.ID = Guid.NewGuid();
                     Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/UMSNB/Balance.dll"));
-                    Acc.Details.Owner = U;
+                    Acc.Owner = U;
                     U.Accounts.Add(Acc);
                 }
                 Spin();
@@ -159,7 +159,7 @@ namespace ViBENecoMigrator {
                     Acc.Details = new();
                     Acc.Details.ID = Guid.NewGuid();
                     Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/GBANK/Balance.dll"));
-                    Acc.Details.Owner = U;
+                    Acc.Owner = U;
                     U.Accounts.Add(Acc);
                 }
                 Spin();
@@ -173,7 +173,7 @@ namespace ViBENecoMigrator {
                     Acc.Details = new();
                     Acc.Details.ID = Guid.NewGuid();
                     Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/RIVER/Balance.dll"));
-                    Acc.Details.Owner = U;
+                    Acc.Owner = U;
                     U.Accounts.Add(Acc);
                 }
                 Spin();
@@ -531,24 +531,26 @@ namespace ViBENecoMigrator {
                         IncomeItem I = new() {
                             ID = Guid.NewGuid(), Name = Name, FederalJurisdiction = UMSJurisdiction,
                             LocalJurisdiction = Jurisdiction, MiscIncome = MiscIncome, User = U,
-                            Subitems = new List<IncomeSubitem>()
+                            Apartments = new List<Apartment>(),
+                            Businesses = new List<Business>(),
+                            Hotels = new List<Hotel>()
                         };
 
                         if (Apt.Income() > 0) {
                             Apt.IncomeItem = I;
-                            I.Subitems.Add(Apt);
+                            I.Apartments.Add(Apt);
                             C.Add(Apt);
                         }
 
                         if (Hotel.Income() > 0) {
                             Hotel.IncomeItem = I;
-                            I.Subitems.Add(Hotel);
+                            I.Hotels.Add(Hotel);
                             C.Add(Hotel);
                         }
 
                         if (Business.Income() > 0) {
                             Business.IncomeItem = I;
-                            I.Subitems.Add(Business);
+                            I.Businesses.Add(Business);
                             C.Add(Business);
                         }
 
