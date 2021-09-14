@@ -105,8 +105,8 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (id == null) { return NotFound(); }
 
             var asset = await _context.Plot
-                .Include(m => m.District).ThenInclude(m => m.DistrictBankAccount.Id)
-                .Include(m => m.District).ThenInclude(m => m.Country).ThenInclude(m => m.FederalBankAccount.Id)
+                .Include(m => m.District).ThenInclude(m => m.DistrictBankAccount.ID)
+                .Include(m => m.District).ThenInclude(m => m.Country).ThenInclude(m => m.FederalBankAccount.ID)
                 .Include(m => m.TiedAccount).ThenInclude(m => m.Type)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (asset == null) { return NotFound(); }

@@ -18,8 +18,8 @@ namespace Igtampe.Neco.Backend.Controllers {
         // GET: Checkbook
         [HttpGet]
         public async Task<IActionResult> Index() { return Ok(await _context.CheckbookItem
-            .Include(m=>m.AttachedTransaciton).ThenInclude(m=>m.FromUser).ThenInclude(m=>m.Type)
-            .Include(m => m.AttachedTransaciton).ThenInclude(m => m.ToUser).ThenInclude(m => m.Type)
+            //.Include(m=>m.AttachedTransaciton).ThenInclude(m=>m.FromUser).ThenInclude(m=>m.Type)
+            //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.ToUser).ThenInclude(m => m.Type)
             .ToListAsync()); }
 
         // GET: Checkbook/5
@@ -27,8 +27,8 @@ namespace Igtampe.Neco.Backend.Controllers {
         public async Task<IActionResult> Details(Guid? id) {
             if (id == null) { return NotFound(); }
             var asset = await _context.CheckbookItem
-                .Include(m => m.AttachedTransaciton).ThenInclude(m => m.FromUser).ThenInclude(m => m.Type)
-                .Include(m => m.AttachedTransaciton).ThenInclude(m => m.ToUser).ThenInclude(m => m.Type)
+                //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.FromUser).ThenInclude(m => m.Type)
+                //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.ToUser).ThenInclude(m => m.Type)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (asset == null) { return NotFound(); }
             return Ok(asset);
@@ -40,10 +40,11 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (string.IsNullOrEmpty(U?.Id)) { return NotFound(); }
 
             var asset = await _context.CheckbookItem
-                .Include(m => m.AttachedTransaciton).ThenInclude(m => m.FromUser).ThenInclude(m => m.Type)
-                .Include(m => m.AttachedTransaciton).ThenInclude(m => m.ToUser).ThenInclude(m => m.Type)
-                .Where(m => (m.AttachedTransaciton.FromUser.Id == U.Id && m.Type == CheckbookItem.ItemType.BILL)
-                        || (m.AttachedTransaciton.ToUser.Id == U.Id && m.Type == CheckbookItem.ItemType.CHECK)).ToListAsync();
+                //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.FromUser).ThenInclude(m => m.Type)
+                //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.ToUser).ThenInclude(m => m.Type)
+                //.Where(m => (m.AttachedTransaciton.FromUser.Id == U.Id && m.Type == CheckbookItem.ItemType.BILL)
+                //        || (m.AttachedTransaciton.ToUser.Id == U.Id && m.Type == CheckbookItem.ItemType.CHECK))
+            .ToListAsync();
             if (asset == null) { return NotFound(); }
             return Ok(asset);
         }
