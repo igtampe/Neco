@@ -7,15 +7,11 @@ using System.Threading.Tasks;
 
 namespace Igtampe.Neco.Common {
 
-    /// <summary>Holds NECO Bank account details that are confidential/summary>
+    /// <summary>Holds NECO Bank account details that are confidential</summary>
     public class BankAccountDetail {
 
         /// <summary>ID of this bank account</summary>
         public Guid Id { get; set; }
-
-        /// <summary>Owner of this bank account</summary>
-        [JsonIgnore]
-        public User Owner { get; set; }
 
         /// <summary>Balance in this bank account</summary>
         public long Balance { get; set; } = 0;
@@ -37,8 +33,8 @@ namespace Igtampe.Neco.Common {
         public override int GetHashCode() { return Id.GetHashCode(); }
 
         /// <summary>Creates a string representation of this BankAccountDetails item</summary>
-        /// <returns>{Id} : {Owner?.Name}'s account with balance {Balance:N0}p</returns>
-        public override string ToString() { return $"{Id} : {Owner?.Name}'s account with balance {Balance:N0}p"; }
+        /// <returns>{Id} : Account with balance {Balance:N0}p</returns>
+        public override string ToString() { return $"{Id} : Account with balance {Balance:N0}p"; }
 
     }
 }

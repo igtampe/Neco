@@ -20,17 +20,11 @@ namespace Igtampe.Neco.Common {
         /// <summary>Time at which this transaction took place</summary>
         public DateTime Time { get; set; } = DateTime.Now;
 
-        /// <summary>User this transaction originates from</summary>
-        public User FromUser { get; set; }
-
-        /// <summary>User this transaction destinates to</summary>
-        public User ToUser { get; set; }
-
         /// <summary>Account from which the amount in this transaction will be deducted</summary>
         public BankAccount FromAccount { get; set; }
 
         /// <summary>Account from which the amount in this transaction will be added to</summary>
-        public BankAccount ToBankAccount { get; set; }
+        public BankAccount ToAccount { get; set; }
 
         /// <summary>Whether or not this transaction is taxable</summary>
         public bool Taxable { get; set; } = true;
@@ -55,7 +49,7 @@ namespace Igtampe.Neco.Common {
 
         /// <summary>Creates a string representation of this transaction</summary>
         /// <returns>{Id} : {Amount} from {FromUser?.Id} to {ToUser?.Id}</returns>
-        public override string ToString() { return $"{Id} : {Amount} from {FromUser?.Id} to {ToUser?.Id}";}
+        public override string ToString() { return $"{Id} : {Amount} from {FromAccount?.ID} to {ToAccount?.ID}";}
 
     }
 }

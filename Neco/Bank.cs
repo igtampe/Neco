@@ -24,7 +24,6 @@ namespace Igtampe.Neco.Common {
         public ICollection<BankAccount> Accounts { get; set; }
 
         /// <summary>Bank Account types available in this bank</summary>
-        [JsonIgnore]
         public ICollection<BankAccountType> AccountTypes { get; set; }
 
         /// <summary>Compares this Bank to another object</summary>

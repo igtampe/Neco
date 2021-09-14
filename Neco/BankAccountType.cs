@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Igtampe.Neco.Common {
@@ -17,6 +18,7 @@ namespace Igtampe.Neco.Common {
         public string Name { get; set; }
 
         /// <summary>Bank this type belongs to</summary>
+        [JsonIgnore]
         public Bank Bank { get; set; }
 
         /// <summary>Interest rate of this bank account type</summary>
