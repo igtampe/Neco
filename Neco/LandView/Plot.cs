@@ -54,7 +54,7 @@ namespace Igtampe.Neco.Common.LandView {
         }
 
         /// <summary>Owner of this plot</summary>
-        public BankAccount TiedAccount { get; set; }
+        public User Owner { get; set; }
 
         /// <summary>Name of this plot</summary>
         public string Name { get; set; } = "";
