@@ -163,7 +163,6 @@ namespace Igtampe.Neco.Backend.Controllers {
             return Ok(T.ID);
         }
 
-
         // POST: INFO
         [HttpPost("INFO")]
         public async Task<IActionResult> UserDetailsWithSessionID(Guid SessionID) {
@@ -223,7 +222,49 @@ namespace Igtampe.Neco.Backend.Controllers {
             await NecoDB.SaveChangesAsync();
             return Ok(N);
         }
-        
+
+        //POST ReadNotif/All
+        [HttpPost("ReadNotif/all")]
+        public async Task<IActionResult> ReadNotifAll(Guid SessionID) {
+            Session S = SessionManager.Manager.FindSession(SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            //Load Notif
+            HashSet<Notification> Ns = NecoDB.Notification
+                .Include(N => N.User)
+                .Where(N => N.User.ID == S.UserID && !N.Read).ToHashSet();
+            if (Ns == null) { return NotFound(); }
+
+            int UpdatedNotifs=0;
+
+            foreach (var N in Ns) {
+                N.Read = true;
+                NecoDB.Update(N);
+                UpdatedNotifs++;
+            }
+
+            await NecoDB.SaveChangesAsync();
+            return Ok(UpdatedNotifs);
+        }
+
+        //POST ReadNotif/Del
+        [HttpPost("ReadNotif/Del")]
+        public async Task<IActionResult> ReadNotifDel(Guid SessionID) {
+            Session S = SessionManager.Manager.FindSession(SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            //Load Notif
+            HashSet<Notification> Ns = NecoDB.Notification
+                .Include(N => N.User)
+                .Where(N => N.User.ID == S.UserID && N.Read).ToHashSet();
+            if (Ns == null) { return NotFound(); }
+
+            NecoDB.RemoveRange(Ns);
+
+            await NecoDB.SaveChangesAsync();
+            return Ok(Ns.Count);
+        }
+
         //POST: BNKO
         [HttpPost("BNKO")]
         public async Task<IActionResult> BNKOpen(BankAccountOpenRequest BNKORequest) {
@@ -299,7 +340,6 @@ namespace Igtampe.Neco.Backend.Controllers {
                                           .OrderByDescending(T => T.Time).ToListAsync();
             return Ok(Transacts);
         }
-
 
         private bool BankAccountExists(string id) { return NecoDB.BankAccount.Any(e => e.ID == id); }
 
