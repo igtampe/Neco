@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
-namespace Igtampe.Neco.Common {
+﻿namespace Igtampe.Neco.Common {
 
     /// <summary>Holds NECO Bank account details that are confidential</summary>
     public class BankAccountDetail {
 
         /// <summary>ID of this bank account</summary>
-        public Guid Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>Balance in this bank account</summary>
         public long Balance { get; set; } = 0;

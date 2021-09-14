@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Igtampe.Neco.Common.LandView {
+﻿namespace Igtampe.Neco.Common.LandView {
     
     /// <summary>Interface that defines LandViewItems that are drawable on screen</summary>
     public interface ILandViewItem {
