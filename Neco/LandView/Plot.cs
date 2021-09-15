@@ -11,9 +11,6 @@ namespace Igtampe.Neco.Common.LandView {
 
         /// <summary>Status of a Plot</summary>
         public enum PlotStatus { 
-            /// <summary>Plot is unclaimed and is available for purchase from the <see cref="District"/></summary>
-            UNCLAIMED, 
-
             /// <summary>Plot that is for sale by <see cref="Owner"/></summary>
             FOR_SALE, 
             
@@ -21,7 +18,8 @@ namespace Igtampe.Neco.Common.LandView {
             NOT_FOR_SALE, 
             
             /// <summary>Plot that has been built upon and can no longer be resold</summary>
-            BUILT}
+            BUILT
+        }
 
         /// <summary>ID of this plot</summary>
         public Guid ID { get; set; }
@@ -59,7 +57,7 @@ namespace Igtampe.Neco.Common.LandView {
         public string Name { get; set; } = "";
 
         /// <summary>Status of this plot</summary>
-        public PlotStatus Status { get; set; } = PlotStatus.UNCLAIMED;
+        public PlotStatus Status { get; set; } = PlotStatus.NOT_FOR_SALE;
 
         /// <summary>Area of this plot in square meters</summary>
         /// <returns></returns>
