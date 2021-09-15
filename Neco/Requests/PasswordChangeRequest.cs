@@ -1,7 +1,7 @@
 ﻿namespace Igtampe.Neco.Common.Requests {
 
     /// <summary>Request to change a password</summary>
-    public class PasswordChangeRequest {
+    public class PasswordChangeRequest:INecoRequest {
 
         /// <summary>ID of the session this PCR comes from</summary>
         public System.Guid SessionID {get; set;}

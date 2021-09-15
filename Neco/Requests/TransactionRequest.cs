@@ -1,6 +1,6 @@
 ﻿namespace Igtampe.Neco.Common.Requests {
     /// <summary>Holds a Neco Transaction Request</summary>
-    public class TransactionRequest {
+    public class TransactionRequest:INecoRequest {
 
         /// <summary>Session that's executing this request</summary>
         public System.Guid SessionID { get; set; }

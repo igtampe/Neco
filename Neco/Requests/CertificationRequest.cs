@@ -1,7 +1,7 @@
 ﻿namespace Igtampe.Neco.Common.Requests {
 
     /// <summary>A Neco request to certify an Item</summary>
-    public class CertificationRequest {
+    public class CertificationRequest:INecoRequest {
 
         /// <summary>SessionID of the certification origin</summary>
         public System.Guid SessionID { get; set; }

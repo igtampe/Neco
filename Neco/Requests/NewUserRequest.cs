@@ -2,6 +2,8 @@
 
 namespace Igtampe.Neco.Common.Requests {
 
+    //This one DOESN'T USE INECOREQUEST and it's because its the only request that can be made without authentication.
+
     /// <summary>Request to the Neco server to create a new user</summary>
     public class NewUserRequest {
 
