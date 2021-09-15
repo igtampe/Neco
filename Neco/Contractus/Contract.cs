@@ -16,7 +16,10 @@ namespace Igtampe.Neco.Common.Contractus {
         PENDING_PAYMENT,
 
         /// <summary>Contract has been paid and is complete</summary>
-        COMPELTED    
+        COMPELTED,
+
+        /// <summary>Contract was cancelled</summary>
+        CANCELLED
     }
 
     /// <summary>Holds a Contractus Contract</summary>
