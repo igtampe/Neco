@@ -5,85 +5,136 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Igtampe.Neco.Common;
 using Igtampe.Neco.Data;
+using Igtampe.Neco.Common.Requests;
 
 namespace Igtampe.Neco.Backend.Controllers {
 
     [Route("Checkbook")]
     [ApiController]
     public class CheckbookController: Controller {
-        private readonly NecoContext _context;
+        private readonly NecoContext NecoDB;
 
-        public CheckbookController(NecoContext context) { _context = context; }
+        public CheckbookController(NecoContext context) { NecoDB = context; }
 
-        // GET: Checkbook
-        [HttpGet]
-        public async Task<IActionResult> Index() { return Ok(await _context.CheckbookItem
-            //.Include(m=>m.AttachedTransaciton).ThenInclude(m=>m.FromUser).ThenInclude(m=>m.Type)
-            //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.ToUser).ThenInclude(m => m.Type)
-            .ToListAsync()); }
+        // POST: Checkbook
+        [HttpPost]
+        public async Task<IActionResult> IndexFromUser(Guid SessionID) {
+            Session S = SessionManager.Manager.FindSession(SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
 
-        // GET: Checkbook/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Details(Guid? id) {
-            if (id == null) { return NotFound(); }
-            var asset = await _context.CheckbookItem
-                //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.FromUser).ThenInclude(m => m.Type)
-                //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.ToUser).ThenInclude(m => m.Type)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (asset == null) { return NotFound(); }
-            return Ok(asset);
-        }
-
-        // GET: Checkbook/User
-        [HttpPost("User")]
-        public async Task<IActionResult> IndexFromUser(User U) {
-            if (string.IsNullOrEmpty(U?.ID)) { return NotFound(); }
-
-            var asset = await _context.CheckbookItem
-                //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.FromUser).ThenInclude(m => m.Type)
-                //.Include(m => m.AttachedTransaciton).ThenInclude(m => m.ToUser).ThenInclude(m => m.Type)
-                //.Where(m => (m.AttachedTransaciton.FromUser.Id == U.Id && m.Type == CheckbookItem.ItemType.BILL)
-                //        || (m.AttachedTransaciton.ToUser.Id == U.Id && m.Type == CheckbookItem.ItemType.CHECK))
+            var asset = await NecoDB.CheckbookItem
+                .Include(C => C.AttachedTransaciton).ThenInclude(AT => AT.FromAccount)
+                .Include(C => C.AttachedTransaciton).ThenInclude(AT => AT.ToAccount)
+                .Where(C=> (C.Type==CheckbookItem.ItemType.BILL && C.AttachedTransaciton.FromAccount.Owner.ID==S.UserID) || 
+                      (C.Type==CheckbookItem.ItemType.CHECK && C.AttachedTransaciton.ToAccount.Owner.ID==S.UserID))
             .ToListAsync();
             if (asset == null) { return NotFound(); }
             return Ok(asset);
         }
 
 
-        // Checkbook: UMSAT
-        [HttpPost]
-        public async Task<IActionResult> Create(CheckbookItem asset) {
-            if (asset.ID != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
-            asset.ID = Guid.NewGuid();
-            _context.Add(asset);
-            await _context.SaveChangesAsync();
-            return Created($"Checkbook/{asset.ID}", asset);
+        // POST: Checkbook/Send
+        [HttpPost("Send")]
+        public async Task<IActionResult> Create(CheckbookSendItemRequest CheckbookRequest ) {
+            Session S = SessionManager.Manager.FindSession(CheckbookRequest.SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            //Validate the internal transaction
+            if (CheckbookRequest.TransactRequest.SessionID != CheckbookRequest.SessionID) { return BadRequest("Transaction Request Sesion ID and Checkbook Request Session ID do not match"); }
+
+            //Get the bank Accounts
+            BankAccount FromBank = await NecoDB.BankAccount
+                .Include(BA=> BA.Owner)
+                .FirstOrDefaultAsync(BA => BA.ID == CheckbookRequest.TransactRequest.FromBankID);
+            if (FromBank == null) { return NotFound("From Bank was not found"); }
+
+            BankAccount ToBank = await NecoDB.BankAccount
+                .Include(BA => BA.Owner)
+                .FirstOrDefaultAsync(BA => BA.ID == CheckbookRequest.TransactRequest.ToBankID);
+            if (ToBank == null) { return NotFound("From Bank was not found"); }
+
+            if (CheckbookRequest.ItemType == CheckbookItem.ItemType.BILL) {
+                if (ToBank.Owner.ID == S.UserID) { return BadRequest("Bill was not addressed to account Session Owner owns"); }
+            } else if (CheckbookRequest.ItemType == CheckbookItem.ItemType.CHECK) {
+                if (FromBank.Owner.ID == S.UserID) { return BadRequest("Check was not from account Session Owner owns"); }
+            } else { return BadRequest("Checkbook item type was not specified, or was unable to be found"); }
+
+            Transaction T = new() {
+                Amount = CheckbookRequest.TransactRequest.Amount,
+                FromAccount = FromBank,
+                ToAccount = ToBank,
+                ID = Guid.NewGuid(),
+                Name = string.IsNullOrWhiteSpace(CheckbookRequest.TransactRequest.Name) ? $"{CheckbookRequest.ItemType} FROM {FromBank.Owner.Name} to {ToBank.Owner.Name}" : CheckbookRequest.TransactRequest.Name,
+                State = TransactionState.PENDING,
+                Time = DateTime.Now
+            };
+
+            CheckbookItem C = new() {
+                AttachedTransaciton = T,
+                Comment = CheckbookRequest.Comment,
+                ID = Guid.NewGuid(),
+                Type = CheckbookRequest.ItemType,
+                Variant = CheckbookRequest.Variant
+            };
+
+            NecoDB.Add(C);
+            await NecoDB.SaveChangesAsync();
+            
+            return Ok(C);
         }
 
-        // PUT: UMSAT/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(Guid id, CheckbookItem asset) {
-            if (id != asset.ID) { return NotFound(); }
+        // POST: Checkbook/Execute/{ID}
+        [HttpPut("Execute/{ID}")]
+        public async Task<IActionResult> Execute([FromBody]Guid SessionID, [FromQuery] Guid ID) {
+            Session S = SessionManager.Manager.FindSession(SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
 
-            try {
-                _context.Update(asset);
-                await _context.SaveChangesAsync();
-            } catch (DbUpdateConcurrencyException) {
-                if (!CheckbookItemExists(asset.ID)) { return NotFound(); } else { throw; }
-            }
+            CheckbookItem C = await NecoDB.CheckbookItem
+                .Include(C => C.AttachedTransaciton).ThenInclude(AT => AT.FromAccount).ThenInclude(A=> A.Owner)
+                .Include(C => C.AttachedTransaciton).ThenInclude(AT => AT.ToAccount).ThenInclude(A => A.Owner)
+                .Include(C => C.AttachedTransaciton).ThenInclude(AT => AT.FromAccount).ThenInclude(A=>A.Details)
+                .Include(C => C.AttachedTransaciton).ThenInclude(AT => AT.ToAccount)  .ThenInclude(A=>A.Details)
+                .FirstOrDefaultAsync(C => C.ID == ID);
 
-            return Ok(asset);
+            if (C == null) { return NotFound("Requested checkbook item was not found"); }
+            if (C.AttachedTransaciton.State == TransactionState.COMPLETED) { return BadRequest("Transaction already executed"); }
+
+            if (C.Type == CheckbookItem.ItemType.BILL) {
+                if (C.AttachedTransaciton.FromAccount.Owner.ID == S.UserID) { return Unauthorized("Session owner is unauthorized to execute this item"); }
+            } else if (C.Type == CheckbookItem.ItemType.CHECK) {
+                if (C.AttachedTransaciton.ToAccount.Owner.ID == S.UserID) { return Unauthorized("Session owner is unauthorized to execute this item"); }
+            } else { throw new InvalidOperationException("For some reason, a check in the database has no type. Time to Panic"); }
+
+            //More Validation
+            if (C.AttachedTransaciton.FromAccount.Details.Balance < C.AttachedTransaciton.Amount) { return BadRequest("Insufficient Funds"); }
+            if (C.AttachedTransaciton.FromAccount.Closed || C.AttachedTransaciton.ToAccount.Closed) { return BadRequest("One or more of the bank acounts in this transaction are closed."); }
+
+            //Execute Transaction
+            C.AttachedTransaciton.FromAccount.Details.Balance -= C.AttachedTransaciton.Amount;
+            C.AttachedTransaciton.ToAccount.Details.Balance += C.AttachedTransaciton.Amount;
+            C.AttachedTransaciton.State = TransactionState.COMPLETED;
+
+            //Build base Notification
+            Notification N = new() {
+                ID = Guid.NewGuid(),
+                Read = false,
+                Time = DateTime.Now,
+            };
+
+            //Determine who's going to get the notif and what the text will be
+            if (C.Type == CheckbookItem.ItemType.BILL) {
+                N.User = C.AttachedTransaciton.ToAccount.Owner;
+                N.Text = $"Bill you sent to {C.AttachedTransaciton.FromAccount.Owner.Name} for {C.AttachedTransaciton.Amount:N0}p has been paid!";
+            } else if (C.Type == CheckbookItem.ItemType.CHECK) {
+                N.User = C.AttachedTransaciton.FromAccount.Owner;
+                N.Text = $"Check you made for {C.AttachedTransaciton.ToAccount.Owner.Name} for {C.AttachedTransaciton.Amount:N0}p has been cashed!";
+            } else { throw new InvalidOperationException("For some reason, a check in the database has no type. Time to Panic"); }
+
+            NecoDB.Update(C);
+            NecoDB.Add(N);
+            await NecoDB.SaveChangesAsync();
+
+            return Ok(C);
         }
-
-        //DELETE: UMSAT/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id) {
-            var asset = await _context.CheckbookItem.FindAsync(id);
-            _context.CheckbookItem.Remove(asset);
-            await _context.SaveChangesAsync();
-            return Ok(asset);
-        }
-
-        private bool CheckbookItemExists(Guid id) { return _context.CheckbookItem.Any(e => e.ID == id); }
     }
 }
