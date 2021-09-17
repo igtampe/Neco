@@ -55,17 +55,17 @@ namespace ViBENecoMigrator {
             UpdateMain("Setting up some Constants", 0.05);
 
             Bank UMSNB = new() { ID = "UMSNB", Name = "The UMS National Bank", AccountTypes = new List<BankAccountType>() };
-            BankAccountType UMSNBChecking = new() { ID = Guid.NewGuid(), Bank = UMSNB, Name = "UMSNB EveryDay(tm) Checking", InterestRate = 0.02 };
+            BankAccountType UMSNBChecking = new() { Bank = UMSNB, Name = "UMSNB EveryDay(tm) Checking", InterestRate = 0.02 };
             UMSNB.AccountTypes.Add(UMSNBChecking);
             Spin();
 
             Bank GBANK = new() { ID = "GBANK", Name = "G-Bank", AccountTypes = new List<BankAccountType>() };
-            BankAccountType GBANKChecking = new() { ID = Guid.NewGuid(), Bank = GBANK, Name = "G-Bank Checking", InterestRate = 0.00 };
+            BankAccountType GBANKChecking = new() { Bank = GBANK, Name = "G-Bank Checking", InterestRate = 0.00 };
             GBANK.AccountTypes.Add(GBANKChecking);
             Spin();
 
             Bank RIVER = new() { ID = "RIVER", Name = "Riverside Bank", AccountTypes = new List<BankAccountType>() };
-            BankAccountType RIVERChecking = new() { ID = Guid.NewGuid(), Bank = RIVER, Name = "Riverside Checking", InterestRate = 0.05 };
+            BankAccountType RIVERChecking = new() { Bank = RIVER, Name = "Riverside Checking", InterestRate = 0.05 };
             GBANK.AccountTypes.Add(RIVERChecking);
             Spin();
 
@@ -75,9 +75,9 @@ namespace ViBENecoMigrator {
             Spin();
 
             UpdateLocal("User Types", .5);
-            UserType STANDARD = new() { ID = Guid.NewGuid(), Name = "Standard" };
-            UserType CORPORATE = new() { ID = Guid.NewGuid(), Name = "Corporate" };
-            UserType GOVERNMENT = new() { ID = Guid.NewGuid(), Name = "Government" };
+            UserType STANDARD = new() { Name = "Standard" };
+            UserType CORPORATE = new() { Name = "Corporate" };
+            UserType GOVERNMENT = new() { Name = "Government" };
             Spin();
 
             C.Add(STANDARD);
@@ -142,7 +142,6 @@ namespace ViBENecoMigrator {
                     Acc.Bank = UMSNB;
 
                     Acc.Details = new ();
-                    Acc.Details.ID = Guid.NewGuid();
                     Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/UMSNB/Balance.dll"));
                     Acc.Owner = U;
                     U.Accounts.Add(Acc);
@@ -157,7 +156,6 @@ namespace ViBENecoMigrator {
                     Acc.Bank = GBANK;
 
                     Acc.Details = new();
-                    Acc.Details.ID = Guid.NewGuid();
                     Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/GBANK/Balance.dll"));
                     Acc.Owner = U;
                     U.Accounts.Add(Acc);
@@ -171,7 +169,6 @@ namespace ViBENecoMigrator {
                     Acc.Bank = RIVER;
 
                     Acc.Details = new();
-                    Acc.Details.ID = Guid.NewGuid();
                     Acc.Details.Balance = long.Parse(GetFirstLine($"{CD}/RIVER/Balance.dll"));
                     Acc.Owner = U;
                     U.Accounts.Add(Acc);
@@ -226,19 +223,19 @@ namespace ViBENecoMigrator {
             UpdateLocal("EzTax Jurisdictions", 0);
 
             //Define these hardcoded since we have them
-            TaxJurisdiction UMSJurisdiction = new() { ID = Guid.NewGuid(), Name = "The UMS", Account = AccUMSGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction UMSJurisdiction = new() { Name = "The UMS", Account = AccUMSGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction NewJurisdiction = new() { ID = Guid.NewGuid(), Name = "Newpond", Account = AccNewpondGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction NewJurisdiction = new() { Name = "Newpond", Account = AccNewpondGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction ParJurisdiction = new() { ID = Guid.NewGuid(), Name = "Paradisus", Account = AccParadisusGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction ParJurisdiction = new() { Name = "Paradisus", Account = AccParadisusGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction UrbJurisdiction = new() { ID = Guid.NewGuid(), Name = "Urbia", Account = AccUrbiaGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction UrbJurisdiction = new() { Name = "Urbia", Account = AccUrbiaGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction LaeJurisdiction = new() { ID = Guid.NewGuid(), Name = "Laertes", Account = AccLaertesGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction LaeJurisdiction = new() { Name = "Laertes", Account = AccLaertesGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction NosJurisdiction = new() { ID = Guid.NewGuid(), Name = "North Osten", Account = AccNOstenGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction NosJurisdiction = new() { Name = "North Osten", Account = AccNOstenGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
-            TaxJurisdiction SosJurisdiction = new() { ID = Guid.NewGuid(), Name = "South Osten", Account = AccSOstenGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
+            TaxJurisdiction SosJurisdiction = new() { Name = "South Osten", Account = AccSOstenGov.Accounts.FirstOrDefault(), Brackets = new List<TaxBracket>() };
             Spin();
 
 
@@ -251,7 +248,7 @@ namespace ViBENecoMigrator {
 
             //FED: Personal Taxed,0.05,5000000,       
             TaxBracket FedPersonal = new() {
-                ID = Guid.NewGuid(), Name = "Federal Personal Taxed",
+                Name = "Federal Personal Taxed",
                 Jurisdiction = UMSJurisdiction, Type = STANDARD, Rate = 0.05,
                 Start = 5000000, End = long.MaxValue
             };
@@ -259,7 +256,7 @@ namespace ViBENecoMigrator {
 
             //FED: Personal Untaxed,0.00,      0,5000000
             TaxBracket FedPersonalUntaxed = new() {
-                ID = Guid.NewGuid(), Name = "Federal Personal Untaxed",
+                Name = "Federal Personal Untaxed",
                 Jurisdiction = UMSJurisdiction, Type = STANDARD, Rate = 0.00,
                 Start = 0, End = 5000000
             };
@@ -268,7 +265,7 @@ namespace ViBENecoMigrator {
             //
             //FCorp: Corporate Taxed,0.02,500000000,       
             TaxBracket FedCorporate = new() {
-                ID = Guid.NewGuid(), Name = "Federal Corporate Taxed",
+                Name = "Federal Corporate Taxed",
                 Jurisdiction = UMSJurisdiction, Type = CORPORATE, Rate = 0.02,
                 Start = 500000000, End = long.MaxValue
             };
@@ -276,7 +273,7 @@ namespace ViBENecoMigrator {
 
             //FCorp: Corporate Untaxed,0.00,        0,500000000
             TaxBracket FedCorporateUntaxed = new() {
-                ID = Guid.NewGuid(), Name = "Federal Corporate Untaxed",
+                Name = "Federal Corporate Untaxed",
                 Jurisdiction = UMSJurisdiction, Type = CORPORATE, Rate = 0.00,
                 Start = 0, End = 500000000
             };
@@ -285,7 +282,7 @@ namespace ViBENecoMigrator {
             //
             //New: Newpond Flat Personal,0.001,0,
             TaxBracket NewpondPersonal = new() {
-                ID = Guid.NewGuid(), Name = "Newpond Flat Personal",
+                Name = "Newpond Flat Personal",
                 Jurisdiction = NewJurisdiction, Type = STANDARD, Rate = 0.001,
                 Start = 0, End = long.MaxValue
             };
@@ -294,7 +291,7 @@ namespace ViBENecoMigrator {
             //
             //NCorp: Newpond Flat Corporate,0.001,0,
             TaxBracket NewpondCorporate = new() {
-                ID = Guid.NewGuid(), Name = "Newpond Flat Corporate",
+                Name = "Newpond Flat Corporate",
                 Jurisdiction = NewJurisdiction, Type = CORPORATE, Rate = 0.001,
                 Start = 0, End = long.MaxValue
             };
@@ -303,7 +300,7 @@ namespace ViBENecoMigrator {
             //
             //Urb: Urbia Flat Personal,0.005,0,
             TaxBracket UrbiaPersonal = new() {
-                ID = Guid.NewGuid(), Name = "Urbia Flat Personal",
+                Name = "Urbia Flat Personal",
                 Jurisdiction = UrbJurisdiction, Type = STANDARD, Rate = 0.005,
                 Start = 0, End = long.MaxValue
             };
@@ -312,7 +309,7 @@ namespace ViBENecoMigrator {
             //
             //UCorp: Urbia Flat Corporate,0.005,0,
             TaxBracket UrbiaCorporate = new() {
-                ID = Guid.NewGuid(), Name = "Urbia Flat Corporate",
+                Name = "Urbia Flat Corporate",
                 Jurisdiction = UrbJurisdiction, Type = CORPORATE, Rate = 0.005,
                 Start = 0, End = long.MaxValue
             };
@@ -321,7 +318,7 @@ namespace ViBENecoMigrator {
             //
             //Par: Paradisus Untaxed,0,0,
             TaxBracket ParadisusUntaxed = new() {
-                ID = Guid.NewGuid(), Name = "Paradisus Untaxed",
+                Name = "Paradisus Untaxed",
                 Jurisdiction = ParJurisdiction, Type = STANDARD, Rate = 0.00,
                 Start = 0, End = long.MaxValue
             };
@@ -330,7 +327,7 @@ namespace ViBENecoMigrator {
             //
             //PCorp: Paradisus Untaxed,0,0,
             TaxBracket ParadisusCorpUntaxed = new() {
-                ID = Guid.NewGuid(), Name = "Paradisus Corp Untaxed",
+                Name = "Paradisus Corp Untaxed",
                 Jurisdiction = ParJurisdiction, Type = CORPORATE, Rate = 0.00,
                 Start = 0, End = long.MaxValue
             };
@@ -339,7 +336,7 @@ namespace ViBENecoMigrator {
             //
             //Lae: Laertes Untaxed,0,0,
             TaxBracket LaertesUntaxed = new() {
-                ID = Guid.NewGuid(), Name = "Laertes Untaxed",
+                Name = "Laertes Untaxed",
                 Jurisdiction = LaeJurisdiction, Type = STANDARD, Rate = 0.00,
                 Start = 0, End = long.MaxValue
             };
@@ -348,7 +345,7 @@ namespace ViBENecoMigrator {
             //
             //LCorp: Laertes Corporate Untaxed,0,0,
             TaxBracket LaertesCorpUntaxed = new() {
-                ID = Guid.NewGuid(), Name = "Laertes Corp Untaxed",
+                Name = "Laertes Corp Untaxed",
                 Jurisdiction = LaeJurisdiction, Type = CORPORATE, Rate = 0.00,
                 Start = 0, End = long.MaxValue
             };
@@ -357,7 +354,7 @@ namespace ViBENecoMigrator {
             //
             //NOsten: North Osten Personal Flat,0.005,0,
             TaxBracket NOstenPersonalFlat = new() {
-                ID = Guid.NewGuid(), Name = "North Osten Flat Personal",
+                Name = "North Osten Flat Personal",
                 Jurisdiction = NosJurisdiction, Type = STANDARD, Rate = 0.005,
                 Start = 0, End = long.MaxValue
             };
@@ -366,7 +363,7 @@ namespace ViBENecoMigrator {
             //
             //NOCorp: North Osten Flat Corporate Tax,0.01,0,
             TaxBracket NOstenCorpFlat = new() {
-                ID = Guid.NewGuid(), Name = "North Osten Flat Corporate",
+                Name = "North Osten Flat Corporate",
                 Jurisdiction = NosJurisdiction, Type = CORPORATE, Rate = 0.01,
                 Start = 0, End = long.MaxValue
             };
@@ -375,7 +372,7 @@ namespace ViBENecoMigrator {
             //
             //SOsten: South Osten Personal Flat,0.002,0,
             TaxBracket SOstenPersonalFlat = new() {
-                ID = Guid.NewGuid(), Name = "South Osten Flat Personal",
+                Name = "South Osten Flat Personal",
                 Jurisdiction = SosJurisdiction, Type = STANDARD, Rate = 0.002,
                 Start = 0, End = long.MaxValue
             };
@@ -384,7 +381,7 @@ namespace ViBENecoMigrator {
             //
             //SOCorp: South Osten Corporate Flat,0.002,0,
             TaxBracket SOstenCorpFlat = new() {
-                ID = Guid.NewGuid(), Name = "South Osten Flat Corporate",
+                Name = "South Osten Flat Corporate",
                 Jurisdiction = SosJurisdiction, Type = CORPORATE, Rate = 0.002,
                 Start = 0, End = long.MaxValue
             };
@@ -475,7 +472,7 @@ namespace ViBENecoMigrator {
                     if (currentline.Length < 2) { continue; }
                     if (currentline.Length == 2) {
                         //Legacy Item
-                        TUI.Items.Add(new IncomeItem() { ID = Guid.NewGuid(), Name = currentline[0], FederalJurisdiction = UMSJurisdiction, LocalJurisdiction = null, MiscIncome = long.Parse(currentline[1]), User = U, });
+                        TUI.Items.Add(new IncomeItem() { Name = currentline[0], FederalJurisdiction = UMSJurisdiction, LocalJurisdiction = null, MiscIncome = long.Parse(currentline[1]), User = U, });
                     } else {
                         //New Item
 
@@ -486,19 +483,19 @@ namespace ViBENecoMigrator {
                             PUnits = int.Parse(currentline[6]), SRent = int.Parse(currentline[7]),
                             B1Rent = int.Parse(currentline[8]), B2Rent = int.Parse(currentline[9]),
                             B3Rent = int.Parse(currentline[10]), PRent = int.Parse(currentline[11]),
-                            ID = Guid.NewGuid(), Name = $"{Name} Apartment"
+                            Name = $"{Name} Apartment"
                         };
 
                         Hotel Hotel = new() {
                             Rooms = int.Parse(currentline[12]), Suites = int.Parse(currentline[13]),
                             RoomRate = int.Parse(currentline[14]), SuiteRate = int.Parse(currentline[15]),
-                            MiscIncome = int.Parse(currentline[16]), Name = $"{Name} Hotel", ID = Guid.NewGuid()
+                            MiscIncome = int.Parse(currentline[16]), Name = $"{Name} Hotel"
                         };
 
                         Business Business = new() {
                             Chairs = int.Parse(currentline[17]), AvgSpend = int.Parse(currentline[18]),
                             CustPerHour = int.Parse(currentline[19]), HoursOpen = int.Parse(currentline[20]),
-                            ID = Guid.NewGuid(), Name = $"{Name} Business"
+                            Name = $"{Name} Business"
                         };
 
                         long MiscIncome = long.Parse(currentline[21]);
@@ -529,7 +526,7 @@ namespace ViBENecoMigrator {
                         }
 
                         IncomeItem I = new() {
-                            ID = Guid.NewGuid(), Name = Name, FederalJurisdiction = UMSJurisdiction,
+                            Name = Name, FederalJurisdiction = UMSJurisdiction,
                             LocalJurisdiction = Jurisdiction, MiscIncome = MiscIncome, User = U,
                             Apartments = new List<Apartment>(),
                             Businesses = new List<Business>(),
@@ -585,7 +582,7 @@ namespace ViBENecoMigrator {
                     if (!DateTime.TryParse((string)Reader[5], out DateTime DOC)) { DOC = DateTime.MinValue; }
                     if (!DateTime.TryParse((string)Reader[6], out DateTime DOLU)) { DOLU = DateTime.Now; }
                     Asset A = new() {
-                        ID = Guid.NewGuid(), Name = (string)Reader[0], Owner = C.User.Find((string)Reader[1]),
+                        Name = (string)Reader[0], Owner = C.User.Find((string)Reader[1]),
                         SpecificLocaiton = (string)Reader[2], Image = new System.Net.WebClient().DownloadData((string)Reader[3]),
                         Description = (string)Reader[4], CreationDate = DOC,  UpdateDate = DOLU, Complete = bool.Parse((string)Reader[7]), 
                         IncomeItem = null, Plot = null

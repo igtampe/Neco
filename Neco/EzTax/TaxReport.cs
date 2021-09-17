@@ -62,7 +62,6 @@ namespace Igtampe.Neco.Common.EzTax {
             TaxReport TR = new();
 
             //Initialize the vars
-            TR.ID = Guid.NewGuid();
             TR.PreparedDate = DateTime.Now;
             TR.StaticIncome = 0;
             TR.ExtraIncome = 0;

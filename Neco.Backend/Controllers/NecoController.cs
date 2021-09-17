@@ -142,7 +142,6 @@ namespace Igtampe.Neco.Backend.Controllers {
 
             if (FromBank.Owner.ID.Equals(ToBank.Owner.ID)) {
                 N = new() {
-                    ID = Guid.NewGuid(),
                     Read = false,
                     Text = $"{FromBank.Owner.Name} sent a Neco with {TransactRequest.Amount : N0}p to Bank {ToBank.ID}",
                     Time = DateTime.Now,
@@ -157,7 +156,6 @@ namespace Igtampe.Neco.Backend.Controllers {
                 State = TransactionState.COMPLETED,
                 FromAccount = FromBank,
                 ToAccount = ToBank,
-                ID = Guid.NewGuid(),
                 Time = DateTime.Now,
                 Name = string.IsNullOrWhiteSpace(TransactRequest.Name) 
                 ? $"TRANSFER FROM {FromBank.ID} TO {ToBank.ID}"
@@ -211,7 +209,6 @@ namespace Igtampe.Neco.Backend.Controllers {
             CertifiedItem C = new() {
                 CertifiedBy = await NecoDB.User.FirstOrDefaultAsync(u => u.ID == S.UserID),
                 Date = DateTime.Now,
-                ID = Guid.NewGuid(),
                 Text = CertRequest.Text
             };
 
@@ -303,10 +300,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             BankAccount A = new() {
                 Bank = Type.Bank,
                 Closed = false,
-                Details = new() {
-                    Balance = 0,
-                    ID = Guid.NewGuid()
-                },
+                Details = new() { Balance = 0 },
                 ID = ID,
                 Owner = await NecoDB.User.FirstOrDefaultAsync(U=>U.ID==S.UserID),
                 Type = Type

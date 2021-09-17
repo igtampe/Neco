@@ -54,7 +54,6 @@ namespace Igtampe.Neco.Backend.Controllers {
         [HttpPost]
         public async Task<IActionResult> Create(Asset asset) {
             if (asset.ID != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
-            asset.ID = Guid.NewGuid();
             _context.Add(asset);
             await _context.SaveChangesAsync();
             return Created($"UMSAT/{asset.ID}", asset);

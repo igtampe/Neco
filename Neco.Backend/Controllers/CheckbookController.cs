@@ -63,7 +63,6 @@ namespace Igtampe.Neco.Backend.Controllers {
                 Amount = CheckbookRequest.TransactRequest.Amount,
                 FromAccount = FromBank,
                 ToAccount = ToBank,
-                ID = Guid.NewGuid(),
                 Name = string.IsNullOrWhiteSpace(CheckbookRequest.TransactRequest.Name) ? $"{CheckbookRequest.ItemType} FROM {FromBank.Owner.Name} to {ToBank.Owner.Name}" : CheckbookRequest.TransactRequest.Name,
                 State = TransactionState.PENDING,
                 Time = DateTime.Now
@@ -72,7 +71,6 @@ namespace Igtampe.Neco.Backend.Controllers {
             CheckbookItem C = new() {
                 AttachedTransaciton = T,
                 Comment = CheckbookRequest.Comment,
-                ID = Guid.NewGuid(),
                 Type = CheckbookRequest.ItemType,
                 Variant = CheckbookRequest.Variant
             };
@@ -116,7 +114,6 @@ namespace Igtampe.Neco.Backend.Controllers {
 
             //Build base Notification
             Notification N = new() {
-                ID = Guid.NewGuid(),
                 Read = false,
                 Time = DateTime.Now,
             };

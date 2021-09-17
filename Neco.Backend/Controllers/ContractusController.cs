@@ -48,7 +48,6 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (S == null) { return Unauthorized("Invalid session"); }
 
             Contract C = new() {
-                ID = Guid.NewGuid(),
                 Amount = long.MaxValue,
                 Description = Request.Description,
                 Name = Request.Name,

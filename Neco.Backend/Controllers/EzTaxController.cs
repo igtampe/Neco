@@ -52,7 +52,6 @@ namespace Igtampe.Neco.Backend.Controllers {
         [HttpPost("IncomeItem")]
         public async Task<IActionResult> IncomeItemCreate(IncomeItem asset) {
             if (asset.ID != Guid.Empty) { BadRequest("Asset has an ID. Did you mean to edit it?"); }
-            asset.ID = Guid.NewGuid();
             NecoDB.Add(asset);
             await NecoDB.SaveChangesAsync();
             return Ok(asset);
