@@ -18,6 +18,7 @@ namespace Igtampe.Neco.Common.EzTax {
         public Guid ID { get; set; }
 
         /// <summary>User this Report belongs to</summary>
+        [JsonIgnore]
         public User Owner { get; set; }
 
         /// <summary>Date at which this tax report was prepared</summary>
