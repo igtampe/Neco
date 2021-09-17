@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Igtampe.Neco.Common.EzTax {
 
@@ -10,6 +11,7 @@ namespace Igtampe.Neco.Common.EzTax {
         public Guid ID { get; set; }
 
         /// <summary>Jurisdiction this tax bracket belongs to</summary>
+        [JsonIgnore]
         public TaxJurisdiction Jurisdiction { get; set; }
 
         /// <summary>Name of this tax bracket</summary>

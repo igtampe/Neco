@@ -25,10 +25,10 @@ namespace Igtampe.Neco.Common.EzTax {
         /// <param name="U"></param>
         /// <param name="I"></param>
         /// <returns></returns>
-        public long CalculateTax(User U, long I) {
+        public (long,TaxBracket) CalculateTax(User U, long I) {
             TaxBracket T = Brackets.FirstOrDefault(P => P.Type.Equals(U.Type) && P.Start >= I && I < P.End); //LOOK AT THIS BEAUTY HOW HAD I NOT USED LINQ BEFORE
-            if(T == null) return 0;
-            return Convert.ToInt64(I * T.Rate);
+            if(T == null) return (0, null);
+            return (Convert.ToInt64(I * T.Rate), T);
         }
 
         /// <summary>Compares this TaxJurisdiction to another object</summary>
