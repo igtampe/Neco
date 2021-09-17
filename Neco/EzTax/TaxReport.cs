@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ namespace Igtampe.Neco.Common.EzTax {
     public class TaxReport {
 
         /// <summary>ID of this Tax Report</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>Date at which this tax report was prepared</summary>

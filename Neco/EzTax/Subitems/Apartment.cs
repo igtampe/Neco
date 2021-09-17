@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Igtampe.Neco.Common.EzTax.Subitems {
@@ -8,6 +9,8 @@ namespace Igtampe.Neco.Common.EzTax.Subitems {
     public class Apartment:IncomeSubitem {
 
         /// <summary>ID of this subitem</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public override Guid ID { get; set; }
 
         /// <summary>IncomeItem this Subitem belongs to</summary>

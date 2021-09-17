@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Igtampe.Neco.Common {
@@ -7,6 +9,8 @@ namespace Igtampe.Neco.Common {
     public class Notification {
 
         /// <summary>ID of this notification</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>Text contained in this notification</summary>

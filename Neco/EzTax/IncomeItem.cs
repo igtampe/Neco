@@ -12,6 +12,8 @@ namespace Igtampe.Neco.Common.EzTax {
     public class IncomeItem {
 
         /// <summary>ID of this income item</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>Name of this IncomeItem</summary>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 
@@ -9,6 +11,8 @@ namespace Igtampe.Neco.Common.EzTax {
     public class TaxJurisdiction {
 
         /// <summary>ID of this jurisdiction</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>Name of this jurisdiction</summary>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Igtampe.Neco.Common {
 
@@ -6,6 +8,8 @@ namespace Igtampe.Neco.Common {
     public class CertifiedItem {
 
         /// <summary>ID of this certified item</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>Human readable text in case the object fails to load</summary>

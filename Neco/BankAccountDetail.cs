@@ -1,9 +1,14 @@
-﻿namespace Igtampe.Neco.Common {
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Igtampe.Neco.Common {
 
     /// <summary>Holds NECO Bank account details that are confidential</summary>
     public class BankAccountDetail {
 
         /// <summary>ID of this bank account</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public System.Guid ID { get; set; }
 
         /// <summary>Balance in this bank account</summary>

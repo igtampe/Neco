@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Igtampe.Neco.Common.EzTax;
 using Igtampe.Neco.Common.LandView;
 
@@ -8,6 +10,8 @@ namespace Igtampe.Neco.Common.UMSAT {
     public class Asset {
 
         /// <summary>ID of this item</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>Name of this Item</summary>

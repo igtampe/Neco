@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Igtampe.Neco.Common.Contractus {
 
@@ -26,6 +27,8 @@ namespace Igtampe.Neco.Common.Contractus {
     public class Contract {
 
         /// <summary>ID Of this contract</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>Name of this contract</summary>

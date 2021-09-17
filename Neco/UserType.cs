@@ -1,4 +1,7 @@
-﻿namespace Igtampe.Neco.Common {
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Igtampe.Neco.Common {
 
     /// <summary>Determines the taxability of transactions to or from accounts held by users of this user type</summary>
     public enum TaxationType {
@@ -25,6 +28,8 @@
     public class UserType {
 
         /// <summary>ID of this User Type</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public System.Guid ID { get; set; }
 
         /// <summary>Name of this User Type (IE Standard, Corporate, Government)</summary>

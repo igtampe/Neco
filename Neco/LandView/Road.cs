@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Igtampe.Neco.Common.LandView {
 
@@ -9,6 +10,8 @@ namespace Igtampe.Neco.Common.LandView {
     public class Road {
 
         /// <summary>ID of this road</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>Name of this road</summary>

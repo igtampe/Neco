@@ -9,6 +9,7 @@ namespace Igtampe.Neco.Common {
         /// <summary>UMSWEB ID of this user</summary>
         [MinLength(5)]
         [MaxLength(5)]
+        [Key]
         public string ID { get; set; }
 
         /// <summary>Name of this user</summary>

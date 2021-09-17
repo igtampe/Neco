@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Igtampe.Neco.Common {
 
@@ -20,6 +21,8 @@ namespace Igtampe.Neco.Common {
     public class Transaction {
 
         /// <summary>ID of this transaction</summary>        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>Amount  transfered by this transaction</summary>

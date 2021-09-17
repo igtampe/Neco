@@ -3,25 +3,28 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Igtampe.Neco.Common.LandView {
-    
+
+    /// <summary>Status of a Plot</summary>
+    public enum PlotStatus {
+        /// <summary>Plot that is for sale by <see cref="Owner"/></summary>
+        FOR_SALE,
+
+        /// <summary>Plot that is owned and is not for  sale</summary>
+        NOT_FOR_SALE,
+
+        /// <summary>Plot that has been built upon and can no longer be resold</summary>
+        BUILT
+    }
+
     /// <summary>A plot of land located in a <see cref="District"/></summary>
     public class Plot:ILandViewItem {
 
-        /// <summary>Status of a Plot</summary>
-        public enum PlotStatus { 
-            /// <summary>Plot that is for sale by <see cref="Owner"/></summary>
-            FOR_SALE, 
-            
-            /// <summary>Plot that is owned and is not for  sale</summary>
-            NOT_FOR_SALE, 
-            
-            /// <summary>Plot that has been built upon and can no longer be resold</summary>
-            BUILT
-        }
-
         /// <summary>ID of this plot</summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>District this Plot belongs to</summary>

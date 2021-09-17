@@ -12,6 +12,8 @@ namespace Igtampe.Neco.Common.LandView {
     public class District:ILandViewItem {
 
         /// <summary>ID of this </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid ID { get; set; }
 
         /// <summary>Name of this District</summary>
