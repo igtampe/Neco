@@ -6,7 +6,7 @@
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
-
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>C:\Users\Igtam\source\repos\Neco\Neco\Igtampe.Neco.Common.xml</DocumentationFile>
   </PropertyGroup>
