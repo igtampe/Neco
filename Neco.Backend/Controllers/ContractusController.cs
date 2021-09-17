@@ -7,71 +7,138 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Igtampe.Neco.Common.Contractus;
 using Igtampe.Neco.Data;
+using Igtampe.Neco.Common.Contractus.Requests;
 
 namespace Igtampe.Neco.Backend.Controllers {
 
     [Route("Contractus")]
     [ApiController]
     public class ContractusController: Controller {
-        private readonly NecoContext _context;
+        private readonly NecoContext NecoDB;
 
-        public ContractusController(NecoContext context) { _context = context; }
+        public ContractusController(NecoContext context) { NecoDB = context; }
 
-        // GET: UMSAT
+        // GET: CONTRACTUS
         [HttpGet]
-        public async Task<IActionResult> Index() { return Ok(await _context.Contract
+        public async Task<IActionResult> Index() { return Ok(await NecoDB.Contract
             .Include(m=>m.FromUser).ThenInclude(m=>m.Type)
             .Include(m=>m.TopBidder).ThenInclude(m => m.Type)
+            .Where(m=> m.Status==ContractStatus.AUCTION)
             .ToListAsync()); }
 
-        // GET: UMSAT/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Details(Guid? id) {
-            if (id == null) { return NotFound(); }
+        // POST: CONTRACTUS
+        [HttpPost]
+        public async Task<IActionResult> UserIndex(Guid SessionID) {
+            Session S = SessionManager.Manager.FindSession(SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
 
-            var contract = await _context.Contract
+            var contract = await NecoDB.Contract
                 .Include(m => m.FromUser).ThenInclude(m => m.Type)
                 .Include(m => m.TopBidder).ThenInclude(m => m.Type)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.FromUser.ID == S.UserID || (m.TopBidder.ID==S.UserID && m.Status != ContractStatus.AUCTION));
             if (contract == null) { return NotFound(); }
 
             return Ok(contract);
         }
 
-        // POST: UMSAT
-        [HttpPost]
-        public async Task<IActionResult> Create(Contract contract) {
-            if (contract.ID != Guid.Empty) { BadRequest("Contract has an ID. Did you mean to edit it?"); }
-            contract.ID = Guid.NewGuid();
-            _context.Add(contract);
-            await _context.SaveChangesAsync();
-            return Created($"Contractus/{contract.ID}", contract);
+        // POST: CONTRACTUS/Create
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(NewContractRequest Request) {
+            Session S = SessionManager.Manager.FindSession(Request.SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            Contract C = new() {
+                ID = Guid.NewGuid(),
+                Amount = long.MaxValue,
+                Description = Request.Description,
+                Name = Request.Name,
+                Status = ContractStatus.AUCTION,
+                TopBidder = null,
+                FromUser = await NecoDB.User.FirstOrDefaultAsync(A=>A.ID == S.UserID)
+            };
+
+            NecoDB.Add(C);
+            await NecoDB.SaveChangesAsync();
+            return Ok(C);
         }
 
-        // PUT: UMSAT/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(Guid id, Contract contract) {
-            if (id != contract.ID) { return NotFound(); }
+        // POST: CONTRACTUS/Bid
+        [HttpPost("Bid")]
+        public async Task<IActionResult> Bid(AddBidRequest Request) {
+            Session S = SessionManager.Manager.FindSession(Request.SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
 
-            try {
-                _context.Update(contract);
-                await _context.SaveChangesAsync();
-            } catch (DbUpdateConcurrencyException) {
-                if (!AssetExists(contract.ID)) { return NotFound(); } else { throw; }
+            //Load the contract
+            Contract C = await NecoDB.Contract
+                .Include(m => m.FromUser).ThenInclude(m => m.Type)
+                .Include(m => m.TopBidder).ThenInclude(m => m.Type)
+                .FirstOrDefaultAsync(C => C.ID == Request.ContractID);
+            if (C == null) { return NotFound(); }
+
+            //Contract in Auction State?
+            if (C.Status != ContractStatus.AUCTION) { return BadRequest("Contract is not in Auction state"); }
+
+            //Bid is lower?
+            if (C.Amount >= Request.Bid) { return BadRequest($"Provided bid is not lower than the current bid of {C.Amount}"); }
+
+            C.Amount = Request.Bid;
+            C.TopBidder = await NecoDB.User.FirstOrDefaultAsync(U => U.ID == S.UserID);
+            NecoDB.Update(C);
+            await NecoDB.SaveChangesAsync();
+
+            return Ok(C);
+        }
+
+        //POST: CONTRACTUS/Change
+        [HttpPost("Change")]
+        public async Task<IActionResult> ChangeStatus(ChangeContractStatusRequest Request) {
+            Session S = SessionManager.Manager.FindSession(Request.SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+
+            //Load the contract
+            Contract C = await NecoDB.Contract
+                .Include(C=>C.FromUser).ThenInclude(m => m.Type)
+                .Include(C=>C.TopBidder).ThenInclude(m => m.Type)
+                .FirstOrDefaultAsync(C => C.ID == Request.ContractID);
+            if (C == null) { return NotFound(); }
+
+            switch (C.Status) {
+                case ContractStatus.AUCTION:
+                    if (S.UserID != C.FromUser.ID) { return Unauthorized("User is unauthorized to modify contract state in its current state"); }
+                    if (Request.NewStatus == ContractStatus.CANCELLED) {
+                        C.Status = ContractStatus.CANCELLED;
+                        break;
+                    } else if (Request.NewStatus == ContractStatus.AWARDED) {
+
+                        if (C.TopBidder == null) { return BadRequest("Cannot award the contract! Nobody has bidded!"); }
+                        C.Status = ContractStatus.AWARDED;
+                        break;
+                    } else { return BadRequest("Invalid status to change to was provided"); }
+                case ContractStatus.AWARDED:
+                    if (S.UserID != C.TopBidder.ID) { return Unauthorized("User is unauthorized to modify contract state in its current state"); }
+                    if (Request.NewStatus == ContractStatus.CANCELLED) {
+                        C.Status = ContractStatus.CANCELLED;
+                        break;
+                    } else if (Request.NewStatus == ContractStatus.PENDING_PAYMENT) {
+                        C.Status = ContractStatus.PENDING_PAYMENT;
+                        break;
+                    } else { return BadRequest("Invalid status to change to was provided"); }
+                case ContractStatus.PENDING_PAYMENT:
+                    if (S.UserID != C.TopBidder.ID) { return Unauthorized("User is unauthorized to modify contract state in its current state"); }
+                    if (Request.NewStatus == ContractStatus.COMPELTED) {
+                        C.Status = ContractStatus.COMPELTED;
+                        break;
+                    } else { return BadRequest("Invalid status to change to was provided"); }
+                case ContractStatus.COMPELTED:
+                case ContractStatus.CANCELLED:
+                default:
+                    return BadRequest("Contract is in an Invalid or Final state. We can't change its status.");
             }
 
-            return Ok(contract);
-        }
+            NecoDB.Update(C);
+            await NecoDB.SaveChangesAsync();
 
-        //DELETE: UMSAT/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id) {
-            var asset = await _context.Contract.FindAsync(id);
-            _context.Contract.Remove(asset);
-            await _context.SaveChangesAsync();
-            return Ok(asset);
+            return Ok(C);
         }
-
-        private bool AssetExists(Guid id) { return _context.Contract.Any(e => e.ID == id); }
     }
 }
