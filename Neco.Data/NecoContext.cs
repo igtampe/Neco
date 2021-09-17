@@ -93,6 +93,9 @@ namespace Igtampe.Neco.Data {
         /// <summary>Table of all hotels</summary>
         public DbSet<Hotel> Hotel { get; set; }
 
+        /// <summary>Table of all Tax Reports</summary>
+        public DbSet<TaxReport> Report { get; set; }
+
         //LandView
 
         /// <summary>Table of all Countries</summary>
