@@ -29,11 +29,20 @@ namespace Igtampe.Neco.Backend {
         /// <summary>Internal constructor to create a session manager</summary>
         private SessionManager() { Sessions = new HashSet<Session>(); }
 
-        /// <summary>Adds given session to the sessions collection if it is not expired</summary>
+        /// <summary>Logs specified user in to a new session.</summary>
         /// <param name="S"></param>
-        public void AddSession(Session S) {
-            if (S.Expired) { throw new ArgumentException("Session is Expired"); }
+        /// <returns>GUID of the added session</returns>
+        public Guid LogIn(string UserID) {
+            Session S;
+            do {
+                S = new(UserID);
+            } while (Sessions.Contains(S));
+
+            //Add the session
             Sessions.Add(S);
+
+            //Return the Session
+            return S.ID;
         }
 
         /// <summary>Returns a session with sepcified ID. 
@@ -61,10 +70,19 @@ namespace Igtampe.Neco.Backend {
         /// <summary>Removes a session with specified ID</summary>
         /// <param name="ID"></param>
         /// <returns>Returns true if the session was found and was removed, false otherwise</returns>
-        public bool RemoveSession(Guid ID) {
+        public bool LogOut(Guid ID) {
             Session S = FindSession(ID);
             if (S == null) { return false; }
             return Sessions.Remove(S);
+        }
+
+        /// <summary>Removes all sessions for the specified user</summary>
+        /// <param name="UserID"></param>
+        /// <returns>Number of sessions logged out of</returns>
+        public int LogOutAll(string UserID) {
+            ICollection<Session> Ss = Sessions.Where(S => S.UserID == UserID).ToList();
+            foreach (Session S in Ss) { Sessions.Remove(S);}
+            return Ss.Count;
         }
 
         /// <summary>Removes all expired sessions from the collection of active sessions</summary>
