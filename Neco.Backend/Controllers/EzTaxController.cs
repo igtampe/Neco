@@ -218,7 +218,8 @@ namespace Igtampe.Neco.Backend.Controllers {
                 Ts = await NecoDB.Transaction
                     .Include(T => T.FromAccount).ThenInclude(A => A.Owner).ThenInclude(U => U.Type)
                     .Include(T => T.ToAccount).ThenInclude(A => A.Owner).ThenInclude(U => U.Type)
-                    .Where(T => T.Time > DayOfThisMonth(15) && T.State==TransactionState.COMPLETED)
+                    .Where(T => T.Time > DayOfThisMonth(15) && T.State==TransactionState.COMPLETED
+                                && T.FromAccount.ID != "999999999")
                     .ToListAsync();
 
             } else {
@@ -227,7 +228,8 @@ namespace Igtampe.Neco.Backend.Controllers {
                 Ts = await NecoDB.Transaction
                     .Include(T => T.FromAccount).ThenInclude(A => A.Owner).ThenInclude(U => U.Type)
                     .Include(T => T.ToAccount).ThenInclude(A => A.Owner).ThenInclude(U => U.Type)
-                    .Where(T => T.Time > DayOfLastMonth(15) && T.Time < DayOfThisMonth(15) && T.State == TransactionState.COMPLETED)
+                    .Where(T => T.Time > DayOfLastMonth(15) && T.Time < DayOfThisMonth(15) 
+                                && T.State == TransactionState.COMPLETED && T.FromAccount.ID != "999999999")
                     .ToListAsync();
 
             }
