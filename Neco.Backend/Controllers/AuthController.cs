@@ -21,6 +21,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
             //Find a user:
             UserAuth DBU = await _context.UserAuth.FindAsync(U.ID);
+            if (DBU == null) { return Ok(Guid.Empty); }
 
             if (DBU.Equals(U)) {
                 //Log in
