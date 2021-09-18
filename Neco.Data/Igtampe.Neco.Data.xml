@@ -44,6 +44,9 @@
             <summary>Downs the migration</summary>
             <param name="migrationBuilder"></param>
         </member>
+        <member name="T:Igtampe.Neco.Data.Migrations.BankAddOwner">
+            <summary>Adds Bank Owner to the migration</summary>
+        </member>
         <member name="M:Igtampe.Neco.Data.Migrations.BankAddOwner.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <summary>Ups migration</summary>
             <param name="migrationBuilder"></param>
@@ -115,6 +118,9 @@
         <member name="P:Igtampe.Neco.Data.NecoContext.BankAccount">
             <summary>Table of all Bank Accounts</summary>
         </member>
+        <member name="P:Igtampe.Neco.Data.NecoContext.BankAccountDetail">
+            <summary>Table of all Bank Accounts</summary>
+        </member>
         <member name="P:Igtampe.Neco.Data.NecoContext.Bank">
             <summary>Table of all Banks</summary>
         </member>
@@ -141,6 +147,9 @@
         </member>
         <member name="P:Igtampe.Neco.Data.NecoContext.Hotel">
             <summary>Table of all hotels</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Data.NecoContext.TaxReport">
+            <summary>Table of all Tax Reports</summary>
         </member>
         <member name="P:Igtampe.Neco.Data.NecoContext.Country">
             <summary>Table of all Countries</summary>

@@ -4,35 +4,10 @@
         <name>Igtampe.Neco.Common</name>
     </assembly>
     <members>
-        <member name="T:Igtampe.Neco.Common.Auth.PasswordChangeRequest">
-            <summary>Request to change a password</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.Auth.PasswordChangeRequest.UserID">
-            <summary>ID of the user to change the password of</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.Auth.PasswordChangeRequest.CurrentPassword">
-            <summary>User's current password</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.Auth.PasswordChangeRequest.NewPassword">
-            <summary>New Password</summary>
-        </member>
-        <member name="M:Igtampe.Neco.Common.Auth.PasswordChangeRequest.Equals(System.Object)">
-            <summary>Compares this PasswordChangeRequest to another object</summary>
-            <param name="obj"></param>
-            <returns>True if and only if the object is a Password Change Request, and all fields match</returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.Auth.PasswordChangeRequest.GetHashCode">
-            <summary>Gets a hash code for this TaxBracket. Delegates to <see cref="P:Igtampe.Neco.Common.Auth.PasswordChangeRequest.UserID"/></summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.Auth.PasswordChangeRequest.ToString">
-            <summary>Creates a string representation of this TaxBracket</summary>
-            <returns>"ID} : {Name}, From {Start} to {End} at {Rate}%</returns>
-        </member>
         <member name="T:Igtampe.Neco.Common.Bank">
             <summary> A Neco Bank</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.Bank.Id">
+        <member name="P:Igtampe.Neco.Common.Bank.ID">
             <summary>ID of this bank (Short name)</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.Bank.Name">
@@ -47,10 +22,10 @@
         <member name="M:Igtampe.Neco.Common.Bank.Equals(System.Object)">
             <summary>Compares this Bank to another object</summary>
             <param name="obj"></param>
-            <returns>True if and only if the object is a Bank and the <see cref="P:Igtampe.Neco.Common.Bank.Id"/> matches with this one's</returns>
+            <returns>True if and only if the object is a Bank and the <see cref="P:Igtampe.Neco.Common.Bank.ID"/> matches with this one's</returns>
         </member>
         <member name="M:Igtampe.Neco.Common.Bank.GetHashCode">
-            <summary>Gets a hash code for this Bank. Delegates to <see cref="P:Igtampe.Neco.Common.Bank.Id"/></summary>
+            <summary>Gets a hash code for this Bank. Delegates to <see cref="P:Igtampe.Neco.Common.Bank.ID"/></summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.Bank.ToString">
@@ -58,13 +33,16 @@
             <returns>{Id} : {Name}</returns>
         </member>
         <member name="T:Igtampe.Neco.Common.BankAccount">
-            <summary>Holds a NECO Bank Account</summary>
+            <summary>Holds the basic information of a bank account, including a shorthand ID </summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.BankAccount.Id">
-            <summary>ID of this bank account</summary>
+        <member name="P:Igtampe.Neco.Common.BankAccount.ID">
+            <summary>Shorthand ID of this bank account</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.BankAccount.Bank">
             <summary>Bank this bank account belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccount.Details">
+            <summary>Details of this bank account</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.BankAccount.Type">
             <summary>Bank Account type of this bank account</summary>
@@ -72,30 +50,52 @@
         <member name="P:Igtampe.Neco.Common.BankAccount.Owner">
             <summary>Owner of this bank account</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.BankAccount.Balance">
-            <summary>Balance in this bank account</summary>
-        </member>
-        <member name="M:Igtampe.Neco.Common.BankAccount.IsOverdrafted">
-            <summary>Boolean to check if this bank account is overdrafted</summary>
-            <returns></returns>
+        <member name="P:Igtampe.Neco.Common.BankAccount.Closed">
+            <summary>Indicates whether this bank account is closed or not</summary>
         </member>
         <member name="M:Igtampe.Neco.Common.BankAccount.Equals(System.Object)">
             <summary>Compares this BankAccount item to another object</summary>
             <param name="obj"></param>
-            <returns>True if and only if the object is a BankAccount item and the <see cref="P:Igtampe.Neco.Common.BankAccount.Id"/> matches with this one's</returns>
+            <returns>True if and only if the object is a BankAccount item and the <see cref="P:Igtampe.Neco.Common.BankAccount.ID"/> matches with this one's</returns>
         </member>
         <member name="M:Igtampe.Neco.Common.BankAccount.GetHashCode">
-            <summary>Gets a hash code for this BankAccount item. Delegates to <see cref="P:Igtampe.Neco.Common.BankAccount.Id"/></summary>
+            <summary>Gets a hash code for this BankAccount item. Delegates to <see cref="P:Igtampe.Neco.Common.BankAccount.ID"/></summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.BankAccount.ToString">
             <summary>Creates a string representation of this BankAccount item</summary>
-            <returns>{Id} : {Owner?.Name}'s {Type?.Name} account with balance {Balance:N0}p</returns>
+            <returns>{ID} : {Owner?.Name}'s bank Account in {Bank?.Name}</returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.BankAccountDetail">
+            <summary>Holds NECO Bank account details that are confidential</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccountDetail.ID">
+            <summary>ID of this bank account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.BankAccountDetail.Balance">
+            <summary>Balance in this bank account</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.BankAccountDetail.IsOverdrafted">
+            <summary>Boolean to check if this bank account is overdrafted</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.BankAccountDetail.Equals(System.Object)">
+            <summary>Compares this BankAccountDetails item to another object</summary>
+            <param name="obj"></param>
+            <returns>True if and only if the object is a BankAccountDetails item and the <see cref="P:Igtampe.Neco.Common.BankAccountDetail.ID"/> matches with this one's</returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.BankAccountDetail.GetHashCode">
+            <summary>Gets a hash code for this BankAccountDetails item. Delegates to <see cref="P:Igtampe.Neco.Common.BankAccountDetail.ID"/></summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.BankAccountDetail.ToString">
+            <summary>Creates a string representation of this BankAccountDetails item</summary>
+            <returns>{Id} : Account with balance {Balance:N0}p</returns>
         </member>
         <member name="T:Igtampe.Neco.Common.BankAccountType">
             <summary>Defines a type of available bank account</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.BankAccountType.Id">
+        <member name="P:Igtampe.Neco.Common.BankAccountType.ID">
             <summary>ID of this bank account type</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.BankAccountType.Name">
@@ -110,10 +110,10 @@
         <member name="M:Igtampe.Neco.Common.BankAccountType.Equals(System.Object)">
             <summary>Compares this Bank Account type item to another object</summary>
             <param name="obj"></param>
-            <returns>True if and only if the object is a BankAccountType item and the <see cref="P:Igtampe.Neco.Common.BankAccountType.Id"/> matches with this one's</returns>
+            <returns>True if and only if the object is a BankAccountType item and the <see cref="P:Igtampe.Neco.Common.BankAccountType.ID"/> matches with this one's</returns>
         </member>
         <member name="M:Igtampe.Neco.Common.BankAccountType.GetHashCode">
-            <summary>Gets a hash code for this BankAccountType item. Delegates to <see cref="P:Igtampe.Neco.Common.BankAccountType.Id"/></summary>
+            <summary>Gets a hash code for this BankAccountType item. Delegates to <see cref="P:Igtampe.Neco.Common.BankAccountType.ID"/></summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.BankAccountType.ToString">
@@ -123,7 +123,7 @@
         <member name="T:Igtampe.Neco.Common.CertifiedItem">
             <summary>Item in the Certification ledger for NECO</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.CertifiedItem.Id">
+        <member name="P:Igtampe.Neco.Common.CertifiedItem.ID">
             <summary>ID of this certified item</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.CertifiedItem.Text">
@@ -138,10 +138,10 @@
         <member name="M:Igtampe.Neco.Common.CertifiedItem.Equals(System.Object)">
             <summary>Compares this Certified item to another object</summary>
             <param name="obj"></param>
-            <returns>True if and only if the object is a certified item and the <see cref="P:Igtampe.Neco.Common.CertifiedItem.Id"/> matches with this one's</returns>
+            <returns>True if and only if the object is a certified item and the <see cref="P:Igtampe.Neco.Common.CertifiedItem.ID"/> matches with this one's</returns>
         </member>
         <member name="M:Igtampe.Neco.Common.CertifiedItem.GetHashCode">
-            <summary>Gets a hash code for this Certified item. Delegates to <see cref="P:Igtampe.Neco.Common.CertifiedItem.Id"/></summary>
+            <summary>Gets a hash code for this Certified item. Delegates to <see cref="P:Igtampe.Neco.Common.CertifiedItem.ID"/></summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.CertifiedItem.ToString">
@@ -151,7 +151,7 @@
         <member name="T:Igtampe.Neco.Common.CheckbookItem">
             <summary>Holds a Checkbook 2000 Item</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.CheckbookItem.Id">
+        <member name="P:Igtampe.Neco.Common.CheckbookItem.ID">
             <summary>ID of this item</summary>
         </member>
         <member name="T:Igtampe.Neco.Common.CheckbookItem.ItemType">
@@ -178,15 +178,33 @@
         <member name="M:Igtampe.Neco.Common.CheckbookItem.Equals(System.Object)">
             <summary>Compares this Checkbook item to another object</summary>
             <param name="obj"></param>
-            <returns>True if and only if the object is a checkbook item and the <see cref="P:Igtampe.Neco.Common.CheckbookItem.Id"/> matches with this one's</returns>
+            <returns>True if and only if the object is a checkbook item and the <see cref="P:Igtampe.Neco.Common.CheckbookItem.ID"/> matches with this one's</returns>
         </member>
         <member name="M:Igtampe.Neco.Common.CheckbookItem.GetHashCode">
-            <summary>Gets a hash code for this Checkbook item. Delegates to <see cref="P:Igtampe.Neco.Common.CheckbookItem.Id"/></summary>
+            <summary>Gets a hash code for this Checkbook item. Delegates to <see cref="P:Igtampe.Neco.Common.CheckbookItem.ID"/></summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.CheckbookItem.ToString">
             <summary>Creates a string representation of this checkbook item</summary>
             <returns>{Id} : {AttachedTransaciton}</returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Contractus.ContractStatus">
+            <summary>Status of a given contract</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.Contractus.ContractStatus.AUCTION">
+            <summary>Contract is currently up for auction</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.Contractus.ContractStatus.AWARDED">
+            <summary>Contract has been awarded and is currently being worked on</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.Contractus.ContractStatus.PENDING_PAYMENT">
+            <summary>Contract is completed and is pending payment</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.Contractus.ContractStatus.COMPELTED">
+            <summary>Contract has been paid and is complete</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.Contractus.ContractStatus.CANCELLED">
+            <summary>Contract was cancelled</summary>
         </member>
         <member name="T:Igtampe.Neco.Common.Contractus.Contract">
             <summary>Holds a Contractus Contract</summary>
@@ -209,11 +227,8 @@
         <member name="P:Igtampe.Neco.Common.Contractus.Contract.Amount">
             <summary>Amount bidded by the <see cref="P:Igtampe.Neco.Common.Contractus.Contract.TopBidder"/></summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.Contractus.Contract.UpForAuction">
-            <summary>Whether or not this contract is still up for auction or not</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.Contractus.Contract.Completed">
-            <summary>Whether or not this contract has been completed </summary>
+        <member name="P:Igtampe.Neco.Common.Contractus.Contract.Status">
+            <summary>Current status of this contract</summary>
         </member>
         <member name="M:Igtampe.Neco.Common.Contractus.Contract.Equals(System.Object)">
             <summary>Compares this Contract to another object</summary>
@@ -227,6 +242,42 @@
         <member name="M:Igtampe.Neco.Common.Contractus.Contract.ToString">
             <summary>Creates a string representation of this Contract</summary>
             <returns>"ID} : {Name}</returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Contractus.Requests.AddBidRequest">
+            <summary>Request to add a bid to a given contract</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Requests.AddBidRequest.SessionID">
+            <summary>ID of the session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Requests.AddBidRequest.ContractID">
+            <summary>ID of the contract this request is for</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Requests.AddBidRequest.Bid">
+            <summary>New Bid to post for this contract</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Contractus.Requests.ChangeContractStatusRequest">
+            <summary>Request to change a given contract's status</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Requests.ChangeContractStatusRequest.SessionID">
+            <summary>ID of the session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Requests.ChangeContractStatusRequest.ContractID">
+            <summary>ID of the contract</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Requests.ChangeContractStatusRequest.NewStatus">
+            <summary>State to which to change the contract to</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Contractus.Requests.NewContractRequest">
+            <summary>Request to create and post a new contract</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Requests.NewContractRequest.SessionID">
+            <summary>ID of the session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Requests.NewContractRequest.Name">
+            <summary>Name of the contract to be created</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Contractus.Requests.NewContractRequest.Description">
+            <summary>Description of the contract to be created</summary>
         </member>
         <member name="T:Igtampe.Neco.Common.EzTax.IncomeItem">
             <summary>Holds an EzTax income item</summary>
@@ -243,6 +294,15 @@
         <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.Subitems">
             <summary>Subitems in this Item</summary>
         </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.Apartments">
+            <summary>Apartments in this IncomeItem</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.Businesses">
+            <summary>Businesses in this IncomeItem</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.Hotels">
+            <summary>Hotels in this IncomeItem</summary>
+        </member>
         <member name="P:Igtampe.Neco.Common.EzTax.IncomeItem.MiscIncome">
             <summary>Other miscellaneous income in this income item</summary>
         </member>
@@ -254,18 +314,6 @@
         </member>
         <member name="M:Igtampe.Neco.Common.EzTax.IncomeItem.TotalMonthlyIncome">
             <summary>Returns the sum of all incomes from subitems contained in this item, and miscincome</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.EzTax.IncomeItem.LocalTax">
-            <summary>Calculates the monthly tax to <see cref="P:Igtampe.Neco.Common.EzTax.IncomeItem.LocalJurisdiction"/></summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.EzTax.IncomeItem.FederalTax">
-            <summary>Calculates the monthly tax to <see cref="P:Igtampe.Neco.Common.EzTax.IncomeItem.FederalJurisdiction"/></summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.EzTax.IncomeItem.TotalMonthlyTax">
-            <summary>Calculates the total monthly tax for this item</summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.EzTax.IncomeItem.Equals(System.Object)">
@@ -280,6 +328,15 @@
         <member name="M:Igtampe.Neco.Common.EzTax.IncomeItem.ToString">
             <summary>Creates a string representation of this IncoemItem</summary>
             <returns>{ID} : {Name}</returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.EzTax.Requests.IncomeItemRequest">
+            <summary>Request to create or modify an incomeitem</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Requests.IncomeItemRequest.SessionID">
+            <summary>ID of the session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.Requests.IncomeItemRequest.Item">
+            <summary>Item to modify or create</summary>
         </member>
         <member name="T:Igtampe.Neco.Common.EzTax.Subitems.Apartment">
             <summary>Subitem that holds data for an appartment complex</summary>
@@ -491,14 +548,54 @@
             <summary>Creates a string representation of this TaxJurisdiction</summary>
             <returns>{ID} : {Name}</returns>
         </member>
+        <member name="T:Igtampe.Neco.Common.EzTax.TaxReport">
+            <summary>Holds a Tax Report </summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.ID">
+            <summary>ID of this Tax Report</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.Owner">
+            <summary>User this Report belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.PreparedDate">
+            <summary>Date at which this tax report was prepared</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.StaticIncome">
+            <summary>Amount of static income (income from <see cref="T:Igtampe.Neco.Common.EzTax.IncomeItem"/>s) in the report.</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.ExtraIncome">
+            <summary>Amount of Extra Income (income from <see cref="T:Igtampe.Neco.Common.Transaction"/>s) in the report.</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.ExtraIncomeTaxable">
+            <summary>Portion of <see cref="P:Igtampe.Neco.Common.EzTax.TaxReport.ExtraIncome"/> that's Taxable</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.GrandTotalIncome">
+            <summary>Grand total of Income during this period</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.GrandTotalTax">
+            <summary>Grand total of tax during this period</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.Report">
+            <summary>Actual Tax Report Text</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.CSVReport">
+            <summary>Tax Report text presented in CSV format for exporting</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.PaymentBreakdownDictionary">
+            <summary>Dictionary of Tax Payment Breakdown</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.EzTax.TaxReport.IncomeBreakdownDictionary">
+            <summary>Dictionary of Income Breakdown</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.TaxReport.GenerateTaxReport(Igtampe.Neco.Common.User,System.Collections.Generic.ICollection{Igtampe.Neco.Common.EzTax.IncomeItem},System.Collections.Generic.ICollection{Igtampe.Neco.Common.Transaction},Igtampe.Neco.Common.EzTax.TaxJurisdiction)">
+            <summary>Generates a Tax Report object based on a User's income items and monthly transactions</summary>
+            <param name="User"></param>
+            <param name="IncomeItems"></param>
+            <param name="CurrentMonthTransactions"></param>
+            <returns></returns>
+        </member>
         <member name="T:Igtampe.Neco.Common.EzTax.TaxUserInfo">
-            <summary>EZTax User Info</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.EzTax.TaxUserInfo.Id">
-            <summary>ID of this userinfo</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.EzTax.TaxUserInfo.User">
-            <summary>User this UserInfo belongs to</summary>
+            <summary>EZTax User Info, designed to be used by the frontend</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.EzTax.TaxUserInfo.Items">
             <summary>Items from this user</summary>
@@ -506,23 +603,6 @@
         <member name="M:Igtampe.Neco.Common.EzTax.TaxUserInfo.TotalMonthlyIncome">
             <summary>Calculates this user's Total Monthly Income</summary>
             <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.EzTax.TaxUserInfo.TotalMonthlyTax">
-            <summary>Calcualtes this user's total monthly tax</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.EzTax.TaxUserInfo.Equals(System.Object)">
-            <summary>Compares this TaxUserInfo to another object</summary>
-            <param name="obj"></param>
-            <returns>True if and only if the object is a TaxUserInfo and the <see cref="P:Igtampe.Neco.Common.EzTax.TaxUserInfo.Id"/> matches with this one's</returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.EzTax.TaxUserInfo.GetHashCode">
-            <summary>Gets a hash code for this TaxUserInfo. Delegates to <see cref="P:Igtampe.Neco.Common.EzTax.TaxUserInfo.Id"/></summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.EzTax.TaxUserInfo.ToString">
-            <summary>Creates a string representation of this TaxUserInfo</summary>
-            <returns>{Id} : Tax info for user {User}</returns>
         </member>
         <member name="T:Igtampe.Neco.Common.LandView.Country">
             <summary>Country for LandView, which holds <see cref="T:Igtampe.Neco.Common.LandView.District"/>s</summary>
@@ -547,9 +627,6 @@
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Country.PricePerSquareMeter">
             <summary>Price per square meter of unclaimed terrain</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.LandView.Country.FederalSalesTax">
-            <summary>Sales tax rate on all land purchases</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Country.FederalBankAccount">
             <summary>Neco User to direct payments of land to and handle accepting taxes</summary>
@@ -603,9 +680,6 @@
         <member name="P:Igtampe.Neco.Common.LandView.District.PricePerSquareMeter">
             <summary>Price per square meter of unclaimed terrain</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.LandView.District.DistrictSalesTax">
-            <summary>District sales tax on all land sales in this district</summary>
-        </member>
         <member name="P:Igtampe.Neco.Common.LandView.District.DistrictBankAccount">
             <summary>Bank account of this district to handle accepting taxes and accept land payments</summary>
         </member>
@@ -649,23 +723,20 @@
             <summary>Area of this item</summary>
             <returns></returns>
         </member>
-        <member name="T:Igtampe.Neco.Common.LandView.Plot">
-            <summary>A plot of land located in a <see cref="P:Igtampe.Neco.Common.LandView.Plot.District"/></summary>
-        </member>
-        <member name="T:Igtampe.Neco.Common.LandView.Plot.PlotStatus">
+        <member name="T:Igtampe.Neco.Common.LandView.PlotStatus">
             <summary>Status of a Plot</summary>
         </member>
-        <member name="F:Igtampe.Neco.Common.LandView.Plot.PlotStatus.UNCLAIMED">
-            <summary>Plot is unclaimed and is available for purchase from the <see cref="P:Igtampe.Neco.Common.LandView.Plot.District"/></summary>
+        <member name="F:Igtampe.Neco.Common.LandView.PlotStatus.FOR_SALE">
+            <summary>Plot that is for sale by <see cref="!:Owner"/></summary>
         </member>
-        <member name="F:Igtampe.Neco.Common.LandView.Plot.PlotStatus.FOR_SALE">
-            <summary>Plot that is for sale by <see cref="P:Igtampe.Neco.Common.LandView.Plot.TiedAccount"/></summary>
-        </member>
-        <member name="F:Igtampe.Neco.Common.LandView.Plot.PlotStatus.NOT_FOR_SALE">
+        <member name="F:Igtampe.Neco.Common.LandView.PlotStatus.NOT_FOR_SALE">
             <summary>Plot that is owned and is not for  sale</summary>
         </member>
-        <member name="F:Igtampe.Neco.Common.LandView.Plot.PlotStatus.BUILT">
+        <member name="F:Igtampe.Neco.Common.LandView.PlotStatus.BUILT">
             <summary>Plot that has been built upon and can no longer be resold</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.LandView.Plot">
+            <summary>A plot of land located in a <see cref="P:Igtampe.Neco.Common.LandView.Plot.District"/></summary>
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Plot.ID">
             <summary>ID of this plot</summary>
@@ -679,7 +750,7 @@
         <member name="P:Igtampe.Neco.Common.LandView.Plot.GraphicalPoints">
             <summary>Graphical points that define the corners of this district</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.LandView.Plot.TiedAccount">
+        <member name="P:Igtampe.Neco.Common.LandView.Plot.Owner">
             <summary>Owner of this plot</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Plot.Name">
@@ -687,9 +758,6 @@
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Plot.Status">
             <summary>Status of this plot</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.LandView.Plot.PricePerSquareMeter">
-            <summary>Price per square meter of this plot</summary> 
         </member>
         <member name="M:Igtampe.Neco.Common.LandView.Plot.Area">
             <summary>Area of this plot in square meters</summary>
@@ -715,6 +783,42 @@
         <member name="M:Igtampe.Neco.Common.LandView.Plot.ToString">
             <summary>Creates a string representation of this Plot</summary>
             <returns>{ID} : {Name}</returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.LandView.Requests.ChangePlotStatusRequest">
+            <summary>Request to change a plot's current status</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.ChangePlotStatusRequest.SessionID">
+            <summary>ID of the session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.ChangePlotStatusRequest.PlotID">
+            <summary>ID of the plot to change status of</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.ChangePlotStatusRequest.NewStatus">
+            <summary>Status to change the plot's status to</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.LandView.Requests.CreatePlotRequest">
+            <summary>Request to create a plot on the Landview system</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.CreatePlotRequest.SessionID">
+            <summary>ID of the session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.CreatePlotRequest.DefiningPoints">
+            <summary>Points that define the area of the plot</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.CreatePlotRequest.BankAccountID">
+            <summary>Bank Account this plot will be bought with</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.LandView.Requests.TransferPlotOwnershipRequest">
+            <summary>Request to transfer plot ownership</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.TransferPlotOwnershipRequest.SessionID">
+            <summary>ID of the Session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.TransferPlotOwnershipRequest.PlotID">
+            <summary>ID of the plot to transfer ownership</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.TransferPlotOwnershipRequest.NewOwnerID">
+            <summary>User ID which will be the new owner of this plot after the transfer</summary>
         </member>
         <member name="T:Igtampe.Neco.Common.LandView.Road">
             <summary>Holds a road to display on a LandView map</summary>
@@ -750,7 +854,7 @@
         <member name="T:Igtampe.Neco.Common.Notification">
             <summary>Holds a notification for a User</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.Notification.Id">
+        <member name="P:Igtampe.Neco.Common.Notification.ID">
             <summary>ID of this notification</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.Notification.Text">
@@ -768,20 +872,138 @@
         <member name="M:Igtampe.Neco.Common.Notification.Equals(System.Object)">
             <summary>Compares this notification to another object</summary>
             <param name="obj"></param>
-            <returns>True if and only if other object is a notification and its <see cref="P:Igtampe.Neco.Common.Notification.Id"/> matches</returns>
+            <returns>True if and only if other object is a notification and its <see cref="P:Igtampe.Neco.Common.Notification.ID"/> matches</returns>
         </member>
         <member name="M:Igtampe.Neco.Common.Notification.GetHashCode">
-            <summary>Gets a hashcode for this notification. Delegates to <see cref="P:Igtampe.Neco.Common.Notification.Id"/></summary>
+            <summary>Gets a hashcode for this notification. Delegates to <see cref="P:Igtampe.Neco.Common.Notification.ID"/></summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.Notification.ToString">
             <summary>Creates a string representation of this Notification</summary>
             <returns>{Id} : [{Time}] {Text}</returns>
         </member>
+        <member name="T:Igtampe.Neco.Common.Requests.BankAccountActionRequest">
+            <summary>Holds a request to commit an action to a Neco Bank Account (IE Close, Logs)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.BankAccountActionRequest.SessionID">
+            <summary>ID of the session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.BankAccountActionRequest.BankAccountID">
+            <summary>ID of the bank account to close</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Requests.BankAccountOpenRequest">
+            <summary>Holds a request to Open a Neco bank account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.BankAccountOpenRequest.SessionID">
+            <summary>ID of the session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.BankAccountOpenRequest.BankAccountTypeID">
+            <summary>ID of the bank account type to open</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Requests.CertificationRequest">
+            <summary>A Neco request to certify an Item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.CertificationRequest.SessionID">
+            <summary>SessionID of the certification origin</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.CertificationRequest.Text">
+            <summary>Text to certify</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Requests.CheckbookSendItemRequest">
+            <summary>Holds a Neco Request to create and send a new checkbook item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.CheckbookSendItemRequest.SessionID">
+            <summary>ID of the session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.CheckbookSendItemRequest.TransactRequest">
+            <summary>Request for the internal transaction in this checkbook item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.CheckbookSendItemRequest.ItemType">
+            <summary>Type of item being requested</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.CheckbookSendItemRequest.Variant">
+            <summary>Graphical variant of item being sent</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.CheckbookSendItemRequest.Comment">
+            <summary>Comment of the item being sent</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Requests.INecoRequest">
+            <summary>Defines the absolute basic needs of a Neco Request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.INecoRequest.SessionID">
+            <summary>ID of the session making this request</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Requests.NewUserRequest">
+            <summary>Request to the Neco server to create a new user</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.NewUserRequest.Name">
+            <summary>Name of this new user</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.NewUserRequest.Pin">
+            <summary>Pin for this new user</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.NewUserRequest.Type">
+            <summary>Type of user to create</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Requests.PasswordChangeRequest">
+            <summary>Request to change a password</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.PasswordChangeRequest.SessionID">
+            <summary>ID of the session this PCR comes from</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.PasswordChangeRequest.CurrentPassword">
+            <summary>User's current password</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.PasswordChangeRequest.NewPassword">
+            <summary>New Password</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Common.Requests.PasswordChangeRequest.Equals(System.Object)">
+            <summary>Compares this PasswordChangeRequest to another object</summary>
+            <param name="obj"></param>
+            <returns>True if and only if the object is a Password Change Request, and all fields match</returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.Requests.PasswordChangeRequest.GetHashCode">
+            <summary>Gets a hash code for this TaxBracket. Delegates to <see cref="P:Igtampe.Neco.Common.Requests.PasswordChangeRequest.SessionID"/></summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.Requests.PasswordChangeRequest.ToString">
+            <summary>Creates a string representation of this TaxBracket</summary>
+            <returns>"ID} : {Name}, From {Start} to {End} at {Rate}%</returns>
+        </member>
+        <member name="T:Igtampe.Neco.Common.Requests.TransactionRequest">
+            <summary>Holds a Neco Transaction Request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.TransactionRequest.SessionID">
+            <summary>Session that's executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.TransactionRequest.Name">
+            <summary>Name of this transaction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.TransactionRequest.FromBankID">
+            <summary>Bank this transaction will originate from</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.TransactionRequest.ToBankID">
+            <summary>Bank this transaction will destinate to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.Requests.TransactionRequest.Amount">
+            <summary>Amount to transfer in this transaction</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.TransactionState">
+            <summary>Holds all states of a Transaction</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.TransactionState.PENDING">
+            <summary>Transaction has not yet been completed</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.TransactionState.COMPLETED">
+            <summary>Transaction was completed successfully</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.TransactionState.FAILED">
+            <summary>Transaction was attempted, and failed</summary>
+        </member>
         <member name="T:Igtampe.Neco.Common.Transaction">
             <summary>Holds information for a NECO Transaction</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.Transaction.Id">
+        <member name="P:Igtampe.Neco.Common.Transaction.ID">
             <summary>ID of this transaction</summary>        
         </member>
         <member name="P:Igtampe.Neco.Common.Transaction.Amount">
@@ -790,34 +1012,25 @@
         <member name="P:Igtampe.Neco.Common.Transaction.Time">
             <summary>Time at which this transaction took place</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.Transaction.FromUser">
-            <summary>User this transaction originates from</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.Transaction.ToUser">
-            <summary>User this transaction destinates to</summary>
+        <member name="P:Igtampe.Neco.Common.Transaction.Name">
+            <summary>Name of ths transaction</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.Transaction.FromAccount">
             <summary>Account from which the amount in this transaction will be deducted</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.Transaction.ToBankAccount">
+        <member name="P:Igtampe.Neco.Common.Transaction.ToAccount">
             <summary>Account from which the amount in this transaction will be added to</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.Transaction.Taxable">
-            <summary>Whether or not this transaction is taxable</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.Transaction.Executed">
+        <member name="P:Igtampe.Neco.Common.Transaction.State">
             <summary>Whether or not this transaciton has been executed</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.Transaction.Failed">
-            <summary>Indicates whether the transaction was executed and failed</summary>
         </member>
         <member name="M:Igtampe.Neco.Common.Transaction.Equals(System.Object)">
             <summary>Compares this Transaction to another object</summary>
             <param name="obj"></param>
-            <returns>return true if the object is a transaction, and if its <see cref="P:Igtampe.Neco.Common.Transaction.Id"/> matches with this one's</returns>
+            <returns>return true if the object is a transaction, and if its <see cref="P:Igtampe.Neco.Common.Transaction.ID"/> matches with this one's</returns>
         </member>
         <member name="M:Igtampe.Neco.Common.Transaction.GetHashCode">
-            <summary>Gets a hashcode for this transaction. Delegates to <see cref="P:Igtampe.Neco.Common.Transaction.Id"/></summary>
+            <summary>Gets a hashcode for this transaction. Delegates to <see cref="P:Igtampe.Neco.Common.Transaction.ID"/></summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.Transaction.ToString">
@@ -877,10 +1090,61 @@
             <summary>Creates a string representation of this Asset</summary>
             <returns>{ID} : {Name}</returns>
         </member>
+        <member name="T:Igtampe.Neco.Common.UMSAT.Requests.AssetDeleteRequest">
+            <summary>Request to delete an UMSAT item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetDeleteRequest.SessionID">
+            <summary>ID of the Session executing request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetDeleteRequest.AssetID">
+            <summary>ID of the Asset thats</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest">
+            <summary>Request to modify or create an asset</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.SessionID">
+            <summary>ID of the Session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.AssetID">
+            <summary>ID of the asset to modify </summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.Name">
+            <summary>Asset name</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.Description">
+            <summary>Asset description</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.SpecificLocation">
+            <summary>Asset specific location</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.Complete">
+            <summary>Asset Completion State</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.Image">
+            <summary>Asset image</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.IncomeItemID">
+            <summary>ID of the tied EzTax IncomeItem</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.PlotID">
+            <summary>ID of the tied LandView Plot</summary>
+        </member>
+        <member name="T:Igtampe.Neco.Common.UMSAT.Requests.AssetTransferRequest">
+            <summary>Request to transfer asset ownership</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetTransferRequest.SessionID">
+            <summary>ID of the Session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetTransferRequest.AssetID">
+            <summary>ID of the asset to transfer ownership</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetTransferRequest.NewOwnerID">
+            <summary>User ID which will be the new owner of this asset after the transfer</summary>
+        </member>
         <member name="T:Igtampe.Neco.Common.User">
             <summary>User in the NECO system</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.User.Id">
+        <member name="P:Igtampe.Neco.Common.User.ID">
             <summary>UMSWEB ID of this user</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.User.Name">
@@ -901,17 +1165,17 @@
             <returns>True if and only if the other object is a user and their ID matches</returns>
         </member>
         <member name="M:Igtampe.Neco.Common.User.GetHashCode">
-            <summary>Gets a hashcode for this user. Delegates to <see cref="P:Igtampe.Neco.Common.User.Id"/></summary>
+            <summary>Gets a hashcode for this user. Delegates to <see cref="P:Igtampe.Neco.Common.User.ID"/></summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.User.ToString">
-            <summary>returns a colon seperated list of <see cref="P:Igtampe.Neco.Common.User.Id"/> and <see cref="P:Igtampe.Neco.Common.User.Name"/></summary>
+            <summary>returns a colon seperated list of <see cref="P:Igtampe.Neco.Common.User.ID"/> and <see cref="P:Igtampe.Neco.Common.User.Name"/></summary>
             <returns></returns>
         </member>
         <member name="T:Igtampe.Neco.Common.UserAuth">
             <summary>User used for Authentication</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.UserAuth.Id">
+        <member name="P:Igtampe.Neco.Common.UserAuth.ID">
             <summary>UMSWEB ID of this user</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.UserAuth.Pin">
@@ -928,21 +1192,44 @@
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.UserAuth.GetHashCode">
-            <summary>Gets a Hashcode for this UserAuth (Delegated to <see cref="P:Igtampe.Neco.Common.UserAuth.Id"/>)</summary>
+            <summary>Gets a Hashcode for this UserAuth (Delegated to <see cref="P:Igtampe.Neco.Common.UserAuth.ID"/>)</summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.UserAuth.ToString">
             <summary>Returns ID for this user auth</summary>
             <returns></returns>
         </member>
+        <member name="T:Igtampe.Neco.Common.TaxationType">
+            <summary>Determines the taxability of transactions to or from accounts held by users of this user type</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.TaxationType.Taxable">
+            <summary>Transactions are taxable to and from this account<br/>
+            Users of this type should be taxed by EzTax<br/>
+            This taxation type should be used by general users</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.TaxationType.NonTaxableDestination">
+            <summary>Transactions are NOT taxable if this account is the destination<br/><br/>
+            IE: Money sent to this account is NOT COUNTED TOWARDS INCOME of the sender.<br/><br/>
+            Users of this type should NOT be taxed by EzTax<br/>
+            This taxation type should be used by Charities</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Common.TaxationType.NontaxableOrigin">
+            <summary>Transactions from this account are NOT taxable<br/>
+            IE: Money received from this account is not counted towards income of the recipient<br/>
+            Users of this type should NOT be taxed by EzTax<br/>
+            This taxation type should be used by Governments</summary>
+        </member>
         <member name="T:Igtampe.Neco.Common.UserType">
             <summary>Type of user in NECO</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.UserType.Id">
+        <member name="P:Igtampe.Neco.Common.UserType.ID">
             <summary>ID of this User Type</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.UserType.Name">
             <summary>Name of this User Type (IE Standard, Corporate, Government)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.UserType.Taxation">
+            <summary>Identifies how to handle taxes to and from this account</summary>
         </member>
         <member name="M:Igtampe.Neco.Common.UserType.Equals(System.Object)">
             <summary>Check if an object is equal to this user type</summary>
@@ -950,7 +1237,7 @@
             <returns>True if and only if the object is a UserType, and if its ID matches with this one's</returns>
         </member>
         <member name="M:Igtampe.Neco.Common.UserType.GetHashCode">
-            <summary>Gets hashcode for this usertype. Delegates to <see cref="P:Igtampe.Neco.Common.UserType.Id"/></summary>
+            <summary>Gets hashcode for this usertype. Delegates to <see cref="P:Igtampe.Neco.Common.UserType.ID"/></summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.UserType.ToString">
