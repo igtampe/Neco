@@ -23,6 +23,8 @@ namespace ViBENecoMigrator {
 
         private static readonly Cycler SpinnerCycler = new(SpinnerCycle);
 
+        private static readonly Random Randomizer = new();
+
         private static int X;
         private static int TopTextHeight;
 
@@ -137,7 +139,7 @@ namespace ViBENecoMigrator {
 
                 if (Directory.Exists($"{CD}/UMSNB")) {
                     BankAccount Acc = new();
-                    Acc.ID = U.ID.Substring(0,4)+"1";
+                    Acc.ID = NewBankAccountID();
                     Acc.Type = UMSNBChecking;
                     Acc.Bank = UMSNB;
 
@@ -151,7 +153,7 @@ namespace ViBENecoMigrator {
 
                 if (Directory.Exists($"{CD}/GBANK")) {
                     BankAccount Acc = new();
-                    Acc.ID = U.ID.Substring(0, 4) + "2";
+                    Acc.ID = NewBankAccountID();
                     Acc.Type = GBANKChecking;
                     Acc.Bank = GBANK;
 
@@ -164,7 +166,7 @@ namespace ViBENecoMigrator {
 
                 if (Directory.Exists($"{CD}/RIVER")) {
                     BankAccount Acc = new();
-                    Acc.ID = U.ID.Substring(0, 4) + "1";
+                    Acc.ID = NewBankAccountID();
                     Acc.Type = RIVERChecking;
                     Acc.Bank = RIVER;
 
@@ -619,6 +621,18 @@ namespace ViBENecoMigrator {
             RenderUtils.Pause();
 
         }
+
+        private static string NewBankAccountID() {
+            string ID;
+            do {
+                ID = "";
+                while (ID.Length < 9) { ID += Randomizer.Next(10); }
+            } while (BankAccountExists(ID));
+            return ID;
+
+        }
+
+        private static bool BankAccountExists(string id) { return C.BankAccount.Any(e => e.ID == id); }
 
         private static string GetFirstLine(string Filename) {return File.ReadAllLines(Filename)[0];}
 
