@@ -90,6 +90,13 @@
         <member name="P:Igtampe.Neco.Data.NecoContext.Asset">
             <summary>Table of all Assets</summary>
         </member>
+        <member name="T:Igtampe.Neco.Data.NecoCosmosContext">
+            <summary>Context for using Neco on Cosmos rather than on SQL Server</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.NecoCosmosContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>Overrides onConfiguring to use <see cref="P:Igtampe.Neco.Data.Constants.ConnectionString"/></summary>
+            <param name="optionsBuilder"></param>
+        </member>
         <member name="T:Igtampe.Neco.Data.Program">
             <summary>test program to see NecoData in action</summary>
         </member>
