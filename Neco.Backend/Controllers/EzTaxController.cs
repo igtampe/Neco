@@ -250,6 +250,7 @@ namespace Igtampe.Neco.Backend.Controllers {
         #region Tax and Income functions
 
         /// <summary></summary>
+        [NonAction]
         public async Task<int> ExecuteTaxDay(bool Force) {
             if (DateTime.Now.Day != 15 && !Force) { throw new InvalidOperationException("Today is not a tax day!"); }
             List<User> Directory = NecoDB.User
@@ -342,6 +343,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         }
 
+        [NonAction]
         public async Task<int> ExecuteIncomeDay(bool Force) {
 
             //Ensure the people is registered

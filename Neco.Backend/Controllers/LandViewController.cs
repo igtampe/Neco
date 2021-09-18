@@ -113,6 +113,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             return Ok(asset);
         }
 
+        [NonAction]
         public async Task<IActionResult> CreatePlotReal(CreatePlotRequest Request, bool CheckOnly) {
             Session S = SessionManager.Manager.FindSession(Request.SessionID);
             if (S == null) { return Unauthorized("Invalid session"); }
