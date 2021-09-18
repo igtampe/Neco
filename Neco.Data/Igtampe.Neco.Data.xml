@@ -156,9 +156,6 @@
         <member name="P:Igtampe.Neco.Data.NecoContext.TaxJurisdiction">
             <summary>Table of all Tax Jurisdictions</summary>
         </member>
-        <member name="P:Igtampe.Neco.Data.NecoContext.TaxUserInfo">
-            <summary>Table of all Tax User Infos</summary>
-        </member>
         <member name="P:Igtampe.Neco.Data.NecoContext.Apartment">
             <summary>Table of all Apartments</summary>
         </member>
