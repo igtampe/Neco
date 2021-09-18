@@ -13,9 +13,5 @@ namespace Igtampe.Neco.Common.EzTax {
         /// <returns></returns>
         public long TotalMonthlyIncome() { return Items.Sum(I => I.TotalMonthlyIncome()); }
 
-        /// <summary>Calcualtes this user's total monthly tax</summary>
-        /// <returns></returns>
-        public long TotalMonthlyTax() { return Items.Sum(I => I.TotalMonthlyTax()) ; }
-
     }
 }
