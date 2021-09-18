@@ -81,9 +81,6 @@ namespace Igtampe.Neco.Data {
         /// <summary>Table of all Tax Jurisdictions</summary>
         public DbSet<TaxJurisdiction> TaxJurisdiction { get; set; }
 
-        /// <summary>Table of all Tax User Infos</summary>
-        public DbSet<TaxUserInfo> TaxUserInfo { get; set; }
-
         /// <summary>Table of all Apartments</summary>
         public DbSet<Apartment> Apartment { get; set; }
 
