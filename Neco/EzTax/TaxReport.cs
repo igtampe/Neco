@@ -60,6 +60,7 @@ namespace Igtampe.Neco.Common.EzTax {
         /// <param name="User"></param>
         /// <param name="IncomeItems"></param>
         /// <param name="CurrentMonthTransactions"></param>
+        /// <param name="UserFederalJurisdiction"></param>
         /// <returns></returns>
         public static TaxReport GenerateTaxReport(User User, ICollection<IncomeItem> IncomeItems, ICollection<Transaction> CurrentMonthTransactions, TaxJurisdiction UserFederalJurisdiction) {
 

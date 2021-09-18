@@ -13,6 +13,8 @@ namespace Igtampe.Neco.Data.Migrations
     [Migration("20210825212534_AddRoads")]
     partial class AddRoads
     {
+        /// <summary></summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

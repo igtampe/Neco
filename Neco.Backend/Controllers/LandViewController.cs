@@ -118,7 +118,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (S == null) { return Unauthorized("Invalid session"); }
 
             //We *really* need to figure out how the heck to figure out if two polygons intersect
-            //If we can't do this, the entire thing is screwed
+            //If we can't do this, the entire thing is screwed TODO
             throw new NotImplementedException();
         }
 

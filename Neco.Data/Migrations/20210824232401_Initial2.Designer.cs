@@ -13,6 +13,8 @@ namespace Igtampe.Neco.Data.Migrations
     [Migration("20210824232401_Initial2")]
     partial class Initial2
     {
+        /// <summary></summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

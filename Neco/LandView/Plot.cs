@@ -9,7 +9,7 @@ namespace Igtampe.Neco.Common.LandView {
 
     /// <summary>Status of a Plot</summary>
     public enum PlotStatus {
-        /// <summary>Plot that is for sale by <see cref="Owner"/></summary>
+        /// <summary>Plot that is for sale by <see cref="Plot.Owner"/></summary>
         FOR_SALE,
 
         /// <summary>Plot that is owned and is not for  sale</summary>

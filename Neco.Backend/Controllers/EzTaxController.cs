@@ -175,7 +175,7 @@ namespace Igtampe.Neco.Backend.Controllers {
         /// this function with param day=15, it would return November 15th). Use day 31 to get the last day of the last month.</summary>
         /// <param name="Day"></param>
         /// <returns></returns>
-        private DateTime DayOfLastMonth(int Day) {
+        private static DateTime DayOfLastMonth(int Day) {
 
             int LastMonth = DateTime.Now.Month - 1;
             int Year = DateTime.Now.Year;
@@ -194,7 +194,7 @@ namespace Igtampe.Neco.Backend.Controllers {
         /// this function with param day=15, it would return December 15th). Use day 31 to get the last day of this month.</summary>
         /// <param name="Day"></param>
         /// <returns></returns>
-        private DateTime DayOfThisMonth(int Day) {
+        private static DateTime DayOfThisMonth(int Day) {
             return new DateTime(DateTime.Now.Year, DateTime.Now.Month, Math.Min(Day, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)));
         }
 

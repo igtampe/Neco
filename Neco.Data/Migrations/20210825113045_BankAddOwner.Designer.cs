@@ -13,6 +13,8 @@ namespace Igtampe.Neco.Data.Migrations
     [Migration("20210825113045_BankAddOwner")]
     partial class BankAddOwner
     {
+        /// <summary></summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
