@@ -10,69 +10,86 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Igtampe.Neco.Data.Migrations
 {
     [DbContext(typeof(NecoContext))]
-    [Migration("20210824232401_Initial2")]
-    partial class Initial2
+    [Migration("20210918013141_Restart")]
+    partial class Restart
     {
-        /// <summary></summary>
-        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.9")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Igtampe.Neco.Common.Bank", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("ID")
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.ToTable("Banks");
+                    b.ToTable("Bank");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.BankAccount", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("ID")
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
+
+                    b.Property<string>("BankID")
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("DetailsID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("OwnerID")
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<Guid?>("TypeID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BankID");
+
+                    b.HasIndex("DetailsID");
+
+                    b.HasIndex("OwnerID");
+
+                    b.HasIndex("TypeID");
+
+                    b.ToTable("BankAccount");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.BankAccountDetail", b =>
+                {
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("Balance")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("BankId")
-                        .HasColumnType("nvarchar(5)");
+                    b.HasKey("ID");
 
-                    b.Property<Guid?>("TypeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(5)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BankId");
-
-                    b.HasIndex("TypeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("BankAccounts");
+                    b.ToTable("BankAccountDetail");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.BankAccountType", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BankId")
+                    b.Property<string>("BankID")
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<double>("InterestRate")
@@ -81,20 +98,20 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("BankId");
+                    b.HasIndex("BankID");
 
-                    b.ToTable("BankAccountTypes");
+                    b.ToTable("BankAccountType");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.CertifiedItem", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CertifiedById")
+                    b.Property<string>("CertifiedByID")
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<DateTime>("Date")
@@ -103,20 +120,20 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("CertifiedById");
+                    b.HasIndex("CertifiedByID");
 
-                    b.ToTable("CertifiedItems");
+                    b.ToTable("CertifiedItem");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.CheckbookItem", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AttachedTransacitonId")
+                    b.Property<Guid?>("AttachedTransacitonID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
@@ -128,11 +145,11 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Property<int>("Variant")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("AttachedTransacitonId");
+                    b.HasIndex("AttachedTransacitonID");
 
-                    b.ToTable("CheckbookItems");
+                    b.ToTable("CheckbookItem");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.Contractus.Contract", b =>
@@ -144,31 +161,28 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FromUserId")
+                    b.Property<string>("FromUserID")
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TopBidderId")
-                        .HasColumnType("nvarchar(5)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("UpForAuction")
-                        .HasColumnType("bit");
+                    b.Property<string>("TopBidderID")
+                        .HasColumnType("nvarchar(5)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("FromUserId");
+                    b.HasIndex("FromUserID");
 
-                    b.HasIndex("TopBidderId");
+                    b.HasIndex("TopBidderID");
 
-                    b.ToTable("Contracts");
+                    b.ToTable("Contract");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.EzTax.IncomeItem", b =>
@@ -186,10 +200,10 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Property<long>("MiscIncome")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("TaxUserInfoId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserID")
                         .HasColumnType("nvarchar(5)");
 
                     b.HasKey("ID");
@@ -198,11 +212,9 @@ namespace Igtampe.Neco.Data.Migrations
 
                     b.HasIndex("LocalJurisdictionID");
 
-                    b.HasIndex("TaxUserInfoId");
+                    b.HasIndex("UserID");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("IncomeItems");
+                    b.ToTable("IncomeItem");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.EzTax.Subitems.Apartment", b =>
@@ -251,7 +263,7 @@ namespace Igtampe.Neco.Data.Migrations
 
                     b.HasIndex("IncomeItemID");
 
-                    b.ToTable("Appartments");
+                    b.ToTable("Apartment");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.EzTax.Subitems.Business", b =>
@@ -282,7 +294,7 @@ namespace Igtampe.Neco.Data.Migrations
 
                     b.HasIndex("IncomeItemID");
 
-                    b.ToTable("Businesses");
+                    b.ToTable("Business");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.EzTax.Subitems.Hotel", b =>
@@ -316,7 +328,7 @@ namespace Igtampe.Neco.Data.Migrations
 
                     b.HasIndex("IncomeItemID");
 
-                    b.ToTable("Hotels");
+                    b.ToTable("Hotel");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.EzTax.TaxBracket", b =>
@@ -340,16 +352,16 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Property<long>("Start")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("TypeId")
+                    b.Property<Guid?>("TypeID")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
 
                     b.HasIndex("JurisdictionID");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("TypeID");
 
-                    b.ToTable("TaxBrackets");
+                    b.ToTable("TaxBracket");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.EzTax.TaxJurisdiction", b =>
@@ -358,33 +370,54 @@ namespace Igtampe.Neco.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("AccountID")
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("AccountID");
 
-                    b.ToTable("TaxJurisdictions");
+                    b.ToTable("TaxJurisdiction");
                 });
 
-            modelBuilder.Entity("Igtampe.Neco.Common.EzTax.TaxUserInfo", b =>
+            modelBuilder.Entity("Igtampe.Neco.Common.EzTax.TaxReport", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("CSVReport")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ExtraIncome")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ExtraIncomeTaxable")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GrandTotalTax")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("OwnerID")
                         .HasColumnType("nvarchar(5)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("PreparedDate")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("UserId");
+                    b.Property<string>("Report")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("TaxUserInfos");
+                    b.Property<long>("StaticIncome")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("OwnerID");
+
+                    b.ToTable("TaxReport");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.LandView.Country", b =>
@@ -393,11 +426,8 @@ namespace Igtampe.Neco.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("FederalBankAccountId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("FederalSalesTax")
-                        .HasColumnType("float");
+                    b.Property<string>("FederalBankAccountID")
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<int>("Height")
                         .HasColumnType("int");
@@ -413,9 +443,9 @@ namespace Igtampe.Neco.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("FederalBankAccountId");
+                    b.HasIndex("FederalBankAccountID");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Country");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.LandView.District", b =>
@@ -427,11 +457,8 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Property<Guid?>("CountryID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DistrictBankAccountId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("DistrictSalesTax")
-                        .HasColumnType("float");
+                    b.Property<string>("DistrictBankAccountID")
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -446,9 +473,9 @@ namespace Igtampe.Neco.Data.Migrations
 
                     b.HasIndex("CountryID");
 
-                    b.HasIndex("DistrictBankAccountId");
+                    b.HasIndex("DistrictBankAccountID");
 
-                    b.ToTable("Districts");
+                    b.ToTable("District");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.LandView.Plot", b =>
@@ -463,30 +490,49 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OwnerID")
+                        .HasColumnType("nvarchar(5)");
+
                     b.Property<string>("Points")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PricePerSquareMeter")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<Guid?>("TiedAccountId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
 
                     b.HasIndex("DistrictID");
 
-                    b.HasIndex("TiedAccountId");
+                    b.HasIndex("OwnerID");
 
-                    b.ToTable("Plots");
+                    b.ToTable("Plot");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.LandView.Road", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CountryID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Points")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CountryID");
+
+                    b.ToTable("Road");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.Notification", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -499,57 +545,47 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserID")
                         .HasColumnType("nvarchar(5)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notification");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.Transaction", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("Executed")
-                        .HasColumnType("bit");
+                    b.Property<string>("FromAccountID")
+                        .HasColumnType("nvarchar(9)");
 
-                    b.Property<Guid?>("FromAccountId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FromUserId")
-                        .HasColumnType("nvarchar(5)");
-
-                    b.Property<bool>("Taxable")
-                        .HasColumnType("bit");
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("ToBankAccountId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ToAccountID")
+                        .HasColumnType("nvarchar(9)");
 
-                    b.Property<string>("ToUserId")
-                        .HasColumnType("nvarchar(5)");
+                    b.HasKey("ID");
 
-                    b.HasKey("Id");
+                    b.HasIndex("FromAccountID");
 
-                    b.HasIndex("FromAccountId");
+                    b.HasIndex("ToAccountID");
 
-                    b.HasIndex("FromUserId");
-
-                    b.HasIndex("ToBankAccountId");
-
-                    b.HasIndex("ToUserId");
-
-                    b.ToTable("Transactions");
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.UMSAT.Asset", b =>
@@ -576,7 +612,7 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OwnerId")
+                    b.Property<string>("OwnerID")
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<Guid?>("PlotID")
@@ -592,35 +628,35 @@ namespace Igtampe.Neco.Data.Migrations
 
                     b.HasIndex("IncomeItemID");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("OwnerID");
 
                     b.HasIndex("PlotID");
 
-                    b.ToTable("Assets");
+                    b.ToTable("Asset");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.User", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("ID")
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TypeId")
+                    b.Property<Guid?>("TypeID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("TypeID");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.UserAuth", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("ID")
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
@@ -628,40 +664,51 @@ namespace Igtampe.Neco.Data.Migrations
                         .HasMaxLength(4)
                         .HasColumnType("nvarchar(4)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.ToTable("UserAuths");
+                    b.ToTable("UserAuth");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.UserType", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Taxation")
+                        .HasColumnType("int");
 
-                    b.ToTable("UserTypes");
+                    b.HasKey("ID");
+
+                    b.ToTable("UserType");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.BankAccount", b =>
                 {
                     b.HasOne("Igtampe.Neco.Common.Bank", "Bank")
                         .WithMany("Accounts")
-                        .HasForeignKey("BankId");
+                        .HasForeignKey("BankID");
+
+                    b.HasOne("Igtampe.Neco.Common.BankAccountDetail", "Details")
+                        .WithMany()
+                        .HasForeignKey("DetailsID");
+
+                    b.HasOne("Igtampe.Neco.Common.User", "Owner")
+                        .WithMany("Accounts")
+                        .HasForeignKey("OwnerID");
 
                     b.HasOne("Igtampe.Neco.Common.BankAccountType", "Type")
                         .WithMany()
-                        .HasForeignKey("TypeId");
-
-                    b.HasOne("Igtampe.Neco.Common.User", null)
-                        .WithMany("Accounts")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("TypeID");
 
                     b.Navigation("Bank");
+
+                    b.Navigation("Details");
+
+                    b.Navigation("Owner");
 
                     b.Navigation("Type");
                 });
@@ -670,7 +717,7 @@ namespace Igtampe.Neco.Data.Migrations
                 {
                     b.HasOne("Igtampe.Neco.Common.Bank", "Bank")
                         .WithMany("AccountTypes")
-                        .HasForeignKey("BankId");
+                        .HasForeignKey("BankID");
 
                     b.Navigation("Bank");
                 });
@@ -679,7 +726,7 @@ namespace Igtampe.Neco.Data.Migrations
                 {
                     b.HasOne("Igtampe.Neco.Common.User", "CertifiedBy")
                         .WithMany()
-                        .HasForeignKey("CertifiedById");
+                        .HasForeignKey("CertifiedByID");
 
                     b.Navigation("CertifiedBy");
                 });
@@ -688,7 +735,7 @@ namespace Igtampe.Neco.Data.Migrations
                 {
                     b.HasOne("Igtampe.Neco.Common.Transaction", "AttachedTransaciton")
                         .WithMany()
-                        .HasForeignKey("AttachedTransacitonId");
+                        .HasForeignKey("AttachedTransacitonID");
 
                     b.Navigation("AttachedTransaciton");
                 });
@@ -697,11 +744,11 @@ namespace Igtampe.Neco.Data.Migrations
                 {
                     b.HasOne("Igtampe.Neco.Common.User", "FromUser")
                         .WithMany()
-                        .HasForeignKey("FromUserId");
+                        .HasForeignKey("FromUserID");
 
                     b.HasOne("Igtampe.Neco.Common.User", "TopBidder")
                         .WithMany()
-                        .HasForeignKey("TopBidderId");
+                        .HasForeignKey("TopBidderID");
 
                     b.Navigation("FromUser");
 
@@ -718,13 +765,9 @@ namespace Igtampe.Neco.Data.Migrations
                         .WithMany()
                         .HasForeignKey("LocalJurisdictionID");
 
-                    b.HasOne("Igtampe.Neco.Common.EzTax.TaxUserInfo", null)
-                        .WithMany("Items")
-                        .HasForeignKey("TaxUserInfoId");
-
                     b.HasOne("Igtampe.Neco.Common.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserID");
 
                     b.Navigation("FederalJurisdiction");
 
@@ -736,7 +779,7 @@ namespace Igtampe.Neco.Data.Migrations
             modelBuilder.Entity("Igtampe.Neco.Common.EzTax.Subitems.Apartment", b =>
                 {
                     b.HasOne("Igtampe.Neco.Common.EzTax.IncomeItem", "IncomeItem")
-                        .WithMany()
+                        .WithMany("Apartments")
                         .HasForeignKey("IncomeItemID");
 
                     b.Navigation("IncomeItem");
@@ -745,7 +788,7 @@ namespace Igtampe.Neco.Data.Migrations
             modelBuilder.Entity("Igtampe.Neco.Common.EzTax.Subitems.Business", b =>
                 {
                     b.HasOne("Igtampe.Neco.Common.EzTax.IncomeItem", "IncomeItem")
-                        .WithMany()
+                        .WithMany("Businesses")
                         .HasForeignKey("IncomeItemID");
 
                     b.Navigation("IncomeItem");
@@ -754,7 +797,7 @@ namespace Igtampe.Neco.Data.Migrations
             modelBuilder.Entity("Igtampe.Neco.Common.EzTax.Subitems.Hotel", b =>
                 {
                     b.HasOne("Igtampe.Neco.Common.EzTax.IncomeItem", "IncomeItem")
-                        .WithMany()
+                        .WithMany("Hotels")
                         .HasForeignKey("IncomeItemID");
 
                     b.Navigation("IncomeItem");
@@ -768,7 +811,7 @@ namespace Igtampe.Neco.Data.Migrations
 
                     b.HasOne("Igtampe.Neco.Common.UserType", "Type")
                         .WithMany()
-                        .HasForeignKey("TypeId");
+                        .HasForeignKey("TypeID");
 
                     b.Navigation("Jurisdiction");
 
@@ -779,25 +822,25 @@ namespace Igtampe.Neco.Data.Migrations
                 {
                     b.HasOne("Igtampe.Neco.Common.BankAccount", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("AccountID");
 
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("Igtampe.Neco.Common.EzTax.TaxUserInfo", b =>
+            modelBuilder.Entity("Igtampe.Neco.Common.EzTax.TaxReport", b =>
                 {
-                    b.HasOne("Igtampe.Neco.Common.User", "User")
+                    b.HasOne("Igtampe.Neco.Common.User", "Owner")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("OwnerID");
 
-                    b.Navigation("User");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.LandView.Country", b =>
                 {
                     b.HasOne("Igtampe.Neco.Common.BankAccount", "FederalBankAccount")
                         .WithMany()
-                        .HasForeignKey("FederalBankAccountId");
+                        .HasForeignKey("FederalBankAccountID");
 
                     b.Navigation("FederalBankAccount");
                 });
@@ -810,7 +853,7 @@ namespace Igtampe.Neco.Data.Migrations
 
                     b.HasOne("Igtampe.Neco.Common.BankAccount", "DistrictBankAccount")
                         .WithMany()
-                        .HasForeignKey("DistrictBankAccountId");
+                        .HasForeignKey("DistrictBankAccountID");
 
                     b.Navigation("Country");
 
@@ -823,20 +866,29 @@ namespace Igtampe.Neco.Data.Migrations
                         .WithMany("Plots")
                         .HasForeignKey("DistrictID");
 
-                    b.HasOne("Igtampe.Neco.Common.BankAccount", "TiedAccount")
+                    b.HasOne("Igtampe.Neco.Common.User", "Owner")
                         .WithMany()
-                        .HasForeignKey("TiedAccountId");
+                        .HasForeignKey("OwnerID");
 
                     b.Navigation("District");
 
-                    b.Navigation("TiedAccount");
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.LandView.Road", b =>
+                {
+                    b.HasOne("Igtampe.Neco.Common.LandView.Country", "Country")
+                        .WithMany("Roads")
+                        .HasForeignKey("CountryID");
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.Notification", b =>
                 {
                     b.HasOne("Igtampe.Neco.Common.User", "User")
                         .WithMany("Notifications")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserID");
 
                     b.Navigation("User");
                 });
@@ -845,27 +897,15 @@ namespace Igtampe.Neco.Data.Migrations
                 {
                     b.HasOne("Igtampe.Neco.Common.BankAccount", "FromAccount")
                         .WithMany()
-                        .HasForeignKey("FromAccountId");
+                        .HasForeignKey("FromAccountID");
 
-                    b.HasOne("Igtampe.Neco.Common.User", "FromUser")
+                    b.HasOne("Igtampe.Neco.Common.BankAccount", "ToAccount")
                         .WithMany()
-                        .HasForeignKey("FromUserId");
-
-                    b.HasOne("Igtampe.Neco.Common.BankAccount", "ToBankAccount")
-                        .WithMany()
-                        .HasForeignKey("ToBankAccountId");
-
-                    b.HasOne("Igtampe.Neco.Common.User", "ToUser")
-                        .WithMany()
-                        .HasForeignKey("ToUserId");
+                        .HasForeignKey("ToAccountID");
 
                     b.Navigation("FromAccount");
 
-                    b.Navigation("FromUser");
-
-                    b.Navigation("ToBankAccount");
-
-                    b.Navigation("ToUser");
+                    b.Navigation("ToAccount");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.UMSAT.Asset", b =>
@@ -876,7 +916,7 @@ namespace Igtampe.Neco.Data.Migrations
 
                     b.HasOne("Igtampe.Neco.Common.User", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("OwnerID");
 
                     b.HasOne("Igtampe.Neco.Common.LandView.Plot", "Plot")
                         .WithMany()
@@ -893,7 +933,7 @@ namespace Igtampe.Neco.Data.Migrations
                 {
                     b.HasOne("Igtampe.Neco.Common.UserType", "Type")
                         .WithMany()
-                        .HasForeignKey("TypeId");
+                        .HasForeignKey("TypeID");
 
                     b.Navigation("Type");
                 });
@@ -905,19 +945,25 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Navigation("AccountTypes");
                 });
 
+            modelBuilder.Entity("Igtampe.Neco.Common.EzTax.IncomeItem", b =>
+                {
+                    b.Navigation("Apartments");
+
+                    b.Navigation("Businesses");
+
+                    b.Navigation("Hotels");
+                });
+
             modelBuilder.Entity("Igtampe.Neco.Common.EzTax.TaxJurisdiction", b =>
                 {
                     b.Navigation("Brackets");
                 });
 
-            modelBuilder.Entity("Igtampe.Neco.Common.EzTax.TaxUserInfo", b =>
-                {
-                    b.Navigation("Items");
-                });
-
             modelBuilder.Entity("Igtampe.Neco.Common.LandView.Country", b =>
                 {
                     b.Navigation("Districts");
+
+                    b.Navigation("Roads");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.LandView.District", b =>
