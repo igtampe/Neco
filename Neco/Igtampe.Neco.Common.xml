@@ -592,6 +592,7 @@
             <param name="User"></param>
             <param name="IncomeItems"></param>
             <param name="CurrentMonthTransactions"></param>
+            <param name="UserFederalJurisdiction"></param>
             <returns></returns>
         </member>
         <member name="T:Igtampe.Neco.Common.EzTax.TaxUserInfo">
@@ -727,7 +728,7 @@
             <summary>Status of a Plot</summary>
         </member>
         <member name="F:Igtampe.Neco.Common.LandView.PlotStatus.FOR_SALE">
-            <summary>Plot that is for sale by <see cref="!:Owner"/></summary>
+            <summary>Plot that is for sale by <see cref="P:Igtampe.Neco.Common.LandView.Plot.Owner"/></summary>
         </member>
         <member name="F:Igtampe.Neco.Common.LandView.PlotStatus.NOT_FOR_SALE">
             <summary>Plot that is owned and is not for  sale</summary>
