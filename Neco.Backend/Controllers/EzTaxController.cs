@@ -416,6 +416,15 @@ namespace Igtampe.Neco.Backend.Controllers {
 
                 }
 
+                N = new() {
+                    Read = false,
+                    Text = $"IMEX has forwarded your income ({TUI.TotalMonthlyIncome():0}p) for the month to account {B.ID}.",
+                    Time = DateTime.Now,
+                    User = U
+                };
+
+                NecoDB.Add(N);
+                await NecoDB.SaveChangesAsync();
             }
 
             return 0;
