@@ -47,7 +47,7 @@ namespace Igtampe.Neco.Common.LandView {
 
         /// <summary>Collection of plots that are in this district</summary>
         [JsonIgnore]
-        public ICollection<Plot> Plots { get; set; }
+        public List<Plot> Plots { get; set; }
 
         /// <summary>Price per square meter of unclaimed terrain</summary>
         [Range(0, int.MaxValue)]

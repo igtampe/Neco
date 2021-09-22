@@ -19,11 +19,11 @@ namespace Igtampe.Neco.Common.LandView {
 
         /// <summary>Districts in this country</summary>
         [JsonIgnore]
-        public ICollection<District> Districts{ get; set; }
+        public List<District> Districts{ get; set; }
 
         /// <summary>Roads in this country</summary>
         [JsonIgnore]
-        public ICollection<Road> Roads { get; set; }
+        public List<Road> Roads { get; set; }
 
         /// <summary>Width of this country in meters</summary>
         public int Width { get; set; } = 0;
