@@ -17,6 +17,9 @@ namespace Igtampe.Neco.Common.LandView {
         /// <summary>Name of this road</summary>
         public string Name { get; set; }
 
+        /// <summary>Width in meters of the road</summary>
+        public int Width { get; set; }
+
         /// <summary>comma separated point strings for storage</summary>
         public string Points { get; set; } //I hope this will save but it probably won't :shrug:
 
