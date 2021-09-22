@@ -77,6 +77,24 @@ namespace Igtampe.Neco.Common.LandView {
             return GraphicalPoints.Max(P => P.X) - GraphicalPoints.Min(P => P.X);
         }
 
+        /// <summary>Returns the X of the leftmost point</summary>
+        /// <returns></returns>
+        public int LeftmostX() {
+            return GraphicalPoints.Min(P => P.X);
+        }
+
+        /// <summary>Returns the Y of the topmost point</summary>
+        /// <returns></returns>
+        public int TopmostY() {
+            return GraphicalPoints.Min(P => P.Y);
+        }
+
+        /// <summary>Returns a point representing a (not necessarily existing) top left most point (Used for the plotter)</summary>
+        /// <returns></returns>
+        public Point Origin() {
+            return new(LeftmostX(), TopmostY());
+        }
+
         /// <summary>Compares this District to another object</summary>
         /// <param name="obj"></param>
         /// <returns>True if and only if the object is a District and the <see cref="ID"/> matches with this one's</returns>
