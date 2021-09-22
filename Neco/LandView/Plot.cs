@@ -79,6 +79,18 @@ namespace Igtampe.Neco.Common.LandView {
         /// <returns></returns>
         public int Width() { return GraphicalPoints.Max(P => P.X) - GraphicalPoints.Min(P => P.X); }
 
+        /// <summary>Returns the X of the leftmost point</summary>
+        /// <returns></returns>
+        public int LeftmostX() {
+            return GraphicalPoints.Min(P => P.X);
+        }
+
+        /// <summary>Returns the Y of the topmost point</summary>
+        /// <returns></returns>
+        public int TopmostY() {
+            return GraphicalPoints.Min(P => P.Y);
+        }
+
         /// <summary>Compares this Plot to another object</summary>
         /// <param name="obj"></param>
         /// <returns>True if and only if the object is a Plot and the <see cref="ID"/> matches with this one's</returns>
