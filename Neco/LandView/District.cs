@@ -89,12 +89,6 @@ namespace Igtampe.Neco.Common.LandView {
             return GraphicalPoints.Min(P => P.Y);
         }
 
-        /// <summary>Returns a point representing a (not necessarily existing) top left most point (Used for the plotter)</summary>
-        /// <returns></returns>
-        public Point Origin() {
-            return new(LeftmostX(), TopmostY());
-        }
-
         /// <summary>Compares this District to another object</summary>
         /// <param name="obj"></param>
         /// <returns>True if and only if the object is a District and the <see cref="ID"/> matches with this one's</returns>
