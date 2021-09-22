@@ -696,6 +696,18 @@
             <summary>Width of this district</summary>
             <returns></returns>
         </member>
+        <member name="M:Igtampe.Neco.Common.LandView.District.LeftmostX">
+            <summary>Returns the X of the leftmost point</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.District.TopmostY">
+            <summary>Returns the Y of the topmost point</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.District.Origin">
+            <summary>Returns a point representing a (not necessarily existing) top left most point (Used for the plotter)</summary>
+            <returns></returns>
+        </member>
         <member name="M:Igtampe.Neco.Common.LandView.District.Equals(System.Object)">
             <summary>Compares this District to another object</summary>
             <param name="obj"></param>
@@ -829,6 +841,9 @@
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Road.Name">
             <summary>Name of this road</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Road.Width">
+            <summary>Width in meters of the road</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Road.Points">
             <summary>comma separated point strings for storage</summary>
