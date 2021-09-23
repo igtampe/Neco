@@ -139,7 +139,7 @@ namespace Igtampe.LandViewPlotter {
                 D.LeftmostX() + Origin.X + D.Width() / 2,
                 D.TopmostY() + Origin.Y + D.Height() / 2);
 
-            DrawLabel(GRM, DCenter, D.Name, $"{D.Plots.Count} Plot(s) | {D.Area()}m²", Foreground, Background, NameFont, InfoFont, 2, 4);
+            DrawLabel(GRM, DCenter, D.Name, $"{D.Plots.Count} Plot(s) | {D.Area():n0}m²", Foreground, Background, NameFont, InfoFont, 2, 4);
         }
 
         /// <summary>Draws a district outline and label for the given district</summary>
@@ -205,7 +205,7 @@ namespace Igtampe.LandViewPlotter {
                 P.TopmostY() + Origin.Y + P.Height() / 2);
 
             //We're going to write some TEXT!
-            DrawLabel(GRM, PCenter, P.Name, $"{P.Area()}m²", Foreground, Background, NameFont, InfoFont, 2, 4);
+            DrawLabel(GRM, PCenter, P.Name, $"{P.Area():n0}m²", Foreground, Background, NameFont, InfoFont, 2, 4);
         }
 
         /// <summary>Draws a plot outline and label for the given plot</summary>
