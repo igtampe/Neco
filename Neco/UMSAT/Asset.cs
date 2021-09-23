@@ -25,16 +25,13 @@ namespace Igtampe.Neco.Common.UMSAT {
 
         /// <summary>Full location of this item</summary>
         /// <returns></returns>
-        public string Location() { return $"{SpecificLocaiton},{IncomeItem.LocalJurisdiction.Name},{IncomeItem.FederalJurisdiction.Name}"; }
+        public string Location() { return $"{SpecificLocaiton},{Plot.District.Name},{Plot.District.Country.Name}"; }
 
         /// <summary>Owner of this item</summary>
         public User Owner { get; set; }
 
         /// <summary>Whether or not this item is complete</summary>
         public bool Complete { get; set; } = false;
-
-        /// <summary>IncomeItem related to this asset</summary>
-        public IncomeItem IncomeItem { get; set; }
 
         /// <summary>Plot of land this item sits on</summary>
         public Plot Plot { get; set; }
