@@ -109,6 +109,7 @@ namespace Igtampe.LandViewPlotter {
             // 
             // PreviewPictureBox
             // 
+            this.PreviewPictureBox.BackgroundImage = global::Igtampe.LandViewPlotter.Properties.Resources.TinyDiagBWTile;
             this.PreviewPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PreviewPictureBox.Location = new System.Drawing.Point(3, 19);
             this.PreviewPictureBox.Name = "PreviewPictureBox";

@@ -40,7 +40,7 @@ namespace Igtampe.LandViewPlotter {
             this.PreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.PreviewGroupBox = new System.Windows.Forms.GroupBox();
             this.MainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.CanButton = new System.Windows.Forms.Button();
             this.CountryDetailsGroupbox.SuspendLayout();
             this.CountryDetailTableLayoutPanel.SuspendLayout();
             this.GraphicalDetailsGroupBox.SuspendLayout();
@@ -209,6 +209,7 @@ namespace Igtampe.LandViewPlotter {
             // 
             // PreviewPictureBox
             // 
+            this.PreviewPictureBox.BackgroundImage = global::Igtampe.LandViewPlotter.Properties.Resources.TinyDiagBWTile;
             this.PreviewPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PreviewPictureBox.Location = new System.Drawing.Point(3, 19);
             this.PreviewPictureBox.Name = "PreviewPictureBox";
@@ -238,7 +239,7 @@ namespace Igtampe.LandViewPlotter {
             this.MainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.MainTableLayoutPanel.Controls.Add(this.PreviewGroupBox, 1, 0);
             this.MainTableLayoutPanel.Controls.Add(this.CountryDetailsGroupbox, 0, 0);
-            this.MainTableLayoutPanel.Controls.Add(this.CancelButton, 2, 1);
+            this.MainTableLayoutPanel.Controls.Add(this.CanButton, 2, 1);
             this.MainTableLayoutPanel.Controls.Add(this.OKButton, 1, 1);
             this.MainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
@@ -251,13 +252,13 @@ namespace Igtampe.LandViewPlotter {
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(722, 299);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(75, 23);
-            this.CancelButton.TabIndex = 2;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseVisualStyleBackColor = true;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.CanButton.Location = new System.Drawing.Point(722, 299);
+            this.CanButton.Name = "CancelButton";
+            this.CanButton.Size = new System.Drawing.Size(75, 23);
+            this.CanButton.TabIndex = 2;
+            this.CanButton.Text = "Cancel";
+            this.CanButton.UseVisualStyleBackColor = true;
+            this.CanButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // PlotPlotter
             // 
@@ -287,7 +288,7 @@ namespace Igtampe.LandViewPlotter {
         private System.Windows.Forms.PictureBox PreviewPictureBox;
         private System.Windows.Forms.GroupBox PreviewGroupBox;
         private System.Windows.Forms.TableLayoutPanel MainTableLayoutPanel;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button CanButton;
         private System.Windows.Forms.TableLayoutPanel CountryDetailTableLayoutPanel;
         private System.Windows.Forms.GroupBox GraphicalDetailsGroupBox;
         private System.Windows.Forms.TableLayoutPanel DetailTableLayoutPanel;
