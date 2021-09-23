@@ -39,7 +39,6 @@ namespace Igtampe.LandViewPlotter {
             RoadContextMenu.Opening += RoadContextMenu_Opening;
             newDistrictToolStripMenuItem.Click += NewDistrictToolStripMenuItem_Click;
             EditDistrictToolStripMenuItem.Click += EditDistrictToolStripMenuItem_Click;
-            DeleteDistrictToolStripMenuItem.Click += DeleteDistrictToolStripMenuItem_Click;
             newRoadToolStripMenuItem.Click += NewRoadToolStripMenuItem_Click;
             EditRoadToolStripMenuItem.Click += EditRoadToolStripMenuItem_Click;
             DeleteRoadToolStripMenuItem.Click += DeleteRoadToolStripMenuItem_Click;
@@ -133,23 +132,40 @@ namespace Igtampe.LandViewPlotter {
         #region DistrictsContextMenu
 
         private void DistrictsContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e) {
-            bool EnableEditOptions = DistrictsListView.SelectedIndices.Count > 0;
-            EditDistrictToolStripMenuItem.Enabled = EnableEditOptions;
-            DeleteDistrictToolStripMenuItem.Enabled = EnableEditOptions;
+            EditDistrictToolStripMenuItem.Enabled = DistrictsListView.SelectedIndices.Count > 0;
         }
 
         private void NewDistrictToolStripMenuItem_Click(object sender, EventArgs e) {
+            District D = new() {
+                Country = MyCountry,
+                Plots =  new List<Plot>()
+            };
 
+            DistrictPlotter DPlotter = new(D, NecoDB);
+            if (DPlotter.ShowDialog() == DialogResult.OK) {
+                //Add the plot
+                MyCountry.Districts.Add(DPlotter.MyDistrict);
+                MarkEdited();
+                PopulateData();
+            }
         }
 
         private void EditDistrictToolStripMenuItem_Click(object sender, EventArgs e) {
+            int Index = GetSelectedDistrictIndex();
+            if (Index == -1) { return; }
 
+            District D = MyCountry.Districts[Index];
+            DistrictPlotter DPlotter = new(D, NecoDB);
+            if (DPlotter.ShowDialog() == DialogResult.OK) {
+                if (!DPlotter.Edited) { return; }
+                MyCountry.Districts[Index] = DPlotter.MyDistrict;
+                MarkEdited();
+                PopulateData();
+            }
         }
 
-        private void DeleteDistrictToolStripMenuItem_Click(object sender, EventArgs e) {
-            //Find the district
-            
-    
+        private int GetSelectedDistrictIndex() {
+            if (DistrictsListView.SelectedIndices.Count == 0) { return -1; } else { return DistrictsListView.SelectedIndices[0]; }
         }
 
         #endregion
@@ -163,16 +179,53 @@ namespace Igtampe.LandViewPlotter {
         }
 
         private void NewRoadToolStripMenuItem_Click(object sender, EventArgs e) {
+            Road R = new() { Country = MyCountry, };
+
+            RoadPlotter RPlotter = new(R);
+            if (RPlotter.ShowDialog() == DialogResult.OK) {
+                //Add the plot
+                MyCountry.Roads.Add(RPlotter.MyRoad);
+                MarkEdited();
+                PopulateData();
+            }
 
         }
 
         private void EditRoadToolStripMenuItem_Click(object sender, EventArgs e) {
+            int Index = GetSelectedRoadIndex();
+            if (Index == -1) { return; }
 
+            Road R = MyCountry.Roads[Index];
+            RoadPlotter RPlotter = new(R);
+            if (RPlotter.ShowDialog() == DialogResult.OK) {
+                if (!RPlotter.Edited) { return; }
+                MyCountry.Roads[Index] = RPlotter.MyRoad;
+                MarkEdited();
+                PopulateData();
+            }
         }
 
         private void DeleteRoadToolStripMenuItem_Click(object sender, EventArgs e) {
+            int Index = GetSelectedRoadIndex();
+            if (Index == -1) { return; }
+
+            Road R = MyCountry.Roads[Index];
+            if (MessageBox.Show($"Are you sure you want to delete Road {R.Name}?\n" +
+                $"\n" +
+                $"This is IRREVIRSIBLE and will take effect as soon as you hit YES (NOT WHEN YOU HIT SAVE)!\n","Are you sure?",
+                MessageBoxButtons.YesNo,MessageBoxIcon.Exclamation)==DialogResult.Yes) {
+                NecoDB.Remove(R);
+                NecoDB.SaveChanges();
+                MyCountry.Roads.Remove(R);
+                PopulateData();
+            }
 
         }
+
+        private int GetSelectedRoadIndex() {
+            if (RoadsListView.SelectedIndices.Count == 0) { return -1; } else { return RoadsListView.SelectedIndices[0]; }
+        }
+
 
         #endregion
 

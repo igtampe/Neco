@@ -37,7 +37,6 @@ namespace Igtampe.LandViewPlotter {
             this.DistrictsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newDistrictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditDistrictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DeleteDistrictToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RoadsGroupBox = new System.Windows.Forms.GroupBox();
             this.RoadsListView = new System.Windows.Forms.ListView();
             this.RoadNameHeader = new System.Windows.Forms.ColumnHeader();
@@ -182,31 +181,23 @@ namespace Igtampe.LandViewPlotter {
             // 
             this.DistrictsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newDistrictToolStripMenuItem,
-            this.EditDistrictToolStripMenuItem,
-            this.DeleteDistrictToolStripMenuItem});
+            this.EditDistrictToolStripMenuItem});
             this.DistrictsContextMenu.Name = "DistrictsContextMenu";
-            this.DistrictsContextMenu.Size = new System.Drawing.Size(148, 70);
+            this.DistrictsContextMenu.Size = new System.Drawing.Size(139, 48);
             // 
             // newDistrictToolStripMenuItem
             // 
             this.newDistrictToolStripMenuItem.Name = "newDistrictToolStripMenuItem";
-            this.newDistrictToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.newDistrictToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.newDistrictToolStripMenuItem.Text = "New District";
             this.newDistrictToolStripMenuItem.Click += new System.EventHandler(this.NewDistrictToolStripMenuItem_Click);
             // 
             // EditDistrictToolStripMenuItem
             // 
             this.EditDistrictToolStripMenuItem.Name = "EditDistrictToolStripMenuItem";
-            this.EditDistrictToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.EditDistrictToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.EditDistrictToolStripMenuItem.Text = "Edit District";
             this.EditDistrictToolStripMenuItem.Click += new System.EventHandler(this.EditDistrictToolStripMenuItem_Click);
-            // 
-            // DeleteDistrictToolStripMenuItem
-            // 
-            this.DeleteDistrictToolStripMenuItem.Name = "DeleteDistrictToolStripMenuItem";
-            this.DeleteDistrictToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
-            this.DeleteDistrictToolStripMenuItem.Text = "Delete District";
-            this.DeleteDistrictToolStripMenuItem.Click += new System.EventHandler(this.DeleteDistrictToolStripMenuItem_Click);
             // 
             // RoadsGroupBox
             // 
@@ -536,7 +527,6 @@ namespace Igtampe.LandViewPlotter {
         private System.Windows.Forms.ContextMenuStrip DistrictsContextMenu;
         private System.Windows.Forms.ToolStripMenuItem newDistrictToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EditDistrictToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem DeleteDistrictToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip RoadContextMenu;
         private System.Windows.Forms.ToolStripMenuItem newRoadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EditRoadToolStripMenuItem;
