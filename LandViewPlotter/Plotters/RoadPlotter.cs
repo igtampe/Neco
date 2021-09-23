@@ -11,6 +11,7 @@ namespace Igtampe.LandViewPlotter {
 
         public RoadPlotter(Road R) {
             InitializeComponent();
+            Icon = Properties.Resources.MainIcon;
             MyRoad = R;
 
             #region Event handlers

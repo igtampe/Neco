@@ -12,6 +12,7 @@ namespace Igtampe.LandViewPlotter {
 
         public PlotPlotter(Plot P, NecoContext NecoDB) {
             InitializeComponent();
+            Icon = Properties.Resources.MainIcon;
             MyPlot = P;
             this.NecoDB = NecoDB;
 

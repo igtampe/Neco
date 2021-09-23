@@ -19,6 +19,7 @@ namespace Igtampe.LandViewPlotter {
 
         public DistrictPlotter(District D, NecoContext NecoDB) {
             InitializeComponent();
+            Icon = Properties.Resources.MainIcon;
             MyDistrict = D;
             if (MyDistrict.Plots == null) { MyDistrict.Plots = new List<Plot>(); }
             this.NecoDB = NecoDB;

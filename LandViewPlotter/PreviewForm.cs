@@ -7,7 +7,10 @@ namespace Igtampe.LandViewPlotter {
     public partial class PreviewForm:Form {
 
         /// <summary>Creates a preview form to show an image (but without an image)</summary>
-        public PreviewForm() { InitializeComponent(); }
+        public PreviewForm() { 
+            InitializeComponent();
+            Icon = Properties.Resources.MainIcon;
+        }
 
         /// <summary>Creates a preview form to show an image (with an image)</summary>
         /// <param name="I"></param>

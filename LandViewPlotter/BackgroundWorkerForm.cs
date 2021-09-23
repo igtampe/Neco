@@ -13,6 +13,7 @@ namespace Igtampe.LandViewPlotter {
 
         public BackgroundWorkerForm(BackgroundWorker BW, object? Arg = null) {
             InitializeComponent();
+            Icon = Properties.Resources.MainIcon;
             MyBackgroundWorker = BW;
             Argument = Arg;
             Shown += StartBW;

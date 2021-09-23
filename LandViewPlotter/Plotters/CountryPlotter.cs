@@ -20,6 +20,7 @@ namespace Igtampe.LandViewPlotter {
 
         public CountryPlotter() {
             InitializeComponent();
+            Icon = Properties.Resources.MainIcon;
 
             //Mira if the designer won't respect me then:
             #region Event handlers

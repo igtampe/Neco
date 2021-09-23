@@ -11,6 +11,7 @@ namespace Igtampe.LandViewPlotter {
 
         public CountryPicker(List<Country> Countries) {
             InitializeComponent();
+            Icon = Properties.Resources.MainIcon;
 
             this.Countries = Countries;
 
