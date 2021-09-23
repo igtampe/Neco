@@ -371,6 +371,19 @@ namespace Igtampe.LandViewPlotter {
             Edited = true;
             saveToolStripMenuItem.Enabled = Edited;
             PreviewPictureBox.Image = LandViewGraphicsEngine.GenerateCountryImage(MyCountry);
+            ZoomOrCenter();
+        }
+
+        private void ZoomOrCenter() {
+            if (PreviewPictureBox.Image.Width < PreviewPictureBox.Width &&
+                PreviewPictureBox.Image.Height < PreviewPictureBox.Height) {
+                //If the Image is not big enough to fit or to squash to fit in the picture box, center it
+                PreviewPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+                return;
+            }
+
+            //Else the image is either the exact size of the window or larger in some axis and must be s q u a s h e d
+            PreviewPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
         private static void ShowCriticalMessagebox(string message) {MessageBox.Show(message, "No", MessageBoxButtons.OK, MessageBoxIcon.Error);}
