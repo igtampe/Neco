@@ -24,6 +24,7 @@ namespace Igtampe.LandViewPlotter {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.WaitAndLaunchBWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // Splash
@@ -44,5 +45,7 @@ namespace Igtampe.LandViewPlotter {
         }
 
         #endregion
+
+        private System.ComponentModel.BackgroundWorker WaitAndLaunchBWorker;
     }
 }
