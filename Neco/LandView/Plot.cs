@@ -37,6 +37,7 @@ namespace Igtampe.Neco.Common.LandView {
         [NotMapped]
         public Point[] GraphicalPoints {
             get {
+                if (string.IsNullOrWhiteSpace(Points)) { return Array.Empty<Point>(); }
                 List<Point> Ps = new();
                 foreach (string P in Points.Split(';')) {
                     int X = int.Parse(P.Split(',')[0]);
