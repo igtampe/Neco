@@ -8,7 +8,7 @@ using Igtampe.Neco.Common;
 using Igtampe.Neco.Common.LandView;
 
 namespace Igtampe.LandViewPlotter {
-    
+
     /// <summary>Holds functiosn to generate and draw images and graphcis for landview items</summary>
     public static class LandViewGraphicsEngine {
 
@@ -34,25 +34,29 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="C"></param>
         /// <returns></returns>
         public static Image GenerateCountryImage(Country C) {
-            if (C.Width == 0 || C.Height == 0) { return new Bitmap(1,1); }
-            Image I = GenerateCanvas(C);
+            try {
+                if (C.Width == 0 || C.Height == 0) { return GenerateErrorImage($"Country {C.Name} ({C.ID})\nHas a width or height of 0 and cannot be drawn."); }
+                Image I = GenerateCanvas(C);
 
-            //Find the point that's 0,0
-            Point Origin = GetCountryOrigin(C);
+                //Find the point that's 0,0
+                Point Origin = GetCountryOrigin(C);
 
-            //Draw a little cross at the center
-            Graphics GRM = Graphics.FromImage(I);
+                //Draw a little cross at the center
+                Graphics GRM = Graphics.FromImage(I);
 
-#if(DEBUG)
-            DrawOriginCrosshair(Origin, GRM);
+#if (DEBUG)
+                DrawOriginCrosshair(Origin, GRM);
 #endif
 
-            //Draw each district
+                //Draw each district
 
-            DrawDistricts(C, GRM, Origin);
-            DrawRoads(C, GRM, Origin);
+                DrawDistricts(C, GRM, Origin);
+                DrawRoads(C, GRM, Origin);
 
-            return I;
+                return I;
+            } catch (Exception E) {
+                return GenerateErrorImage($"{E.Source} at {E.TargetSite}: {E.Message}\n{E.StackTrace}");
+            }
 
         }
 
@@ -60,41 +64,47 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="D"></param>
         /// <returns></returns>
         public static Image GenerateDistrictImage(District D) {
+            try {
+                if (D.Width() == 0 || D.Height() == 0) { return GenerateErrorImage($"District {D.Name} ({D.ID})\nHas a width or height of 0 and cannot be drawn."); }
+                Image I = GenerateCanvas(D);
 
-            if (D.Width() == 0 || D.Height() == 0) { return new Bitmap(1, 1); }
-            Image I = GenerateCanvas(D);
+                //Find the point that's 0,0
+                Point Origin = GetDistrictOrigin(D);
 
-            //Find the point that's 0,0
-            Point Origin = GetDistrictOrigin(D);
-
-            //Draw a little cross at the center
-            Graphics GRM = Graphics.FromImage(I);
+                //Draw a little cross at the center
+                Graphics GRM = Graphics.FromImage(I);
 #if (DEBUG)
-            DrawOriginCrosshair(Origin, GRM);
+                DrawOriginCrosshair(Origin, GRM);
 #endif
-            DrawDistrictOutline(D, GRM, Origin, new(new SolidBrush(Color.Black), 10));
-            DrawPlots(D,GRM,Origin);
-            DrawRoads(D.Country,GRM,Origin);
+                DrawDistrictOutline(D, GRM, Origin, new(new SolidBrush(Color.Black), 10));
+                DrawPlots(D, GRM, Origin);
+                DrawRoads(D.Country, GRM, Origin);
 
-            return I;
+                return I;
+            } catch (Exception E) {
+                return GenerateErrorImage($"{E.Source} at {E.TargetSite}: {E.Message}\n{E.StackTrace}");
+            }
         }
 
         /// <summary>Generates an image with a Plot</summary>
         /// <param name="P"></param>
         /// <returns></returns>
         public static Image GeneratePlotImage(Plot P) {
+            try {
+                if (P.Width() == 0 || P.Height() == 0) { return GenerateErrorImage($"Plot {P.Name} ({P.ID})\nHas a width or height of 0 and cannot be drawn."); }
+                Image I = GenerateCanvas(P);
 
-            if (P.Width() == 0 || P.Height() == 0) { return new Bitmap(1, 1); }
-            Image I = GenerateCanvas(P);
+                Graphics GRM = Graphics.FromImage(I);
+                Point Origin = GetPlotOrigin(P);
+                Pen PlotPen = new(Color.Black, 5);
+                Font NameFont = new(FFamily, 12, FontStyle.Bold, GraphicsUnit.Point);
+                Font InfoFont = new(FFamily, 8, FontStyle.Regular, GraphicsUnit.Point);
+                DrawPlot(P, GRM, Origin, PlotPen, Color.Black, Color.White, NameFont, InfoFont);
 
-            Graphics GRM = Graphics.FromImage(I);
-            Point Origin = GetPlotOrigin(P);
-            Pen PlotPen = new(Color.Black, 5);
-            Font NameFont = new(FFamily, 12, FontStyle.Bold, GraphicsUnit.Point);
-            Font InfoFont = new(FFamily, 8, FontStyle.Regular, GraphicsUnit.Point);
-            DrawPlot(P, GRM, Origin, PlotPen, Color.Black, Color.White, NameFont, InfoFont);
-
-            return I;
+                return I;
+            } catch (Exception E) {
+                return GenerateErrorImage($"{E.Source} at {E.TargetSite}: {E.Message}\n{E.StackTrace}");
+            }
         }
 
         #region District
@@ -127,7 +137,7 @@ namespace Igtampe.LandViewPlotter {
                 D.LeftmostX() + Origin.X + D.Width() / 2,
                 D.TopmostY() + Origin.Y + D.Height() / 2);
 
-            DrawLabel(GRM, DCenter, D.Name, $"{D.Plots.Count} Plot(s) | {D.Area()}m²", NameFont, InfoFont, 2, 4);
+            DrawLabel(GRM, DCenter, D.Name, $"{D.Plots.Count} Plot(s) | {D.Area()}m²", Foreground, Background, NameFont, InfoFont, 2, 4);
         }
 
         /// <summary>Draws a district outline and label for the given district</summary>
@@ -193,7 +203,7 @@ namespace Igtampe.LandViewPlotter {
                 P.TopmostY() + Origin.Y + P.Height() / 2);
 
             //We're going to write some TEXT!
-            DrawLabel(GRM, PCenter, P.Name, $"{P.Area()}m²", NameFont, InfoFont, 2, 4);
+            DrawLabel(GRM, PCenter, P.Name, $"{P.Area()}m²", Foreground, Background, NameFont, InfoFont, 2, 4);
         }
 
         /// <summary>Draws a plot outline and label for the given plot</summary>
@@ -221,7 +231,7 @@ namespace Igtampe.LandViewPlotter {
             Font InfoFont = new(FFamily, 8, FontStyle.Regular, GraphicsUnit.Point);
             //Draw each plot
             foreach (Plot P in D.Plots) {
-                DrawPlot(P, GRM, Origin, PlotPen,Color.Black,Color.White,NameFont,InfoFont);
+                DrawPlot(P, GRM, Origin, PlotPen, Color.Black, Color.White, NameFont, InfoFont);
             }
         }
 
@@ -247,7 +257,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="Origin">Point on the given graphcis  that represents 0,0</param>
         public static void DrawRoads(Country C, Graphics GRM, Point Origin) {
             //Draw each road
-            foreach (Road R in C.Roads) {DrawRoad(R, GRM, Origin, Color.DarkGray);}
+            foreach (Road R in C.Roads) { DrawRoad(R, GRM, Origin, Color.DarkGray); }
         }
 
         #endregion
@@ -300,24 +310,24 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="InfoFont">Font for the second line</param>
         /// <param name="Padding">Padding around the label</param>
         /// <param name="Spacing">Spacing between the first and second line of text</param>
-        public static void DrawLabel(Graphics GRM, Point LabelCenter, string NameLabel, string InfoLabel, Font NameFont, Font InfoFont, int Padding, int Spacing) {
+        public static void DrawLabel(Graphics GRM, Point LabelCenter, string NameLabel, string InfoLabel, Color Foreground, Color Background, Font NameFont, Font InfoFont, int Padding, int Spacing) {
             SizeF NameSize = GRM.MeasureString(NameLabel, NameFont);
             SizeF InfoSize = GRM.MeasureString(InfoLabel, InfoFont);
 
-            Size CardSize = new(Convert.ToInt32(Math.Max(NameSize.Width, InfoSize.Width)) + (2*Padding),
-                                        Convert.ToInt32(NameSize.Height + InfoSize.Height) + Spacing + (2*Padding));
+            Size CardSize = new(Convert.ToInt32(Math.Max(NameSize.Width, InfoSize.Width)) + (2 * Padding),
+                                        Convert.ToInt32(NameSize.Height + InfoSize.Height) + Spacing + (2 * Padding));
 
             //Get the point at which to draw this thing
             Point LabelDrawPoint = OffsetPoint(LabelCenter, CardSize.Width / -2, CardSize.Height / -2);
 
             //Draw a rectangle in black
-            GRM.FillRectangle(new SolidBrush(Color.Black), LabelDrawPoint.X, LabelDrawPoint.Y, CardSize.Width, CardSize.Height);
+            GRM.FillRectangle(new SolidBrush(Background), LabelDrawPoint.X, LabelDrawPoint.Y, CardSize.Width, CardSize.Height);
 
             //Draw the Label
-            GRM.DrawString(NameLabel, NameFont, new SolidBrush(Color.White), OffsetPoint(LabelDrawPoint, Padding, Padding));
+            GRM.DrawString(NameLabel, NameFont, new SolidBrush(Foreground), OffsetPoint(LabelDrawPoint, Padding, Padding));
 
             //Draw the PlotLabel
-            GRM.DrawString(InfoLabel, InfoFont, new SolidBrush(Color.White), OffsetPoint(LabelDrawPoint, Padding, Padding + Convert.ToInt32(NameSize.Height) + Spacing));
+            GRM.DrawString(InfoLabel, InfoFont, new SolidBrush(Foreground), OffsetPoint(LabelDrawPoint, Padding, Padding + Convert.ToInt32(NameSize.Height) + Spacing));
 
             //Now we're done
         }
@@ -334,9 +344,24 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="DY"></param>
         /// <returns>Copy of the original point, offset by the given amount</returns>
         public static Point OffsetPoint(Point P, int DX, int DY) {
-            Point P2 = new(P.X,P.Y); //create a duplicate
+            Point P2 = new(P.X, P.Y); //create a duplicate
             P2.Offset(DX, DY); //Offset it
             return P2; //return it
+        }
+
+        public static Image GenerateErrorImage(string Error) {
+
+            Image E = new Bitmap(Properties.Resources.LandviewGenerationError);
+            Graphics GRM = Graphics.FromImage(E);
+
+
+            Font NameFont = new(FFamily, 14, FontStyle.Regular, GraphicsUnit.Point);
+
+            GRM.FillRectangle(new SolidBrush(Color.Black), 87, 408, 852, 260);
+            GRM.DrawString(Error, NameFont, new SolidBrush(Color.White), 90, 411);
+
+            return E;
+
         }
 
         #endregion
