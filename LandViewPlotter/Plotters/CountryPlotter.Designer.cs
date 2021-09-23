@@ -67,6 +67,8 @@ namespace Igtampe.LandViewPlotter {
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LoadCountriesBW = new System.ComponentModel.BackgroundWorker();
+            this.SaveCountryBW = new System.ComponentModel.BackgroundWorker();
             this.MainTableLayoutPanel.SuspendLayout();
             this.PreviewGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBox)).BeginInit();
@@ -479,7 +481,7 @@ namespace Igtampe.LandViewPlotter {
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -555,5 +557,7 @@ namespace Igtampe.LandViewPlotter {
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Label PPSMLabel;
         private System.Windows.Forms.TextBox PPSMBox;
+        private System.ComponentModel.BackgroundWorker LoadCountriesBW;
+        private System.ComponentModel.BackgroundWorker SaveCountryBW;
     }
 }

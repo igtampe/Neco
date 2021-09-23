@@ -38,6 +38,10 @@ namespace Igtampe.LandViewPlotter {
             DistrictsContextMenu.Opening += DistrictsContextMenu_Opening;
             RoadContextMenu.Opening += RoadContextMenu_Opening;
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
+            LoadCountriesBW.RunWorkerCompleted += LoadCountriesBW_RunWorkerCompleted;
+            LoadCountriesBW.DoWork += LoadCountriesBW_DoWork;
+            SaveCountryBW.RunWorkerCompleted += SaveCountryBW_RunWorkerCompleted;
+            SaveCountryBW.DoWork += SaveCountryBW_DoWork;
             #endregion
 
             saveToolStripMenuItem.Enabled = Edited;
@@ -65,6 +69,7 @@ namespace Igtampe.LandViewPlotter {
                 switch (MessageBox.Show("There are unsaved changes! Would you like to save?", "Are You Sure?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)) {
                     case DialogResult.Yes:
                         SaveToolStripMenuItem_Click(sender, null);
+                        while (SaveCountryBW.IsBusy) { /*Wait for this thing to finish*/} 
                         break;
                     case DialogResult.No:
                         return;
@@ -97,32 +102,14 @@ namespace Igtampe.LandViewPlotter {
                 if (E.Cancel) { return; }
                 
                 NecoDB.Dispose(); 
-            
+
             }
-            NecoDB = new();
 
-            List<Country> Countries = NecoDB.Country
-                    .Include(C => C.Districts).ThenInclude(D => D.Plots).ThenInclude(P => P.Owner).ThenInclude(U => U.Type)
-                    .Include(C => C.Districts).ThenInclude(D => D.DistrictBankAccount)
-                    .Include(C => C.FederalBankAccount)
-                    .ToList();
-
-            CountryPicker CP = new(Countries);
-            if (CP.ShowDialog() != DialogResult.OK && MyCountry == null) { Close(); return; }
-
-            MyCountry = CP.SelectedCountry;
-            if (MyCountry.Districts == null) { MyCountry.Districts = new List<District>(); }
-            if (MyCountry.Roads == null) { MyCountry.Roads = new List<Road>(); }
-            PopulateData();
+            LoadCountriesAsync();
         }
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (Edited = false) { return; }
-            if (MyCountry.ID == Guid.Empty) { NecoDB.Add(MyCountry); } else { NecoDB.Update(MyCountry); }            
-            int Entities = NecoDB.SaveChanges();
-            MessageBox.Show($"Saved {MyCountry.Name}, along with {Entities-1} sub-item(s)","Safe!",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            Edited = false;
-            saveToolStripMenuItem.Enabled = Edited;
+            SaveCountryAsync(MyCountry);
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e) { Close(); }
@@ -313,6 +300,70 @@ namespace Igtampe.LandViewPlotter {
             }
         }
 
+        #endregion
+
+        #region IO to the DB
+
+        private void SaveCountryAsync(Country C) {
+            if (Edited = false) { return; }
+            Enabled = false;
+            SaveCountryBW.RunWorkerAsync(C);
+        }
+
+        private void SaveCountryBW_DoWork(object sender, DoWorkEventArgs e) {
+            Country C = (Country)e.Argument;
+
+            NecoDB.SaveChanges();
+            if (C.ID == Guid.Empty) { NecoDB.Add(C); } else { NecoDB.Update(C); }
+            e.Result=(NecoDB.SaveChanges());
+        }
+
+        private void SaveCountryBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            Enabled = true;
+
+            if (e.Error != null) {
+                ShowCriticalMessagebox($"An error occured when saving the country to the database:\n\n{e.Error.Source} at {e.Error.TargetSite}: {e.Error.Message}\n\n{e.Error.StackTrace}");
+                return;
+            }
+
+            int Entities = (int)e.Result;
+
+            Edited = false;
+            saveToolStripMenuItem.Enabled = Edited;
+            MessageBox.Show($"Saved {MyCountry.Name}, along with {Entities - 1} sub-item(s)", "Safe!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void LoadCountriesAsync() {
+            Enabled = false;
+            LoadCountriesBW.RunWorkerAsync();
+
+        }
+
+        private void LoadCountriesBW_DoWork(object sender, DoWorkEventArgs e) {
+            NecoDB = new();
+            e.Result = NecoDB.Country
+                    .Include(C => C.Districts).ThenInclude(D => D.Plots).ThenInclude(P => P.Owner).ThenInclude(U => U.Type)
+                    .Include(C => C.Districts).ThenInclude(D => D.DistrictBankAccount)
+                    .Include(C => C.FederalBankAccount)
+                    .ToList();
+        }
+
+        private void LoadCountriesBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            Enabled = true;
+
+            if (e.Error != null) {
+                ShowCriticalMessagebox($"An error occured when loading the countries from the database:\n\n{e.Error.Source} at {e.Error.TargetSite}: {e.Error.Message}\n\n{e.Error.StackTrace}");
+                return;
+            }
+
+            CountryPicker CP = new((List<Country>)e.Result);
+            if (CP.ShowDialog() != DialogResult.OK && MyCountry == null) { Close(); return; }
+
+            MyCountry = CP.SelectedCountry;
+            if (MyCountry.Districts == null) { MyCountry.Districts = new List<District>(); }
+            if (MyCountry.Roads == null) { MyCountry.Roads = new List<Road>(); }
+            PopulateData();
+        }
         #endregion
 
         private void MarkEdited() {
