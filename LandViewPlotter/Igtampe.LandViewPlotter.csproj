@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Forms\**" />
+    <EmbeddedResource Remove="Forms\**" />
+    <None Remove="Forms\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Neco.Data\Igtampe.Neco.Data.csproj" />
     <ProjectReference Include="..\Neco\Igtampe.Neco.Common.csproj" />
   </ItemGroup>
