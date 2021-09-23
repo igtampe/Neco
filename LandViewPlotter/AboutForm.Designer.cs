@@ -29,7 +29,7 @@ namespace Igtampe.LandViewPlotter {
             // 
             // OkButton
             // 
-            this.OkButton.Location = new System.Drawing.Point(480, 288);
+            this.OkButton.Location = new System.Drawing.Point(504, 305);
             this.OkButton.Name = "OkButton";
             this.OkButton.Size = new System.Drawing.Size(75, 23);
             this.OkButton.TabIndex = 0;
@@ -41,7 +41,7 @@ namespace Igtampe.LandViewPlotter {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 323);
+            this.ClientSize = new System.Drawing.Size(591, 340);
             this.Controls.Add(this.OkButton);
             this.Name = "AboutForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
