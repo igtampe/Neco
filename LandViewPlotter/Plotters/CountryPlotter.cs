@@ -16,7 +16,7 @@ namespace Igtampe.LandViewPlotter {
 
         private NecoContext NecoDB;
         private Country MyCountry;
-        private bool Edited;
+        private bool Edited=false;
 
         public CountryPlotter() {
             InitializeComponent();
@@ -37,15 +37,10 @@ namespace Igtampe.LandViewPlotter {
             PPSMBox.LostFocus += PPSMBox_LostFocus;
             DistrictsContextMenu.Opening += DistrictsContextMenu_Opening;
             RoadContextMenu.Opening += RoadContextMenu_Opening;
-            //newDistrictToolStripMenuItem.Click += NewDistrictToolStripMenuItem_Click; //so is this one
-            //EditDistrictToolStripMenuItem.Click += EditDistrictToolStripMenuItem_Click; //This one is actually respected.
-            newRoadToolStripMenuItem.Click += NewRoadToolStripMenuItem_Click;
-            EditRoadToolStripMenuItem.Click += EditRoadToolStripMenuItem_Click;
-            DeleteRoadToolStripMenuItem.Click += DeleteRoadToolStripMenuItem_Click;
-            CountryPickerToolStripMenuItem.Click += OpenMenuItem_Click;
-            saveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             #endregion
+
+            saveToolStripMenuItem.Enabled = Edited;
 
         }
 
@@ -122,9 +117,12 @@ namespace Igtampe.LandViewPlotter {
         }
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (MyCountry.ID == Guid.Empty) { NecoDB.Add(MyCountry); } else { NecoDB.Update(MyCountry); }
-            NecoDB.SaveChanges();
+            if (Edited = false) { return; }
+            if (MyCountry.ID == Guid.Empty) { NecoDB.Add(MyCountry); } else { NecoDB.Update(MyCountry); }            
+            int Entities = NecoDB.SaveChanges();
+            MessageBox.Show($"Saved {MyCountry.Name}, along with {Entities-1} sub-item(s)","Safe!",MessageBoxButtons.OK,MessageBoxIcon.Information);
             Edited = false;
+            saveToolStripMenuItem.Enabled = Edited;
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e) { Close(); }
@@ -319,6 +317,7 @@ namespace Igtampe.LandViewPlotter {
 
         private void MarkEdited() {
             Edited = true;
+            saveToolStripMenuItem.Enabled = Edited;
             PreviewPictureBox.Image = LandViewGraphicsEngine.GenerateCountryImage(MyCountry);
         }
 
