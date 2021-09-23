@@ -23,7 +23,7 @@ namespace Igtampe.LandViewPlotter {
 
             //Mira if the designer won't respect me then:
             #region Event handlers
-            Shown += OpenMenuItem_Click;
+            Shown += OpenMenuItem_Click;   
             FormClosing += CountryPlotter_FormClosing;
             NameBox.GotFocus += NameBox_GotFocus;
             NameBox.LostFocus += NameBox_LostFocus;
