@@ -704,10 +704,6 @@
             <summary>Returns the Y of the topmost point</summary>
             <returns></returns>
         </member>
-        <member name="M:Igtampe.Neco.Common.LandView.District.Origin">
-            <summary>Returns a point representing a (not necessarily existing) top left most point (Used for the plotter)</summary>
-            <returns></returns>
-        </member>
         <member name="M:Igtampe.Neco.Common.LandView.District.Equals(System.Object)">
             <summary>Compares this District to another object</summary>
             <param name="obj"></param>
@@ -782,6 +778,14 @@
         </member>
         <member name="M:Igtampe.Neco.Common.LandView.Plot.Width">
             <summary>Width of this plot in meters</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Plot.LeftmostX">
+            <summary>Returns the X of the leftmost point</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Plot.TopmostY">
+            <summary>Returns the Y of the topmost point</summary>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.LandView.Plot.Equals(System.Object)">
