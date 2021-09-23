@@ -498,6 +498,7 @@ namespace Igtampe.LandViewPlotter {
             this.Controls.Add(this.WindowMainMenuStrip);
             this.Controls.Add(this.MainTableLayoutPanel);
             this.Name = "CountryPlotter";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CountryPlotter";
             this.MainTableLayoutPanel.ResumeLayout(false);
             this.PreviewGroupBox.ResumeLayout(false);
