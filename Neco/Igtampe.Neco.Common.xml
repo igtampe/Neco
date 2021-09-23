@@ -1082,9 +1082,6 @@
         <member name="P:Igtampe.Neco.Common.UMSAT.Asset.Complete">
             <summary>Whether or not this item is complete</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.UMSAT.Asset.IncomeItem">
-            <summary>IncomeItem related to this asset</summary>
-        </member>
         <member name="P:Igtampe.Neco.Common.UMSAT.Asset.Plot">
             <summary>Plot of land this item sits on</summary>
         </member>
