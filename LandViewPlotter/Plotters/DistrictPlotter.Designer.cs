@@ -45,7 +45,6 @@ namespace Igtampe.LandViewPlotter {
             this.PlotContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.NewPlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditPlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DeletePlotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.GraphicalDetailsGroupBox = new System.Windows.Forms.GroupBox();
             this.CancelButton = new System.Windows.Forms.Button();
             this.OKButton = new System.Windows.Forms.Button();
@@ -267,28 +266,21 @@ namespace Igtampe.LandViewPlotter {
             // 
             this.PlotContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewPlotToolStripMenuItem,
-            this.EditPlotToolStripMenuItem,
-            this.DeletePlotToolStripMenuItem});
+            this.EditPlotToolStripMenuItem});
             this.PlotContextMenu.Name = "DistrictsContextMenu";
-            this.PlotContextMenu.Size = new System.Drawing.Size(132, 70);
+            this.PlotContextMenu.Size = new System.Drawing.Size(181, 70);
             // 
             // NewPlotToolStripMenuItem
             // 
             this.NewPlotToolStripMenuItem.Name = "NewPlotToolStripMenuItem";
-            this.NewPlotToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.NewPlotToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.NewPlotToolStripMenuItem.Text = "New Plot";
             // 
             // EditPlotToolStripMenuItem
             // 
             this.EditPlotToolStripMenuItem.Name = "EditPlotToolStripMenuItem";
-            this.EditPlotToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.EditPlotToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.EditPlotToolStripMenuItem.Text = "Edit Plot";
-            // 
-            // DeletePlotToolStripMenuItem
-            // 
-            this.DeletePlotToolStripMenuItem.Name = "DeletePlotToolStripMenuItem";
-            this.DeletePlotToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.DeletePlotToolStripMenuItem.Text = "Delete Plot";
             // 
             // GraphicalDetailsGroupBox
             // 
@@ -368,7 +360,6 @@ namespace Igtampe.LandViewPlotter {
         private System.Windows.Forms.ContextMenuStrip PlotContextMenu;
         private System.Windows.Forms.ToolStripMenuItem NewPlotToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EditPlotToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem DeletePlotToolStripMenuItem;
         private System.Windows.Forms.GroupBox GraphicalDetailsGroupBox;
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Button OKButton;

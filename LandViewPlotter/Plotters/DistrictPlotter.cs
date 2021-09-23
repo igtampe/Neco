@@ -52,9 +52,7 @@ namespace Igtampe.LandViewPlotter {
         }
 
         private void PlotContextMenu_Opening(object sender, CancelEventArgs e) {
-            bool EnableEditOptions = PlotsListView.SelectedIndices.Count > 0;
-            EditPlotToolStripMenuItem.Enabled = EnableEditOptions;
-            DeletePlotToolStripMenuItem.Enabled = EnableEditOptions;
+            EditPlotToolStripMenuItem.Enabled = PlotsListView.SelectedIndices.Count > 0;
         }
 
         private void NewPlotToolStripMenuItem_Click(object sender, EventArgs e) {
