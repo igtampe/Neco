@@ -14,7 +14,7 @@ namespace Igtampe.LandViewPlotter {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CountryPlotter());
+            Application.Run(new Splash());
         }
     }
 }
