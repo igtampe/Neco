@@ -55,7 +55,7 @@ namespace Igtampe.LandViewPlotter {
 
                 return I;
             } catch (Exception E) {
-                return GenerateErrorImage($"{E.Source} at {E.TargetSite}: {E.Message}\n{E.StackTrace}");
+                return GenerateErrorImage($"{E.Source} at {E.TargetSite}:\n{E.Message}\n{E.StackTrace}");
             }
 
         }
@@ -83,7 +83,7 @@ namespace Igtampe.LandViewPlotter {
 
                 return I;
             } catch (Exception E) {
-                return GenerateErrorImage($"{E.Source} at {E.TargetSite}: {E.Message}\n{E.StackTrace}");
+                return GenerateErrorImage($"{E.Source} at {E.TargetSite}:\n{E.Message}\n{E.StackTrace}");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Igtampe.LandViewPlotter {
 
                 return I;
             } catch (Exception E) {
-                return GenerateErrorImage($"{E.Source} at {E.TargetSite}: {E.Message}\n{E.StackTrace}");
+                return GenerateErrorImage($"{E.Source} at {E.TargetSite}:\n{E.Message}\n{E.StackTrace}");
             }
         }
 
