@@ -25,11 +25,6 @@ namespace Igtampe.Neco.Backend.Controllers {
             int realstart = start!=null ? (int)start : 0;
             int realend = end != null ? (int)end : 20;
             return Ok(await NecoDB.Asset
-                .Include(a => a.IncomeItem).ThenInclude(m => m.LocalJurisdiction)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.FederalJurisdiction)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.Apartments)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.Businesses)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.Hotels)
                 .Include(a => a.Plot).ThenInclude(m => m.District).ThenInclude(m => m.Country)
                 .Include(a => a.Owner).ThenInclude(m=>m.Type).Skip(realstart).Take(realend-realstart).ToListAsync()); 
         }
@@ -39,11 +34,7 @@ namespace Igtampe.Neco.Backend.Controllers {
         public async Task<IActionResult> Details(Guid? id) {
             if (id == null) { return NotFound(); }
 
-            var asset = await NecoDB.Asset.Include(a => a.IncomeItem).ThenInclude(m => m.LocalJurisdiction)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.FederalJurisdiction)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.Apartments)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.Businesses)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.Hotels)
+            var asset = await NecoDB.Asset
                 .Include(a => a.Plot).ThenInclude(m => m.District).ThenInclude(m => m.Country)
                 .Include(a => a.Owner).ThenInclude(m => m.Type).FirstOrDefaultAsync(m => m.ID == id);
 
@@ -58,11 +49,7 @@ namespace Igtampe.Neco.Backend.Controllers {
             Session S = SessionManager.Manager.FindSession(SessionID);
             if (S == null) { return Unauthorized("Invalid session"); }
 
-            var asset = await NecoDB.Asset.Include(a => a.IncomeItem).ThenInclude(m => m.LocalJurisdiction)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.FederalJurisdiction)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.Apartments)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.Businesses)
-                .Include(a => a.IncomeItem).ThenInclude(m => m.Hotels)
+            var asset = await NecoDB.Asset
                 .Include(a => a.Plot).ThenInclude(m => m.District).ThenInclude(m => m.Country)
                 .Include(a => a.Owner).ThenInclude(m => m.Type).Where(m => m.Owner.ID==S.UserID)
                 .OrderByDescending(m=>m.UpdateDate).ToListAsync();
