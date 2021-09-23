@@ -36,7 +36,7 @@ namespace Igtampe.LandViewPlotter {
             this.PointsLabel = new System.Windows.Forms.Label();
             this.PointsBox = new System.Windows.Forms.TextBox();
             this.OKButton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.CanButton = new System.Windows.Forms.Button();
             this.RoadDetailsGroupBox.SuspendLayout();
             this.MainTableLayoutPanel1.SuspendLayout();
             this.GraphicalDetailsGroupBox.SuspendLayout();
@@ -80,7 +80,7 @@ namespace Igtampe.LandViewPlotter {
             this.MainTableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.MainTableLayoutPanel1.Controls.Add(this.GraphicalDetailsGroupBox, 0, 0);
             this.MainTableLayoutPanel1.Controls.Add(this.OKButton, 0, 2);
-            this.MainTableLayoutPanel1.Controls.Add(this.CancelButton, 1, 2);
+            this.MainTableLayoutPanel1.Controls.Add(this.CanButton, 1, 2);
             this.MainTableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainTableLayoutPanel1.Location = new System.Drawing.Point(3, 19);
             this.MainTableLayoutPanel1.Name = "MainTableLayoutPanel1";
@@ -198,13 +198,13 @@ namespace Igtampe.LandViewPlotter {
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(391, 281);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(75, 23);
-            this.CancelButton.TabIndex = 4;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseVisualStyleBackColor = true;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.CanButton.Location = new System.Drawing.Point(391, 281);
+            this.CanButton.Name = "CancelButton";
+            this.CanButton.Size = new System.Drawing.Size(75, 23);
+            this.CanButton.TabIndex = 4;
+            this.CanButton.Text = "Cancel";
+            this.CanButton.UseVisualStyleBackColor = true;
+            this.CanButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // RoadPlotter
             // 
@@ -238,6 +238,6 @@ namespace Igtampe.LandViewPlotter {
         private System.Windows.Forms.Label PointsLabel;
         private System.Windows.Forms.TextBox PointsBox;
         private System.Windows.Forms.Button OKButton;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button CanButton;
     }
 }

@@ -306,9 +306,8 @@ namespace Igtampe.LandViewPlotter {
         #region IO to the DB
 
         private void SaveCountryAsync(Country C) {
-            if (Edited = false) { return; }
+            if (!Edited) { return; }
             Enabled = false;
-            //SaveCountryBW.RunWorkerAsync(C);
             new BackgroundWorkerForm(SaveCountryBW,C).ShowDialog();
         }
 

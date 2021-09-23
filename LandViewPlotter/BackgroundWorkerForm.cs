@@ -11,7 +11,7 @@ namespace Igtampe.LandViewPlotter {
         public Label BigTextLabel { get; set; }
         public Label StatusTextLabel { get; set; }
 
-        public BackgroundWorkerForm(BackgroundWorker BW, object? Arg = null) {
+        public BackgroundWorkerForm(BackgroundWorker BW, object Arg = null) {
             InitializeComponent();
             Icon = Properties.Resources.MainIcon;
             MyBackgroundWorker = BW;
