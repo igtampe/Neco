@@ -20,6 +20,7 @@ namespace Igtampe.LandViewPlotter {
         public DistrictPlotter(District D, NecoContext NecoDB) {
             InitializeComponent();
             MyDistrict = D;
+            if (MyDistrict.Plots == null) { MyDistrict.Plots = new List<Plot>(); }
             this.NecoDB = NecoDB;
 
             #region Event handlers

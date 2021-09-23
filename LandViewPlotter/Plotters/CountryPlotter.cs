@@ -116,6 +116,8 @@ namespace Igtampe.LandViewPlotter {
             if (CP.ShowDialog() != DialogResult.OK && MyCountry == null) { Close(); return; }
 
             MyCountry = CP.SelectedCountry;
+            if (MyCountry.Districts == null) { MyCountry.Districts = new List<District>(); }
+            if (MyCountry.Roads == null) { MyCountry.Roads = new List<Road>(); }
             PopulateData();
         }
 
