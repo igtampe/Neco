@@ -345,6 +345,7 @@ namespace Igtampe.LandViewPlotter {
                     .Include(C => C.Districts).ThenInclude(D => D.Plots).ThenInclude(P => P.Owner).ThenInclude(U => U.Type)
                     .Include(C => C.Districts).ThenInclude(D => D.DistrictBankAccount)
                     .Include(C => C.FederalBankAccount)
+                    .Include(C => C.Roads)
                     .ToList();
         }
 
