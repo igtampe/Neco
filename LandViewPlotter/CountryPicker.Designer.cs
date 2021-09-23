@@ -65,7 +65,7 @@ namespace Igtampe.LandViewPlotter {
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.CountriesComboBox);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "CountryPicker";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
