@@ -1,7 +1,7 @@
 ﻿namespace Igtampe.Neco.Common.LandView {
     
     /// <summary>Interface that defines LandViewItems that are drawable on screen</summary>
-    public interface ILandViewItem {
+    public interface ILandViewItem : System.ICloneable {
         
         /// <summary>Width of this item</summary>
         /// <returns></returns>

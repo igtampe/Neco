@@ -108,5 +108,9 @@ namespace Igtampe.Neco.Common.LandView {
         /// <returns>{ID} : {Name}</returns>
         public override string ToString() { return $"{ID} : {Name}"; }
 
+        /// <summary>Creates a Clone of this plot</summary>
+        /// <returns>A Shallow copy of this plot</returns>
+        public object Clone() { return MemberwiseClone(); }
+
     }
 }
