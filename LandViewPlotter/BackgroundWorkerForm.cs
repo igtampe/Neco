@@ -21,11 +21,11 @@ namespace Igtampe.LandViewPlotter {
             InitializeComponent();
             MyBackgroundWorker = BW;
             Argument = Arg;
-            MyBackgroundWorker.RunWorkerCompleted += MyBackgroundWorker_RunWorkerCompleted;
-            Shown += BackgroundWorkerForm_Shown;
+            Shown += StartBW;
+            MyBackgroundWorker.RunWorkerCompleted += CloseBW;
         }
 
-        private void BackgroundWorkerForm_Shown(object sender, EventArgs e) {MyBackgroundWorker.RunWorkerAsync(Argument);}
-        private void MyBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {Close();}
+        private void StartBW(object sender, EventArgs e) {MyBackgroundWorker.RunWorkerAsync(Argument);}
+        private void CloseBW(object sender, RunWorkerCompletedEventArgs e) {Close();}
     }
 }
