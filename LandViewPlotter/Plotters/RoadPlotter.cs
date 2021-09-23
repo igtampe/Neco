@@ -5,7 +5,7 @@ using Igtampe.Neco.Common.LandView;
 namespace Igtampe.LandViewPlotter {
     public partial class RoadPlotter: Form {
 
-        private readonly Road MyRoad;
+        public readonly Road MyRoad { get; private set; }
         public bool Edited { get; private set; }
 
 

@@ -6,7 +6,7 @@ using Igtampe.Neco.Common.LandView;
 namespace Igtampe.LandViewPlotter {
     public partial class PlotPlotter: Form {
 
-        private readonly Plot MyPlot;
+        public Plot MyPlot { get; private set; }
         private readonly NecoContext NecoDB;
         public bool Edited { get; private set; }
 
