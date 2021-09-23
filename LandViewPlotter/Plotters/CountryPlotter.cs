@@ -323,5 +323,6 @@ namespace Igtampe.LandViewPlotter {
 
         private static void ShowCriticalMessagebox(string message) {MessageBox.Show(message, "No", MessageBoxButtons.OK, MessageBoxIcon.Error);}
 
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e) { new AboutForm().ShowDialog();}
     }
 }
