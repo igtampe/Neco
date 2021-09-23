@@ -50,12 +50,6 @@ namespace Igtampe.LandViewPlotter {
         }
 
         private void PointsBox_LostFocus(object sender, EventArgs e) {
-            if (!LandViewUtils.ValidatePoints(PointsBox.Text, 2)) { return; }
-            MyRoad.Points = PointsBox.Text;
-            MarkEdited();
-        }
-
-        private void PointsBox_TextChanged(object sender, EventArgs e) {
             PointsLabel.Text = "Points";
             if (MyRoad.Points == PointsBox.Text) { return; }
             if (!LandViewUtils.ValidatePoints(PointsBox.Text, 2)) {
@@ -63,6 +57,12 @@ namespace Igtampe.LandViewPlotter {
                 PointsBox.Focus();
                 return;
             }
+            MyRoad.Points = PointsBox.Text;
+            MarkEdited();
+        }
+
+        private void PointsBox_TextChanged(object sender, EventArgs e) {
+            if (!LandViewUtils.ValidatePoints(PointsBox.Text, 2)) { return; }
             MyRoad.Points = PointsBox.Text;
             MarkEdited();
         }
