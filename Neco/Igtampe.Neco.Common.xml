@@ -657,6 +657,10 @@
             <summary>Creates a string representation of this Country</summary>
             <returns>{ID} : {Name}</returns>
         </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Country.Clone">
+            <summary>Creates a Clone of this country</summary>
+            <returns>A Shallow copy of this country</returns>
+        </member>
         <member name="T:Igtampe.Neco.Common.LandView.District">
             <summary>Districts in landview held in a <see cref="P:Igtampe.Neco.Common.LandView.District.Country"/>, that holds <see cref="T:Igtampe.Neco.Common.LandView.Plot"/>s</summary>
         </member>
@@ -716,6 +720,10 @@
         <member name="M:Igtampe.Neco.Common.LandView.District.ToString">
             <summary>Creates a string representation of this District</summary>
             <returns>{ID} : {Name}</returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.District.Clone">
+            <summary>Creates a Clone of this district</summary>
+            <returns>A Shallow copy of this district</returns>
         </member>
         <member name="T:Igtampe.Neco.Common.LandView.ILandViewItem">
             <summary>Interface that defines LandViewItems that are drawable on screen</summary>
@@ -801,6 +809,10 @@
             <summary>Creates a string representation of this Plot</summary>
             <returns>{ID} : {Name}</returns>
         </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Plot.Clone">
+            <summary>Creates a Clone of this plot</summary>
+            <returns>A Shallow copy of this plot</returns>
+        </member>
         <member name="T:Igtampe.Neco.Common.LandView.Requests.ChangePlotStatusRequest">
             <summary>Request to change a plot's current status</summary>
         </member>
@@ -870,6 +882,10 @@
         <member name="M:Igtampe.Neco.Common.LandView.Road.ToString">
             <summary>Creates a string representation of this Road</summary>
             <returns>{ID} : {Name}</returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Road.Clone">
+            <summary>Creates a Clone of this Road</summary>
+            <returns>A Shallow copy of this Road</returns>
         </member>
         <member name="T:Igtampe.Neco.Common.Notification">
             <summary>Holds a notification for a User</summary>
