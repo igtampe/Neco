@@ -37,8 +37,8 @@ namespace Igtampe.LandViewPlotter {
             PPSMBox.LostFocus += PPSMBox_LostFocus;
             DistrictsContextMenu.Opening += DistrictsContextMenu_Opening;
             RoadContextMenu.Opening += RoadContextMenu_Opening;
-            newDistrictToolStripMenuItem.Click += NewDistrictToolStripMenuItem_Click;
-            EditDistrictToolStripMenuItem.Click += EditDistrictToolStripMenuItem_Click;
+            //newDistrictToolStripMenuItem.Click += NewDistrictToolStripMenuItem_Click; //so is this one
+            //EditDistrictToolStripMenuItem.Click += EditDistrictToolStripMenuItem_Click; //This one is actually respected.
             newRoadToolStripMenuItem.Click += NewRoadToolStripMenuItem_Click;
             EditRoadToolStripMenuItem.Click += EditRoadToolStripMenuItem_Click;
             DeleteRoadToolStripMenuItem.Click += DeleteRoadToolStripMenuItem_Click;
