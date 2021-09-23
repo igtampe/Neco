@@ -10,20 +10,22 @@ using System.Windows.Forms;
 
 namespace Igtampe.LandViewPlotter {
     public partial class BackgroundWorkerForm: Form {
-        BackgroundWorker MyBackgroundWorker;
+        private BackgroundWorker MyBackgroundWorker;
+        private object? Argument;
 
         public PictureBox ImageBox { get { return LoadIconPictureBox; } set { LoadIconPictureBox = value; } }
         public Label BigTextLabel { get { return PleaseWaitLabel; } set { PleaseWaitLabel = value; } }
         public Label StatusTextLabel { get { return StatusLabel; } set { StatusLabel = value; } }
 
-        public BackgroundWorkerForm(BackgroundWorker BW) {
+        public BackgroundWorkerForm(BackgroundWorker BW, object? Arg = null) {
             InitializeComponent();
             MyBackgroundWorker = BW;
+            Argument = Arg;
             MyBackgroundWorker.RunWorkerCompleted += MyBackgroundWorker_RunWorkerCompleted;
             Shown += BackgroundWorkerForm_Shown;
         }
 
-        private void BackgroundWorkerForm_Shown(object sender, EventArgs e) {MyBackgroundWorker.RunWorkerAsync();}
+        private void BackgroundWorkerForm_Shown(object sender, EventArgs e) {MyBackgroundWorker.RunWorkerAsync(Argument);}
         private void MyBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {Close();}
     }
 }

@@ -307,7 +307,8 @@ namespace Igtampe.LandViewPlotter {
         private void SaveCountryAsync(Country C) {
             if (Edited = false) { return; }
             Enabled = false;
-            SaveCountryBW.RunWorkerAsync(C);
+            //SaveCountryBW.RunWorkerAsync(C);
+            new BackgroundWorkerForm(SaveCountryBW,C).ShowDialog();
         }
 
         private void SaveCountryBW_DoWork(object sender, DoWorkEventArgs e) {
@@ -335,8 +336,7 @@ namespace Igtampe.LandViewPlotter {
 
         private void LoadCountriesAsync() {
             Enabled = false;
-            LoadCountriesBW.RunWorkerAsync();
-
+            new BackgroundWorkerForm(LoadCountriesBW).ShowDialog();
         }
 
         private void LoadCountriesBW_DoWork(object sender, DoWorkEventArgs e) {
