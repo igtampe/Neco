@@ -65,7 +65,8 @@ namespace Igtampe.LandViewPlotter {
             PlotPlotter PPlotter = new(P, NecoDB);
             if (PPlotter.ShowDialog()==DialogResult.OK) {
                 //Add the plot
-                MyDistrict.Plots.Add(P);
+                MyDistrict.Plots.Add(PPlotter.MyPlot);
+                MarkEdited();
                 PopulateData();
             }
         }
@@ -80,6 +81,7 @@ namespace Igtampe.LandViewPlotter {
             if (PPlotter.ShowDialog() == DialogResult.OK) {
                 if (!PPlotter.Edited) { return; }
                 MyDistrict.Plots[Index] = PPlotter.MyPlot;
+                MarkEdited();
                 PopulateData();
             }
 
