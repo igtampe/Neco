@@ -66,6 +66,7 @@ namespace Igtampe.LandViewPlotter {
         public static Image GenerateDistrictImage(District D) {
             try {
                 if (D.Width() == 0 || D.Height() == 0) { return GenerateErrorImage($"District {D.Name} ({D.ID})\nHas a width or height of 0 and cannot be drawn."); }
+                if (!LandViewUtils.ValidatePoints(D.Points, 3)) { return GenerateErrorImage($"District {D.Name} ({D.ID})\nHas an invalid Points field and cannot be drawn"); }
                 Image I = GenerateCanvas(D);
 
                 //Find the point that's 0,0
@@ -92,6 +93,7 @@ namespace Igtampe.LandViewPlotter {
         public static Image GeneratePlotImage(Plot P) {
             try {
                 if (P.Width() == 0 || P.Height() == 0) { return GenerateErrorImage($"Plot {P.Name} ({P.ID})\nHas a width or height of 0 and cannot be drawn."); }
+                if (!LandViewUtils.ValidatePoints(P.Points,3)) { return GenerateErrorImage($"Plot {P.Name} ({P.ID})\nHas an invalid Points field and cannot be drawn"); }
                 Image I = GenerateCanvas(P);
 
                 Graphics GRM = Graphics.FromImage(I);
