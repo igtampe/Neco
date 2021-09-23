@@ -99,7 +99,7 @@ namespace Igtampe.LandViewPlotter {
                 Graphics GRM = Graphics.FromImage(I);
                 Point Origin = GetPlotOrigin(P);
                 Pen PlotPen = new(Color.Black, 5);
-                Font NameFont = new(FFamily, 12, FontStyle.Bold, GraphicsUnit.Point);
+                Font NameFont = new(FFamily, 8, FontStyle.Bold, GraphicsUnit.Point);
                 Font InfoFont = new(FFamily, 8, FontStyle.Regular, GraphicsUnit.Point);
                 DrawPlot(P, GRM, Origin, PlotPen, Color.Black, Color.White, NameFont, InfoFont);
 
@@ -229,7 +229,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="Origin">Point of the given graphics that defines 0,0</param>
         public static void DrawPlots(District D, Graphics GRM, Point Origin) {
             Pen PlotPen = new(Color.Black, 5);
-            Font NameFont = new(FFamily, 12, FontStyle.Bold, GraphicsUnit.Point);
+            Font NameFont = new(FFamily, 8, FontStyle.Bold, GraphicsUnit.Point);
             Font InfoFont = new(FFamily, 8, FontStyle.Regular, GraphicsUnit.Point);
             //Draw each plot
             foreach (Plot P in D.Plots) {
