@@ -9,10 +9,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Igtampe.Neco.Data.Migrations
 {
+    /// <summary></summary>
     [DbContext(typeof(NecoContext))]
     [Migration("20210918013141_Restart")]
     partial class Restart
     {
+        /// <summary></summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

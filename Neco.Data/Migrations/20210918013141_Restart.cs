@@ -5,6 +5,8 @@ namespace Igtampe.Neco.Data.Migrations
 {
     public partial class Restart : Migration
     {
+        /// <summary></summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -736,6 +738,8 @@ namespace Igtampe.Neco.Data.Migrations
                 column: "TypeID");
         }
 
+        /// <summary></summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

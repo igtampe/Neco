@@ -2,8 +2,11 @@
 
 namespace Igtampe.Neco.Data.Migrations
 {
+    /// <summary></summary>
     public partial class AddWidth : Migration
     {
+        /// <summary></summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
@@ -14,6 +17,8 @@ namespace Igtampe.Neco.Data.Migrations
                 defaultValue: 0);
         }
 
+        /// <summary></summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
