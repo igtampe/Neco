@@ -37,7 +37,7 @@ namespace Igtampe.LandViewPlotter {
             this.MainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.PreviewGroupBox = new System.Windows.Forms.GroupBox();
             this.PreviewPictureBox = new System.Windows.Forms.PictureBox();
-            this.CountryDetailsGroupbox = new System.Windows.Forms.GroupBox();
+            this.DistrictDetailsGroupbox = new System.Windows.Forms.GroupBox();
             this.CountryDetailTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.PlotGroupBox = new System.Windows.Forms.GroupBox();
             this.PlotsListView = new System.Windows.Forms.ListView();
@@ -53,7 +53,7 @@ namespace Igtampe.LandViewPlotter {
             this.MainTableLayoutPanel.SuspendLayout();
             this.PreviewGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBox)).BeginInit();
-            this.CountryDetailsGroupbox.SuspendLayout();
+            this.DistrictDetailsGroupbox.SuspendLayout();
             this.CountryDetailTableLayoutPanel.SuspendLayout();
             this.PlotGroupBox.SuspendLayout();
             this.PlotContextMenu.SuspendLayout();
@@ -169,7 +169,7 @@ namespace Igtampe.LandViewPlotter {
             this.MainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.MainTableLayoutPanel.Controls.Add(this.PreviewGroupBox, 1, 0);
-            this.MainTableLayoutPanel.Controls.Add(this.CountryDetailsGroupbox, 0, 0);
+            this.MainTableLayoutPanel.Controls.Add(this.DistrictDetailsGroupbox, 0, 0);
             this.MainTableLayoutPanel.Controls.Add(this.CancelButton, 2, 1);
             this.MainTableLayoutPanel.Controls.Add(this.OKButton, 1, 1);
             this.MainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -204,16 +204,16 @@ namespace Igtampe.LandViewPlotter {
             this.PreviewPictureBox.TabStop = false;
             this.PreviewPictureBox.Click += new System.EventHandler(this.PreviewPictureBox_Click);
             // 
-            // CountryDetailsGroupbox
+            // DistrictDetailsGroupbox
             // 
-            this.CountryDetailsGroupbox.Controls.Add(this.CountryDetailTableLayoutPanel);
-            this.CountryDetailsGroupbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CountryDetailsGroupbox.Location = new System.Drawing.Point(3, 3);
-            this.CountryDetailsGroupbox.Name = "CountryDetailsGroupbox";
-            this.CountryDetailsGroupbox.Size = new System.Drawing.Size(394, 539);
-            this.CountryDetailsGroupbox.TabIndex = 1;
-            this.CountryDetailsGroupbox.TabStop = false;
-            this.CountryDetailsGroupbox.Text = "Country Details";
+            this.DistrictDetailsGroupbox.Controls.Add(this.CountryDetailTableLayoutPanel);
+            this.DistrictDetailsGroupbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DistrictDetailsGroupbox.Location = new System.Drawing.Point(3, 3);
+            this.DistrictDetailsGroupbox.Name = "DistrictDetailsGroupbox";
+            this.DistrictDetailsGroupbox.Size = new System.Drawing.Size(394, 539);
+            this.DistrictDetailsGroupbox.TabIndex = 1;
+            this.DistrictDetailsGroupbox.TabStop = false;
+            this.DistrictDetailsGroupbox.Text = "District Details";
             // 
             // CountryDetailTableLayoutPanel
             // 
@@ -337,7 +337,7 @@ namespace Igtampe.LandViewPlotter {
             this.MainTableLayoutPanel.ResumeLayout(false);
             this.PreviewGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBox)).EndInit();
-            this.CountryDetailsGroupbox.ResumeLayout(false);
+            this.DistrictDetailsGroupbox.ResumeLayout(false);
             this.CountryDetailTableLayoutPanel.ResumeLayout(false);
             this.PlotGroupBox.ResumeLayout(false);
             this.PlotContextMenu.ResumeLayout(false);
@@ -360,7 +360,7 @@ namespace Igtampe.LandViewPlotter {
         private System.Windows.Forms.TableLayoutPanel MainTableLayoutPanel;
         private System.Windows.Forms.GroupBox PreviewGroupBox;
         private System.Windows.Forms.PictureBox PreviewPictureBox;
-        private System.Windows.Forms.GroupBox CountryDetailsGroupbox;
+        private System.Windows.Forms.GroupBox DistrictDetailsGroupbox;
         private System.Windows.Forms.TableLayoutPanel CountryDetailTableLayoutPanel;
         private System.Windows.Forms.GroupBox PlotGroupBox;
         private System.Windows.Forms.ListView PlotsListView;
