@@ -27,6 +27,12 @@ namespace Igtampe.LandViewPlotter {
             StatusComboBox.SelectedIndexChanged += StatusComboBox_SelectedIndexChanged;
             #endregion
 
+            if (P.ID != Guid.Empty) {
+                CanButton.Visible = false;
+                MainTableLayoutPanel.SetColumn(OKButton, 2);
+                DialogResult = DialogResult.OK;
+            }
+
             PopulateData();
         }
 

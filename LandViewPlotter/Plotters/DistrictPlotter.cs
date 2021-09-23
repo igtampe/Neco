@@ -39,6 +39,12 @@ namespace Igtampe.LandViewPlotter {
             EditPlotToolStripMenuItem.Click += EditPlotToolStripMenuItem_Click;
             #endregion
 
+            if (D.ID != Guid.Empty) {
+                CanButton.Visible = false;
+                MainTableLayoutPanel.SetColumn(OKButton, 2);
+                DialogResult = DialogResult.OK;
+            }
+
             PopulateData();
         }
 

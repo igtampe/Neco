@@ -24,6 +24,11 @@ namespace Igtampe.LandViewPlotter {
             WidthBox.LostFocus += WidthBox_LostFocus;
             #endregion
 
+            if (R.ID != Guid.Empty) {
+                CanButton.Visible = false;
+                DetailTableLayoutPanel.SetColumn(OKButton, 1);
+                DialogResult = DialogResult.OK;
+            }
 
             PopulateData();
         }

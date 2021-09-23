@@ -250,10 +250,10 @@ namespace Igtampe.LandViewPlotter {
             this.MainTableLayoutPanel.Size = new System.Drawing.Size(800, 325);
             this.MainTableLayoutPanel.TabIndex = 4;
             // 
-            // CancelButton
+            // CanButton
             // 
             this.CanButton.Location = new System.Drawing.Point(722, 299);
-            this.CanButton.Name = "CancelButton";
+            this.CanButton.Name = "CanButton";
             this.CanButton.Size = new System.Drawing.Size(75, 23);
             this.CanButton.TabIndex = 2;
             this.CanButton.Text = "Cancel";
