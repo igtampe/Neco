@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Igtampe.LandViewPlotter {
     public partial class BackgroundWorkerForm: Form {
-        private BackgroundWorker MyBackgroundWorker;
-        private object? Argument;
+        private readonly BackgroundWorker MyBackgroundWorker;
+        private readonly object Argument;
 
-        public PictureBox ImageBox { get { return LoadIconPictureBox; } set { LoadIconPictureBox = value; } }
-        public Label BigTextLabel { get { return PleaseWaitLabel; } set { PleaseWaitLabel = value; } }
-        public Label StatusTextLabel { get { return StatusLabel; } set { StatusLabel = value; } }
+        public PictureBox ImageBox { get; set; }
+        public Label BigTextLabel { get; set; }
+        public Label StatusTextLabel { get; set; }
 
         public BackgroundWorkerForm(BackgroundWorker BW, object? Arg = null) {
             InitializeComponent();

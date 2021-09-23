@@ -25,11 +25,11 @@ namespace Igtampe.LandViewPlotter {
         /// </summary>
         private void InitializeComponent() {
             this.MainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.LoadIconPictureBox = new System.Windows.Forms.PictureBox();
-            this.PleaseWaitLabel = new System.Windows.Forms.Label();
-            this.StatusLabel = new System.Windows.Forms.Label();
+            this.ImageBox = new System.Windows.Forms.PictureBox();
+            this.BigTextLabel = new System.Windows.Forms.Label();
+            this.StatusTextLabel = new System.Windows.Forms.Label();
             this.MainTableLayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LoadIconPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).BeginInit();
             this.SuspendLayout();
             // 
             // MainTableLayoutPanel
@@ -37,9 +37,9 @@ namespace Igtampe.LandViewPlotter {
             this.MainTableLayoutPanel.ColumnCount = 2;
             this.MainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.32832F));
             this.MainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.67168F));
-            this.MainTableLayoutPanel.Controls.Add(this.LoadIconPictureBox, 0, 0);
-            this.MainTableLayoutPanel.Controls.Add(this.PleaseWaitLabel, 1, 0);
-            this.MainTableLayoutPanel.Controls.Add(this.StatusLabel, 1, 1);
+            this.MainTableLayoutPanel.Controls.Add(this.ImageBox, 0, 0);
+            this.MainTableLayoutPanel.Controls.Add(this.BigTextLabel, 1, 0);
+            this.MainTableLayoutPanel.Controls.Add(this.StatusTextLabel, 1, 1);
             this.MainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.MainTableLayoutPanel.Name = "MainTableLayoutPanel";
@@ -54,36 +54,36 @@ namespace Igtampe.LandViewPlotter {
             // 
             // LoadIconPictureBox
             // 
-            this.LoadIconPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LoadIconPictureBox.Image = global::Igtampe.LandViewPlotter.Properties.Resources.Load;
-            this.LoadIconPictureBox.Location = new System.Drawing.Point(20, 20);
-            this.LoadIconPictureBox.Margin = new System.Windows.Forms.Padding(20, 20, 5, 20);
-            this.LoadIconPictureBox.Name = "LoadIconPictureBox";
-            this.MainTableLayoutPanel.SetRowSpan(this.LoadIconPictureBox, 2);
-            this.LoadIconPictureBox.Size = new System.Drawing.Size(70, 69);
-            this.LoadIconPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.LoadIconPictureBox.TabIndex = 0;
-            this.LoadIconPictureBox.TabStop = false;
+            this.ImageBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ImageBox.Image = global::Igtampe.LandViewPlotter.Properties.Resources.Load;
+            this.ImageBox.Location = new System.Drawing.Point(20, 20);
+            this.ImageBox.Margin = new System.Windows.Forms.Padding(20, 20, 5, 20);
+            this.ImageBox.Name = "LoadIconPictureBox";
+            this.MainTableLayoutPanel.SetRowSpan(this.ImageBox, 2);
+            this.ImageBox.Size = new System.Drawing.Size(70, 69);
+            this.ImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ImageBox.TabIndex = 0;
+            this.ImageBox.TabStop = false;
             // 
             // PleaseWaitLabel
             // 
-            this.PleaseWaitLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.PleaseWaitLabel.AutoSize = true;
-            this.PleaseWaitLabel.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.PleaseWaitLabel.Location = new System.Drawing.Point(98, 26);
-            this.PleaseWaitLabel.Name = "PleaseWaitLabel";
-            this.PleaseWaitLabel.Size = new System.Drawing.Size(100, 28);
-            this.PleaseWaitLabel.TabIndex = 1;
-            this.PleaseWaitLabel.Text = "Sit Tight!";
+            this.BigTextLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BigTextLabel.AutoSize = true;
+            this.BigTextLabel.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.BigTextLabel.Location = new System.Drawing.Point(98, 26);
+            this.BigTextLabel.Name = "PleaseWaitLabel";
+            this.BigTextLabel.Size = new System.Drawing.Size(100, 28);
+            this.BigTextLabel.TabIndex = 1;
+            this.BigTextLabel.Text = "Sit Tight!";
             // 
             // label1
             // 
-            this.StatusLabel.AutoSize = true;
-            this.StatusLabel.Location = new System.Drawing.Point(98, 54);
-            this.StatusLabel.Name = "label1";
-            this.StatusLabel.Size = new System.Drawing.Size(204, 30);
-            this.StatusLabel.TabIndex = 2;
-            this.StatusLabel.Text = "A Neco has been dispatched and will process your request";
+            this.StatusTextLabel.AutoSize = true;
+            this.StatusTextLabel.Location = new System.Drawing.Point(98, 54);
+            this.StatusTextLabel.Name = "label1";
+            this.StatusTextLabel.Size = new System.Drawing.Size(204, 30);
+            this.StatusTextLabel.TabIndex = 2;
+            this.StatusTextLabel.Text = "A Neco has been dispatched and will process your request";
             // 
             // BackgroundWorkerForm
             // 
@@ -97,7 +97,7 @@ namespace Igtampe.LandViewPlotter {
             this.Text = "Please Wait";
             this.MainTableLayoutPanel.ResumeLayout(false);
             this.MainTableLayoutPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LoadIconPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -105,8 +105,5 @@ namespace Igtampe.LandViewPlotter {
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel MainTableLayoutPanel;
-        private System.Windows.Forms.PictureBox LoadIconPictureBox;
-        private System.Windows.Forms.Label PleaseWaitLabel;
-        private System.Windows.Forms.Label StatusLabel;
     }
 }
