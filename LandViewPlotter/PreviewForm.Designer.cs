@@ -25,32 +25,31 @@ namespace Igtampe.LandViewPlotter {
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.MainPanel = new System.Windows.Forms.Panel();
             this.ImageBox = new System.Windows.Forms.PictureBox();
             this.PictureMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExportFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.panel1.SuspendLayout();
+            this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).BeginInit();
             this.PictureMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // MainPanel
             // 
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.ImageBox);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(932, 690);
-            this.panel1.TabIndex = 1;
+            this.MainPanel.AutoScroll = true;
+            this.MainPanel.Controls.Add(this.ImageBox);
+            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainPanel.Location = new System.Drawing.Point(0, 0);
+            this.MainPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MainPanel.Name = "MainPanel";
+            this.MainPanel.Size = new System.Drawing.Size(932, 690);
+            this.MainPanel.TabIndex = 1;
             // 
             // ImageBox
             // 
             this.ImageBox.ContextMenuStrip = this.PictureMenuStrip;
-            this.ImageBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ImageBox.Location = new System.Drawing.Point(0, 0);
             this.ImageBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ImageBox.Name = "ImageBox";
@@ -95,14 +94,14 @@ namespace Igtampe.LandViewPlotter {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(932, 690);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.MainPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "PreviewForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Preview";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.MainPanel.ResumeLayout(false);
+            this.MainPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).EndInit();
             this.PictureMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -112,7 +111,7 @@ namespace Igtampe.LandViewPlotter {
         #endregion
 
         private System.Windows.Forms.PictureBox ImageBox;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.ContextMenuStrip PictureMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
