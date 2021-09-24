@@ -35,13 +35,15 @@ namespace Igtampe.LandViewPlotter {
             this.WidthBox = new System.Windows.Forms.TextBox();
             this.PointsLabel = new System.Windows.Forms.Label();
             this.PointsBox = new System.Windows.Forms.TextBox();
-            this.OKButton = new System.Windows.Forms.Button();
             this.CanButton = new System.Windows.Forms.Button();
+            this.OKButton = new System.Windows.Forms.Button();
+            this.PreviewGroupBox = new System.Windows.Forms.GroupBox();
             this.PreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.RoadDetailsGroupBox.SuspendLayout();
             this.MainTableLayoutPanel1.SuspendLayout();
             this.GraphicalDetailsGroupBox.SuspendLayout();
             this.GraphicalDetailsTableLayoutPanel.SuspendLayout();
+            this.PreviewGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,7 +86,7 @@ namespace Igtampe.LandViewPlotter {
             this.MainTableLayoutPanel1.Controls.Add(this.GraphicalDetailsGroupBox, 0, 0);
             this.MainTableLayoutPanel1.Controls.Add(this.CanButton, 2, 2);
             this.MainTableLayoutPanel1.Controls.Add(this.OKButton, 1, 2);
-            this.MainTableLayoutPanel1.Controls.Add(this.PreviewPictureBox, 1, 0);
+            this.MainTableLayoutPanel1.Controls.Add(this.PreviewGroupBox, 1, 0);
             this.MainTableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainTableLayoutPanel1.Location = new System.Drawing.Point(3, 19);
             this.MainTableLayoutPanel1.Name = "MainTableLayoutPanel1";
@@ -92,6 +94,7 @@ namespace Igtampe.LandViewPlotter {
             this.MainTableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainTableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 196F));
             this.MainTableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.MainTableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.MainTableLayoutPanel1.Size = new System.Drawing.Size(896, 307);
             this.MainTableLayoutPanel1.TabIndex = 0;
             // 
@@ -188,6 +191,16 @@ namespace Igtampe.LandViewPlotter {
             this.PointsBox.Size = new System.Drawing.Size(326, 186);
             this.PointsBox.TabIndex = 11;
             // 
+            // CanButton
+            // 
+            this.CanButton.Location = new System.Drawing.Point(818, 281);
+            this.CanButton.Name = "CanButton";
+            this.CanButton.Size = new System.Drawing.Size(75, 23);
+            this.CanButton.TabIndex = 4;
+            this.CanButton.Text = "Cancel";
+            this.CanButton.UseVisualStyleBackColor = true;
+            this.CanButton.Click += new System.EventHandler(this.CancelButton_Click);
+            // 
             // OKButton
             // 
             this.OKButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -199,25 +212,26 @@ namespace Igtampe.LandViewPlotter {
             this.OKButton.UseVisualStyleBackColor = true;
             this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
             // 
-            // CanButton
+            // PreviewGroupBox
             // 
-            this.CanButton.Location = new System.Drawing.Point(818, 281);
-            this.CanButton.Name = "CanButton";
-            this.CanButton.Size = new System.Drawing.Size(75, 23);
-            this.CanButton.TabIndex = 4;
-            this.CanButton.Text = "Cancel";
-            this.CanButton.UseVisualStyleBackColor = true;
-            this.CanButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.MainTableLayoutPanel1.SetColumnSpan(this.PreviewGroupBox, 2);
+            this.PreviewGroupBox.Controls.Add(this.PreviewPictureBox);
+            this.PreviewGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PreviewGroupBox.Location = new System.Drawing.Point(453, 3);
+            this.PreviewGroupBox.Name = "PreviewGroupBox";
+            this.MainTableLayoutPanel1.SetRowSpan(this.PreviewGroupBox, 2);
+            this.PreviewGroupBox.Size = new System.Drawing.Size(440, 272);
+            this.PreviewGroupBox.TabIndex = 5;
+            this.PreviewGroupBox.TabStop = false;
+            this.PreviewGroupBox.Text = "Preview";
             // 
             // PreviewPictureBox
             // 
-            this.MainTableLayoutPanel1.SetColumnSpan(this.PreviewPictureBox, 2);
             this.PreviewPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PreviewPictureBox.Location = new System.Drawing.Point(453, 3);
+            this.PreviewPictureBox.Location = new System.Drawing.Point(3, 19);
             this.PreviewPictureBox.Name = "PreviewPictureBox";
-            this.MainTableLayoutPanel1.SetRowSpan(this.PreviewPictureBox, 2);
-            this.PreviewPictureBox.Size = new System.Drawing.Size(440, 272);
-            this.PreviewPictureBox.TabIndex = 5;
+            this.PreviewPictureBox.Size = new System.Drawing.Size(434, 250);
+            this.PreviewPictureBox.TabIndex = 6;
             this.PreviewPictureBox.TabStop = false;
             this.PreviewPictureBox.Click += new System.EventHandler(this.PreviewPictureBox_Click);
             // 
@@ -235,6 +249,7 @@ namespace Igtampe.LandViewPlotter {
             this.GraphicalDetailsGroupBox.ResumeLayout(false);
             this.GraphicalDetailsTableLayoutPanel.ResumeLayout(false);
             this.GraphicalDetailsTableLayoutPanel.PerformLayout();
+            this.PreviewGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBox)).EndInit();
             this.ResumeLayout(false);
 
@@ -255,6 +270,7 @@ namespace Igtampe.LandViewPlotter {
         private System.Windows.Forms.TextBox PointsBox;
         private System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button CanButton;
+        private System.Windows.Forms.GroupBox PreviewGroupBox;
         private System.Windows.Forms.PictureBox PreviewPictureBox;
     }
 }
