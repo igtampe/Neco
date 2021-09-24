@@ -22,7 +22,7 @@ namespace Igtampe.LandViewPlotter {
             foreach (string ppair in Points.Split(";")) {
                 //Split it again by colon
                 string[] ppairsplit = ppair.Split(",");
-                if (ppairsplit.Count() != 2) { return false; } //If we have more than three coords then no
+                if (ppairsplit.Length != 2) { return false; } //If we have more than three coords then no
                 if (!int.TryParse(ppairsplit[0], out int _)) { return false; } //Test to ensure both can be
                 if (!int.TryParse(ppairsplit[1], out int _)) { return false; } //parsed as ints
             }
