@@ -84,9 +84,8 @@ namespace Igtampe.LandViewPlotter {
 #if (DEBUG)
                 DrawOriginCrosshair(Origin, GRM);
 #endif
-                DrawDistrictOutline(D, GRM, Origin, new(new SolidBrush(Color.Black), 10));
-                DrawPlots(D, GRM, Origin);
-                DrawRoads(D.Country, GRM, Origin);
+                if (D.Country != null) { DrawEverything(D.Country, GRM, Origin); }
+                DrawDistrictOutline(D, GRM, Origin, new(Color.Red, 10));
 
                 GRM.Dispose();
 
@@ -107,13 +106,11 @@ namespace Igtampe.LandViewPlotter {
 
                 Graphics GRM = Graphics.FromImage(I);
                 Point Origin = GetPlotOrigin(P);
-                Pen PlotPen = new(Color.Black, 5);
-                Font NameFont = new(FFamily, 8, FontStyle.Bold, GraphicsUnit.Point);
-                Font InfoFont = new(FFamily, 8, FontStyle.Regular, GraphicsUnit.Point);
-                DrawPlot(P, GRM, Origin, PlotPen, Color.Black, Color.White, NameFont, InfoFont);
+
+                if (P.District != null && P.District.Country != null) { DrawEverything(P.District.Country, GRM, Origin); }
+                DrawPlotOutline(P, GRM, Origin, new(Color.Red, 5));
 
                 GRM.Dispose();
-
                 return I;
             } catch (Exception E) {
                 return GenerateErrorImage($"{E.Source} at {E.TargetSite}:\n{E.Message}\n{E.StackTrace}");
