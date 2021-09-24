@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Igtampe.Neco.Common;
 using Igtampe.Neco.Common.LandView;
 
 namespace Igtampe.LandViewPlotter {
@@ -14,20 +10,31 @@ namespace Igtampe.LandViewPlotter {
 
         private static readonly FontFamily FFamily = new("Arial");
 
-
+        /// <summary>Margin around the land view items on all sides</summary>
+        public const int MARGIN = 30;
+        
         /// <summary>Creates an image with a country, all its districts, and all its roads</summary>
         /// <param name="C"></param>
         /// <returns></returns>
         public static Image GenerateDetailedCountryImage(Country C) {
+            try { 
 
-            Image I = GenerateCountryImage(C);
-            Graphics GRM = Graphics.FromImage(I);
-            Point Origin = GetCountryOrigin(C);
-            foreach (District D in C.Districts) {
-                DrawPlots(D, GRM, Origin);
+                Image I = GenerateCanvas(C);
+                Graphics GRM = Graphics.FromImage(I);
+                Point Origin = GetCountryOrigin(C);
+
+#if (DEBUG)
+                DrawOriginCrosshair(Origin, GRM);
+#endif
+
+                DrawEverything(C, GRM, Origin);
+
+                GRM.Dispose();
+                
+                return I;
+            } catch (Exception E) {
+                return GenerateErrorImage($"{E.Source} at {E.TargetSite}:\n{E.Message}\n{E.StackTrace}");
             }
-
-            return I;
         }
 
         /// <summary>Creates an image with a Country and all its districts and roads</summary>
@@ -81,6 +88,8 @@ namespace Igtampe.LandViewPlotter {
                 DrawPlots(D, GRM, Origin);
                 DrawRoads(D.Country, GRM, Origin);
 
+                GRM.Dispose();
+
                 return I;
             } catch (Exception E) {
                 return GenerateErrorImage($"{E.Source} at {E.TargetSite}:\n{E.Message}\n{E.StackTrace}");
@@ -103,11 +112,37 @@ namespace Igtampe.LandViewPlotter {
                 Font InfoFont = new(FFamily, 8, FontStyle.Regular, GraphicsUnit.Point);
                 DrawPlot(P, GRM, Origin, PlotPen, Color.Black, Color.White, NameFont, InfoFont);
 
+                GRM.Dispose();
+
                 return I;
             } catch (Exception E) {
                 return GenerateErrorImage($"{E.Source} at {E.TargetSite}:\n{E.Message}\n{E.StackTrace}");
             }
         }
+
+        #region Fill Everything
+
+        /// <summary>Draws everything in the country (Roads, Plots, Districts) to the given image</summary>
+        /// <param name="C"></param>
+        /// <param name="GRM"></param>
+        /// <param name="Origin"></param>
+        public static void DrawEverything(Country C, Graphics GRM, Point Origin) {
+
+            //Draw Plots first, since district labels *should* Cover those if they have to            
+            foreach (District D in C.Districts) {
+                //Draw Plots first
+                DrawPlots(D,GRM,Origin);
+            }
+
+            //Draw the Districts
+            DrawDistricts(C, GRM, Origin);
+
+            //Finally draw Roads
+            DrawRoads(C, GRM, Origin);
+
+        }
+
+        #endregion
 
         #region District
 
@@ -271,7 +306,7 @@ namespace Igtampe.LandViewPlotter {
         /// <returns></returns>
         public static Image GenerateCanvas(ILandViewItem L) {
             if (L.Width() == 0 || L.Height() == 0) { return new Bitmap(1, 1); }
-            Image I = new Bitmap(L.Width(), L.Height());
+            Image I = new Bitmap(L.Width()+MARGIN*2, L.Height()+MARGIN*2); //We add some padding.
             Graphics GRM = Graphics.FromImage(I);
             GRM.FillRectangle(new SolidBrush(Color.White), 0, 0, I.Width, I.Height);
             GRM.Dispose();
@@ -281,17 +316,17 @@ namespace Igtampe.LandViewPlotter {
         /// <summary>Returns a point that represents 0,0 for a given country's Graphics object</summary>
         /// <param name="C"></param>
         /// <returns></returns>
-        public static Point GetCountryOrigin(Country C) { return new(C.Width / 2, C.Height / 2); }
+        public static Point GetCountryOrigin(Country C) { return new((C.Width+MARGIN*2) / 2, (C.Height+MARGIN*2) / 2); }
 
         /// <summary>Returns a point that represents 0,0 for a given District's graphics object</summary>
         /// <param name="D"></param>
         /// <returns></returns>
-        public static Point GetDistrictOrigin(District D) { return new(-D.LeftmostX(), -D.TopmostY()); }
+        public static Point GetDistrictOrigin(District D) { return new(-(D.LeftmostX()-MARGIN), -(D.TopmostY()-MARGIN)); }
 
         /// <summary>Returns a point that represents 0,0 for a given Plot's graphics</summary>
         /// <param name="P"></param>
         /// <returns></returns>
-        public static Point GetPlotOrigin(Plot P) { return new(-P.LeftmostX(), -P.TopmostY()); }
+        public static Point GetPlotOrigin(Plot P) { return new(-(P.LeftmostX()-MARGIN), -(P.TopmostY()-MARGIN)); }
 
         /// <summary>Draws a small crosshair on where the origin is</summary>
         /// <param name="Origin">Point that represents 0,0 on the given graphics</param>
