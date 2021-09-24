@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Igtampe.Neco.Data;
 using Igtampe.Neco.Common.LandView;
+using System.Drawing;
 
 namespace Igtampe.LandViewPlotter {
     public partial class PlotPlotter: Form {
@@ -67,10 +68,11 @@ namespace Igtampe.LandViewPlotter {
 
         private void PointsBox_LostFocus(object sender, EventArgs e) {
             PointsLabel.Text = "Points";
+            PointsLabel.ForeColor = Color.Black;
             if (MyPlot.Points == PointsBox.Text) { return; }
             if (!LandViewUtils.ValidatePoints(PointsBox.Text, 3)) {
-                ShowCriticalMessagebox("Could not parse points! Please fix them before continuing");
-                PointsBox.Focus();
+                PointsLabel.Text = "Points*";
+                PointsLabel.ForeColor = Color.Red;
                 return;
             }
             MyPlot.Points = PointsBox.Text;
