@@ -858,8 +858,8 @@
         <member name="P:Igtampe.Neco.Common.LandView.Road.Name">
             <summary>Name of this road</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.LandView.Road.Width">
-            <summary>Width in meters of the road</summary>
+        <member name="P:Igtampe.Neco.Common.LandView.Road.Thickness">
+            <summary>Width (Line thickness) in meters of the road</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Road.Points">
             <summary>comma separated point strings for storage</summary>
@@ -886,6 +886,26 @@
         <member name="M:Igtampe.Neco.Common.LandView.Road.Clone">
             <summary>Creates a Clone of this Road</summary>
             <returns>A Shallow copy of this Road</returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Road.Width">
+            <summary>Width of a rectangle that encompasses this road</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Road.Height">
+            <summary>Height of a rectangle that encompasses this road</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Road.LeftmostX">
+            <summary>Returns the X of the leftmost point</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Road.TopmostY">
+            <summary>Returns the Y of the topmost point</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.Road.Area">
+            <summary>Area of this road which is NOT IMPLEMENTED</summary>
+            <returns></returns>
         </member>
         <member name="T:Igtampe.Neco.Common.Notification">
             <summary>Holds a notification for a User</summary>
