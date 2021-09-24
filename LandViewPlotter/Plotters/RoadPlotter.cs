@@ -27,7 +27,7 @@ namespace Igtampe.LandViewPlotter {
 
             if (R.ID != Guid.Empty) {
                 CanButton.Visible = false;
-                DetailTableLayoutPanel.SetColumn(OKButton, 1);
+                DetailTableLayoutPanel.SetColumn(OKButton, 2);
                 DialogResult = DialogResult.OK;
             }
 
@@ -36,7 +36,7 @@ namespace Igtampe.LandViewPlotter {
 
         private void PopulateData() {
             NameBox.Text = MyRoad.Name;
-            WidthBox.Text = MyRoad.Width + "";
+            WidthBox.Text = MyRoad.Thickness + "";
             PointsBox.Text = MyRoad.Points;
         }
 
@@ -83,10 +83,10 @@ namespace Igtampe.LandViewPlotter {
             WidthLabel.Text = "Width";
             if (!int.TryParse(WidthBox.Text, out int W)) {
                 ShowCriticalMessagebox($"Could not parse '{WidthBox.Text}' as an integer");
-                WidthBox.Text = MyRoad.Width + "";
+                WidthBox.Text = MyRoad.Thickness + "";
             } else {
-                if (W == MyRoad.Width) { return; }
-                MyRoad.Width = W;
+                if (W == MyRoad.Thickness) { return; }
+                MyRoad.Thickness = W;
                 MarkEdited();
             }
         }
@@ -100,10 +100,30 @@ namespace Igtampe.LandViewPlotter {
             Close();
         }
 
-        private void MarkEdited() { Edited = true; }
+        private void PreviewPictureBox_Click(object sender, EventArgs e) {
+            if (PreviewPictureBox.Image == null) { return; }
+            new PreviewForm(PreviewPictureBox.Image).ShowDialog();
+        }
+
+        private void MarkEdited() { 
+            Edited = true;
+            PreviewPictureBox.Image = LandViewGraphicsEngine.GenerateRoadImage(MyRoad);
+            ZoomOrCenter();
+        }
+
+        private void ZoomOrCenter() {
+            if (PreviewPictureBox.Image.Width < PreviewPictureBox.Width &&
+                PreviewPictureBox.Image.Height < PreviewPictureBox.Height) {
+                //If the Image is not big enough to fit or to squash to fit in the picture box, center it
+                PreviewPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+                return;
+            }
+
+            //Else the image is either the exact size of the window or larger in some axis and must be s q u a s h e d
+            PreviewPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+        }
 
         private static void ShowCriticalMessagebox(string message) { MessageBox.Show(message, "No", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-
 
     }
 }
