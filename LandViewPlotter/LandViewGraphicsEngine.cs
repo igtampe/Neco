@@ -117,6 +117,26 @@ namespace Igtampe.LandViewPlotter {
             }
         }
 
+        public static Image GenerateRoadImage(Road R) {
+            try {
+                if (R.Width() == 0 || R.Height() == 0) { return GenerateErrorImage($"Road {R.Name} ({R.ID})\nHas a width or height of 0 and cannot be drawn."); }
+                if (!LandViewUtils.ValidatePoints(R.Points, 2)) { return GenerateErrorImage($"Plot {R.Name} ({R.ID})\nHas an invalid Points field and cannot be drawn"); }
+                Image I = GenerateCanvas(R);
+
+                Graphics GRM = Graphics.FromImage(I);
+                Point Origin = GetRoadOrigin(R);
+
+                if (R.Country != null) { DrawEverything(R.Country, GRM, Origin); }
+                DrawRoad(R, GRM, Origin, Color.Red);
+
+                GRM.Dispose();
+                return I;
+            } catch (Exception E) {
+                return GenerateErrorImage($"{E.Source} at {E.TargetSite}:\n{E.Message}\n{E.StackTrace}");
+            }
+
+        }
+
         #region Fill Everything
 
         /// <summary>Draws everything in the country (Roads, Plots, Districts) to the given image</summary>
@@ -279,7 +299,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="Origin">Point on the given graphcis that represents 0,0</param>
         /// <param name="C">Color to draw the road in</param>
         public static void DrawRoad(Road R, Graphics GRM, Point Origin, Color C) {
-            Pen RoadPen = new(C, R.Width);
+            Pen RoadPen = new(C, R.Thickness);
             for (int i = 0; i < R.GraphicalPoints.Length - 1; i++) {
                 GRM.DrawLine(RoadPen, OffsetPoint(Origin, R.GraphicalPoints[i]), OffsetPoint(Origin, R.GraphicalPoints[i + 1]));
             }
@@ -324,6 +344,11 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="P"></param>
         /// <returns></returns>
         public static Point GetPlotOrigin(Plot P) { return new(-(P.LeftmostX()-MARGIN), -(P.TopmostY()-MARGIN)); }
+
+        /// <summary>Returns a point that represents 0,0 for a given Road's graphics</summary>
+        /// <param name="R"></param>
+        /// <returns></returns>
+        public static Point GetRoadOrigin(Road R) { return new(-(R.LeftmostX() - MARGIN), -(R.TopmostY() - MARGIN)); }
 
         /// <summary>Draws a small crosshair on where the origin is</summary>
         /// <param name="Origin">Point that represents 0,0 on the given graphics</param>
