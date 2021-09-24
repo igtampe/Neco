@@ -357,6 +357,9 @@ namespace Igtampe.LandViewPlotter {
                 return;
             }
 
+            //Delete the current countyr
+            MyCountry = null;
+
             CountryPicker CP = new((List<Country>)e.Result);
             if (CP.ShowDialog() != DialogResult.OK && MyCountry == null) { Close(); return; }
 
