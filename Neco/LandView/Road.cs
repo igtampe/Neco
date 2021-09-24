@@ -3,11 +3,12 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Igtampe.Neco.Common.LandView {
 
     /// <summary>Holds a road to display on a LandView map</summary>
-    public class Road {
+    public class Road:ILandViewItem {
 
         /// <summary>ID of this road</summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -17,8 +18,8 @@ namespace Igtampe.Neco.Common.LandView {
         /// <summary>Name of this road</summary>
         public string Name { get; set; }
 
-        /// <summary>Width in meters of the road</summary>
-        public int Width { get; set; }
+        /// <summary>Width (Line thickness) in meters of the road</summary>
+        public int Thickness { get; set; }
 
         /// <summary>comma separated point strings for storage</summary>
         public string Points { get; set; } //I hope this will save but it probably won't :shrug:
@@ -66,6 +67,34 @@ namespace Igtampe.Neco.Common.LandView {
         /// <summary>Creates a Clone of this Road</summary>
         /// <returns>A Shallow copy of this Road</returns>
         public object Clone() { return MemberwiseClone(); }
+
+        /// <summary>Width of a rectangle that encompasses this road</summary>
+        /// <returns></returns>
+        public int Width() {
+            return GraphicalPoints.Max(P => P.X) - GraphicalPoints.Min(P => P.X);
+        }
+
+        /// <summary>Height of a rectangle that encompasses this road</summary>
+        /// <returns></returns>
+        public int Height() {
+            return GraphicalPoints.Max(P => P.Y) - GraphicalPoints.Min(P => P.Y);
+        }
+
+        /// <summary>Returns the X of the leftmost point</summary>
+        /// <returns></returns>
+        public int LeftmostX() {
+            return GraphicalPoints.Min(P => P.X);
+        }
+
+        /// <summary>Returns the Y of the topmost point</summary>
+        /// <returns></returns>
+        public int TopmostY() {
+            return GraphicalPoints.Min(P => P.Y);
+        }
+
+        /// <summary>Area of this road which is NOT IMPLEMENTED</summary>
+        /// <returns></returns>
+        public double Area() { throw new NotImplementedException(); }
 
     }
 }
