@@ -12,8 +12,8 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="Points"></param>
         /// <param name="MinLength">Minimum number of points. 2 for roads, 3 for plots and districts</param>
         /// <returns></returns>
-        public static bool ValidatePoints(string Points, int MinLength) { 
-
+        public static bool ValidatePoints(string Points, int MinLength) {
+            if (string.IsNullOrWhiteSpace(Points)) { return false; }
             //Ensure blank ones can be actually saved.
             if (Points.Length == 0) { return true; }
             if (Points.Length < MinLength) { return false; }
