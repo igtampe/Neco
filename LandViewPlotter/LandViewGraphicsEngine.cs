@@ -42,6 +42,7 @@ namespace Igtampe.LandViewPlotter {
         /// <returns></returns>
         public static Image GenerateCountryImage(Country C) {
             try {
+                //This is the only check we need
                 if (C.Width == 0 || C.Height == 0) { return GenerateErrorImage($"Country {C.Name} ({C.ID})\nHas a width or height of 0 and cannot be drawn."); }
                 Image I = GenerateCanvas(C);
 
@@ -56,9 +57,9 @@ namespace Igtampe.LandViewPlotter {
 #endif
 
                 //Draw each district
-
-                DrawDistricts(C, GRM, Origin);
+                
                 DrawRoads(C, GRM, Origin);
+                DrawDistricts(C, GRM, Origin);
 
                 return I;
             } catch (Exception E) {
@@ -72,7 +73,6 @@ namespace Igtampe.LandViewPlotter {
         /// <returns></returns>
         public static Image GenerateDistrictImage(District D) {
             try {
-                if (D.Width() == 0 || D.Height() == 0) { return GenerateErrorImage($"District {D.Name} ({D.ID})\nHas a width or height of 0 and cannot be drawn."); }
                 if (!LandViewUtils.ValidatePoints(D.Points, 3)) { return GenerateErrorImage($"District {D.Name} ({D.ID})\nHas an invalid Points field and cannot be drawn"); }
                 Image I = GenerateCanvas(D);
 
@@ -100,8 +100,7 @@ namespace Igtampe.LandViewPlotter {
         /// <returns></returns>
         public static Image GeneratePlotImage(Plot P) {
             try {
-                if (P.Width() == 0 || P.Height() == 0) { return GenerateErrorImage($"Plot {P.Name} ({P.ID})\nHas a width or height of 0 and cannot be drawn."); }
-                if (!LandViewUtils.ValidatePoints(P.Points,3)) { return GenerateErrorImage($"Plot {P.Name} ({P.ID})\nHas an invalid Points field and cannot be drawn"); }
+                if (!LandViewUtils.ValidatePoints(P.Points,0)) { return GenerateErrorImage($"Plot {P.Name} ({P.ID})\nHas an invalid Points field and cannot be drawn"); }
                 Image I = GenerateCanvas(P);
 
                 Graphics GRM = Graphics.FromImage(I);
@@ -119,8 +118,7 @@ namespace Igtampe.LandViewPlotter {
 
         public static Image GenerateRoadImage(Road R) {
             try {
-                if (R.Width() == 0 || R.Height() == 0) { return GenerateErrorImage($"Road {R.Name} ({R.ID})\nHas a width or height of 0 and cannot be drawn."); }
-                if (!LandViewUtils.ValidatePoints(R.Points, 2)) { return GenerateErrorImage($"Plot {R.Name} ({R.ID})\nHas an invalid Points field and cannot be drawn"); }
+                if (!LandViewUtils.ValidatePoints(R.Points, 0)) { return GenerateErrorImage($"Plot {R.Name} ({R.ID})\nHas an invalid Points field and cannot be drawn"); }
                 Image I = GenerateCanvas(R);
 
                 Graphics GRM = Graphics.FromImage(I);
@@ -145,6 +143,9 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="Origin"></param>
         public static void DrawEverything(Country C, Graphics GRM, Point Origin) {
 
+            //Draw Roads first actually, so that labels and everything else overlay them
+            DrawRoads(C, GRM, Origin);
+
             //Draw Plots first, since district labels *should* Cover those if they have to            
             foreach (District D in C.Districts) {
                 //Draw Plots first
@@ -153,9 +154,6 @@ namespace Igtampe.LandViewPlotter {
 
             //Draw the Districts
             DrawDistricts(C, GRM, Origin);
-
-            //Finally draw Roads
-            DrawRoads(C, GRM, Origin);
 
         }
 
@@ -169,6 +167,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="Origin">Point that defines 0,0 on the given graphcis</param>
         /// <param name="DistrictPen">Pen to draw the outline with</param>
         public static void DrawDistrictOutline(District D, Graphics GRM, Point Origin, Pen DistrictPen) {
+            if (D.GraphicalPoints.Length < 2) { return; } //If it's less than 2 then we can't
             for (int i = 0; i < D.GraphicalPoints.Length - 1; i++) {
                 GRM.DrawLine(DistrictPen, OffsetPoint(Origin, D.GraphicalPoints[i]), OffsetPoint(Origin, D.GraphicalPoints[i + 1]));
             }
@@ -186,6 +185,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="NameFont">Font used to draw the name</param>
         /// <param name="InfoFont">Font used to draw the info</param>
         public static void DrawDistrictLabel(District D, Graphics GRM, Point Origin, Color Background, Color Foreground, Font NameFont, Font InfoFont) {
+            if (D.GraphicalPoints.Length == 0) { return; } //If there aren't any points then we can't do it!
             //Find the center of this thing
             Point DCenter = new(
                 D.LeftmostX() + Origin.X + D.Width() / 2,
@@ -234,6 +234,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="Origin">Point that defines 0,0 on the given graphcis</param>
         /// <param name="PlotPen">Pen to draw the outline with</param>
         public static void DrawPlotOutline(Plot P, Graphics GRM, Point Origin, Pen PlotPen) {
+            if (P.GraphicalPoints.Length < 2) { return; } //If it's less than 2 then we can't
             for (int i = 0; i < P.GraphicalPoints.Length - 1; i++) {
                 GRM.DrawLine(PlotPen, OffsetPoint(Origin, P.GraphicalPoints[i]), OffsetPoint(Origin, P.GraphicalPoints[i + 1]));
             }
@@ -251,6 +252,8 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="NameFont">Font used to draw the name</param>
         /// <param name="InfoFont">Font used to draw the info</param>
         public static void DrawPlotLabel(Plot P, Graphics GRM, Point Origin, Color Background, Color Foreground, Font NameFont, Font InfoFont) {
+            if (P.GraphicalPoints.Length == 0) { return; } //If it's less than 2 then we can't
+
             //Find the center of this thing
             Point PCenter = new(
                 P.LeftmostX() + Origin.X + P.Width() / 2,
@@ -299,6 +302,8 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="Origin">Point on the given graphcis that represents 0,0</param>
         /// <param name="C">Color to draw the road in</param>
         public static void DrawRoad(Road R, Graphics GRM, Point Origin, Color C) {
+            if (R.GraphicalPoints.Length < 2) { return; } //If it's less than 2 then we can't
+
             Pen RoadPen = new(C, R.Thickness);
             for (int i = 0; i < R.GraphicalPoints.Length - 1; i++) {
                 GRM.DrawLine(RoadPen, OffsetPoint(Origin, R.GraphicalPoints[i]), OffsetPoint(Origin, R.GraphicalPoints[i + 1]));
