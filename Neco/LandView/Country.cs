@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 using System.Text.Json.Serialization;
 
 namespace Igtampe.Neco.Common.LandView {
@@ -37,6 +38,18 @@ namespace Igtampe.Neco.Common.LandView {
 
         /// <summary>Neco User to direct payments of land to and handle accepting taxes</summary>
         public BankAccount FederalBankAccount { get; set; }
+
+        /// <summary>Graphical points of the country</summary>
+        public Point[] GraphicalPoints { get {
+
+                Point[] Points = { new(-Width / 2, -Height / 2),
+                                   new(Width / 2, -Height / 2),
+                                   new(Width / 2, Height / 2),
+                                   new(-Width / 2, Height / 2)};
+
+                return Points;
+            } 
+        }
 
         /// <summary>Area of this country in square meters</summary>
         /// <returns></returns>
