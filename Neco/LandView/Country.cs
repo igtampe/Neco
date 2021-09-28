@@ -51,6 +51,14 @@ namespace Igtampe.Neco.Common.LandView {
             } 
         }
 
+        /// <summary>Returns leftmost X of this country</summary>
+        /// <returns></returns>
+        public int LeftmostX() { return -Width / 2; }
+
+        /// <summary>Returns topmost Y of this country</summary>
+        /// <returns></returns>
+        public int TopmostY() { return -Height / 2; }
+
         /// <summary>Area of this country in square meters</summary>
         /// <returns></returns>
         public double Area() { return Width * Height; }
@@ -82,5 +90,6 @@ namespace Igtampe.Neco.Common.LandView {
         /// <summary>Creates a Clone of this country</summary>
         /// <returns>A Shallow copy of this country</returns>
         public object Clone() { return MemberwiseClone();}
+
     }
 }
