@@ -134,6 +134,11 @@ namespace Igtampe.LandViewPlotter {
             //Ensure this plot doesn't intersect any other plots
             Plot ConflictingPlot = LandViewUtils.GetIntersectingPlot(MyPlot);
 
+            if (MyPlot.ID == Guid.Empty && MyPlot.District.Plots.Contains(MyPlot)) {
+                MessageBox.Show("Because this plot has already been added, but has not been saved to the database, we cannot check if it conflicts with other plots pending" +
+                                "saving to the database. Do be warned about any potential conflicts we will not see","Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+            }
+
             if (ConflictingPlot != null) {
                 ShowCriticalMessagebox($"The plot you created intersects with plot {ConflictingPlot.Name}. Fix this before creating this plot.");
                 return;
