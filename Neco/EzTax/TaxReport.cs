@@ -12,6 +12,9 @@ namespace Igtampe.Neco.Common.EzTax {
     /// <summary>Holds a Tax Report </summary>
     public class TaxReport {
 
+        private const string SectionLine = "================================================================================\n";
+        private const string ItemLine = "-------------------------------------------------------------------------------\n";
+
         /// <summary>ID of this Tax Report</summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -73,11 +76,20 @@ namespace Igtampe.Neco.Common.EzTax {
             TR.ExtraIncomeTaxable = 0;
             TR.GrandTotalTax = 0;
             TR.Report = "";
+            TR.CSVReport = "";
             TR.PaymentBreakdownDictionary = new();
 
             //I would use Linq here to calculate everything but we're going to need to go throug the entire thing anyway so we may as well
 
-            //TODO: Prepare both reports at the same time
+            //Report Headers
+            TR.Report = $"EZTax Tax Report\nPrepared on {DateTime.Now} for {User.Name}\n\n";
+            TR.CSVReport = $"EZTax Tax Report\nPrepared on {DateTime.Now} for {User.Name}\n\n";
+
+            //Transaction Headers
+            TR.Report += $"{SectionLine}Transactions this month\n{SectionLine}";
+            TR.CSVReport += $"ID,Name,Amount,FromBank,ToBank,Type\n";
+
+#pragma warning disable S1643 // I Really do not understand SolarLint's problem with + on a string in loops. It's probably waranted but I don't want to deal with it.
 
             foreach (Transaction T in CurrentMonthTransactions) {
                 //If User received this money
@@ -89,7 +101,14 @@ namespace Igtampe.Neco.Common.EzTax {
                     //If the origin isn't nontaxableOrigin
                     if (T.FromAccount.Owner.Type.Taxation != TaxationType.NontaxableOrigin) {
                         TR.ExtraIncomeTaxable += T.Amount; //add the transaction's amount to the taxable extra income.
+
+                        TR.Report += $"{T.ID}: {T.Name}, {T.Amount:n0} from {T.FromAccount.ID} to {T.ToAccount.ID} (Taxable)\n{ItemLine}";
+                        TR.CSVReport += string.Join(',', T.ID, T.Name, T.Amount, T.FromAccount.ID, T.ToAccount.ID, "Taxable", "\n");
+                    } else {
+                        TR.Report += $"{T.ID}: {T.Name}, {T.Amount:n0} from {T.FromAccount.ID} to {T.ToAccount.ID} (Non-Taxable)\n{ItemLine}";
+                        TR.CSVReport += string.Join(',', T.ID, T.Name, T.Amount, T.FromAccount.ID, T.ToAccount.ID, "Non-Taxable", "\n");
                     }
+
                 } else {
                     //User sent this money out
 
@@ -97,14 +116,24 @@ namespace Igtampe.Neco.Common.EzTax {
                     if (T.ToAccount.Owner.Type.Taxation == TaxationType.NonTaxableDestination) {
                         //Consider this a tax deduction
                         TR.ExtraIncomeTaxable -= T.Amount;
+                        TR.Report += $"{T.ID}: {T.Name}, {T.Amount:n0} from {T.FromAccount.ID} to {T.ToAccount.ID} (Tax-Deductible)\n{ItemLine}";
+                        TR.CSVReport += string.Join(',', T.ID, T.Name, T.Amount, T.FromAccount.ID, T.ToAccount.ID, "Tax-Deductible", "\n");
                     }
                 }
             }
 
             TR.IncomeBreakdownDictionary.Add(UserFederalJurisdiction, TR.ExtraIncome);
 
-            //Now then,
-            
+            //Finish off the reports
+            TR.Report += $"{ItemLine}TOTAL NET INCOME     : {TR.ExtraIncome:n0}\n" +
+                                   $"TOTAL TAXABLE INCOME : {TR.ExtraIncomeTaxable:n0}\n{SectionLine}";
+            TR.CSVReport += "\n\n";
+
+
+            //Headers for the static income items
+            TR.Report += $"\n{SectionLine}Static Income Items\n{SectionLine}";
+            TR.CSVReport += "ID,Name,Federal Jurisdiction,Local Jurisdiction,Income";
+
             //Add incomes from every 
             foreach (IncomeItem I in IncomeItems) {
 
@@ -123,17 +152,54 @@ namespace Igtampe.Neco.Common.EzTax {
                     TR.IncomeBreakdownDictionary[I.FederalJurisdiction] += I.TotalMonthlyIncome();
                 }
 
+                TR.CSVReport += string.Join(',', I.ID, I.Name, I.FederalJurisdiction.Name, I.LocalJurisdiction.Name, I.TotalMonthlyIncome(),"\n");
+                TR.Report += $"{I.ID}: {I.Name} located in {I.LocalJurisdiction.Name},{I.FederalJurisdiction.Name}\n";
+
+                if (I.Subitems.Count > 0) {
+                    TR.Report += "\nSubitems:\n\n";
+                    foreach (var S in I.Subitems) {
+                        TR.Report += $"{S.ID}: {S.Name} with income {S.Income():n0}\n";
+                    }
+                }
+
+                TR.Report += $"\nMisc Income: {I.MiscIncome:n0}\n\nTOTAL INCOME: {I.TotalMonthlyIncome():n0}\n{ItemLine}";
+
             }
+
+            //Finish off the two reports static income section
+            TR.Report += $"{ItemLine}TOTAL STATIC INCOME  : {TR.StaticIncome:n0}\n{SectionLine}";
+            TR.CSVReport += "\n\n";
+
+            TR.Report += $"\n\nBreakdown:\n\n";
+
+            //Breakdown Section
+            foreach (TaxJurisdiction J in TR.IncomeBreakdownDictionary.Keys) {
+                TR.Report += $"{J.Name} INCOME : {TR.IncomeBreakdownDictionary[J]:n0}\n";
+            }
+
+            TR.Report += $"GRAND TOTAL INCOME : {TR.GrandTotalIncome:n0}\n";
+
+
+            TR.Report += $"\n\nTaxes:\n\n";
+            TR.CSVReport += "Jurisdiction,Income,Bracket,Percent,Tax\n";
 
             //Lastly, let's calcualte tax
             foreach (TaxJurisdiction J in TR.IncomeBreakdownDictionary.Keys) {
                 (long, TaxBracket) Result = J.CalculateTax(User, TR.IncomeBreakdownDictionary[J]);
-                TR.PaymentBreakdownDictionary.Add(J, Result.Item1); //Split here for the report TODO
+                TR.PaymentBreakdownDictionary.Add(J, Result.Item1); //Split here for the report
+
+                TR.CSVReport += string.Join(',', J.Name, TR.IncomeBreakdownDictionary[J],Result.Item2.Name,Result.Item2.Rate,Result.Item1, "\n");
+                TR.Report += $"{J.Name} TAX : {Result.Item1:n0} ({Result.Item2.Name} ({Result.Item2.Rate}))\n";
+
                 TR.GrandTotalTax += Result.Item1;
             }
 
             //Finalize the report
-            
+            TR.Report += $"GRAND TOTAL TAX : {TR.GrandTotalTax:n0}\n";
+            TR.CSVReport += "\n\n";
+
+#pragma warning restore S1643 // Strings should not be concatenated using '+' in a loop
+
 
             return TR;
         }
