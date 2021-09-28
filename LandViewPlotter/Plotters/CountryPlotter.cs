@@ -323,11 +323,9 @@ namespace Igtampe.LandViewPlotter {
                 return;
             }
 
-            int Entities = (int)e.Result;
-
             Edited = false;
             saveToolStripMenuItem.Enabled = Edited;
-            MessageBox.Show($"Saved {MyCountry.Name}, along with {Entities - 1} sub-item(s)", "Safe!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Saved {MyCountry.Name}", "Safe!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void LoadCountriesAsync() {
