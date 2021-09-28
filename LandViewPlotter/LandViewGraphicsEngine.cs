@@ -21,7 +21,7 @@ namespace Igtampe.LandViewPlotter {
 
                 Image I = GenerateCanvas(C);
                 Graphics GRM = Graphics.FromImage(I);
-                Point Origin = GetCountryOrigin(C);
+                Point Origin = GetOrigin(C);
 
 #if (DEBUG)
                 DrawOriginCrosshair(Origin, GRM);
@@ -47,7 +47,7 @@ namespace Igtampe.LandViewPlotter {
                 Image I = GenerateCanvas(C);
 
                 //Find the point that's 0,0
-                Point Origin = GetCountryOrigin(C);
+                Point Origin = GetOrigin(C);
 
                 //Draw a little cross at the center
                 Graphics GRM = Graphics.FromImage(I);
@@ -77,7 +77,7 @@ namespace Igtampe.LandViewPlotter {
                 Image I = GenerateCanvas(D);
 
                 //Find the point that's 0,0
-                Point Origin = GetDistrictOrigin(D);
+                Point Origin = GetOrigin(D);
 
                 //Draw a little cross at the center
                 Graphics GRM = Graphics.FromImage(I);
@@ -104,7 +104,7 @@ namespace Igtampe.LandViewPlotter {
                 Image I = GenerateCanvas(P);
 
                 Graphics GRM = Graphics.FromImage(I);
-                Point Origin = GetPlotOrigin(P);
+                Point Origin = GetOrigin(P);
 
                 if (P.District != null && P.District.Country != null) { DrawEverything(P.District.Country, GRM, Origin); }
                 DrawPlotOutline(P, GRM, Origin, new(Color.Red, 5));
@@ -122,7 +122,7 @@ namespace Igtampe.LandViewPlotter {
                 Image I = GenerateCanvas(R);
 
                 Graphics GRM = Graphics.FromImage(I);
-                Point Origin = GetRoadOrigin(R);
+                Point Origin = GetOrigin(R);
 
                 if (R.Country != null) { DrawEverything(R.Country, GRM, Origin); }
                 DrawRoad(R, GRM, Origin, Color.Red);
@@ -335,25 +335,10 @@ namespace Igtampe.LandViewPlotter {
             return I;
         }
 
-        /// <summary>Returns a point that represents 0,0 for a given country's Graphics object</summary>
-        /// <param name="C"></param>
+        /// <summary>Returns a point that represents 0,0 for a given LandViewItem's graphics object</summary>
+        /// <param name="L"></param>
         /// <returns></returns>
-        public static Point GetCountryOrigin(Country C) { return new((C.Width+MARGIN*2) / 2, (C.Height+MARGIN*2) / 2); }
-
-        /// <summary>Returns a point that represents 0,0 for a given District's graphics object</summary>
-        /// <param name="D"></param>
-        /// <returns></returns>
-        public static Point GetDistrictOrigin(District D) { return new(-(D.LeftmostX()-MARGIN), -(D.TopmostY()-MARGIN)); }
-
-        /// <summary>Returns a point that represents 0,0 for a given Plot's graphics</summary>
-        /// <param name="P"></param>
-        /// <returns></returns>
-        public static Point GetPlotOrigin(Plot P) { return new(-(P.LeftmostX()-MARGIN), -(P.TopmostY()-MARGIN)); }
-
-        /// <summary>Returns a point that represents 0,0 for a given Road's graphics</summary>
-        /// <param name="R"></param>
-        /// <returns></returns>
-        public static Point GetRoadOrigin(Road R) { return new(-(R.LeftmostX() - MARGIN), -(R.TopmostY() - MARGIN)); }
+        public static Point GetOrigin(ILandViewItem L) { return new(-(L.LeftmostX()-MARGIN), -(L.TopmostY()-MARGIN)); }
 
         /// <summary>Draws a small crosshair on where the origin is</summary>
         /// <param name="Origin">Point that represents 0,0 on the given graphics</param>
