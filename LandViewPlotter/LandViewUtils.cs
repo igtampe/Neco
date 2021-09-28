@@ -40,6 +40,7 @@ namespace Igtampe.LandViewPlotter {
         /// <returns>The ILandviewItem that intersects, or null if none was found</returns>
         public static Plot GetIntersectingPlot(ICollection<Plot> Existing, Plot New) {
             foreach (var Item in Existing) {
+                if (Item.Equals(New)) { continue; } //If the new item already exists, then let's ignore it. We can't intersect with ourselves.
                 if (Intersects(Item, New)) { return Item; }
             }
 
