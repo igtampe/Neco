@@ -112,6 +112,35 @@ namespace Igtampe.LandViewPlotter {
         }
 
         private void OKButton_Click(object sender, EventArgs e) {
+            //First validate the points
+            if (!LandViewUtils.ValidatePoints(MyPlot.Points, 3)) { 
+                ShowCriticalMessagebox("Points are not valid. Fix them before closing");
+                return;
+            }
+
+            //Ensure this plot is in the district its supposed to be in
+            District CalculatedDistrict = LandViewUtils.CalculatePlotDistrict(MyPlot.District.Country, MyPlot);
+
+            if (CalculatedDistrict == null) {
+                ShowCriticalMessagebox("We could not calculate what district this plot is contained by. This could mean that this plot is not in a single district, is in federal" +
+                                       " land, or is not in the right country. Fix this before creating this plot.");
+                return;
+            } else if (!MyPlot.District.Equals(CalculatedDistrict)) {
+                ShowCriticalMessagebox($"You created this plot under {MyPlot.District.Name}, however it was calculated to be under {CalculatedDistrict.Name}, which is not the same." +
+                                       $" Fix this before creating this plot.");
+                return;
+            }
+
+            //Ensure this plot doesn't intersect any other plots
+            Plot ConflictingPlot = LandViewUtils.GetIntersectingPlot(MyPlot);
+
+            if (ConflictingPlot != null) {
+                ShowCriticalMessagebox($"The plot you created intersects with plot {ConflictingPlot.Name}. Fix this before creating this plot.");
+                return;
+            }
+
+            //OK then we're good to go.
+
             DialogResult = DialogResult.OK;
             Close();
         }
