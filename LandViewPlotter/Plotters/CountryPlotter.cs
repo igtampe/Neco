@@ -367,7 +367,7 @@ namespace Igtampe.LandViewPlotter {
         private void MarkEdited() {
             Edited = true;
             saveToolStripMenuItem.Enabled = Edited;
-            PreviewPictureBox.Image = LandViewGraphicsEngine.GenerateCountryImage(MyCountry);
+            PreviewPictureBox.Image = LandViewGraphicsEngine.GenerateDetailedCountryImage(MyCountry);
             ZoomOrCenter();
         }
 
