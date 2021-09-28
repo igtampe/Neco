@@ -129,7 +129,12 @@ namespace Igtampe.LandViewPlotter {
         public static bool Intersects(ILandViewItem L1, ILandViewItem L2) {
 
             //First find if it is contained
-            if (Contains(L1, L2)) { return true; }
+            if (!FastContains(L1, L2)) { return false; } //If we don't fastcontain, return false.
+
+            //Instead of normal deepcontains, let's check if *any* points land in the first landview item:
+            foreach (Point P in L2.GraphicalPoints) {
+                if (ContainsPoint(L1, P)) { return true; }
+            }
 
             //Now do a fast calculation:
             Rectangle R1 = LandviewItemBoundingRectangle(L1);
