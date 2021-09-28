@@ -130,9 +130,12 @@ namespace Igtampe.LandViewPlotter {
         public static bool Intersects(ILandViewItem L1, ILandViewItem L2) {
 
             //First find if it is contained
-            if (!FastContains(L1, L2)) { return false; } //If we don't fastcontain, return false.
+            //Actually FastContains does nothing for us. If it's fast contained we can't say its contained, and if it isn't fastcontained (IE if we can say it
+            //isn't contained), that doesn't mean it doesn't intersect
 
-            //Instead of normal deepcontains, let's check if *any* points land in the first landview item:
+            //Something similar to Deepcontains can help us determine if it *does* intersect:
+
+            //Instead of normal deepcontains, let's check if *any* points land in the first landview item's area:
             foreach (Point P in L2.GraphicalPoints) {
                 if (ContainsPoint(L1, P)) { return true; }
             }
@@ -142,7 +145,7 @@ namespace Igtampe.LandViewPlotter {
             Rectangle R2 = LandviewItemBoundingRectangle(L2);
 
             //If the rectangles do not intersect, then we can be sure that this does not intersect
-            if (R1.IntersectsWith(R2)) { return false; }
+            if (!R1.IntersectsWith(R2)) { return false; }
 
             //If they do we need to do the nitty gritty
 
