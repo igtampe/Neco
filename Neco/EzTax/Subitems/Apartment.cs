@@ -8,18 +8,6 @@ namespace Igtampe.Neco.Common.EzTax.Subitems {
     /// <summary>Subitem that holds data for an appartment complex</summary>
     public class Apartment:IncomeSubitem {
 
-        /// <summary>ID of this subitem</summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public override Guid ID { get; set; }
-
-        /// <summary>IncomeItem this Subitem belongs to</summary>
-        [JsonIgnore]
-        public override IncomeItem IncomeItem { get; set; }
-
-        /// <summary>Name of this IncomeSubItem</summary>
-        public override string Name { get; set; }
-
         /// <summary>Studio units in this appartment</summary>
         [Range(0, int.MaxValue)]
         public int SUnits { get; set; } = 0;

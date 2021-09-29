@@ -11,14 +11,14 @@ namespace Igtampe.Neco.Common.EzTax.Subitems {
         /// <summary>ID of this subitem</summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public abstract Guid ID { get; set; }
+        public Guid ID { get; set; }
 
         /// <summary>IncomeItem this Subitem belongs to</summary>
         [JsonIgnore]
-        public abstract IncomeItem IncomeItem { get; set; }
+        public IncomeItem IncomeItem { get; set; }
 
         /// <summary>Name of this IncomeSubItem</summary>
-        public abstract string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>Gets this item's income</summary>
         /// <returns></returns>
@@ -41,7 +41,6 @@ namespace Igtampe.Neco.Common.EzTax.Subitems {
         /// <summary>Creates a string representation of this IncomeSubItem</summary>
         /// <returns>"ID} : {Name}</returns>
         public override string ToString() { return $"{ID} : {Name}"; }
-
-
+        
     }
 }
