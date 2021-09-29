@@ -277,6 +277,19 @@ namespace Igtampe.Neco.Backend.Controllers {
             return Ok(P);
         }
 
+        [HttpPost("Plot")]
+        public async Task<IActionResult> GetUserPlots(Guid SessionID) {
+            Session S = SessionManager.Manager.FindSession(SessionID);
+            if (S == null) { return Unauthorized("Invalid session"); }
+            //Retrieve Plot
+            List<Plot> P = await NecoDB.Plot
+                .Include(m => m.District).ThenInclude(m => m.Country)
+                .Include(m => m.Owner).ThenInclude(m => m.Type)
+                .Where(p => p.Owner.ID == S.UserID).ToListAsync();
+
+            return Ok(P);
+        }
+
         #endregion
 
         #region Images
