@@ -9,6 +9,7 @@ using Igtampe.Neco.Common;
 using Igtampe.Neco.Common.LandView;
 using Igtampe.Neco.Common.LandView.Requests;
 using Igtampe.Neco.Data;
+using System.IO;
 
 namespace Igtampe.Neco.Backend.Controllers {
 
@@ -118,9 +119,95 @@ namespace Igtampe.Neco.Backend.Controllers {
             Session S = SessionManager.Manager.FindSession(Request.SessionID);
             if (S == null) { return Unauthorized("Invalid session"); }
 
-            //We *really* need to figure out how the heck to figure out if two polygons intersect
-            //If we can't do this, the entire thing is screwed TODO
-            throw new NotImplementedException();
+            //Get the owner
+            User U = await NecoDB.User.FindAsync(S.UserID);
+            BankAccount B = await NecoDB.BankAccount
+                .Include(B => B.Owner)
+                .Include(B => B.Details)
+                .FirstOrDefaultAsync(B => B.ID == Request.BankAccountID);
+
+            if (B.Owner.ID != S.UserID) { return Unauthorized("Session owner does not own given bank account"); }
+
+            Country C = await NecoDB.Country
+                .Include(C => C.Districts).ThenInclude(D => D.DistrictBankAccount).ThenInclude(B => B.Owner) //Include every district and their bank accounts
+                .Include(C => C.Districts).ThenInclude(D => D.DistrictBankAccount).ThenInclude(B => B.Details) //Include details because we're going to need it for the transaction.
+                .Include(C => C.Districts).ThenInclude(D => D.Plots) //Include plots and their owners
+                .FirstOrDefaultAsync(D => D.ID == Request.CountryID);
+            if (C == null) { return NotFound("Could not find country"); }
+
+            Plot MyPlot = new() {
+                GraphicalPoints = Request.DefiningPoints,
+                Name = Request.Name,
+                Owner = U,
+                Status = PlotStatus.NOT_FOR_SALE
+            };
+
+            //First validate the points
+            if (!LandViewUtils.ValidatePoints(MyPlot.Points, 3)) {
+                return BadRequest("Points are not valid. Fix them before creating");
+            }
+
+            //Ensure this plot is in the district its supposed to be in
+            MyPlot.District = LandViewUtils.CalculatePlotDistrict(C, MyPlot);
+
+            if (MyPlot.District == null) {
+                return BadRequest("We could not calculate what district this plot is contained by. This could mean that this plot is not in a single district, is in federal" +
+                                  " land, or is not in the right country. Fix this before creating this plot.");
+            }
+
+            //Ensure this plot doesn't intersect any other plots
+            Plot ConflictingPlot = LandViewUtils.GetIntersectingPlot(MyPlot);
+
+            if (ConflictingPlot != null) {
+                return BadRequest($"The plot you created intersects with plot {ConflictingPlot.Name}. Fix this before creating this plot.");
+            }
+
+            //OK then we're good to go.
+
+            //Now calculate the area, and calculate the price
+            long Price = Convert.ToInt64(MyPlot.Area()) * MyPlot.District.PricePerSquareMeter;
+
+
+            //If this is check only, return the price
+            if (CheckOnly) { return Ok(Price); }
+
+            //Otherwise, let's commit the transaction
+
+            if (B.Details.Balance < Price) { return BadRequest("Bank account has insufficient funds"); }
+
+            Transaction T = new() {
+                Amount = Price,
+                FromAccount = B,
+                ToAccount = MyPlot.District.DistrictBankAccount,
+                Name = $"PURCHASE OF PLOT {MyPlot.Name}",
+                State = TransactionState.COMPLETED,
+                Time = DateTime.Now
+            };
+
+            T.FromAccount.Details.Balance -= T.Amount;
+            T.ToAccount.Details.Balance += T.Amount;
+
+            NecoDB.Add(T);
+
+            //Add a notification to the owner
+            Notification N = new() {
+                Read = false,
+                Text = $"{U.Name} has forwarded payment for the creation of plot {MyPlot.Name}",
+                Time = DateTime.Now,
+                User = T.ToAccount.Owner
+            };
+
+            NecoDB.Add(N);
+
+            //Finally add MyPlot
+            NecoDB.Add(MyPlot);
+
+            //And lastly, save to the database
+            await NecoDB.SaveChangesAsync();
+
+            //Finally, return the plot
+            return Ok(MyPlot);
+
         }
 
         // POST: Plot/Create
@@ -188,6 +275,84 @@ namespace Igtampe.Neco.Backend.Controllers {
 
             //Return the plot
             return Ok(P);
+        }
+
+        #endregion
+
+        #region Images
+
+        [HttpGet("Images/Country/{id}.png")]
+        public async Task<IActionResult> GetCountryImage(Guid ID) {
+            //Get the country and include ***everything***
+
+            Country C = await NecoDB.Country
+                .Include(C => C.Districts).ThenInclude(D => D.Plots)
+                .Include(C => C.Roads)
+                .FirstOrDefaultAsync(D => D.ID == ID);
+            
+            if (C == null) { return NotFound("Could not find country"); }
+
+            var ReturnImage = await Task.Run(() => GraphicsEngine.GenerateDetailedCountryImage(C));
+            return File(ImageToPngByteArray(ReturnImage), "image/png");
+        }
+
+        [HttpGet("Images/District/{id}.png")]
+        public async Task<IActionResult> GetDistrictImage(Guid ID) {
+            //Get the district and include ***everything***
+            District D = await NecoDB.District
+                .Include(D => D.Country).ThenInclude(C => C.Districts).ThenInclude(D => D.Plots)
+                .Include(D => D.Country).ThenInclude(C => C.Roads)
+                .Include(D => D.Plots)
+                .FirstOrDefaultAsync(D => D.ID == ID);
+
+            if (D == null) { return NotFound("Could not find District"); }
+
+            var ReturnImage = await Task.Run(() => GraphicsEngine.GenerateDistrictImage(D));
+            return File(ImageToPngByteArray(ReturnImage), "image/png");
+        }
+
+        [HttpGet("Images/Plot/{id}.png")]
+        public async Task<IActionResult> GetPlotImage(Guid ID) {
+            //Get the plot and include ***everything***
+            Plot P = await NecoDB.Plot
+                .Include(P => P.District).ThenInclude(D => D.Country).ThenInclude(C => C.Districts).ThenInclude(D=>D.Plots)
+                .Include(P => P.District).ThenInclude(D => D.Country).ThenInclude(C => C.Roads)
+                .Include(P => P.District).ThenInclude(D => D.Plots)
+                .FirstOrDefaultAsync(P => P.ID == ID);
+
+            if (P == null) { return NotFound("Could not find Plot"); }
+
+            var ReturnImage = await Task.Run(() => GraphicsEngine.GeneratePlotImage(P));
+            return File(ImageToPngByteArray(ReturnImage), "image/png");
+        }
+
+        [HttpPost("Images/plot/Preview.png")]
+        public async Task<IActionResult> GetPlotPreviewImage(CreatePlotRequest PR) {
+
+            //We actually don't need any information relating to session ID or anything. I'm just reusing this 
+            //request object because it contains a list of points and a country ID.
+
+            //Get the country
+            Country C = await NecoDB.Country
+                .Include(C => C.Districts).ThenInclude(D => D.Plots)
+                .Include(C => C.Roads)
+                .FirstOrDefaultAsync(C => C.ID == PR.CountryID);
+            if (C == null) { return NotFound("Country could not be found"); }
+            if (C.Districts.Count == 0) { return BadRequest("There are no districts in the specified country. We cannot fulfill this request"); }
+
+            Plot P = new() {
+                GraphicalPoints = PR.DefiningPoints,
+                District = C.Districts.First() //Here it doesn't actually matter what district this belongs to, as long as it belongs to the country
+            };
+
+            var ReturnImage = await Task.Run(() => GraphicsEngine.GeneratePlotImage(P));
+            return File(ImageToPngByteArray(ReturnImage), "image/png");
+        }
+
+        private static byte[] ImageToPngByteArray(System.Drawing.Image I) {
+            using MemoryStream ms = new();
+            I.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            return ms.ToArray();
         }
 
         #endregion
