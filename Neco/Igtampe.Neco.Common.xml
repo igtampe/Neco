@@ -726,6 +726,11 @@
             <param name="P"></param>
             <returns></returns>
         </member>
+        <member name="M:Igtampe.Neco.Common.LandView.GraphicsEngine.GenerateRoadImage(Igtampe.Neco.Common.LandView.Road)">
+            <summary>Generates an image for the specified road</summary>
+            <param name="R"></param>
+            <returns></returns>
+        </member>
         <member name="M:Igtampe.Neco.Common.LandView.GraphicsEngine.DrawEverything(Igtampe.Neco.Common.LandView.Country,System.Drawing.Graphics,System.Drawing.Point)">
             <summary>Draws everything in the country (Roads, Plots, Districts) to the given image</summary>
             <param name="C"></param>
@@ -815,7 +820,7 @@
         </member>
         <member name="M:Igtampe.Neco.Common.LandView.GraphicsEngine.GenerateCanvas(Igtampe.Neco.Common.LandView.LandViewItem)">
             <summary>Generates a blank canvas the size of the given country</summary>
-            <param name="C"></param>
+            <param name="L"></param>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.Common.LandView.GraphicsEngine.GetOrigin(Igtampe.Neco.Common.LandView.LandViewItem)">
@@ -838,6 +843,8 @@
             <param name="InfoFont">Font for the second line</param>
             <param name="Padding">Padding around the label</param>
             <param name="Spacing">Spacing between the first and second line of text</param>
+            <param name="Background">Color of the background of the label</param>
+            <param name="Foreground">Color of the foreground of the label (The text)</param>
         </member>
         <member name="M:Igtampe.Neco.Common.LandView.GraphicsEngine.OffsetPoint(System.Drawing.Point,System.Drawing.Point)">
             <summary>Offsets a point by the coordinates in a different point</summary>
@@ -851,6 +858,11 @@
             <param name="DX"></param>
             <param name="DY"></param>
             <returns>Copy of the original point, offset by the given amount</returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.GraphicsEngine.GenerateErrorImage(System.String)">
+            <summary>Generates an error image for the specified error</summary>
+            <param name="Error"></param>
+            <returns></returns>
         </member>
         <member name="T:Igtampe.Neco.Common.LandView.LandViewItem">
             <summary>Interface that defines LandViewItems that are drawable on screen</summary>
@@ -882,6 +894,9 @@
             <summary>Creates a Clone of this district</summary>
             <returns>A Shallow copy of this district</returns>
         </member>
+        <member name="T:Igtampe.Neco.Common.LandView.LandViewUtils">
+            <summary>Utilities for landview items</summary>
+        </member>
         <member name="M:Igtampe.Neco.Common.LandView.LandViewUtils.ValidatePoints(System.String,System.Int32)">
             <summary>Validates a Points string for use on a <see cref="T:Igtampe.Neco.Common.LandView.Plot"/>,<see cref="T:Igtampe.Neco.Common.LandView.District"/>, or a <see cref="T:Igtampe.Neco.Common.LandView.Road"/></summary>
             <param name="Points"></param>
@@ -911,7 +926,7 @@
             Gets the smallest district (by area) From the list of potential containers that contains the given Item.<br/>
             This method is meant for finding the smallest district that contains a plot
             </summary>
-            <param name="Containers"></param>
+            <param name="AllDistricts"></param>
             <param name="Item"></param>
             <returns>the item, or null if none was found</returns>
         </member>
@@ -1039,6 +1054,12 @@
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Requests.CreatePlotRequest.SessionID">
             <summary>ID of the session executing this request</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.CreatePlotRequest.CountryID">
+            <summary>ID of the district this Plot should belong to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.Common.LandView.Requests.CreatePlotRequest.Name">
+            <summary>Name of the plot</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.LandView.Requests.CreatePlotRequest.DefiningPoints">
             <summary>Points that define the area of the plot</summary>
