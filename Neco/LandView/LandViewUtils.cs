@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Linq;
 
 namespace Igtampe.Neco.Common.LandView {
+
+    /// <summary>Utilities for landview items</summary>
     public static class LandViewUtils {
 
         /// <summary>Validates a Points string for use on a <see cref="Plot"/>,<see cref="District"/>, or a <see cref="Road"/></summary>
@@ -63,7 +65,7 @@ namespace Igtampe.Neco.Common.LandView {
         /// Gets the smallest district (by area) From the list of potential containers that contains the given Item.<br/>
         /// This method is meant for finding the smallest district that contains a plot
         /// </summary>
-        /// <param name="Containers"></param>
+        /// <param name="AllDistricts"></param>
         /// <param name="Item"></param>
         /// <returns>the item, or null if none was found</returns>
         public static District GetSmallestDistrictContaining(ICollection<District> AllDistricts, LandViewItem Item) {

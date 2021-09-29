@@ -115,6 +115,9 @@ namespace Igtampe.Neco.Common.LandView{
             }
         }
 
+        /// <summary>Generates an image for the specified road</summary>
+        /// <param name="R"></param>
+        /// <returns></returns>
         public static Image GenerateRoadImage(Road R) {
             try {
                 if (!LandViewUtils.ValidatePoints(R.Points, 0)) { return GenerateErrorImage($"Plot {R.Name} ({R.ID})\nHas an invalid Points field and cannot be drawn"); }
@@ -323,7 +326,7 @@ namespace Igtampe.Neco.Common.LandView{
         #region Utilities
 
         /// <summary>Generates a blank canvas the size of the given country</summary>
-        /// <param name="C"></param>
+        /// <param name="L"></param>
         /// <returns></returns>
         public static Image GenerateCanvas(LandViewItem L) {
             if (L.Width() == 0 || L.Height() == 0) { return new Bitmap(1, 1); }
@@ -358,6 +361,8 @@ namespace Igtampe.Neco.Common.LandView{
         /// <param name="InfoFont">Font for the second line</param>
         /// <param name="Padding">Padding around the label</param>
         /// <param name="Spacing">Spacing between the first and second line of text</param>
+        /// <param name="Background">Color of the background of the label</param>
+        /// <param name="Foreground">Color of the foreground of the label (The text)</param>
         public static void DrawLabel(Graphics GRM, Point LabelCenter, string NameLabel, string InfoLabel, Color Foreground, Color Background, Font NameFont, Font InfoFont, int Padding, int Spacing) {
             SizeF NameSize = GRM.MeasureString(NameLabel, NameFont);
             SizeF InfoSize = GRM.MeasureString(InfoLabel, InfoFont);
@@ -397,6 +402,9 @@ namespace Igtampe.Neco.Common.LandView{
             return P2; //return it
         }
 
+        /// <summary>Generates an error image for the specified error</summary>
+        /// <param name="Error"></param>
+        /// <returns></returns>
         public static Image GenerateErrorImage(string Error) {
 
             Image E = new Bitmap(Properties.Resources.LandviewGenerationError);
