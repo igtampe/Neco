@@ -92,6 +92,10 @@ namespace Igtampe.Neco.Common.EzTax {
 #pragma warning disable S1643 // I Really do not understand SolarLint's problem with + on a string in loops. It's probably waranted but I don't want to deal with it.
 
             foreach (Transaction T in CurrentMonthTransactions) {
+
+                //Make sure we don't count transfers between a user's own bank accounts
+                if (T.FromAccount.Owner.ID == T.ToAccount.Owner.ID) { continue; }
+
                 //If User received this money
                 if (T.ToAccount.Owner.ID == User.ID) {
                     
