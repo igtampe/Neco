@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Igtampe.Neco.Common.Requests;
 
 namespace Igtampe.Neco.Common.LandView.Requests {
@@ -13,11 +9,17 @@ namespace Igtampe.Neco.Common.LandView.Requests {
         /// <summary>ID of the session executing this request</summary>
         public Guid SessionID { get; set; }
 
+        /// <summary>ID of the district this Plot should belong to</summary>
+        public Guid CountryID { get; set; }
+
+        /// <summary>Name of the plot</summary>
+        public string Name { get; set; }
+
         /// <summary>Points that define the area of the plot</summary>
-        public List<Point> DefiningPoints { get; set; }
+        public Point[] DefiningPoints { get; set; }
 
         /// <summary>Bank Account this plot will be bought with</summary>
-        public Guid BankAccountID { get; set; }
+        public string BankAccountID { get; set; }
 
     }
 }
