@@ -67,7 +67,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="Containers"></param>
         /// <param name="Item"></param>
         /// <returns>the item, or null if none was found</returns>
-        public static District GetSmallestDistrictContaining(ICollection<District> AllDistricts, ILandViewItem Item) {
+        public static District GetSmallestDistrictContaining(ICollection<District> AllDistricts, LandViewItem Item) {
 
             List<District> Containers = new();
 
@@ -91,7 +91,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="L1">Shape that could contain L2</param>
         /// <param name="L2">Shape that could be contained by L1</param>
         /// <returns>Whether or not L1 contains L2</returns>
-        public static bool Contains(ILandViewItem L1, ILandViewItem L2) {
+        public static bool Contains(LandViewItem L1, LandViewItem L2) {
             if (!FastContains(L1, L2)) { return false; } //If R1 does not contain R2, then we can immediately stop.
             return DeepContains(L1, L2);
         }
@@ -100,7 +100,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="L1"></param>
         /// <param name="L2"></param>
         /// <returns></returns>
-        public static bool FastContains(ILandViewItem L1, ILandViewItem L2) {
+        public static bool FastContains(LandViewItem L1, LandViewItem L2) {
             //Let's divide this into levels. First let's make two rectangles and see if they contain each other
             Rectangle R1 = LandviewItemBoundingRectangle(L1);
             Rectangle R2 = LandviewItemBoundingRectangle(L2);
@@ -113,7 +113,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="L1"></param>
         /// <param name="L2"></param>
         /// <returns></returns>
-        public static bool DeepContains(ILandViewItem L1, ILandViewItem L2) {
+        public static bool DeepContains(LandViewItem L1, LandViewItem L2) {
             //If it does we still need to check. For contains, we need to check that *every* point in L2 falls in L1
             foreach (Point P in L2.GraphicalPoints) {
                 if (!ContainsPoint(L1, P)) { return false; }
@@ -127,7 +127,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="L1"></param>
         /// <param name="L2"></param>
         /// <returns></returns>
-        public static bool Intersects(ILandViewItem L1, ILandViewItem L2) {
+        public static bool Intersects(LandViewItem L1, LandViewItem L2) {
 
             //First find if it is contained
             //Actually FastContains does nothing for us. If it's fast contained we can't say its contained, and if it isn't fastcontained (IE if we can say it
@@ -174,7 +174,7 @@ namespace Igtampe.LandViewPlotter {
         /// <param name="L"></param>
         /// <param name="P"></param>
         /// <returns></returns>
-        public static bool ContainsPoint(ILandViewItem L, Point P) {
+        public static bool ContainsPoint(LandViewItem L, Point P) {
             // Get the angle between the point and the
             // first and last vertices.
             int max_point = L.GraphicalPoints.Length - 1;
@@ -281,7 +281,7 @@ namespace Igtampe.LandViewPlotter {
         /// <summary>Creates a bounding rectangle that contains the given landview item</summary>
         /// <param name="L"></param>
         /// <returns></returns>
-        public static Rectangle LandviewItemBoundingRectangle(ILandViewItem L) {
+        public static Rectangle LandviewItemBoundingRectangle(LandViewItem L) {
             if (L is Road) { throw new ArgumentException("L is a Road"); }
             return new(L.LeftmostX(), L.TopmostY(), L.Width(), L.Height()); 
         }

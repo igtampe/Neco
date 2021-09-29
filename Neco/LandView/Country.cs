@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace Igtampe.Neco.Common.LandView {
 
     /// <summary>Country for LandView, which holds <see cref="District"/>s</summary>
-    public class Country:ILandViewItem {
+    public class Country:LandViewItem {
 
         /// <summary>ID of this country</summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,10 +27,10 @@ namespace Igtampe.Neco.Common.LandView {
         public List<Road> Roads { get; set; }
 
         /// <summary>Width of this country in meters</summary>
-        public int Width { get; set; } = 0;
+        public new int Width { get; set; } = 0;
 
         /// <summary>Height of this country in meters</summary>
-        public int Height { get; set; } = 0;
+        public new int Height { get; set; } = 0;
 
         /// <summary>Price per square meter of unclaimed terrain</summary>
         [Range(0,int.MaxValue)]
@@ -40,7 +40,8 @@ namespace Igtampe.Neco.Common.LandView {
         public BankAccount FederalBankAccount { get; set; }
 
         /// <summary>Graphical points of the country</summary>
-        public Point[] GraphicalPoints { get {
+        [NotMapped]
+        public override Point[] GraphicalPoints { get {
 
                 Point[] Points = { new(-Width / 2, -Height / 2),
                                    new(Width / 2, -Height / 2),
@@ -48,28 +49,21 @@ namespace Igtampe.Neco.Common.LandView {
                                    new(-Width / 2, Height / 2)};
 
                 return Points;
-            } 
+            }
+            set { throw new InvalidOperationException("Cannot set graphical points of a country"); }
         }
 
         /// <summary>Returns leftmost X of this country</summary>
         /// <returns></returns>
-        public int LeftmostX() { return -Width / 2; }
+        public override int LeftmostX() { return -Width / 2; }
 
         /// <summary>Returns topmost Y of this country</summary>
         /// <returns></returns>
-        public int TopmostY() { return -Height / 2; }
+        public override int TopmostY() { return -Height / 2; }
 
         /// <summary>Area of this country in square meters</summary>
         /// <returns></returns>
-        public double Area() { return Width * Height; }
-
-        /// <summary>Height of this country in meters</summary>
-        /// <returns></returns>
-        int ILandViewItem.Height() { return Height; }
-
-        /// <summary>Width of this country in meters</summary>
-        /// <returns></returns>
-        int ILandViewItem.Width() { return Width; }
+        public override double Area() { return Width * Height; }
 
         /// <summary>Compares this Country to another object</summary>
         /// <param name="obj"></param>

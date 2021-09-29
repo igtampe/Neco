@@ -647,14 +647,6 @@
             <summary>Area of this country in square meters</summary>
             <returns></returns>
         </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Country.Igtampe#Neco#Common#LandView#ILandViewItem#Height">
-            <summary>Height of this country in meters</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Country.Igtampe#Neco#Common#LandView#ILandViewItem#Width">
-            <summary>Width of this country in meters</summary>
-            <returns></returns>
-        </member>
         <member name="M:Igtampe.Neco.Common.LandView.Country.Equals(System.Object)">
             <summary>Compares this Country to another object</summary>
             <param name="obj"></param>
@@ -699,26 +691,6 @@
         <member name="P:Igtampe.Neco.Common.LandView.District.DistrictBankAccount">
             <summary>Bank account of this district to handle accepting taxes and accept land payments</summary>
         </member>
-        <member name="M:Igtampe.Neco.Common.LandView.District.Area">
-            <summary>Area of this District</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.District.Height">
-            <summary>Height of this district</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.District.Width">
-            <summary>Width of this district</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.District.LeftmostX">
-            <summary>Returns the X of the leftmost point</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.District.TopmostY">
-            <summary>Returns the Y of the topmost point</summary>
-            <returns></returns>
-        </member>
         <member name="M:Igtampe.Neco.Common.LandView.District.Equals(System.Object)">
             <summary>Compares this District to another object</summary>
             <param name="obj"></param>
@@ -732,35 +704,35 @@
             <summary>Creates a string representation of this District</summary>
             <returns>{ID} : {Name}</returns>
         </member>
-        <member name="M:Igtampe.Neco.Common.LandView.District.Clone">
-            <summary>Creates a Clone of this district</summary>
-            <returns>A Shallow copy of this district</returns>
-        </member>
-        <member name="T:Igtampe.Neco.Common.LandView.ILandViewItem">
+        <member name="T:Igtampe.Neco.Common.LandView.LandViewItem">
             <summary>Interface that defines LandViewItems that are drawable on screen</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.LandView.ILandViewItem.GraphicalPoints">
+        <member name="P:Igtampe.Neco.Common.LandView.LandViewItem.GraphicalPoints">
             <summary>Graphical points that represent a polygon for this landview item</summary>
         </member>
-        <member name="M:Igtampe.Neco.Common.LandView.ILandViewItem.LeftmostX">
+        <member name="M:Igtampe.Neco.Common.LandView.LandViewItem.LeftmostX">
             <summary>Gets this landviewitem's leftmost X coordinate</summary>
             <returns></returns>
         </member>
-        <member name="M:Igtampe.Neco.Common.LandView.ILandViewItem.TopmostY">
+        <member name="M:Igtampe.Neco.Common.LandView.LandViewItem.TopmostY">
             <summary>Gets this landviewitem's Topmost y coordinate</summary>
             <returns></returns>
         </member>
-        <member name="M:Igtampe.Neco.Common.LandView.ILandViewItem.Width">
+        <member name="M:Igtampe.Neco.Common.LandView.LandViewItem.Width">
             <summary>Width of this item</summary>
             <returns></returns>
         </member>
-        <member name="M:Igtampe.Neco.Common.LandView.ILandViewItem.Height">
+        <member name="M:Igtampe.Neco.Common.LandView.LandViewItem.Height">
             <summary>Height of this item</summary>
             <returns></returns>
         </member>
-        <member name="M:Igtampe.Neco.Common.LandView.ILandViewItem.Area">
+        <member name="M:Igtampe.Neco.Common.LandView.LandViewItem.Area">
             <summary>Area of this item</summary>
             <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.LandView.LandViewItem.Clone">
+            <summary>Creates a Clone of this district</summary>
+            <returns>A Shallow copy of this district</returns>
         </member>
         <member name="T:Igtampe.Neco.Common.LandView.PlotStatus">
             <summary>Status of a Plot</summary>
@@ -798,26 +770,6 @@
         <member name="P:Igtampe.Neco.Common.LandView.Plot.Status">
             <summary>Status of this plot</summary>
         </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Plot.Area">
-            <summary>Area of this plot in square meters</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Plot.Height">
-            <summary>Height of this plot in meters</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Plot.Width">
-            <summary>Width of this plot in meters</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Plot.LeftmostX">
-            <summary>Returns the X of the leftmost point</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Plot.TopmostY">
-            <summary>Returns the Y of the topmost point</summary>
-            <returns></returns>
-        </member>
         <member name="M:Igtampe.Neco.Common.LandView.Plot.Equals(System.Object)">
             <summary>Compares this Plot to another object</summary>
             <param name="obj"></param>
@@ -830,10 +782,6 @@
         <member name="M:Igtampe.Neco.Common.LandView.Plot.ToString">
             <summary>Creates a string representation of this Plot</summary>
             <returns>{ID} : {Name}</returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Plot.Clone">
-            <summary>Creates a Clone of this plot</summary>
-            <returns>A Shallow copy of this plot</returns>
         </member>
         <member name="T:Igtampe.Neco.Common.LandView.Requests.ChangePlotStatusRequest">
             <summary>Request to change a plot's current status</summary>
@@ -904,30 +852,6 @@
         <member name="M:Igtampe.Neco.Common.LandView.Road.ToString">
             <summary>Creates a string representation of this Road</summary>
             <returns>{ID} : {Name}</returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Road.Clone">
-            <summary>Creates a Clone of this Road</summary>
-            <returns>A Shallow copy of this Road</returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Road.Width">
-            <summary>Width of a rectangle that encompasses this road</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Road.Height">
-            <summary>Height of a rectangle that encompasses this road</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Road.LeftmostX">
-            <summary>Returns the X of the leftmost point</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Road.TopmostY">
-            <summary>Returns the Y of the topmost point</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Igtampe.Neco.Common.LandView.Road.Area">
-            <summary>Area of this road which is NOT IMPLEMENTED</summary>
-            <returns></returns>
         </member>
         <member name="T:Igtampe.Neco.Common.Notification">
             <summary>Holds a notification for a User</summary>

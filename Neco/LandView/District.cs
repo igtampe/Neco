@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -9,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace Igtampe.Neco.Common.LandView {
     
     /// <summary>Districts in landview held in a <see cref="Country"/>, that holds <see cref="Plot"/>s</summary>
-    public class District:ILandViewItem {
+    public class District:LandViewItem {
 
         /// <summary>ID of this </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,7 +26,7 @@ namespace Igtampe.Neco.Common.LandView {
 
         /// <summary>Graphical points that define the corners of this district</summary>
         [NotMapped]
-        public Point[] GraphicalPoints { 
+        public override Point[] GraphicalPoints { 
             get {
                 if (string.IsNullOrWhiteSpace(Points)) { return Array.Empty<Point>(); }
                 List<Point> Ps = new();
@@ -57,39 +56,6 @@ namespace Igtampe.Neco.Common.LandView {
         /// <summary>Bank account of this district to handle accepting taxes and accept land payments</summary>
         public BankAccount DistrictBankAccount { get; set; }
 
-        /// <summary>Area of this District</summary>
-        /// <returns></returns>
-        public double Area() {
-            //Provided by https://stackoverflow.com/questions/2034540/calculating-area-of-irregular-polygon-in-c-sharp
-            return Math.Abs(GraphicalPoints.Take(GraphicalPoints.Length - 1)
-                .Select((p, i) => (GraphicalPoints[i + 1].X - p.X) * (GraphicalPoints[i + 1].Y + p.Y))
-                .Sum() / 2);
-        }
-
-        /// <summary>Height of this district</summary>
-        /// <returns></returns>
-        public int Height() {
-            return GraphicalPoints.Max(P => P.Y) - GraphicalPoints.Min(P => P.Y);
-        }
-
-        /// <summary>Width of this district</summary>
-        /// <returns></returns>
-        public int Width() {
-            return GraphicalPoints.Max(P => P.X) - GraphicalPoints.Min(P => P.X);
-        }
-
-        /// <summary>Returns the X of the leftmost point</summary>
-        /// <returns></returns>
-        public int LeftmostX() {
-            return GraphicalPoints.Min(P => P.X);
-        }
-
-        /// <summary>Returns the Y of the topmost point</summary>
-        /// <returns></returns>
-        public int TopmostY() {
-            return GraphicalPoints.Min(P => P.Y);
-        }
-
         /// <summary>Compares this District to another object</summary>
         /// <param name="obj"></param>
         /// <returns>True if and only if the object is a District and the <see cref="ID"/> matches with this one's</returns>
@@ -105,10 +71,6 @@ namespace Igtampe.Neco.Common.LandView {
         /// <summary>Creates a string representation of this District</summary>
         /// <returns>{ID} : {Name}</returns>
         public override string ToString() { return $"{ID} : {Name}"; }
-
-        /// <summary>Creates a Clone of this district</summary>
-        /// <returns>A Shallow copy of this district</returns>
-        public object Clone() { return MemberwiseClone(); }
 
     }
 }

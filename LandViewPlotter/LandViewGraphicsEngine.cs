@@ -326,7 +326,7 @@ namespace Igtampe.LandViewPlotter {
         /// <summary>Generates a blank canvas the size of the given country</summary>
         /// <param name="C"></param>
         /// <returns></returns>
-        public static Image GenerateCanvas(ILandViewItem L) {
+        public static Image GenerateCanvas(LandViewItem L) {
             if (L.Width() == 0 || L.Height() == 0) { return new Bitmap(1, 1); }
             Image I = new Bitmap(L.Width()+MARGIN*2, L.Height()+MARGIN*2); //We add some padding.
             Graphics GRM = Graphics.FromImage(I);
@@ -338,7 +338,7 @@ namespace Igtampe.LandViewPlotter {
         /// <summary>Returns a point that represents 0,0 for a given LandViewItem's graphics object</summary>
         /// <param name="L"></param>
         /// <returns></returns>
-        public static Point GetOrigin(ILandViewItem L) { return new(-(L.LeftmostX()-MARGIN), -(L.TopmostY()-MARGIN)); }
+        public static Point GetOrigin(LandViewItem L) { return new(-(L.LeftmostX()-MARGIN), -(L.TopmostY()-MARGIN)); }
 
         /// <summary>Draws a small crosshair on where the origin is</summary>
         /// <param name="Origin">Point that represents 0,0 on the given graphics</param>
