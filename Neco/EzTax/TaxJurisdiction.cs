@@ -19,7 +19,6 @@ namespace Igtampe.Neco.Common.EzTax {
         public string Name { get; set; } = "";
 
         /// <summary>Brackets in this Jurisdiction</summary>
-        [JsonIgnore]
         public ICollection<TaxBracket> Brackets { get; set; }
 
         /// <summary>Account to which taxes must be paid out to</summary>
