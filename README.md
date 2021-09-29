@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/igtampe/Neco/master/Images/NecoCard.png" width="300"/>
-</p>
+ <img src="https://raw.githubusercontent.com/igtampe/Neco/master/Images/NecoCard.png" width="300"/>
 Neco (.NET Economy) is a successor to <a href="https://github.com/igtampe/ViBE">ViBE</a>, working with more industry standard tools, and an actual database. The Backend runs on ASP.NET Core, and uses Entity Framework to communicate to a SQL Server database running on the local machine by default, but can be configured to use a different connection string. Neco encompasses the same subprograms as the <a href="https://github.com/igtampe/VibeServer">ViBE Server</a>, along with more integration with other services like <a href="https://github.com/igtampe/Imex">Income Manager Express (IMEX)</a>, and the <a href="https://github.com/igtampe/UMSAssetTrack">UMS Asset Tracking System (UMSAT)</a>. Not only that, it provides more possibilities, like more banks, multiple bank accounts, better income item management, a Reworked LandView, and more. Check the Readme on the Neco Backend for more details on the controllers and what they do.<br>
 <br>
 Due to using SQL Server, Neco is no longer cross compatible with ViBE (as ViBE was with its own predecessor). We've made a small program to migrate all the data from ViBE to the new DB, which takes in data from ViBE's folders, files, and from the UMSAT Database. See the ViBE Neco Migrator for more information on how it works.<br>
