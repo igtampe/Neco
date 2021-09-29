@@ -30,7 +30,7 @@ namespace Igtampe.Neco.Common.EzTax.Subitems {
 
         /// <summary>Income of this hotel. Assumes 50% Profit</summary>
         /// <returns></returns>
-        public override int Income() { return (RateToMonthlyIncome(RoomRate) * Rooms) + (RateToMonthlyIncome(SuiteRate) * Suites); } 
+        public override int Income() { return (RateToMonthlyIncome(RoomRate) * Rooms) + (RateToMonthlyIncome(SuiteRate) * Suites) + MiscIncome; } 
 
         /// <summary>Converts a nightly rate to monthly income. Assumes 50% profit</summary>
         /// <param name="Rate"></param>
