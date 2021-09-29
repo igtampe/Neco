@@ -29,10 +29,32 @@ namespace Igtampe.Neco.Common.LandView {
         /// <summary>Area of this item</summary>
         /// <returns></returns>
         public virtual double Area() {
-            //Provided by https://stackoverflow.com/questions/2034540/calculating-area-of-irregular-polygon-in-c-sharp
-            return Math.Abs(GraphicalPoints.Take(GraphicalPoints.Length - 1)
-                .Select((p, i) => (GraphicalPoints[i + 1].X - p.X) * (GraphicalPoints[i + 1].Y + p.Y))
-                .Sum() / 2);
+
+            //In order to calculate area, let's *translate* this polygon to make sure all coords are positive:
+            int XAdjust = -1 * Math.Min(0,GraphicalPoints.Min(P => P.X));
+            int YAdjust = -1 * Math.Min(0,GraphicalPoints.Min(P => P.Y));
+
+            //Provided/modified by http://csharphelper.com/blog/2014/07/calculate-the-area-of-a-polygon-in-c/
+
+            // Add the first point to the end.
+            int num_points = GraphicalPoints.Length;
+            PointF[] pts = new PointF[num_points + 1];
+            for (int i = 0; i < GraphicalPoints.Length; i++) {
+                pts[i] = new(GraphicalPoints[i].X + XAdjust, GraphicalPoints[i].Y + YAdjust);
+            }
+
+            pts[num_points] = new(GraphicalPoints[0].X + XAdjust, GraphicalPoints[0].Y + YAdjust);
+
+            // Get the areas.
+            float area = 0;
+            for (int i = 0; i < num_points; i++) {
+                area +=
+                    (pts[i + 1].X - pts[i].X) *
+                    (pts[i + 1].Y + pts[i].Y) / 2;
+            }
+
+            // Return the result.
+            return Math.Abs(area);
         }
 
         /// <summary>Creates a Clone of this district</summary>
