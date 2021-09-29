@@ -107,7 +107,7 @@ namespace Igtampe.LandViewPlotter {
 
         private void MarkEdited() { 
             Edited = true;
-            PreviewPictureBox.Image = LandViewGraphicsEngine.GenerateRoadImage(MyRoad);
+            PreviewPictureBox.Image = GraphicsEngine.GenerateRoadImage(MyRoad);
             ZoomOrCenter();
         }
 

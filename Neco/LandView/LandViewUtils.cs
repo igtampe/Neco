@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Igtampe.Neco.Common.LandView;
 
-namespace Igtampe.LandViewPlotter {
+namespace Igtampe.Neco.Common.LandView {
     public static class LandViewUtils {
 
         /// <summary>Validates a Points string for use on a <see cref="Plot"/>,<see cref="District"/>, or a <see cref="Road"/></summary>

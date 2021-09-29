@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using Igtampe.Neco.Common.LandView;
 
-namespace Igtampe.LandViewPlotter {
+namespace Igtampe.Neco.Common.LandView{
 
     /// <summary>Holds functiosn to generate and draw images and graphcis for landview items</summary>
-    public static class LandViewGraphicsEngine {
+    public static class GraphicsEngine {
 
         private static readonly FontFamily FFamily = new("Arial");
 

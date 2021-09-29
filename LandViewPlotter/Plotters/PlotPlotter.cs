@@ -156,7 +156,7 @@ namespace Igtampe.LandViewPlotter {
 
         private void MarkEdited() {
             Edited = true;
-            PreviewPictureBox.Image = LandViewGraphicsEngine.GeneratePlotImage(MyPlot);
+            PreviewPictureBox.Image = GraphicsEngine.GeneratePlotImage(MyPlot);
             ZoomOrCenter();
         }
 

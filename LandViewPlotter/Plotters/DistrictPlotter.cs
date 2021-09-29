@@ -188,7 +188,7 @@ namespace Igtampe.LandViewPlotter {
 
         private void MarkEdited() {
             Edited = true;
-            PreviewPictureBox.Image = LandViewGraphicsEngine.GenerateDistrictImage(MyDistrict);
+            PreviewPictureBox.Image = GraphicsEngine.GenerateDistrictImage(MyDistrict);
             ZoomOrCenter();
         }
 

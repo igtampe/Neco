@@ -52,7 +52,7 @@ namespace Igtampe.LandViewPlotter {
             HeightBox.Text = MyCountry.Height+"";
             BankAccountBox.Text = MyCountry.FederalBankAccount?.ID;
             PPSMBox.Text = MyCountry.PricePerSquareMeter + "";
-            PreviewPictureBox.Image = LandViewGraphicsEngine.GenerateCountryImage(MyCountry);
+            PreviewPictureBox.Image = GraphicsEngine.GenerateCountryImage(MyCountry);
 
             DistrictsListView.Items.Clear();
             foreach (District D in MyCountry.Districts) {DistrictsListView.Items.Add(D.Name);}
@@ -367,7 +367,7 @@ namespace Igtampe.LandViewPlotter {
         private void MarkEdited() {
             Edited = true;
             saveToolStripMenuItem.Enabled = Edited;
-            PreviewPictureBox.Image = LandViewGraphicsEngine.GenerateDetailedCountryImage(MyCountry);
+            PreviewPictureBox.Image = GraphicsEngine.GenerateDetailedCountryImage(MyCountry);
             ZoomOrCenter();
         }
 
