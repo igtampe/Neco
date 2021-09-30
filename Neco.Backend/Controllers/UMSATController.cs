@@ -9,6 +9,8 @@ using Igtampe.Neco.Common.UMSAT;
 using Igtampe.Neco.Common.UMSAT.Requests;
 using Igtampe.Neco.Common;
 using Igtampe.Neco.Data;
+using System.Drawing;
+using System.IO;
 
 namespace Igtampe.Neco.Backend.Controllers {
 
@@ -24,9 +26,19 @@ namespace Igtampe.Neco.Backend.Controllers {
         public async Task<IActionResult> Index(int? start, int? end) {
             int realstart = start!=null ? (int)start : 0;
             int realend = end != null ? (int)end : 20;
-            return Ok(await NecoDB.Asset
+            var Assets = await NecoDB.Asset
                 .Include(a => a.Plot).ThenInclude(m => m.District).ThenInclude(m => m.Country)
-                .Include(a => a.Owner).ThenInclude(m=>m.Type).Skip(realstart).Take(realend-realstart).ToListAsync()); 
+                .Include(a => a.Owner).ThenInclude(m=>m.Type).Skip(realstart).Take(realend-realstart).ToListAsync();
+
+            //Remove images since we shouldn't include those when we're just showing an index
+            Assets = await Task.Run(() => NullifyImages(Assets));
+            return Ok(Assets);
+        }
+
+        [NonAction]
+        public static List<Asset> NullifyImages(List<Asset> L) {
+            for (int i = 0; i < L.Count; i++) { L[i].Image = null; }
+            return L;
         }
 
         // GET: UMSAT/5
@@ -39,6 +51,7 @@ namespace Igtampe.Neco.Backend.Controllers {
                 .Include(a => a.Owner).ThenInclude(m => m.Type).FirstOrDefaultAsync(m => m.ID == id);
 
             if (asset == null) { return NotFound(); }
+            if (asset.Image == null) { asset.Image = ImageToPngByteArray(Properties.Resources.UMSATBlank); }
 
             return Ok(asset);
         }
@@ -139,5 +152,12 @@ namespace Igtampe.Neco.Backend.Controllers {
 
             
         }
+
+        private static byte[] ImageToPngByteArray(System.Drawing.Image I) {
+            using MemoryStream ms = new();
+            I.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            return ms.ToArray();
+        }
+
     }
 }
