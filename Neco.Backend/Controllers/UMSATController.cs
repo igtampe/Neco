@@ -73,7 +73,6 @@ namespace Igtampe.Neco.Backend.Controllers {
                     Complete = Request.Complete,
                     CreationDate = DateTime.Now,
                     Description = Request.Description,
-                    Image = Request.Image,
                     Name = Request.Name,
                     Owner = U,
                     SpecificLocaiton=Request.SpecificLocation,
@@ -92,7 +91,6 @@ namespace Igtampe.Neco.Backend.Controllers {
                 //Update the asset details
                 A.Complete = Request.Complete;
                 A.Description = Request.Description;
-                A.Image = Request.Image;
                 A.Name = Request.Name;
                 A.SpecificLocaiton = Request.SpecificLocation;
                 A.UpdateDate = DateTime.Now;
