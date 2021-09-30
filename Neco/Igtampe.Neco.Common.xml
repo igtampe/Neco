@@ -1373,12 +1373,6 @@
         <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.Complete">
             <summary>Asset Completion State</summary>
         </member>
-        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.Image">
-            <summary>Asset image</summary>
-        </member>
-        <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.IncomeItemID">
-            <summary>ID of the tied EzTax IncomeItem</summary>
-        </member>
         <member name="P:Igtampe.Neco.Common.UMSAT.Requests.AssetModRequest.PlotID">
             <summary>ID of the tied LandView Plot</summary>
         </member>
