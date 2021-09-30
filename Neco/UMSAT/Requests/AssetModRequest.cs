@@ -23,14 +23,7 @@ namespace Igtampe.Neco.Common.UMSAT.Requests {
         /// <summary>Asset Completion State</summary>
         public bool Complete { get; set; }
 
-        /// <summary>Asset image</summary>
-        public byte[] Image { get; set; }
-
-        /// <summary>ID of the tied EzTax IncomeItem</summary>
-        public Guid IncomeItemID { get; set; }
-
         /// <summary>ID of the tied LandView Plot</summary>
         public Guid PlotID { get; set; }
-
     }
 }
