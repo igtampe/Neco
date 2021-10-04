@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Igtampe.Neco.Common.UMSAT;
 using Igtampe.Neco.Common.UMSAT.Requests;
 using Igtampe.Neco.Common;
 using Igtampe.Neco.Data;
-using System.Drawing;
 using System.IO;
 
 namespace Igtampe.Neco.Backend.Controllers {
