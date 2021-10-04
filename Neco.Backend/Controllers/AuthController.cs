@@ -35,7 +35,8 @@ namespace Igtampe.Neco.Backend.Controllers {
         //POST: Auth/Out
         [HttpPost("Out")]
         public async Task<IActionResult> LogOut(Guid SessionID) {
-            return Ok(SessionManager.Manager.LogOut(SessionID));
+            bool LogoutSuccess = await Task.Run(() => SessionManager.Manager.LogOut(SessionID));
+            return Ok(LogoutSuccess);
         }
 
         //POST: Auth/Out
@@ -44,7 +45,9 @@ namespace Igtampe.Neco.Backend.Controllers {
             Session S = SessionManager.Manager.FindSession(SessionID);
             if (S == null) { return Unauthorized("Invalid session"); }
 
-            return Ok(SessionManager.Manager.LogOutAll(S.UserID));
+            int LogoutCount = await Task.Run(()=> SessionManager.Manager.LogOutAll(S.UserID));
+
+            return Ok(LogoutCount);
         }
 
 
