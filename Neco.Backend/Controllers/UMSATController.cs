@@ -122,13 +122,8 @@ namespace Igtampe.Neco.Backend.Controllers {
         public async Task<IActionResult> ImageUpload(AssetImageUpdateRequest Request) {
             Session S = SessionManager.Manager.FindSession(Request.SessionID);
             if (S == null) { return Unauthorized("Invalid session"); }
-
-            User U = await NecoDB.User.FirstOrDefaultAsync(U => U.ID == S.UserID);
-
+            
             Asset A;
-
-
-            //This is a modified asset.
             A = await NecoDB.Asset.Include(A => A.Owner).FirstOrDefaultAsync(A => A.ID == Request.AssetID);
             if (A == null) { return NotFound("Asset was not found"); }
             if (A.Owner.ID != S.UserID) { return Unauthorized("Session owner isn't this asset's owner"); }
