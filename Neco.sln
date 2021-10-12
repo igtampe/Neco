@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViBENecoMigrator", "ViBENec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.LandViewPlotter", "LandViewPlotter\Igtampe.LandViewPlotter.csproj", "{2F6D193D-4DBD-4C74-A4DF-3F1A2B1BEE45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igtampe.Neco.ReactFrontend", "Igtampe.Neco.ReactFrontend\Igtampe.Neco.ReactFrontend.csproj", "{ACB3138F-DCE8-4E38-A9FF-5EE7E352A4E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.Calico", "Igtampe.Neco.ReactFrontend\Igtampe.Calico.csproj", "{ACB3138F-DCE8-4E38-A9FF-5EE7E352A4E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igtampe.Bombay", "Bombay\Igtampe.Bombay.csproj", "{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{ACB3138F-DCE8-4E38-A9FF-5EE7E352A4E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACB3138F-DCE8-4E38-A9FF-5EE7E352A4E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACB3138F-DCE8-4E38-A9FF-5EE7E352A4E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
