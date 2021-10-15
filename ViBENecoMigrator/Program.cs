@@ -585,7 +585,8 @@ namespace ViBENecoMigrator {
                     if (!DateTime.TryParse((string)Reader[6], out DateTime DOLU)) { DOLU = DateTime.Now; }
                     Asset A = new() {
                         Name = (string)Reader[0], Owner = C.User.Find((string)Reader[1]),
-                        SpecificLocaiton = (string)Reader[2], Image = new System.Net.WebClient().DownloadData((string)Reader[3]),
+                        SpecificLocaiton = (string)Reader[2], 
+                        //Image = new System.Net.WebClient().DownloadData((string)Reader[3]), //skip image for now
                         Description = (string)Reader[4], CreationDate = DOC,  UpdateDate = DOLU, Complete = bool.Parse((string)Reader[7]), 
                         Plot = null
                     };
