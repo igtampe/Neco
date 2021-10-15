@@ -295,6 +295,10 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         [HttpGet("Images/Country/{id}.png")]
         public async Task<IActionResult> GetCountryImage(Guid ID) {
+            
+            //If we're in postgres mode (IE running on Heroku)
+            if (Program.OnHeroku) { return Unauthorized("Due to limitations on Heroku, this option has been disabled on it"); }
+
             //Get the country and include ***everything***
 
             Country C = await NecoDB.Country
@@ -314,6 +318,10 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         [HttpGet("Images/District/{id}.png")]
         public async Task<IActionResult> GetDistrictImage(Guid ID) {
+
+            //If we're in postgres mode (IE running on Heroku)
+            if (Program.OnHeroku) { return Unauthorized("Due to limitations on Heroku, this option has been disabled on it"); }
+
             //Get the district and include ***everything***
             District D = await NecoDB.District
                 .Include(D => D.Country).ThenInclude(C => C.Districts).ThenInclude(D => D.Plots)

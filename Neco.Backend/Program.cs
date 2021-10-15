@@ -8,7 +8,10 @@ namespace Igtampe.Neco.Backend {
         public static void Main(string[] args) {
 
             //Start session remover thread
-            new Thread(delegate () { SessionManager.SessionRemoverThread(60); }).Start();
+            if (!OnHeroku) {
+                //Only start this thread if we're not on heroku. If we are I'm 90% sure this can consume dyno hours since it's doing *something*
+                new Thread(delegate () { SessionManager.SessionRemoverThread(60); }).Start();
+            }
 
             //Start the website
             CreateHostBuilder(args).Build().Run(); 
@@ -16,5 +19,10 @@ namespace Igtampe.Neco.Backend {
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args) .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>();});
+
+        public static bool OnHeroku { get {
+                return !string.IsNullOrWhiteSpace(System.Environment.GetEnvironmentVariable("HEROKU"));
+            } 
+        } 
     }
 }
