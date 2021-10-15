@@ -50,22 +50,48 @@ namespace Igtampe.Neco.Data {
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 
-            string JDBCURL = string.IsNullOrWhiteSpace(PostgresURL) ? System.Environment.GetEnvironmentVariable("DATABASE_URL") : PostgresURL;
+            string PURL = string.IsNullOrWhiteSpace(PostgresURL) ? System.Environment.GetEnvironmentVariable("DATABASE_URL") : PostgresURL;
 
-            if (!string.IsNullOrWhiteSpace(JDBCURL) && !ForceSQLServer) {
+            if (!string.IsNullOrWhiteSpace(PURL) && !ForceSQLServer) {
 
-                //We need to parce the JDBC de esta cosa
+                //OK so now we have this
+                //postgres://user:password@host:port/database
 
-                optionsBuilder.UseNpgsql(@"
-                Host=host;
-                Port=port;
-                Username=username;
-                Password=password;
-                Database=db;
-                Pooling=true;
-                SSL Mode=Require;
-                TrustServerCertificate=True;
-            ");
+                //Drop the beginning 
+                PURL = PURL.Replace("postgres://", "");
+
+                //Split the beginning and end into two parts at the @
+                string[] PurlSplit = PURL.Split('@');
+
+                //We should now have:
+                //user:password
+                string Username = PurlSplit[0].Split(':')[0];
+                string Password = PurlSplit[0].Split(':')[1];
+
+                //And:
+                //host:port/database
+
+                //Split this again by /
+                PurlSplit = PurlSplit[1].Split('/');
+
+                //Now we should have
+                //host:port
+                string Host = PurlSplit[0].Split(':')[0];
+                string Port = PurlSplit[0].Split(':')[1];
+
+                //Database
+                string Database = PurlSplit[1];
+
+
+
+                optionsBuilder.UseNpgsql(@$"
+                    Host={Host}; Port={Port}; 
+                    Username={Username}; Password={Password};
+                    Database={Database};
+                    Pooling=true;
+                    SSL Mode=Require;
+                    TrustServerCertificate=True;
+                ");
 
             } else {
 
