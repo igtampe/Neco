@@ -12,6 +12,9 @@ namespace Igtampe.Neco.Data {
     /// <summary>Context that has every table. Used for generating database tables and for testing.</summary>
     public class NecoContext: DbContext {
 
+        /// <summary>Indicates whether or not this neco context is in Postgres Mode</summary>
+        public bool PostgresMode { get; private set; } = false;
+
         /// <summary>Indicates whether or not to force no postgres</summary>
         private readonly bool ForceSQLServer = false;
 
@@ -82,8 +85,6 @@ namespace Igtampe.Neco.Data {
                 //Database
                 string Database = PurlSplit[1];
 
-
-
                 optionsBuilder.UseNpgsql(@$"
                     Host={Host}; Port={Port}; 
                     Username={Username}; Password={Password};
@@ -92,6 +93,8 @@ namespace Igtampe.Neco.Data {
                     SSL Mode=Require;
                     TrustServerCertificate=True;
                 ");
+
+                PostgresMode = true;
 
             } else {
 
