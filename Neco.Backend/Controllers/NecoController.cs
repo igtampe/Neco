@@ -20,7 +20,7 @@ namespace Igtampe.Neco.Backend.Controllers {
 
         //GET:
         [HttpGet]
-        public IActionResult Ping() {return Ok("You've connected to the server! Congrats.\nT" + Environment.GetEnvironmentVariable("DATABASE_URL"));}
+        public IActionResult Ping() {return Ok("You've connected to the server! Congrats.");}
 
         // GET: Dir
         [HttpGet("dir")]
