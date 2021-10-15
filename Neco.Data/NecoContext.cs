@@ -12,12 +12,67 @@ namespace Igtampe.Neco.Data {
     /// <summary>Context that has every table. Used for generating database tables and for testing.</summary>
     public class NecoContext: DbContext {
 
+        /// <summary>Indicates whether or not to force no postgres</summary>
+        private bool ForceSQLServer = false;
+
+        /// <summary>Override for SQL Server URL. <b></b></summary>
+        private string SQLServerURL;
+
+        /// <summary>Override for Postgres server URL. <b></b></summary>
+        private string PostgresURL;
+
         /// <summary>Creates an EverythingContext</summary>
         public NecoContext() : base() { }
 
+        /// <summary>Creates an EverythingContext</summary>
+        public NecoContext(string SQLServerURL) : base() {
+            this.SQLServerURL = SQLServerURL;
+        }
+
+        /// <summary>Creates an EverythingContext</summary>
+        public NecoContext(string SQLServerURL, string PostgresURL) : base() {
+            this.SQLServerURL = SQLServerURL;
+            this.PostgresURL = PostgresURL;
+        }
+
+        /// <summary>Creates an EverythingContext</summary>
+        public NecoContext(bool ForceSQLServer) : base() {
+            this.ForceSQLServer = ForceSQLServer;
+        }
+
+        /// <summary>Creates an EverythingContext</summary>
+        public NecoContext(bool ForceSQLServer, string SQLServerURL) : base() {
+            this.ForceSQLServer = ForceSQLServer;
+            this.SQLServerURL = SQLServerURL;
+        }
+
         /// <summary>Overrides onConfiguring to use <see cref="Constants.ConnectionString"/></summary>
         /// <param name="optionsBuilder"></param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { optionsBuilder.UseSqlServer(Constants.ConnectionString); }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+
+            string JDBCURL = string.IsNullOrWhiteSpace(PostgresURL) ? System.Environment.GetEnvironmentVariable("JDBC_DATABASE_URL") : PostgresURL;
+
+            if (!string.IsNullOrWhiteSpace(JDBCURL) && !ForceSQLServer) {
+
+                //We need to parce the JDBC de esta cosa
+
+                optionsBuilder.UseNpgsql(@"
+                Host=host;
+                Port=port;
+                Username=username;
+                Password=password;
+                Database=db;
+                Pooling=true;
+                SSL Mode=Require;
+                TrustServerCertificate=True;
+            ");
+
+            } else {
+
+                //We do not have a URL to connect to a postgres db. Fallback to the local or configured sql server database
+                optionsBuilder.UseSqlServer(string.IsNullOrWhiteSpace(SQLServerURL) ? Constants.ConnectionString : SQLServerURL);
+            }
+        }
 
         /// <summary>Overrides on model creation to remove the plural convention</summary>
         /// <param name="modelBuilder"></param>
