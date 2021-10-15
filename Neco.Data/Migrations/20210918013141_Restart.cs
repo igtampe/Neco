@@ -13,8 +13,8 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Bank",
                 columns: table => new
                 {
-                    ID = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ID = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -25,7 +25,7 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "BankAccountDetail",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
                     Balance = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -37,8 +37,8 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "UserAuth",
                 columns: table => new
                 {
-                    ID = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    Pin = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: true)
+                    ID = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: false),
+                    Pin = table.Column<string>(type: "varchar(4)", maxLength: 4, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,8 +49,8 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "UserType",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
                     Taxation = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -62,9 +62,9 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "BankAccountType",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankID = table.Column<string>(type: "nvarchar(5)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
+                    BankID = table.Column<string>(type: "varchar(5)", nullable: true),
                     InterestRate = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
@@ -82,9 +82,9 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    ID = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TypeID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ID = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
+                    TypeID = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,12 +101,12 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "BankAccount",
                 columns: table => new
                 {
-                    ID = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
-                    BankID = table.Column<string>(type: "nvarchar(5)", nullable: true),
-                    DetailsID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TypeID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OwnerID = table.Column<string>(type: "nvarchar(5)", nullable: true),
-                    Closed = table.Column<bool>(type: "bit", nullable: false)
+                    ID = table.Column<string>(type: "varchar(9)", maxLength: 9, nullable: false),
+                    BankID = table.Column<string>(type: "varchar(5)", nullable: true),
+                    DetailsID = table.Column<Guid>(type: "uuid", nullable: true),
+                    TypeID = table.Column<Guid>(type: "uuid", nullable: true),
+                    OwnerID = table.Column<string>(type: "varchar(5)", nullable: true),
+                    Closed = table.Column<bool>(type: "bool", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,10 +141,10 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "CertifiedItem",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CertifiedByID = table.Column<string>(type: "nvarchar(5)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Text = table.Column<string>(type: "varchar", nullable: true),
+                    CertifiedByID = table.Column<string>(type: "varchar(5)", nullable: true),
+                    Date = table.Column<DateTime>(type: "timestamp", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -161,11 +161,11 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Contract",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FromUserID = table.Column<string>(type: "nvarchar(5)", nullable: true),
-                    TopBidderID = table.Column<string>(type: "nvarchar(5)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
+                    Description = table.Column<string>(type: "varchar", nullable: true),
+                    FromUserID = table.Column<string>(type: "varchar(5)", nullable: true),
+                    TopBidderID = table.Column<string>(type: "varchar(5)", nullable: true),
                     Amount = table.Column<long>(type: "bigint", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
@@ -190,11 +190,11 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Notification",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserID = table.Column<string>(type: "nvarchar(5)", nullable: true),
-                    Read = table.Column<bool>(type: "bit", nullable: false)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Text = table.Column<string>(type: "varchar", nullable: true),
+                    Time = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    UserID = table.Column<string>(type: "varchar(5)", nullable: true),
+                    Read = table.Column<bool>(type: "bool", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -211,15 +211,15 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "TaxReport",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerID = table.Column<string>(type: "nvarchar(5)", nullable: true),
-                    PreparedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    OwnerID = table.Column<string>(type: "varchar(5)", nullable: true),
+                    PreparedDate = table.Column<DateTime>(type: "timestamp", nullable: false),
                     StaticIncome = table.Column<long>(type: "bigint", nullable: false),
                     ExtraIncome = table.Column<long>(type: "bigint", nullable: false),
                     ExtraIncomeTaxable = table.Column<long>(type: "bigint", nullable: false),
                     GrandTotalTax = table.Column<long>(type: "bigint", nullable: false),
-                    Report = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CSVReport = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Report = table.Column<string>(type: "varchar", nullable: true),
+                    CSVReport = table.Column<string>(type: "varchar", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -236,12 +236,12 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Country",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
                     Width = table.Column<int>(type: "int", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
                     PricePerSquareMeter = table.Column<int>(type: "int", nullable: false),
-                    FederalBankAccountID = table.Column<string>(type: "nvarchar(9)", nullable: true)
+                    FederalBankAccountID = table.Column<string>(type: "varchar(9)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -258,9 +258,9 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "TaxJurisdiction",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountID = table.Column<string>(type: "nvarchar(9)", nullable: true)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
+                    AccountID = table.Column<string>(type: "varchar(9)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -277,12 +277,12 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Transaction",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
                     Amount = table.Column<long>(type: "bigint", nullable: false),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FromAccountID = table.Column<string>(type: "nvarchar(9)", nullable: true),
-                    ToAccountID = table.Column<string>(type: "nvarchar(9)", nullable: true),
+                    Time = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
+                    FromAccountID = table.Column<string>(type: "varchar(9)", nullable: true),
+                    ToAccountID = table.Column<string>(type: "varchar(9)", nullable: true),
                     State = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -306,12 +306,12 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "District",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CountryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Points = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
+                    CountryID = table.Column<Guid>(type: "uuid", nullable: true),
+                    Points = table.Column<string>(type: "varchar", nullable: true),
                     PricePerSquareMeter = table.Column<int>(type: "int", nullable: false),
-                    DistrictBankAccountID = table.Column<string>(type: "nvarchar(9)", nullable: true)
+                    DistrictBankAccountID = table.Column<string>(type: "varchar(9)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -334,10 +334,10 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Road",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Points = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CountryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
+                    Points = table.Column<string>(type: "varchar", nullable: true),
+                    CountryID = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -354,12 +354,12 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "IncomeItem",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserID = table.Column<string>(type: "nvarchar(5)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
+                    UserID = table.Column<string>(type: "varchar(5)", nullable: true),
                     MiscIncome = table.Column<long>(type: "bigint", nullable: false),
-                    LocalJurisdictionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    FederalJurisdictionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    LocalJurisdictionID = table.Column<Guid>(type: "uuid", nullable: true),
+                    FederalJurisdictionID = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -388,12 +388,12 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "TaxBracket",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    JurisdictionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    JurisdictionID = table.Column<Guid>(type: "uuid", nullable: true),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
                     Start = table.Column<long>(type: "bigint", nullable: false),
                     End = table.Column<long>(type: "bigint", nullable: false),
-                    TypeID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TypeID = table.Column<Guid>(type: "uuid", nullable: true),
                     Rate = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
@@ -417,11 +417,11 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "CheckbookItem",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AttachedTransacitonID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    AttachedTransacitonID = table.Column<Guid>(type: "uuid", nullable: true),
                     Type = table.Column<int>(type: "int", nullable: false),
                     Variant = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Comment = table.Column<string>(type: "varchar", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -438,11 +438,11 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Plot",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DistrictID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Points = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OwnerID = table.Column<string>(type: "nvarchar(5)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    DistrictID = table.Column<Guid>(type: "uuid", nullable: true),
+                    Points = table.Column<string>(type: "varchar", nullable: true),
+                    OwnerID = table.Column<string>(type: "varchar(5)", nullable: true),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -466,9 +466,9 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Apartment",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IncomeItemID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    IncomeItemID = table.Column<Guid>(type: "uuid", nullable: true),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
                     SUnits = table.Column<int>(type: "int", nullable: false),
                     B1Units = table.Column<int>(type: "int", nullable: false),
                     B2Units = table.Column<int>(type: "int", nullable: false),
@@ -495,9 +495,9 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Business",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IncomeItemID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    IncomeItemID = table.Column<Guid>(type: "uuid", nullable: true),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
                     Chairs = table.Column<int>(type: "int", nullable: false),
                     AvgSpend = table.Column<int>(type: "int", nullable: false),
                     CustPerHour = table.Column<int>(type: "int", nullable: false),
@@ -518,9 +518,9 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Hotel",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IncomeItemID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    IncomeItemID = table.Column<Guid>(type: "uuid", nullable: true),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
                     Rooms = table.Column<int>(type: "int", nullable: false),
                     Suites = table.Column<int>(type: "int", nullable: false),
                     RoomRate = table.Column<int>(type: "int", nullable: false),
@@ -542,17 +542,17 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "Asset",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SpecificLocaiton = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OwnerID = table.Column<string>(type: "nvarchar(5)", nullable: true),
-                    Complete = table.Column<bool>(type: "bit", nullable: false),
-                    IncomeItemID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PlotID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "varchar", nullable: true),
+                    Description = table.Column<string>(type: "varchar", nullable: true),
+                    SpecificLocaiton = table.Column<string>(type: "varchar", nullable: true),
+                    OwnerID = table.Column<string>(type: "varchar(5)", nullable: true),
+                    Complete = table.Column<bool>(type: "bool", nullable: false),
+                    IncomeItemID = table.Column<Guid>(type: "uuid", nullable: true),
+                    PlotID = table.Column<Guid>(type: "uuid", nullable: true),
+                    Image = table.Column<byte[]>(type: "bytea", nullable: true),
+                    CreationDate = table.Column<DateTime>(type: "timestamp", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "timestamp", nullable: false)
                 },
                 constraints: table =>
                 {

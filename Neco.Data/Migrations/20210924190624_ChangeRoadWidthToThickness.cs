@@ -39,7 +39,7 @@ namespace Igtampe.Neco.Data.Migrations
             migrationBuilder.AddColumn<Guid>(
                 name: "IncomeItemID",
                 table: "Asset",
-                type: "uniqueidentifier",
+                type: "uuid",
                 nullable: true);
 
             migrationBuilder.CreateIndex(
