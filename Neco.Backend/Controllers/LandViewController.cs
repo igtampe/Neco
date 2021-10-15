@@ -305,7 +305,11 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (C == null) { return NotFound("Could not find country"); }
 
             var ReturnImage = await Task.Run(() => GraphicsEngine.GenerateDetailedCountryImage(C));
-            return File(ImageToPngByteArray(ReturnImage), "image/png");
+
+            byte[] Arr = ImageToPngByteArray(ReturnImage);
+            ReturnImage.Dispose();
+            C = null;
+            return File(Arr, "image/png");
         }
 
         [HttpGet("Images/District/{id}.png")]
@@ -320,7 +324,11 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (D == null) { return NotFound("Could not find District"); }
 
             var ReturnImage = await Task.Run(() => GraphicsEngine.GenerateDistrictImage(D));
-            return File(ImageToPngByteArray(ReturnImage), "image/png");
+
+            byte[] Arr = ImageToPngByteArray(ReturnImage);
+            ReturnImage.Dispose();
+            D = null;
+            return File(Arr, "image/png");
         }
 
         [HttpGet("Images/Plot/{id}.png")]
@@ -335,7 +343,10 @@ namespace Igtampe.Neco.Backend.Controllers {
             if (P == null) { return NotFound("Could not find Plot"); }
 
             var ReturnImage = await Task.Run(() => GraphicsEngine.GeneratePlotImage(P));
-            return File(ImageToPngByteArray(ReturnImage), "image/png");
+            byte[] Arr = ImageToPngByteArray(ReturnImage);
+            ReturnImage.Dispose();
+            P = null;
+            return File(Arr, "image/png");
         }
 
         [HttpPost("Images/plot/Preview.png")]
@@ -358,7 +369,10 @@ namespace Igtampe.Neco.Backend.Controllers {
             };
 
             var ReturnImage = await Task.Run(() => GraphicsEngine.GeneratePlotImage(P));
-            return File(ImageToPngByteArray(ReturnImage), "image/png");
+            byte[] Arr = ImageToPngByteArray(ReturnImage);
+            ReturnImage.Dispose();
+            P = null;
+            return File(Arr, "image/png");
         }
 
         private static byte[] ImageToPngByteArray(System.Drawing.Image I) {
