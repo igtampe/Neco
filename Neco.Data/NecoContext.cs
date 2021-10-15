@@ -13,13 +13,13 @@ namespace Igtampe.Neco.Data {
     public class NecoContext: DbContext {
 
         /// <summary>Indicates whether or not to force no postgres</summary>
-        private bool ForceSQLServer = false;
+        private readonly bool ForceSQLServer = false;
 
         /// <summary>Override for SQL Server URL. <b></b></summary>
-        private string SQLServerURL;
+        private readonly string SQLServerURL;
 
         /// <summary>Override for Postgres server URL. <b></b></summary>
-        private string PostgresURL;
+        private readonly string PostgresURL;
 
         /// <summary>Creates an EverythingContext</summary>
         public NecoContext() : base() { }
