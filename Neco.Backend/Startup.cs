@@ -43,10 +43,7 @@ namespace Igtampe.Neco.Backend {
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
 
             app.UseCors(MyAllowSpecificOrigins);
-
-            //if (env.IsDevelopment()) {
-                app.UseDeveloperExceptionPage();
-            //}
+            app.UseDeveloperExceptionPage();
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Neco.Backend v1"));
