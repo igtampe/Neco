@@ -55,7 +55,28 @@
         <member name="T:Igtampe.Neco.Data.NecoContext">
             <summary>Context that has every table. Used for generating database tables and for testing.</summary>
         </member>
+        <member name="F:Igtampe.Neco.Data.NecoContext.ForceSQLServer">
+            <summary>Indicates whether or not to force no postgres</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Data.NecoContext.SQLServerURL">
+            <summary>Override for SQL Server URL. <b></b></summary>
+        </member>
+        <member name="F:Igtampe.Neco.Data.NecoContext.PostgresURL">
+            <summary>Override for Postgres server URL. <b></b></summary>
+        </member>
         <member name="M:Igtampe.Neco.Data.NecoContext.#ctor">
+            <summary>Creates an EverythingContext</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor(System.String)">
+            <summary>Creates an EverythingContext</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor(System.String,System.String)">
+            <summary>Creates an EverythingContext</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor(System.Boolean)">
+            <summary>Creates an EverythingContext</summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor(System.Boolean,System.String)">
             <summary>Creates an EverythingContext</summary>
         </member>
         <member name="M:Igtampe.Neco.Data.NecoContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
