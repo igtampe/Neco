@@ -50,7 +50,7 @@ namespace Igtampe.Neco.Data {
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 
-            string JDBCURL = string.IsNullOrWhiteSpace(PostgresURL) ? System.Environment.GetEnvironmentVariable("JDBC_DATABASE_URL") : PostgresURL;
+            string JDBCURL = string.IsNullOrWhiteSpace(PostgresURL) ? System.Environment.GetEnvironmentVariable("DATABASE_URL") : PostgresURL;
 
             if (!string.IsNullOrWhiteSpace(JDBCURL) && !ForceSQLServer) {
 
