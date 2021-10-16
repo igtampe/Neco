@@ -1,4 +1,5 @@
-﻿using Igtampe.Neco.Common;
+﻿using System;
+using Igtampe.Neco.Common;
 using Igtampe.Neco.Common.Contractus;
 using Igtampe.Neco.Common.EzTax;
 using Igtampe.Neco.Common.EzTax.Subitems;
@@ -9,97 +10,80 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Igtampe.Neco.Data {
 
+    /// <summary>Mode to run the Neco Context in</summary>
+    public enum NecoContextMode { 
+        
+        /// <summary>Have the Neco Context decide automatically which database to connect to</summary>
+        AUTOMATIC=-1,
+
+        /// <summary>Run the Neco Context connecting to a SQL Server DB  (Usually to run it on a Local instance of SQL Server)</summary>
+        SQL_SERVER = 0,
+
+        /// <summary>Run the Neco Context connecting to a Postgres DB (Usually to run it on Heroku)</summary>
+        POSTGRES = 1,
+
+        /// <summary>Run the Neco Context connecting to a Database in Memory (Usually to run it for a test)</summary>
+        IN_MEMORY = 2
+        
+    }
+
     /// <summary>Context that has every table. Used for generating database tables and for testing.</summary>
     public class NecoContext: DbContext {
 
-        /// <summary>Indicates whether or not this neco context is in Postgres Mode</summary>
-        public bool PostgresMode { get; private set; } = false;
 
-        /// <summary>Indicates whether or not to force no postgres</summary>
-        private readonly bool ForceSQLServer = false;
+        /// <summary>Indicates whether or not this Neco context is in Postgres Mode</summary>
+        public NecoContextMode Mode { get; private set; } = NecoContextMode.AUTOMATIC;
 
-        /// <summary>Override for SQL Server URL. <b></b></summary>
-        private readonly string SQLServerURL;
+        /// <summary>URL to the Database this context is connected to</summary>
+        private string DBURL;
 
-        /// <summary>Override for Postgres server URL. <b></b></summary>
-        private readonly string PostgresURL;
-
-        /// <summary>Creates an EverythingContext</summary>
+        /// <summary>Creates a NecoContext</summary>
         public NecoContext() : base() { }
 
-        /// <summary>Creates an EverythingContext</summary>
-        public NecoContext(string SQLServerURL) : base() {
-            this.SQLServerURL = SQLServerURL;
+        /// <summary>Creates a NecoContext with an overridden NecoContextMode and URL</summary>
+        public NecoContext(NecoContextMode Mode) : base() {
+            this.Mode = Mode;
         }
 
-        /// <summary>Creates an EverythingContext</summary>
-        public NecoContext(string SQLServerURL, string PostgresURL) : base() {
-            this.SQLServerURL = SQLServerURL;
-            this.PostgresURL = PostgresURL;
+        /// <summary>Creates a NecoContext with an overridden NecoContextMode and URL</summary>
+        public NecoContext(NecoContextMode Mode, string URL) : base() {
+            this.Mode = Mode;
+            DBURL = URL;
         }
 
-        /// <summary>Creates an EverythingContext</summary>
-        public NecoContext(bool ForceSQLServer) : base() {
-            this.ForceSQLServer = ForceSQLServer;
-        }
-
-        /// <summary>Creates an EverythingContext</summary>
-        public NecoContext(bool ForceSQLServer, string SQLServerURL) : base() {
-            this.ForceSQLServer = ForceSQLServer;
-            this.SQLServerURL = SQLServerURL;
-        }
 
         /// <summary>Overrides onConfiguring to use <see cref="Constants.ConnectionString"/></summary>
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 
-            string PURL = string.IsNullOrWhiteSpace(PostgresURL) ? System.Environment.GetEnvironmentVariable("DATABASE_URL") : PostgresURL;
+            if (Mode == NecoContextMode.AUTOMATIC) {
 
-            if (!string.IsNullOrWhiteSpace(PURL) && !ForceSQLServer) {
+                //We must determine what mode to run this on
 
-                //OK so now we have this
-                //postgres://user:password@host:port/database
+                //Check if we have a de-esta cosa for the Database URL (IE For Postgres)
+                DBURL = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-                //Drop the beginning 
-                PURL = PURL.Replace("postgres://", "");
+                if (DBURL != null) { Mode = NecoContextMode.POSTGRES; } 
+                else {
+                    Mode = NecoContextMode.SQL_SERVER;
+                    DBURL = Constants.ConnectionString;
+                }
 
-                //Split the beginning and end into two parts at the @
-                string[] PurlSplit = PURL.Split('@');
+            }
 
-                //We should now have:
-                //user:password
-                string Username = PurlSplit[0].Split(':')[0];
-                string Password = PurlSplit[0].Split(':')[1];
-
-                //And:
-                //host:port/database
-
-                //Split this again by /
-                PurlSplit = PurlSplit[1].Split('/');
-
-                //Now we should have
-                //host:port
-                string Host = PurlSplit[0].Split(':')[0];
-                string Port = PurlSplit[0].Split(':')[1];
-
-                //Database
-                string Database = PurlSplit[1];
-
-                optionsBuilder.UseNpgsql(@$"
-                    Host={Host}; Port={Port}; 
-                    Username={Username}; Password={Password};
-                    Database={Database};
-                    Pooling=true;
-                    SSL Mode=Require;
-                    TrustServerCertificate=True;
-                ");
-
-                PostgresMode = true;
-
-            } else {
-
-                //We do not have a URL to connect to a postgres db. Fallback to the local or configured sql server database
-                optionsBuilder.UseSqlServer(string.IsNullOrWhiteSpace(SQLServerURL) ? Constants.ConnectionString : SQLServerURL);
+            switch (Mode) {
+                case NecoContextMode.POSTGRES:
+                    optionsBuilder.UseNpgsql(ConvertPostgresURLToConnectionString(DBURL));
+                    break;
+                case NecoContextMode.SQL_SERVER:
+                    optionsBuilder.UseSqlServer(DBURL);
+                    break;
+                case NecoContextMode.IN_MEMORY:
+                    //We're going to need to set this up
+                    throw new NotImplementedException("Not yet at least");
+                    break;
+                default:
+                    throw new InvalidOperationException("Invalid Neco Context Mode was used");
             }
         }
 
@@ -110,7 +94,48 @@ namespace Igtampe.Neco.Data {
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes()) {
                 entityType.SetTableName(entityType.DisplayName());
             }
-        }//Auth
+        }
+
+        public static string ConvertPostgresURLToConnectionString(string DBURL) {
+            //OK so now we have this
+            //postgres://user:password@host:port/database
+
+            //Drop the beginning 
+            string PURL = DBURL.Replace("postgres://", "");
+
+            //Split the beginning and end into two parts at the @
+            string[] PurlSplit = PURL.Split('@');
+
+            //We should now have:
+            //user:password
+            string Username = PurlSplit[0].Split(':')[0];
+            string Password = PurlSplit[0].Split(':')[1];
+
+            //And:
+            //host:port/database
+
+            //Split this again by /
+            PurlSplit = PurlSplit[1].Split('/');
+
+            //Now we should have
+            //host:port
+            string Host = PurlSplit[0].Split(':')[0];
+            string Port = PurlSplit[0].Split(':')[1];
+
+            //Database
+            string Database = PurlSplit[1];
+
+            return @$"
+                        Host={Host}; Port={Port}; 
+                        Username={Username}; Password={Password};
+                        Database={Database};
+                        Pooling=true;
+                        SSL Mode=Require;
+                        TrustServerCertificate=True;
+                    ";
+        }
+        
+        //Auth
 
         /// <summary>View of the Users table that returns <see cref="Common.UserAuth"/></summary>
         public DbSet<UserAuth> UserAuth { get; set; }
