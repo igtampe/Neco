@@ -208,5 +208,22 @@ namespace Igtampe.Neco.Common.EzTax {
             return TR;
         }
 
+
+        /// <summary>Compares this Tax Report to another object</summary>
+        /// <param name="obj"></param>
+        /// <returns>True if and only if the object is a Tax Report and the <see cref="ID"/> matches with this one's</returns>
+        public override bool Equals(object obj) {
+            if (obj is TaxReport C) { return C.ID == ID; }
+            return false;
+        }
+
+        /// <summary>Gets a hash code for this Tax Report. Delegates to <see cref="ID"/></summary>
+        /// <returns></returns>
+        public override int GetHashCode() { return ID.GetHashCode(); }
+
+        /// <summary>Creates a string representation of this Tax Report</summary>
+        /// <returns>{ID} : {PreparedDate} {GrandTotalIncome:n0} {GrandTotalTax:n0}</returns>
+        public override string ToString() { return $"{ID} : {PreparedDate} {GrandTotalIncome:n0} {GrandTotalTax:n0}"; }
+
     }
 }
