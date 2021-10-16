@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.LandViewPlotter", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.Calico", "Calico\Igtampe.Calico.csproj", "{ACB3138F-DCE8-4E38-A9FF-5EE7E352A4E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igtampe.Bombay", "Bombay\Igtampe.Bombay.csproj", "{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.Bombay", "Bombay\Igtampe.Bombay.csproj", "{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igtampe.Neco.Test", "Neco.Test\Igtampe.Neco.Test.csproj", "{E46589CF-BFFE-482F-807F-E4304422DF9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E46589CF-BFFE-482F-807F-E4304422DF9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E46589CF-BFFE-482F-807F-E4304422DF9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E46589CF-BFFE-482F-807F-E4304422DF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E46589CF-BFFE-482F-807F-E4304422DF9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
