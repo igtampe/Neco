@@ -568,6 +568,19 @@
             <param name="UserFederalJurisdiction"></param>
             <returns></returns>
         </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.TaxReport.Equals(System.Object)">
+            <summary>Compares this Tax Report to another object</summary>
+            <param name="obj"></param>
+            <returns>True if and only if the object is a Tax Report and the <see cref="P:Igtampe.Neco.Common.EzTax.TaxReport.ID"/> matches with this one's</returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.TaxReport.GetHashCode">
+            <summary>Gets a hash code for this Tax Report. Delegates to <see cref="P:Igtampe.Neco.Common.EzTax.TaxReport.ID"/></summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.Common.EzTax.TaxReport.ToString">
+            <summary>Creates a string representation of this Tax Report</summary>
+            <returns>{ID} : {PreparedDate} {GrandTotalIncome:n0} {GrandTotalTax:n0}</returns>
+        </member>
         <member name="T:Igtampe.Neco.Common.EzTax.TaxUserInfo">
             <summary>EZTax User Info, designed to be used by the frontend</summary>
         </member>
