@@ -193,8 +193,9 @@ namespace Igtampe.Neco.Common.EzTax {
                 (long, TaxBracket) Result = J.CalculateTax(User, TR.IncomeBreakdownDictionary[J]);
                 TR.PaymentBreakdownDictionary.Add(J, Result.Item1); //Split here for the report
 
-                TR.CSVReport += string.Join(',', J.Name, TR.IncomeBreakdownDictionary[J],Result.Item2.Name,Result.Item2.Rate,Result.Item1, "\n");
-                TR.Report += $"{J.Name} TAX : {Result.Item1:n0} ({Result.Item2.Name} ({Result.Item2.Rate}))\n";
+                TR.CSVReport += string.Join(',', J.Name, TR.IncomeBreakdownDictionary[J],Result.Item2!=null ? Result.Item2.Name : "NO TAX",
+                                                 Result.Item2 !=null ? Result.Item2.Rate : 0.0,Result.Item1, "\n");
+                TR.Report += $"{J.Name} TAX : {Result.Item1:n0} ({Result.Item2?.Name} ({Result.Item2?.Rate}))\n";
 
                 TR.GrandTotalTax += Result.Item1;
             }
