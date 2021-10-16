@@ -28,9 +28,9 @@ namespace Igtampe.Neco.Common.EzTax {
         public ICollection<IncomeSubitem> Subitems { 
             get {
                 List<IncomeSubitem> L = new();
-                L.AddRange(Apartments);
-                L.AddRange(Businesses);
-                L.AddRange(Hotels);
+                if (Apartments != null) { L.AddRange(Apartments); }
+                if (Businesses != null) { L.AddRange(Businesses); }
+                if (Hotels != null) { L.AddRange(Hotels); }
                 return L; //This is REALLY stretching the definition of a Property but OK.
             } 
         }
