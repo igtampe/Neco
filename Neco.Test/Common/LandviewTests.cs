@@ -1,36 +1,29 @@
 ﻿using NUnit.Framework;
 using System.Drawing;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Igtampe.Neco.Common.LandView;
 
 namespace Igtampe.Neco.Test.Common {
     public class LandviewTests {
 
-        Country TestCountry;
+        private Country TestCountry;
 
-        Road TestRoad;
+        private Road TestRoad;
 
-        Plot TestPlot;
-        int TestPlotArea = 40500;
+        private Plot TestPlot;
+        private readonly int TestPlotArea = 40500;
 
-        District Rectangle;
-        int RectangleArea = 240000;
+        private District Rectangle;
+        private readonly int RectangleArea = 240000;
 
-        District Parallelogram;
-        int ParallelogramArea = 249375;
+        private District Parallelogram;
+        private readonly int ParallelogramArea = 249375;
 
-        Plot A1;
-        int A1Area = 5625;
+        private Plot A1;
+        private readonly int A1Area = 5625;
 
-        Plot A2;
-        int A2Area = 70;
-
-
-
+        private Plot A2;
+        private readonly int A2Area = 70;
 
         [SetUp]
         public void Setup() {

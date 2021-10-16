@@ -1,9 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Igtampe.Neco.Common;
 using Igtampe.Neco.Common.Contractus;
 using Igtampe.Neco.Common.EzTax;

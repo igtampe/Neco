@@ -1,9 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Igtampe.Neco.Common;
 using Igtampe.Neco.Common.EzTax;
 using Igtampe.Neco.Common.EzTax.Subitems;
@@ -14,35 +11,35 @@ namespace Igtampe.Neco.Test.Common {
         //We're going to setup a *whole* simulation
 
         //Users
-        User Person;
-        User Corporation;
-        User TheState;
-        User TheChurch;
+        private User Person;
+        private User Corporation;
+        private User TheState;
+        private User TheChurch;
 
         //Bank accounts
-        BankAccount PersonAccount;
-        BankAccount CorporationAccount;
-        BankAccount TheStateAccount;
-        BankAccount TheChurchAccount;
+        private BankAccount PersonAccount;
+        private BankAccount CorporationAccount;
+        private BankAccount TheStateAccount;
+        private BankAccount TheChurchAccount;
 
         //Bank stuff
-        Bank TheBank;
-        BankAccountType TheBanksType;
+        private Bank TheBank;
+        private BankAccountType TheBanksType;
 
         //User Types
-        UserType Corporate;
-        UserType Personal;
-        UserType Government;
-        UserType Charity;
+        private UserType Corporate;
+        private UserType Personal;
+        private UserType Government;
+        private UserType Charity;
         
         //Simulation Items and Transactions
-        List<IncomeItem> Items;
-        List<Transaction> PersonTransactions;
-        List<Transaction> CorporateTransactions;
+        private List<IncomeItem> Items;
+        private List<Transaction> PersonTransactions;
+        private List<Transaction> CorporateTransactions;
 
         //Jurisdictions
-        TaxJurisdiction FederalJurisdiction;
-        TaxJurisdiction LocalJurisdiction;
+        private TaxJurisdiction FederalJurisdiction;
+        private TaxJurisdiction LocalJurisdiction;
 
         [SetUp]
         public void Setup() {
