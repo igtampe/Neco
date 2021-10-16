@@ -126,6 +126,7 @@ namespace Igtampe.Neco.Common.EzTax {
                 }
             }
 
+            TR.IncomeBreakdownDictionary = new();
             TR.IncomeBreakdownDictionary.Add(UserFederalJurisdiction, TR.ExtraIncome);
 
             //Finish off the reports
