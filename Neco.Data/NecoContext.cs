@@ -37,6 +37,9 @@ namespace Igtampe.Neco.Data {
         /// <summary>URL to the Database this context is connected to</summary>
         private string DBURL;
 
+        /// <summary>Flag to indicate if the in memory database has been setup</summary>
+        public static bool InMemorySetupComplete = false;
+
         /// <summary>Creates a NecoContext</summary>
         public NecoContext() : base() { }
 
@@ -79,8 +82,7 @@ namespace Igtampe.Neco.Data {
                     optionsBuilder.UseSqlServer(DBURL);
                     break;
                 case NecoContextMode.IN_MEMORY:
-                    //We're going to need to set this up
-                    throw new NotImplementedException("Not yet at least");
+                    optionsBuilder.UseInMemoryDatabase("Neco");
                     break;
                 default:
                     throw new InvalidOperationException("Invalid Neco Context Mode was used");
@@ -133,6 +135,14 @@ namespace Igtampe.Neco.Data {
                         SSL Mode=Require;
                         TrustServerCertificate=True;
                     ";
+        }
+
+        //Setup
+        public void SetupInMemoryDB() {
+            if (Mode != NecoContextMode.IN_MEMORY) { throw new InvalidOperationException("This Neco context is not running in InMemory mode"); }
+            if (InMemorySetupComplete) { return; }
+
+            //apply the migrations to the in memory database
         }
         
         //Auth
