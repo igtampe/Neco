@@ -23,7 +23,7 @@ namespace Igtampe.Neco.Data {
         POSTGRES = 1,
 
         /// <summary>Run the Neco Context connecting to a Database in SQLITE (Usually to run it for a test)</summary>
-        SQLITE = 2
+        SQLLITE = 2
         
     }
 
@@ -76,10 +76,12 @@ namespace Igtampe.Neco.Data {
                     optionsBuilder.UseNpgsql(ConvertPostgresURLToConnectionString(DBURL));
                     break;
                 case NecoContextMode.SQL_SERVER:
+                    if (string.IsNullOrWhiteSpace(DBURL)) { DBURL = Constants.ConnectionString; } //By default lets make this in memory
                     optionsBuilder.UseSqlServer(DBURL);
                     break;
-                case NecoContextMode.SQLITE:
-                    throw new NotImplementedException("Still not implemented");
+                case NecoContextMode.SQLLITE:
+                    if (string.IsNullOrWhiteSpace(DBURL)) { DBURL = "Filename=:memory:"; } //By default lets make this in memory
+                    optionsBuilder.UseSqlite(DBURL);
                     break;
                 default:
                     throw new InvalidOperationException("Invalid Neco Context Mode was used");
@@ -133,7 +135,7 @@ namespace Igtampe.Neco.Data {
                         TrustServerCertificate=True;
                     ";
         }
-        
+
         //Auth
 
         /// <summary>View of the Users table that returns <see cref="Common.UserAuth"/></summary>
