@@ -22,8 +22,8 @@ namespace Igtampe.Neco.Data {
         /// <summary>Run the Neco Context connecting to a Postgres DB (Usually to run it on Heroku)</summary>
         POSTGRES = 1,
 
-        /// <summary>Run the Neco Context connecting to a Database in Memory (Usually to run it for a test)</summary>
-        IN_MEMORY = 2
+        /// <summary>Run the Neco Context connecting to a Database in SQLITE (Usually to run it for a test)</summary>
+        SQLITE = 2
         
     }
 
@@ -36,9 +36,6 @@ namespace Igtampe.Neco.Data {
 
         /// <summary>URL to the Database this context is connected to</summary>
         private string DBURL;
-
-        /// <summary>Flag to indicate if the in memory database has been setup</summary>
-        public static bool InMemorySetupComplete = false;
 
         /// <summary>Creates a NecoContext</summary>
         public NecoContext() : base() { }
@@ -81,8 +78,8 @@ namespace Igtampe.Neco.Data {
                 case NecoContextMode.SQL_SERVER:
                     optionsBuilder.UseSqlServer(DBURL);
                     break;
-                case NecoContextMode.IN_MEMORY:
-                    optionsBuilder.UseInMemoryDatabase("Neco");
+                case NecoContextMode.SQLITE:
+                    throw new NotImplementedException("Still not implemented");
                     break;
                 default:
                     throw new InvalidOperationException("Invalid Neco Context Mode was used");
@@ -135,14 +132,6 @@ namespace Igtampe.Neco.Data {
                         SSL Mode=Require;
                         TrustServerCertificate=True;
                     ";
-        }
-
-        //Setup
-        public void SetupInMemoryDB() {
-            if (Mode != NecoContextMode.IN_MEMORY) { throw new InvalidOperationException("This Neco context is not running in InMemory mode"); }
-            if (InMemorySetupComplete) { return; }
-
-            //apply the migrations to the in memory database
         }
         
         //Auth
