@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Neco\Igtampe.Neco.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Backend\" />
-  </ItemGroup>
-
 </Project>
