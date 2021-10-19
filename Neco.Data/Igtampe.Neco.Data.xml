@@ -52,35 +52,38 @@
             <summary></summary>
             <param name="modelBuilder"></param>
         </member>
+        <member name="T:Igtampe.Neco.Data.NecoContextMode">
+            <summary>Mode to run the Neco Context in</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Data.NecoContextMode.AUTOMATIC">
+            <summary>Have the Neco Context decide automatically which database to connect to</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Data.NecoContextMode.SQL_SERVER">
+            <summary>Run the Neco Context connecting to a SQL Server DB  (Usually to run it on a Local instance of SQL Server)</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Data.NecoContextMode.POSTGRES">
+            <summary>Run the Neco Context connecting to a Postgres DB (Usually to run it on Heroku)</summary>
+        </member>
+        <member name="F:Igtampe.Neco.Data.NecoContextMode.SQLLITE">
+            <summary>Run the Neco Context connecting to a Database in SQLITE (Usually to run it for a test)</summary>
+        </member>
         <member name="T:Igtampe.Neco.Data.NecoContext">
             <summary>Context that has every table. Used for generating database tables and for testing.</summary>
         </member>
-        <member name="P:Igtampe.Neco.Data.NecoContext.PostgresMode">
-            <summary>Indicates whether or not this neco context is in Postgres Mode</summary>
+        <member name="P:Igtampe.Neco.Data.NecoContext.Mode">
+            <summary>Indicates whether or not this Neco context is in Postgres Mode</summary>
         </member>
-        <member name="F:Igtampe.Neco.Data.NecoContext.ForceSQLServer">
-            <summary>Indicates whether or not to force no postgres</summary>
-        </member>
-        <member name="F:Igtampe.Neco.Data.NecoContext.SQLServerURL">
-            <summary>Override for SQL Server URL. <b></b></summary>
-        </member>
-        <member name="F:Igtampe.Neco.Data.NecoContext.PostgresURL">
-            <summary>Override for Postgres server URL. <b></b></summary>
+        <member name="F:Igtampe.Neco.Data.NecoContext.DBURL">
+            <summary>URL to the Database this context is connected to</summary>
         </member>
         <member name="M:Igtampe.Neco.Data.NecoContext.#ctor">
-            <summary>Creates an EverythingContext</summary>
+            <summary>Creates a NecoContext</summary>
         </member>
-        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor(System.String)">
-            <summary>Creates an EverythingContext</summary>
+        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor(Igtampe.Neco.Data.NecoContextMode)">
+            <summary>Creates a NecoContext with an overridden NecoContextMode and URL</summary>
         </member>
-        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor(System.String,System.String)">
-            <summary>Creates an EverythingContext</summary>
-        </member>
-        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor(System.Boolean)">
-            <summary>Creates an EverythingContext</summary>
-        </member>
-        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor(System.Boolean,System.String)">
-            <summary>Creates an EverythingContext</summary>
+        <member name="M:Igtampe.Neco.Data.NecoContext.#ctor(Igtampe.Neco.Data.NecoContextMode,System.String)">
+            <summary>Creates a NecoContext with an overridden NecoContextMode and URL</summary>
         </member>
         <member name="M:Igtampe.Neco.Data.NecoContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
             <summary>Overrides onConfiguring to use <see cref="P:Igtampe.Neco.Data.Constants.ConnectionString"/></summary>
