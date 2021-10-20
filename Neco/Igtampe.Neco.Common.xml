@@ -1212,7 +1212,7 @@
             <summary>Pin for this new user</summary>
         </member>
         <member name="P:Igtampe.Neco.Common.Requests.NewUserRequest.Type">
-            <summary>Type of user to create</summary>
+            <summary>ID of type of user to create</summary>
         </member>
         <member name="T:Igtampe.Neco.Common.Requests.PasswordChangeRequest">
             <summary>Request to change a password</summary>

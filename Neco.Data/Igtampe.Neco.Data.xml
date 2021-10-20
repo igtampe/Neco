@@ -52,6 +52,21 @@
             <summary></summary>
             <param name="modelBuilder"></param>
         </member>
+        <member name="T:Igtampe.Neco.Data.Migrations.AddUserOpenableUserType">
+            <summary></summary>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.AddUserOpenableUserType.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary></summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.AddUserOpenableUserType.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary></summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.Migrations.AddUserOpenableUserType.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary></summary>
+            <param name="modelBuilder"></param>
+        </member>
         <member name="T:Igtampe.Neco.Data.NecoContextMode">
             <summary>Mode to run the Neco Context in</summary>
         </member>
@@ -92,6 +107,11 @@
         <member name="M:Igtampe.Neco.Data.NecoContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>Overrides on model creation to remove the plural convention</summary>
             <param name="modelBuilder"></param>
+        </member>
+        <member name="M:Igtampe.Neco.Data.NecoContext.ConvertPostgresURLToConnectionString(System.String)">
+            <summary>Converts a URI (From Heroku usually) to the expected connection string of npgsql</summary>
+            <param name="DBURL"></param>
+            <returns></returns>
         </member>
         <member name="P:Igtampe.Neco.Data.NecoContext.UserAuth">
             <summary>View of the Users table that returns <see cref="T:Igtampe.Neco.Common.UserAuth"/></summary>
