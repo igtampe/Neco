@@ -1503,6 +1503,9 @@
         <member name="P:Igtampe.Neco.Common.UserType.Taxation">
             <summary>Identifies how to handle taxes to and from this account</summary>
         </member>
+        <member name="P:Igtampe.Neco.Common.UserType.UserOpenable">
+            <summary>Identifies if this type of account should be user openable (IE: IF a user should be able to open this type of account directly)</summary>
+        </member>
         <member name="M:Igtampe.Neco.Common.UserType.Equals(System.Object)">
             <summary>Check if an object is equal to this user type</summary>
             <param name="obj"></param>
