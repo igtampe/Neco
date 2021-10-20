@@ -97,6 +97,9 @@ namespace Igtampe.Neco.Data {
             }
         }
 
+        /// <summary>Converts a URI (From Heroku usually) to the expected connection string of npgsql</summary>
+        /// <param name="DBURL"></param>
+        /// <returns></returns>
         public static string ConvertPostgresURLToConnectionString(string DBURL) {
             //OK so now we have this
             //postgres://user:password@host:port/database
