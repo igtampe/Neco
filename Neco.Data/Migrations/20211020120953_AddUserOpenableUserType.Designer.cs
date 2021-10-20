@@ -4,14 +4,18 @@ using Igtampe.Neco.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Igtampe.Neco.Data.Migrations
 {
     [DbContext(typeof(NecoContext))]
-    partial class NecoContextModelSnapshot : ModelSnapshot
+    [Migration("20211020120953_AddUserOpenableUserType")]
+    partial class AddUserOpenableUserType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <summary></summary>
+        /// <param name="modelBuilder"></param>
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
