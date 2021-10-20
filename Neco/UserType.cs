@@ -38,6 +38,9 @@ namespace Igtampe.Neco.Common {
         /// <summary>Identifies how to handle taxes to and from this account</summary>
         public TaxationType Taxation { get; set; }
 
+        /// <summary>Identifies if this type of account should be user openable (IE: IF a user should be able to open this type of account directly)</summary>
+        public bool UserOpenable { get; set; }
+
         /// <summary>Check if an object is equal to this user type</summary>
         /// <param name="obj"></param>
         /// <returns>True if and only if the object is a UserType, and if its ID matches with this one's</returns>
