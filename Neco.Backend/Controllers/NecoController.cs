@@ -58,10 +58,14 @@ namespace Igtampe.Neco.Backend.Controllers {
                 while (ID.Length < 5) { ID += Randomizer.Next(10); }
             } while (UserExists(ID));
 
+            UserType UT = await NecoDB.UserType.FindAsync(NewUser.Type);
+            if (UT == null) { return NotFound("Given Usertype was not found"); }
+            if (!UT.UserOpenable) { return BadRequest("Given UserType is not user openable."); }
+
             User U = new() {
                 ID = ID,
                 Name = NewUser.Name,
-                Type = NewUser.Type,
+                Type = UT,
             };
 
             UserAuth UA = new() {
