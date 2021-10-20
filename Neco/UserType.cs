@@ -9,19 +9,19 @@ namespace Igtampe.Neco.Common {
         /// <summary>Transactions are taxable to and from this account<br/>
         /// Users of this type should be taxed by EzTax<br/>
         /// This taxation type should be used by general users</summary>
-        Taxable,
+        Taxable = 0,
 
         /// <summary>Transactions are NOT taxable if this account is the destination<br/><br/>
         /// IE: Money sent to this account is NOT COUNTED TOWARDS INCOME of the sender.<br/><br/>
         /// Users of this type should NOT be taxed by EzTax<br/>
         /// This taxation type should be used by Charities</summary>
-        NonTaxableDestination,
+        NonTaxableDestination = 1,
 
         /// <summary>Transactions from this account are NOT taxable<br/>
         /// IE: Money received from this account is not counted towards income of the recipient<br/>
         /// Users of this type should NOT be taxed by EzTax<br/>
         /// This taxation type should be used by Governments</summary>
-        NontaxableOrigin
+        NontaxableOrigin = 2
     }
 
     /// <summary>Type of user in NECO</summary>
