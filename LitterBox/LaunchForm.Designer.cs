@@ -69,6 +69,12 @@ namespace Igtampe.LitterBox {
             this.BankIDColumnHeader = new System.Windows.Forms.ColumnHeader();
             this.BankNameColumnHeader = new System.Windows.Forms.ColumnHeader();
             this.JurisdictionNameColumnHeader = new System.Windows.Forms.ColumnHeader();
+            this.UserDetailsGroupBox = new System.Windows.Forms.GroupBox();
+            this.BankDetailsGroupBox = new System.Windows.Forms.GroupBox();
+            this.JurisdictionDetailsGroupBox = new System.Windows.Forms.GroupBox();
+            this.UserDetailsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.BankDetailsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.JurisdictionDetailsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.MainMenuStrip.SuspendLayout();
             this.MainPannel.SuspendLayout();
             this.MainTabController.SuspendLayout();
@@ -86,6 +92,9 @@ namespace Igtampe.LitterBox {
             ((System.ComponentModel.ISupportInitialize)(this.WarnIconPictureBox)).BeginInit();
             this.CleanupButtonsTableLayout.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.UserDetailsGroupBox.SuspendLayout();
+            this.BankDetailsGroupBox.SuspendLayout();
+            this.JurisdictionDetailsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainMenuStrip
@@ -196,11 +205,11 @@ namespace Igtampe.LitterBox {
             this.UsersTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
             this.UsersTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.UsersTableLayoutPanel.Controls.Add(this.UsersGroupBox, 0, 0);
+            this.UsersTableLayoutPanel.Controls.Add(this.UserDetailsGroupBox, 1, 0);
             this.UsersTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UsersTableLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.UsersTableLayoutPanel.Name = "UsersTableLayoutPanel";
-            this.UsersTableLayoutPanel.RowCount = 2;
-            this.UsersTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.UsersTableLayoutPanel.RowCount = 1;
             this.UsersTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.UsersTableLayoutPanel.Size = new System.Drawing.Size(1183, 427);
             this.UsersTableLayoutPanel.TabIndex = 0;
@@ -211,7 +220,6 @@ namespace Igtampe.LitterBox {
             this.UsersGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UsersGroupBox.Location = new System.Drawing.Point(3, 3);
             this.UsersGroupBox.Name = "UsersGroupBox";
-            this.UsersTableLayoutPanel.SetRowSpan(this.UsersGroupBox, 2);
             this.UsersGroupBox.Size = new System.Drawing.Size(394, 421);
             this.UsersGroupBox.TabIndex = 0;
             this.UsersGroupBox.TabStop = false;
@@ -247,12 +255,12 @@ namespace Igtampe.LitterBox {
             this.BankTableLayoutPanel.ColumnCount = 2;
             this.BankTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
             this.BankTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.BankTableLayoutPanel.Controls.Add(this.BankDetailsGroupBox, 0, 0);
             this.BankTableLayoutPanel.Controls.Add(this.BankGroupBox, 0, 0);
             this.BankTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BankTableLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.BankTableLayoutPanel.Name = "BankTableLayoutPanel";
-            this.BankTableLayoutPanel.RowCount = 2;
-            this.BankTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.BankTableLayoutPanel.RowCount = 1;
             this.BankTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.BankTableLayoutPanel.Size = new System.Drawing.Size(1183, 427);
             this.BankTableLayoutPanel.TabIndex = 0;
@@ -263,7 +271,6 @@ namespace Igtampe.LitterBox {
             this.BankGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BankGroupBox.Location = new System.Drawing.Point(3, 3);
             this.BankGroupBox.Name = "BankGroupBox";
-            this.BankTableLayoutPanel.SetRowSpan(this.BankGroupBox, 2);
             this.BankGroupBox.Size = new System.Drawing.Size(394, 421);
             this.BankGroupBox.TabIndex = 1;
             this.BankGroupBox.TabStop = false;
@@ -299,12 +306,12 @@ namespace Igtampe.LitterBox {
             this.JurisdictionTableLayoutPanel.ColumnCount = 2;
             this.JurisdictionTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
             this.JurisdictionTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.JurisdictionTableLayoutPanel.Controls.Add(this.JurisdictionDetailsGroupBox, 0, 0);
             this.JurisdictionTableLayoutPanel.Controls.Add(this.JurisdictionsGroupBox, 0, 0);
             this.JurisdictionTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JurisdictionTableLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.JurisdictionTableLayoutPanel.Name = "JurisdictionTableLayoutPanel";
-            this.JurisdictionTableLayoutPanel.RowCount = 2;
-            this.JurisdictionTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.JurisdictionTableLayoutPanel.RowCount = 1;
             this.JurisdictionTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.JurisdictionTableLayoutPanel.Size = new System.Drawing.Size(1183, 427);
             this.JurisdictionTableLayoutPanel.TabIndex = 0;
@@ -315,7 +322,6 @@ namespace Igtampe.LitterBox {
             this.JurisdictionsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JurisdictionsGroupBox.Location = new System.Drawing.Point(3, 3);
             this.JurisdictionsGroupBox.Name = "JurisdictionsGroupBox";
-            this.JurisdictionTableLayoutPanel.SetRowSpan(this.JurisdictionsGroupBox, 2);
             this.JurisdictionsGroupBox.Size = new System.Drawing.Size(394, 421);
             this.JurisdictionsGroupBox.TabIndex = 1;
             this.JurisdictionsGroupBox.TabStop = false;
@@ -539,6 +545,81 @@ namespace Igtampe.LitterBox {
             this.JurisdictionNameColumnHeader.Text = "Name";
             this.JurisdictionNameColumnHeader.Width = 320;
             // 
+            // UserDetailsGroupBox
+            // 
+            this.UserDetailsGroupBox.Controls.Add(this.UserDetailsTableLayoutPanel);
+            this.UserDetailsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UserDetailsGroupBox.Location = new System.Drawing.Point(403, 3);
+            this.UserDetailsGroupBox.Name = "UserDetailsGroupBox";
+            this.UserDetailsGroupBox.Size = new System.Drawing.Size(777, 421);
+            this.UserDetailsGroupBox.TabIndex = 1;
+            this.UserDetailsGroupBox.TabStop = false;
+            this.UserDetailsGroupBox.Text = "Details";
+            // 
+            // BankDetailsGroupBox
+            // 
+            this.BankDetailsGroupBox.Controls.Add(this.BankDetailsTableLayoutPanel);
+            this.BankDetailsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BankDetailsGroupBox.Location = new System.Drawing.Point(403, 3);
+            this.BankDetailsGroupBox.Name = "BankDetailsGroupBox";
+            this.BankDetailsGroupBox.Size = new System.Drawing.Size(777, 421);
+            this.BankDetailsGroupBox.TabIndex = 2;
+            this.BankDetailsGroupBox.TabStop = false;
+            this.BankDetailsGroupBox.Text = "Details";
+            // 
+            // JurisdictionDetailsGroupBox
+            // 
+            this.JurisdictionDetailsGroupBox.Controls.Add(this.JurisdictionDetailsTableLayoutPanel);
+            this.JurisdictionDetailsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.JurisdictionDetailsGroupBox.Location = new System.Drawing.Point(403, 3);
+            this.JurisdictionDetailsGroupBox.Name = "JurisdictionDetailsGroupBox";
+            this.JurisdictionDetailsGroupBox.Size = new System.Drawing.Size(777, 421);
+            this.JurisdictionDetailsGroupBox.TabIndex = 2;
+            this.JurisdictionDetailsGroupBox.TabStop = false;
+            this.JurisdictionDetailsGroupBox.Text = "Details";
+            // 
+            // UserDetailsTableLayoutPanel
+            // 
+            this.UserDetailsTableLayoutPanel.ColumnCount = 2;
+            this.UserDetailsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.UserDetailsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.UserDetailsTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UserDetailsTableLayoutPanel.Location = new System.Drawing.Point(3, 19);
+            this.UserDetailsTableLayoutPanel.Name = "UserDetailsTableLayoutPanel";
+            this.UserDetailsTableLayoutPanel.RowCount = 2;
+            this.UserDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.UserDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.UserDetailsTableLayoutPanel.Size = new System.Drawing.Size(771, 399);
+            this.UserDetailsTableLayoutPanel.TabIndex = 0;
+            // 
+            // BankDetailsTableLayoutPanel
+            // 
+            this.BankDetailsTableLayoutPanel.ColumnCount = 2;
+            this.BankDetailsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.BankDetailsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.BankDetailsTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BankDetailsTableLayoutPanel.Location = new System.Drawing.Point(3, 19);
+            this.BankDetailsTableLayoutPanel.Name = "BankDetailsTableLayoutPanel";
+            this.BankDetailsTableLayoutPanel.RowCount = 2;
+            this.BankDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.BankDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.BankDetailsTableLayoutPanel.Size = new System.Drawing.Size(771, 399);
+            this.BankDetailsTableLayoutPanel.TabIndex = 1;
+            // 
+            // JurisdictionDetailsTableLayoutPanel
+            // 
+            this.JurisdictionDetailsTableLayoutPanel.ColumnCount = 2;
+            this.JurisdictionDetailsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.JurisdictionDetailsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.JurisdictionDetailsTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.JurisdictionDetailsTableLayoutPanel.Location = new System.Drawing.Point(3, 19);
+            this.JurisdictionDetailsTableLayoutPanel.Name = "JurisdictionDetailsTableLayoutPanel";
+            this.JurisdictionDetailsTableLayoutPanel.RowCount = 2;
+            this.JurisdictionDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.JurisdictionDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.JurisdictionDetailsTableLayoutPanel.Size = new System.Drawing.Size(771, 399);
+            this.JurisdictionDetailsTableLayoutPanel.TabIndex = 1;
+            // 
             // LaunchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -569,6 +650,9 @@ namespace Igtampe.LitterBox {
             this.CleanupButtonsTableLayout.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.UserDetailsGroupBox.ResumeLayout(false);
+            this.BankDetailsGroupBox.ResumeLayout(false);
+            this.JurisdictionDetailsGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -619,5 +703,11 @@ namespace Igtampe.LitterBox {
         private System.Windows.Forms.ColumnHeader BankIDColumnHeader;
         private System.Windows.Forms.ColumnHeader BankNameColumnHeader;
         private System.Windows.Forms.ColumnHeader JurisdictionNameColumnHeader;
+        private System.Windows.Forms.GroupBox UserDetailsGroupBox;
+        private System.Windows.Forms.GroupBox BankDetailsGroupBox;
+        private System.Windows.Forms.GroupBox JurisdictionDetailsGroupBox;
+        private System.Windows.Forms.TableLayoutPanel UserDetailsTableLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel BankDetailsTableLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel JurisdictionDetailsTableLayoutPanel;
     }
 }
