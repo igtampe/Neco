@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.Calico", "Calico\Ig
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.Bombay", "Bombay\Igtampe.Bombay.csproj", "{A44A3F1B-DD45-46FE-97DF-4A6D5DC3BA90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igtampe.Neco.Test", "Neco.Test\Igtampe.Neco.Test.csproj", "{E46589CF-BFFE-482F-807F-E4304422DF9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igtampe.Neco.Test", "Neco.Test\Igtampe.Neco.Test.csproj", "{E46589CF-BFFE-482F-807F-E4304422DF9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igtampe.LitterBox", "LitterBox\Igtampe.LitterBox.csproj", "{18389E63-642F-4A7F-800E-9D2194635A3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{E46589CF-BFFE-482F-807F-E4304422DF9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E46589CF-BFFE-482F-807F-E4304422DF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E46589CF-BFFE-482F-807F-E4304422DF9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18389E63-642F-4A7F-800E-9D2194635A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18389E63-642F-4A7F-800E-9D2194635A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18389E63-642F-4A7F-800E-9D2194635A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18389E63-642F-4A7F-800E-9D2194635A3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
