@@ -59,6 +59,7 @@ namespace Igtampe.LitterBox {
             this.UsersListView = new System.Windows.Forms.ListView();
             this.BanksListView = new System.Windows.Forms.ListView();
             this.JurisdictionsListView = new System.Windows.Forms.ListView();
+            this.StatusProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.MainMenuStrip.SuspendLayout();
             this.MainPannel.SuspendLayout();
             this.MainTabController.SuspendLayout();
@@ -370,6 +371,7 @@ namespace Igtampe.LitterBox {
             this.CleanupCertifiedItemsButton.TabIndex = 3;
             this.CleanupCertifiedItemsButton.Text = "Delete Certified Items over 6 months old";
             this.CleanupCertifiedItemsButton.UseVisualStyleBackColor = true;
+            this.CleanupCertifiedItemsButton.Click += new System.EventHandler(this.CleanupCertifiedItemsButton_Click);
             // 
             // CleanupTaxReportsButton
             // 
@@ -381,6 +383,7 @@ namespace Igtampe.LitterBox {
             this.CleanupTaxReportsButton.TabIndex = 2;
             this.CleanupTaxReportsButton.Text = "Delete Tax Reports over 6 months old";
             this.CleanupTaxReportsButton.UseVisualStyleBackColor = true;
+            this.CleanupTaxReportsButton.Click += new System.EventHandler(this.CleanupTaxReportsButton_Click);
             // 
             // CleanupNotificationsButton
             // 
@@ -392,6 +395,7 @@ namespace Igtampe.LitterBox {
             this.CleanupNotificationsButton.TabIndex = 1;
             this.CleanupNotificationsButton.Text = "Delete Notifications over 1 month old";
             this.CleanupNotificationsButton.UseVisualStyleBackColor = true;
+            this.CleanupNotificationsButton.Click += new System.EventHandler(this.CleanupNotificationsButton_Click);
             // 
             // CleanupTransactionsButton
             // 
@@ -403,10 +407,12 @@ namespace Igtampe.LitterBox {
             this.CleanupTransactionsButton.TabIndex = 0;
             this.CleanupTransactionsButton.Text = "Delete Transactions over 3 months old";
             this.CleanupTransactionsButton.UseVisualStyleBackColor = true;
+            this.CleanupTransactionsButton.Click += new System.EventHandler(this.CleanupTransactionsButton_Click);
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusProgressBar,
             this.StatusLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 483);
             this.statusStrip1.Name = "statusStrip1";
@@ -458,6 +464,11 @@ namespace Igtampe.LitterBox {
             this.JurisdictionsListView.TabIndex = 1;
             this.JurisdictionsListView.UseCompatibleStateImageBehavior = false;
             this.JurisdictionsListView.View = System.Windows.Forms.View.Details;
+            // 
+            // StatusProgressBar
+            // 
+            this.StatusProgressBar.Name = "StatusProgressBar";
+            this.StatusProgressBar.Size = new System.Drawing.Size(100, 16);
             // 
             // LaunchForm
             // 
@@ -529,5 +540,6 @@ namespace Igtampe.LitterBox {
         private System.Windows.Forms.ListView UsersListView;
         private System.Windows.Forms.ListView BanksListView;
         private System.Windows.Forms.ListView JurisdictionsListView;
+        private System.Windows.Forms.ToolStripProgressBar StatusProgressBar;
     }
 }
