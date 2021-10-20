@@ -15,8 +15,8 @@ namespace Igtampe.Neco.Common.Requests {
         [MinLength(4)]
         public string Pin { get; set; }
 
-        /// <summary>Type of user to create</summary>
-        public UserType Type { get; set; }
+        /// <summary>ID of type of user to create</summary>
+        public System.Guid Type { get; set; }
 
     }
 }
