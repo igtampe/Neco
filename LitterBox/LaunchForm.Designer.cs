@@ -28,6 +28,7 @@ namespace Igtampe.LitterBox {
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectDisconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,12 +38,15 @@ namespace Igtampe.LitterBox {
             this.UserManagementPage = new System.Windows.Forms.TabPage();
             this.UsersTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.UsersGroupBox = new System.Windows.Forms.GroupBox();
+            this.UsersListView = new System.Windows.Forms.ListView();
             this.BankManagementPage = new System.Windows.Forms.TabPage();
             this.BankTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.BankGroupBox = new System.Windows.Forms.GroupBox();
+            this.BanksListView = new System.Windows.Forms.ListView();
             this.TaxJurisdictionManagementPage = new System.Windows.Forms.TabPage();
             this.JurisdictionTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.JurisdictionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.JurisdictionsListView = new System.Windows.Forms.ListView();
             this.CleanupTabPage = new System.Windows.Forms.TabPage();
             this.CleanupTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.WarnIconPictureBox = new System.Windows.Forms.PictureBox();
@@ -54,12 +58,17 @@ namespace Igtampe.LitterBox {
             this.CleanupNotificationsButton = new System.Windows.Forms.Button();
             this.CleanupTransactionsButton = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.RefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.UsersListView = new System.Windows.Forms.ListView();
-            this.BanksListView = new System.Windows.Forms.ListView();
-            this.JurisdictionsListView = new System.Windows.Forms.ListView();
             this.StatusProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.UserIDColumnHeader = new System.Windows.Forms.ColumnHeader();
+            this.UsernameColumnHeader = new System.Windows.Forms.ColumnHeader();
+            this.GenerateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateIncomeReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateBankReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateJurisdictionReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BankIDColumnHeader = new System.Windows.Forms.ColumnHeader();
+            this.BankNameColumnHeader = new System.Windows.Forms.ColumnHeader();
+            this.JurisdictionNameColumnHeader = new System.Windows.Forms.ColumnHeader();
             this.MainMenuStrip.SuspendLayout();
             this.MainPannel.SuspendLayout();
             this.MainTabController.SuspendLayout();
@@ -83,6 +92,7 @@ namespace Igtampe.LitterBox {
             // 
             this.MainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.GenerateToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MainMenuStrip.Name = "MainMenuStrip";
@@ -104,19 +114,25 @@ namespace Igtampe.LitterBox {
             // connectDisconnectToolStripMenuItem
             // 
             this.connectDisconnectToolStripMenuItem.Name = "connectDisconnectToolStripMenuItem";
-            this.connectDisconnectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.connectDisconnectToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.connectDisconnectToolStripMenuItem.Text = "&Connect";
             this.connectDisconnectToolStripMenuItem.Click += new System.EventHandler(this.ConnectDisconnectToolStripMenuItem_Click);
+            // 
+            // RefreshToolStripMenuItem
+            // 
+            this.RefreshToolStripMenuItem.Name = "RefreshToolStripMenuItem";
+            this.RefreshToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.RefreshToolStripMenuItem.Text = "&Refresh";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(116, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -131,7 +147,7 @@ namespace Igtampe.LitterBox {
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             // 
             // MainPannel
@@ -201,6 +217,20 @@ namespace Igtampe.LitterBox {
             this.UsersGroupBox.TabStop = false;
             this.UsersGroupBox.Text = "Users";
             // 
+            // UsersListView
+            // 
+            this.UsersListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.UserIDColumnHeader,
+            this.UsernameColumnHeader});
+            this.UsersListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UsersListView.HideSelection = false;
+            this.UsersListView.Location = new System.Drawing.Point(3, 19);
+            this.UsersListView.Name = "UsersListView";
+            this.UsersListView.Size = new System.Drawing.Size(388, 399);
+            this.UsersListView.TabIndex = 0;
+            this.UsersListView.UseCompatibleStateImageBehavior = false;
+            this.UsersListView.View = System.Windows.Forms.View.Details;
+            // 
             // BankManagementPage
             // 
             this.BankManagementPage.Controls.Add(this.BankTableLayoutPanel);
@@ -239,6 +269,20 @@ namespace Igtampe.LitterBox {
             this.BankGroupBox.TabStop = false;
             this.BankGroupBox.Text = "Banks";
             // 
+            // BanksListView
+            // 
+            this.BanksListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.BankIDColumnHeader,
+            this.BankNameColumnHeader});
+            this.BanksListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BanksListView.HideSelection = false;
+            this.BanksListView.Location = new System.Drawing.Point(3, 19);
+            this.BanksListView.Name = "BanksListView";
+            this.BanksListView.Size = new System.Drawing.Size(388, 399);
+            this.BanksListView.TabIndex = 1;
+            this.BanksListView.UseCompatibleStateImageBehavior = false;
+            this.BanksListView.View = System.Windows.Forms.View.Details;
+            // 
             // TaxJurisdictionManagementPage
             // 
             this.TaxJurisdictionManagementPage.Controls.Add(this.JurisdictionTableLayoutPanel);
@@ -276,6 +320,19 @@ namespace Igtampe.LitterBox {
             this.JurisdictionsGroupBox.TabIndex = 1;
             this.JurisdictionsGroupBox.TabStop = false;
             this.JurisdictionsGroupBox.Text = "Jurisdictions";
+            // 
+            // JurisdictionsListView
+            // 
+            this.JurisdictionsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.JurisdictionNameColumnHeader});
+            this.JurisdictionsListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.JurisdictionsListView.HideSelection = false;
+            this.JurisdictionsListView.Location = new System.Drawing.Point(3, 19);
+            this.JurisdictionsListView.Name = "JurisdictionsListView";
+            this.JurisdictionsListView.Size = new System.Drawing.Size(388, 399);
+            this.JurisdictionsListView.TabIndex = 1;
+            this.JurisdictionsListView.UseCompatibleStateImageBehavior = false;
+            this.JurisdictionsListView.View = System.Windows.Forms.View.Details;
             // 
             // CleanupTabPage
             // 
@@ -420,55 +477,67 @@ namespace Igtampe.LitterBox {
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // StatusProgressBar
+            // 
+            this.StatusProgressBar.Name = "StatusProgressBar";
+            this.StatusProgressBar.Size = new System.Drawing.Size(100, 16);
+            // 
             // StatusLabel
             // 
             this.StatusLabel.Name = "StatusLabel";
             this.StatusLabel.Size = new System.Drawing.Size(79, 17);
             this.StatusLabel.Text = "Disconnected";
             // 
-            // RefreshToolStripMenuItem
+            // UserIDColumnHeader
             // 
-            this.RefreshToolStripMenuItem.Name = "RefreshToolStripMenuItem";
-            this.RefreshToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.RefreshToolStripMenuItem.Text = "&Refresh";
+            this.UserIDColumnHeader.Text = "ID";
             // 
-            // UsersListView
+            // UsernameColumnHeader
             // 
-            this.UsersListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.UsersListView.HideSelection = false;
-            this.UsersListView.Location = new System.Drawing.Point(3, 19);
-            this.UsersListView.Name = "UsersListView";
-            this.UsersListView.Size = new System.Drawing.Size(388, 399);
-            this.UsersListView.TabIndex = 0;
-            this.UsersListView.UseCompatibleStateImageBehavior = false;
-            this.UsersListView.View = System.Windows.Forms.View.Details;
+            this.UsernameColumnHeader.Text = "Name";
+            this.UsernameColumnHeader.Width = 250;
             // 
-            // BanksListView
+            // GenerateToolStripMenuItem
             // 
-            this.BanksListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BanksListView.HideSelection = false;
-            this.BanksListView.Location = new System.Drawing.Point(3, 19);
-            this.BanksListView.Name = "BanksListView";
-            this.BanksListView.Size = new System.Drawing.Size(388, 399);
-            this.BanksListView.TabIndex = 1;
-            this.BanksListView.UseCompatibleStateImageBehavior = false;
-            this.BanksListView.View = System.Windows.Forms.View.Details;
+            this.GenerateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.generateIncomeReportToolStripMenuItem,
+            this.generateBankReportToolStripMenuItem,
+            this.generateJurisdictionReportToolStripMenuItem});
+            this.GenerateToolStripMenuItem.Name = "GenerateToolStripMenuItem";
+            this.GenerateToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.GenerateToolStripMenuItem.Text = "Generate";
             // 
-            // JurisdictionsListView
+            // generateIncomeReportToolStripMenuItem
             // 
-            this.JurisdictionsListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JurisdictionsListView.HideSelection = false;
-            this.JurisdictionsListView.Location = new System.Drawing.Point(3, 19);
-            this.JurisdictionsListView.Name = "JurisdictionsListView";
-            this.JurisdictionsListView.Size = new System.Drawing.Size(388, 399);
-            this.JurisdictionsListView.TabIndex = 1;
-            this.JurisdictionsListView.UseCompatibleStateImageBehavior = false;
-            this.JurisdictionsListView.View = System.Windows.Forms.View.Details;
+            this.generateIncomeReportToolStripMenuItem.Name = "generateIncomeReportToolStripMenuItem";
+            this.generateIncomeReportToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.generateIncomeReportToolStripMenuItem.Text = "Generate &Income Report";
             // 
-            // StatusProgressBar
+            // generateBankReportToolStripMenuItem
             // 
-            this.StatusProgressBar.Name = "StatusProgressBar";
-            this.StatusProgressBar.Size = new System.Drawing.Size(100, 16);
+            this.generateBankReportToolStripMenuItem.Name = "generateBankReportToolStripMenuItem";
+            this.generateBankReportToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.generateBankReportToolStripMenuItem.Text = "Generate &Bank Report";
+            // 
+            // generateJurisdictionReportToolStripMenuItem
+            // 
+            this.generateJurisdictionReportToolStripMenuItem.Name = "generateJurisdictionReportToolStripMenuItem";
+            this.generateJurisdictionReportToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.generateJurisdictionReportToolStripMenuItem.Text = "Generate &Jurisdiction Report";
+            // 
+            // BankIDColumnHeader
+            // 
+            this.BankIDColumnHeader.Text = "ID";
+            // 
+            // BankNameColumnHeader
+            // 
+            this.BankNameColumnHeader.Text = "Name";
+            this.BankNameColumnHeader.Width = 250;
+            // 
+            // JurisdictionNameColumnHeader
+            // 
+            this.JurisdictionNameColumnHeader.Text = "Name";
+            this.JurisdictionNameColumnHeader.Width = 320;
             // 
             // LaunchForm
             // 
@@ -541,5 +610,14 @@ namespace Igtampe.LitterBox {
         private System.Windows.Forms.ListView BanksListView;
         private System.Windows.Forms.ListView JurisdictionsListView;
         private System.Windows.Forms.ToolStripProgressBar StatusProgressBar;
+        private System.Windows.Forms.ToolStripMenuItem GenerateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generateIncomeReportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generateBankReportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generateJurisdictionReportToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader UserIDColumnHeader;
+        private System.Windows.Forms.ColumnHeader UsernameColumnHeader;
+        private System.Windows.Forms.ColumnHeader BankIDColumnHeader;
+        private System.Windows.Forms.ColumnHeader BankNameColumnHeader;
+        private System.Windows.Forms.ColumnHeader JurisdictionNameColumnHeader;
     }
 }
