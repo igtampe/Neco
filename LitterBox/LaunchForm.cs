@@ -25,9 +25,9 @@ namespace Igtampe.LitterBox {
             Shown += LaunchForm_Shown;
         }
 
-        private void LaunchForm_Shown(object sender, EventArgs e) {connectDisconnectToolStripMenuItem_Click(sender, e); }
+        private void LaunchForm_Shown(object sender, EventArgs e) {ConnectDisconnectToolStripMenuItem_Click(sender, e); }
 
-        private void connectDisconnectToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void ConnectDisconnectToolStripMenuItem_Click(object sender, EventArgs e) {
             if (NecoDB != null) {
                 NecoDB.Dispose();
                 connectDisconnectToolStripMenuItem.Text = "&Connect";
@@ -49,7 +49,7 @@ namespace Igtampe.LitterBox {
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e) { Close(); }
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e) { Close(); }
         private void LaunchForm_FormClosing(object sender, FormClosingEventArgs e) { NecoDB?.Dispose(); } //Just in case
 
         #region Cleanup

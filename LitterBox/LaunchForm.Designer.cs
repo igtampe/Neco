@@ -106,7 +106,7 @@ namespace Igtampe.LitterBox {
             this.connectDisconnectToolStripMenuItem.Name = "connectDisconnectToolStripMenuItem";
             this.connectDisconnectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.connectDisconnectToolStripMenuItem.Text = "&Connect";
-            this.connectDisconnectToolStripMenuItem.Click += new System.EventHandler(this.connectDisconnectToolStripMenuItem_Click);
+            this.connectDisconnectToolStripMenuItem.Click += new System.EventHandler(this.ConnectDisconnectToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -118,7 +118,7 @@ namespace Igtampe.LitterBox {
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
