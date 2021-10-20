@@ -32,6 +32,7 @@ namespace Igtampe.LitterBox {
                 connectDisconnectToolStripMenuItem.Text = "&Connect";
                 NecoDB = null;
                 MainPannel.Enabled = false;
+                StatusLabel.Text = "Disconnected";
                 return;
             }
 
@@ -43,6 +44,7 @@ namespace Igtampe.LitterBox {
                 NecoDB = F.Context;
                 connectDisconnectToolStripMenuItem.Text = "&Disconnect";
                 MainPannel.Enabled = true;
+                StatusLabel.Text = $"Connected to Neco Database";
             }
         }
 
@@ -52,7 +54,6 @@ namespace Igtampe.LitterBox {
 
         private void LaunchForm_FormClosing(object sender, FormClosingEventArgs e) {
             NecoDB?.Dispose(); //Just in case
-        }
-
+        }      
     }
 }
