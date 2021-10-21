@@ -24,14 +24,14 @@ namespace Igtampe.LitterBox {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "57174",
             "Chopo"}, -1);
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LaunchForm));
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "UMSNB",
             "999999999",
             "123,456,789,012p"}, -1);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LaunchForm));
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectDisconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +56,10 @@ namespace Igtampe.LitterBox {
             this.UserDetailsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.UserIDNameLabel = new System.Windows.Forms.Label();
             this.BankAccountGroupBox = new System.Windows.Forms.GroupBox();
+            this.UserBankAccountsListView = new System.Windows.Forms.ListView();
+            this.UserDetailsBankNameColumnHeader = new System.Windows.Forms.ColumnHeader();
+            this.UserDetailsBankIDColumnHeader = new System.Windows.Forms.ColumnHeader();
+            this.UserDetailsBankBalanceColumnHeader = new System.Windows.Forms.ColumnHeader();
             this.ActionsGroupbox = new System.Windows.Forms.GroupBox();
             this.UserActionsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.UserChangeTypeLabel = new System.Windows.Forms.Label();
@@ -66,16 +70,19 @@ namespace Igtampe.LitterBox {
             this.UserTypesTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.UserTypeDetailsGroupBox = new System.Windows.Forms.GroupBox();
             this.UserTypeDetailsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.listView4 = new System.Windows.Forms.ListView();
+            this.UserTypeNameLabel = new System.Windows.Forms.Label();
+            this.UserTypeTaxationTypeLabel = new System.Windows.Forms.Label();
+            this.UserTypeUserOpenableLabel = new System.Windows.Forms.Label();
+            this.UserTypeNameBox = new System.Windows.Forms.TextBox();
+            this.UserTypeTaxationTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.UserTypeUserOpenableCheckbox = new System.Windows.Forms.CheckBox();
             this.UserTypesGroupBox = new System.Windows.Forms.GroupBox();
             this.UserTypesListview = new System.Windows.Forms.ListView();
-            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
+            this.UserTypesNameColumnHeader = new System.Windows.Forms.ColumnHeader();
             this.BankManagementPage = new System.Windows.Forms.TabPage();
             this.BankTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.BankDetailsGroupBox = new System.Windows.Forms.GroupBox();
             this.BankDetailsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.listView1 = new System.Windows.Forms.ListView();
             this.BankGroupBox = new System.Windows.Forms.GroupBox();
             this.BanksListView = new System.Windows.Forms.ListView();
             this.BankIDColumnHeader = new System.Windows.Forms.ColumnHeader();
@@ -109,10 +116,6 @@ namespace Igtampe.LitterBox {
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.UserBankAccountsListView = new System.Windows.Forms.ListView();
-            this.UserDetailsBankIDColumnHeader = new System.Windows.Forms.ColumnHeader();
-            this.UserDetailsBankNameColumnHeader = new System.Windows.Forms.ColumnHeader();
-            this.UserDetailsBankBalanceColumnHeader = new System.Windows.Forms.ColumnHeader();
             this.MainMenuStrip.SuspendLayout();
             this.MainPannel.SuspendLayout();
             this.MainTabController.SuspendLayout();
@@ -132,7 +135,6 @@ namespace Igtampe.LitterBox {
             this.BankManagementPage.SuspendLayout();
             this.BankTableLayoutPanel.SuspendLayout();
             this.BankDetailsGroupBox.SuspendLayout();
-            this.BankDetailsTableLayoutPanel.SuspendLayout();
             this.BankGroupBox.SuspendLayout();
             this.TaxJurisdictionManagementPage.SuspendLayout();
             this.JurisdictionTableLayoutPanel.SuspendLayout();
@@ -314,7 +316,7 @@ namespace Igtampe.LitterBox {
             this.UsersListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UsersListView.HideSelection = false;
             this.UsersListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem7});
             this.UsersListView.Location = new System.Drawing.Point(3, 19);
             this.UsersListView.Name = "UsersListView";
             this.UsersListView.Size = new System.Drawing.Size(388, 399);
@@ -385,6 +387,38 @@ namespace Igtampe.LitterBox {
             this.BankAccountGroupBox.TabIndex = 1;
             this.BankAccountGroupBox.TabStop = false;
             this.BankAccountGroupBox.Text = "Bank Accounts";
+            // 
+            // UserBankAccountsListView
+            // 
+            this.UserBankAccountsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.UserDetailsBankNameColumnHeader,
+            this.UserDetailsBankIDColumnHeader,
+            this.UserDetailsBankBalanceColumnHeader});
+            this.UserBankAccountsListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UserBankAccountsListView.HideSelection = false;
+            this.UserBankAccountsListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem8});
+            this.UserBankAccountsListView.Location = new System.Drawing.Point(3, 19);
+            this.UserBankAccountsListView.Name = "UserBankAccountsListView";
+            this.UserBankAccountsListView.Size = new System.Drawing.Size(408, 239);
+            this.UserBankAccountsListView.TabIndex = 0;
+            this.UserBankAccountsListView.UseCompatibleStateImageBehavior = false;
+            this.UserBankAccountsListView.View = System.Windows.Forms.View.Details;
+            // 
+            // UserDetailsBankNameColumnHeader
+            // 
+            this.UserDetailsBankNameColumnHeader.Text = "Bank Name";
+            this.UserDetailsBankNameColumnHeader.Width = 100;
+            // 
+            // UserDetailsBankIDColumnHeader
+            // 
+            this.UserDetailsBankIDColumnHeader.Text = "Account ID";
+            this.UserDetailsBankIDColumnHeader.Width = 100;
+            // 
+            // UserDetailsBankBalanceColumnHeader
+            // 
+            this.UserDetailsBankBalanceColumnHeader.Text = "Balance";
+            this.UserDetailsBankBalanceColumnHeader.Width = 175;
             // 
             // ActionsGroupbox
             // 
@@ -512,24 +546,91 @@ namespace Igtampe.LitterBox {
             this.UserTypeDetailsTableLayoutPanel.ColumnCount = 2;
             this.UserTypeDetailsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.UserTypeDetailsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.UserTypeDetailsTableLayoutPanel.Controls.Add(this.listView4, 0, 1);
+            this.UserTypeDetailsTableLayoutPanel.Controls.Add(this.UserTypeNameLabel, 0, 1);
+            this.UserTypeDetailsTableLayoutPanel.Controls.Add(this.UserTypeTaxationTypeLabel, 0, 2);
+            this.UserTypeDetailsTableLayoutPanel.Controls.Add(this.UserTypeUserOpenableLabel, 0, 3);
+            this.UserTypeDetailsTableLayoutPanel.Controls.Add(this.UserTypeNameBox, 1, 1);
+            this.UserTypeDetailsTableLayoutPanel.Controls.Add(this.UserTypeTaxationTypeComboBox, 1, 2);
+            this.UserTypeDetailsTableLayoutPanel.Controls.Add(this.UserTypeUserOpenableCheckbox, 1, 3);
             this.UserTypeDetailsTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserTypeDetailsTableLayoutPanel.Location = new System.Drawing.Point(3, 19);
             this.UserTypeDetailsTableLayoutPanel.Name = "UserTypeDetailsTableLayoutPanel";
-            this.UserTypeDetailsTableLayoutPanel.RowCount = 2;
+            this.UserTypeDetailsTableLayoutPanel.RowCount = 5;
             this.UserTypeDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.UserTypeDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.UserTypeDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.UserTypeDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.UserTypeDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.UserTypeDetailsTableLayoutPanel.Size = new System.Drawing.Size(420, 399);
             this.UserTypeDetailsTableLayoutPanel.TabIndex = 1;
             // 
-            // listView4
+            // UserTypeNameLabel
             // 
-            this.listView4.HideSelection = false;
-            this.listView4.Location = new System.Drawing.Point(3, 202);
-            this.listView4.Name = "listView4";
-            this.listView4.Size = new System.Drawing.Size(121, 97);
-            this.listView4.TabIndex = 0;
-            this.listView4.UseCompatibleStateImageBehavior = false;
+            this.UserTypeNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UserTypeNameLabel.AutoSize = true;
+            this.UserTypeNameLabel.Location = new System.Drawing.Point(165, 160);
+            this.UserTypeNameLabel.Name = "UserTypeNameLabel";
+            this.UserTypeNameLabel.Size = new System.Drawing.Size(42, 29);
+            this.UserTypeNameLabel.TabIndex = 0;
+            this.UserTypeNameLabel.Text = "Name:";
+            this.UserTypeNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // UserTypeTaxationTypeLabel
+            // 
+            this.UserTypeTaxationTypeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UserTypeTaxationTypeLabel.AutoSize = true;
+            this.UserTypeTaxationTypeLabel.Location = new System.Drawing.Point(126, 189);
+            this.UserTypeTaxationTypeLabel.Name = "UserTypeTaxationTypeLabel";
+            this.UserTypeTaxationTypeLabel.Size = new System.Drawing.Size(81, 29);
+            this.UserTypeTaxationTypeLabel.TabIndex = 1;
+            this.UserTypeTaxationTypeLabel.Text = "Taxation Type:";
+            this.UserTypeTaxationTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // UserTypeUserOpenableLabel
+            // 
+            this.UserTypeUserOpenableLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UserTypeUserOpenableLabel.AutoSize = true;
+            this.UserTypeUserOpenableLabel.Location = new System.Drawing.Point(120, 218);
+            this.UserTypeUserOpenableLabel.Name = "UserTypeUserOpenableLabel";
+            this.UserTypeUserOpenableLabel.Size = new System.Drawing.Size(87, 20);
+            this.UserTypeUserOpenableLabel.TabIndex = 2;
+            this.UserTypeUserOpenableLabel.Text = "User Openable:";
+            this.UserTypeUserOpenableLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // UserTypeNameBox
+            // 
+            this.UserTypeNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UserTypeNameBox.Location = new System.Drawing.Point(213, 163);
+            this.UserTypeNameBox.Margin = new System.Windows.Forms.Padding(3, 3, 50, 3);
+            this.UserTypeNameBox.Name = "UserTypeNameBox";
+            this.UserTypeNameBox.Size = new System.Drawing.Size(157, 23);
+            this.UserTypeNameBox.TabIndex = 3;
+            // 
+            // UserTypeTaxationTypeComboBox
+            // 
+            this.UserTypeTaxationTypeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UserTypeTaxationTypeComboBox.FormattingEnabled = true;
+            this.UserTypeTaxationTypeComboBox.Location = new System.Drawing.Point(213, 192);
+            this.UserTypeTaxationTypeComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 50, 3);
+            this.UserTypeTaxationTypeComboBox.Name = "UserTypeTaxationTypeComboBox";
+            this.UserTypeTaxationTypeComboBox.Size = new System.Drawing.Size(157, 23);
+            this.UserTypeTaxationTypeComboBox.TabIndex = 4;
+            this.UserTypeTaxationTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.UserTypeTaxationTypeComboBox_SelectedIndexChanged);
+            // 
+            // UserTypeUserOpenableCheckbox
+            // 
+            this.UserTypeUserOpenableCheckbox.AutoSize = true;
+            this.UserTypeUserOpenableCheckbox.Location = new System.Drawing.Point(213, 221);
+            this.UserTypeUserOpenableCheckbox.Name = "UserTypeUserOpenableCheckbox";
+            this.UserTypeUserOpenableCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.UserTypeUserOpenableCheckbox.TabIndex = 5;
+            this.UserTypeUserOpenableCheckbox.UseVisualStyleBackColor = true;
+            this.UserTypeUserOpenableCheckbox.CheckedChanged += new System.EventHandler(this.UserTypeUserOpenableCheckbox_CheckedChanged);
             // 
             // UserTypesGroupBox
             // 
@@ -545,8 +646,7 @@ namespace Igtampe.LitterBox {
             // UserTypesListview
             // 
             this.UserTypesListview.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3,
-            this.columnHeader4});
+            this.UserTypesNameColumnHeader});
             this.UserTypesListview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserTypesListview.HideSelection = false;
             this.UserTypesListview.Location = new System.Drawing.Point(3, 19);
@@ -555,15 +655,12 @@ namespace Igtampe.LitterBox {
             this.UserTypesListview.TabIndex = 1;
             this.UserTypesListview.UseCompatibleStateImageBehavior = false;
             this.UserTypesListview.View = System.Windows.Forms.View.Details;
+            this.UserTypesListview.SelectedIndexChanged += new System.EventHandler(this.UserTypesListview_SelectedIndexChanged);
             // 
-            // columnHeader3
+            // UserTypesNameColumnHeader
             // 
-            this.columnHeader3.Text = "ID";
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Name";
-            this.columnHeader4.Width = 250;
+            this.UserTypesNameColumnHeader.Text = "Name";
+            this.UserTypesNameColumnHeader.Width = 250;
             // 
             // BankManagementPage
             // 
@@ -571,7 +668,7 @@ namespace Igtampe.LitterBox {
             this.BankManagementPage.Location = new System.Drawing.Point(33, 4);
             this.BankManagementPage.Name = "BankManagementPage";
             this.BankManagementPage.Padding = new System.Windows.Forms.Padding(3);
-            this.BankManagementPage.Size = new System.Drawing.Size(882, 433);
+            this.BankManagementPage.Size = new System.Drawing.Size(838, 433);
             this.BankManagementPage.TabIndex = 1;
             this.BankManagementPage.Text = "Banks";
             this.BankManagementPage.UseVisualStyleBackColor = true;
@@ -588,7 +685,7 @@ namespace Igtampe.LitterBox {
             this.BankTableLayoutPanel.Name = "BankTableLayoutPanel";
             this.BankTableLayoutPanel.RowCount = 1;
             this.BankTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.BankTableLayoutPanel.Size = new System.Drawing.Size(876, 427);
+            this.BankTableLayoutPanel.Size = new System.Drawing.Size(832, 427);
             this.BankTableLayoutPanel.TabIndex = 0;
             // 
             // BankDetailsGroupBox
@@ -597,7 +694,7 @@ namespace Igtampe.LitterBox {
             this.BankDetailsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BankDetailsGroupBox.Location = new System.Drawing.Point(403, 3);
             this.BankDetailsGroupBox.Name = "BankDetailsGroupBox";
-            this.BankDetailsGroupBox.Size = new System.Drawing.Size(470, 421);
+            this.BankDetailsGroupBox.Size = new System.Drawing.Size(426, 421);
             this.BankDetailsGroupBox.TabIndex = 2;
             this.BankDetailsGroupBox.TabStop = false;
             this.BankDetailsGroupBox.Text = "Details";
@@ -607,24 +704,14 @@ namespace Igtampe.LitterBox {
             this.BankDetailsTableLayoutPanel.ColumnCount = 2;
             this.BankDetailsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.BankDetailsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.BankDetailsTableLayoutPanel.Controls.Add(this.listView1, 0, 1);
             this.BankDetailsTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BankDetailsTableLayoutPanel.Location = new System.Drawing.Point(3, 19);
             this.BankDetailsTableLayoutPanel.Name = "BankDetailsTableLayoutPanel";
             this.BankDetailsTableLayoutPanel.RowCount = 2;
             this.BankDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.BankDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.BankDetailsTableLayoutPanel.Size = new System.Drawing.Size(464, 399);
+            this.BankDetailsTableLayoutPanel.Size = new System.Drawing.Size(420, 399);
             this.BankDetailsTableLayoutPanel.TabIndex = 1;
-            // 
-            // listView1
-            // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(3, 202);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(121, 97);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // BankGroupBox
             // 
@@ -666,7 +753,7 @@ namespace Igtampe.LitterBox {
             this.TaxJurisdictionManagementPage.Location = new System.Drawing.Point(33, 4);
             this.TaxJurisdictionManagementPage.Name = "TaxJurisdictionManagementPage";
             this.TaxJurisdictionManagementPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TaxJurisdictionManagementPage.Size = new System.Drawing.Size(882, 433);
+            this.TaxJurisdictionManagementPage.Size = new System.Drawing.Size(838, 433);
             this.TaxJurisdictionManagementPage.TabIndex = 2;
             this.TaxJurisdictionManagementPage.Text = "Jurisdictions";
             this.TaxJurisdictionManagementPage.UseVisualStyleBackColor = true;
@@ -683,7 +770,7 @@ namespace Igtampe.LitterBox {
             this.JurisdictionTableLayoutPanel.Name = "JurisdictionTableLayoutPanel";
             this.JurisdictionTableLayoutPanel.RowCount = 1;
             this.JurisdictionTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.JurisdictionTableLayoutPanel.Size = new System.Drawing.Size(876, 427);
+            this.JurisdictionTableLayoutPanel.Size = new System.Drawing.Size(832, 427);
             this.JurisdictionTableLayoutPanel.TabIndex = 0;
             // 
             // JurisdictionDetailsGroupBox
@@ -692,7 +779,7 @@ namespace Igtampe.LitterBox {
             this.JurisdictionDetailsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JurisdictionDetailsGroupBox.Location = new System.Drawing.Point(403, 3);
             this.JurisdictionDetailsGroupBox.Name = "JurisdictionDetailsGroupBox";
-            this.JurisdictionDetailsGroupBox.Size = new System.Drawing.Size(470, 421);
+            this.JurisdictionDetailsGroupBox.Size = new System.Drawing.Size(426, 421);
             this.JurisdictionDetailsGroupBox.TabIndex = 2;
             this.JurisdictionDetailsGroupBox.TabStop = false;
             this.JurisdictionDetailsGroupBox.Text = "Details";
@@ -708,7 +795,7 @@ namespace Igtampe.LitterBox {
             this.JurisdictionDetailsTableLayoutPanel.RowCount = 2;
             this.JurisdictionDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.JurisdictionDetailsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.JurisdictionDetailsTableLayoutPanel.Size = new System.Drawing.Size(464, 399);
+            this.JurisdictionDetailsTableLayoutPanel.Size = new System.Drawing.Size(420, 399);
             this.JurisdictionDetailsTableLayoutPanel.TabIndex = 1;
             // 
             // JurisdictionsGroupBox
@@ -746,7 +833,7 @@ namespace Igtampe.LitterBox {
             this.CleanupTabPage.Location = new System.Drawing.Point(33, 4);
             this.CleanupTabPage.Name = "CleanupTabPage";
             this.CleanupTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.CleanupTabPage.Size = new System.Drawing.Size(882, 433);
+            this.CleanupTabPage.Size = new System.Drawing.Size(838, 433);
             this.CleanupTabPage.TabIndex = 4;
             this.CleanupTabPage.Text = "Cleanup";
             this.CleanupTabPage.UseVisualStyleBackColor = true;
@@ -767,7 +854,7 @@ namespace Igtampe.LitterBox {
             this.CleanupTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.CleanupTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.CleanupTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.CleanupTableLayoutPanel.Size = new System.Drawing.Size(876, 427);
+            this.CleanupTableLayoutPanel.Size = new System.Drawing.Size(832, 427);
             this.CleanupTableLayoutPanel.TabIndex = 0;
             // 
             // WarnIconPictureBox
@@ -776,7 +863,7 @@ namespace Igtampe.LitterBox {
             this.WarnIconPictureBox.Image = global::Igtampe.LitterBox.Properties.Resources.WarnIcon;
             this.WarnIconPictureBox.Location = new System.Drawing.Point(3, 3);
             this.WarnIconPictureBox.Name = "WarnIconPictureBox";
-            this.WarnIconPictureBox.Size = new System.Drawing.Size(870, 114);
+            this.WarnIconPictureBox.Size = new System.Drawing.Size(826, 114);
             this.WarnIconPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.WarnIconPictureBox.TabIndex = 0;
             this.WarnIconPictureBox.TabStop = false;
@@ -790,7 +877,7 @@ namespace Igtampe.LitterBox {
             this.SlowDownLabel.Location = new System.Drawing.Point(3, 125);
             this.SlowDownLabel.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.SlowDownLabel.Name = "SlowDownLabel";
-            this.SlowDownLabel.Size = new System.Drawing.Size(870, 30);
+            this.SlowDownLabel.Size = new System.Drawing.Size(826, 30);
             this.SlowDownLabel.TabIndex = 1;
             this.SlowDownLabel.Text = "Slow down there bud";
             this.SlowDownLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -798,7 +885,7 @@ namespace Igtampe.LitterBox {
             // CleanupExplinationLabel
             // 
             this.CleanupExplinationLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.CleanupExplinationLabel.Location = new System.Drawing.Point(210, 160);
+            this.CleanupExplinationLabel.Location = new System.Drawing.Point(188, 160);
             this.CleanupExplinationLabel.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.CleanupExplinationLabel.Name = "CleanupExplinationLabel";
             this.CleanupExplinationLabel.Size = new System.Drawing.Size(456, 52);
@@ -822,12 +909,12 @@ namespace Igtampe.LitterBox {
             this.CleanupButtonsTableLayout.RowCount = 2;
             this.CleanupButtonsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.CleanupButtonsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CleanupButtonsTableLayout.Size = new System.Drawing.Size(870, 209);
+            this.CleanupButtonsTableLayout.Size = new System.Drawing.Size(826, 209);
             this.CleanupButtonsTableLayout.TabIndex = 3;
             // 
             // CleanupCertifiedItemsButton
             // 
-            this.CleanupCertifiedItemsButton.Location = new System.Drawing.Point(445, 114);
+            this.CleanupCertifiedItemsButton.Location = new System.Drawing.Point(423, 114);
             this.CleanupCertifiedItemsButton.Margin = new System.Windows.Forms.Padding(10);
             this.CleanupCertifiedItemsButton.Name = "CleanupCertifiedItemsButton";
             this.CleanupCertifiedItemsButton.Size = new System.Drawing.Size(260, 30);
@@ -839,7 +926,7 @@ namespace Igtampe.LitterBox {
             // CleanupTaxReportsButton
             // 
             this.CleanupTaxReportsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CleanupTaxReportsButton.Location = new System.Drawing.Point(165, 114);
+            this.CleanupTaxReportsButton.Location = new System.Drawing.Point(143, 114);
             this.CleanupTaxReportsButton.Margin = new System.Windows.Forms.Padding(10);
             this.CleanupTaxReportsButton.Name = "CleanupTaxReportsButton";
             this.CleanupTaxReportsButton.Size = new System.Drawing.Size(260, 30);
@@ -851,7 +938,7 @@ namespace Igtampe.LitterBox {
             // CleanupNotificationsButton
             // 
             this.CleanupNotificationsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.CleanupNotificationsButton.Location = new System.Drawing.Point(445, 64);
+            this.CleanupNotificationsButton.Location = new System.Drawing.Point(423, 64);
             this.CleanupNotificationsButton.Margin = new System.Windows.Forms.Padding(10);
             this.CleanupNotificationsButton.Name = "CleanupNotificationsButton";
             this.CleanupNotificationsButton.Size = new System.Drawing.Size(260, 30);
@@ -863,7 +950,7 @@ namespace Igtampe.LitterBox {
             // CleanupTransactionsButton
             // 
             this.CleanupTransactionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CleanupTransactionsButton.Location = new System.Drawing.Point(165, 64);
+            this.CleanupTransactionsButton.Location = new System.Drawing.Point(143, 64);
             this.CleanupTransactionsButton.Margin = new System.Windows.Forms.Padding(10);
             this.CleanupTransactionsButton.Name = "CleanupTransactionsButton";
             this.CleanupTransactionsButton.Size = new System.Drawing.Size(260, 30);
@@ -983,38 +1070,6 @@ namespace Igtampe.LitterBox {
             this.tabPage1.Size = new System.Drawing.Size(200, 100);
             this.tabPage1.TabIndex = 0;
             // 
-            // UserBankAccountsListView
-            // 
-            this.UserBankAccountsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.UserDetailsBankNameColumnHeader,
-            this.UserDetailsBankIDColumnHeader,
-            this.UserDetailsBankBalanceColumnHeader});
-            this.UserBankAccountsListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.UserBankAccountsListView.HideSelection = false;
-            this.UserBankAccountsListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
-            this.UserBankAccountsListView.Location = new System.Drawing.Point(3, 19);
-            this.UserBankAccountsListView.Name = "UserBankAccountsListView";
-            this.UserBankAccountsListView.Size = new System.Drawing.Size(408, 239);
-            this.UserBankAccountsListView.TabIndex = 0;
-            this.UserBankAccountsListView.UseCompatibleStateImageBehavior = false;
-            this.UserBankAccountsListView.View = System.Windows.Forms.View.Details;
-            // 
-            // UserDetailsBankIDColumnHeader
-            // 
-            this.UserDetailsBankIDColumnHeader.Text = "Account ID";
-            this.UserDetailsBankIDColumnHeader.Width = 100;
-            // 
-            // UserDetailsBankNameColumnHeader
-            // 
-            this.UserDetailsBankNameColumnHeader.Text = "Bank Name";
-            this.UserDetailsBankNameColumnHeader.Width = 100;
-            // 
-            // UserDetailsBankBalanceColumnHeader
-            // 
-            this.UserDetailsBankBalanceColumnHeader.Text = "Balance";
-            this.UserDetailsBankBalanceColumnHeader.Width = 175;
-            // 
             // LaunchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1043,11 +1098,11 @@ namespace Igtampe.LitterBox {
             this.UserTypesTableLayoutPanel.ResumeLayout(false);
             this.UserTypeDetailsGroupBox.ResumeLayout(false);
             this.UserTypeDetailsTableLayoutPanel.ResumeLayout(false);
+            this.UserTypeDetailsTableLayoutPanel.PerformLayout();
             this.UserTypesGroupBox.ResumeLayout(false);
             this.BankManagementPage.ResumeLayout(false);
             this.BankTableLayoutPanel.ResumeLayout(false);
             this.BankDetailsGroupBox.ResumeLayout(false);
-            this.BankDetailsTableLayoutPanel.ResumeLayout(false);
             this.BankGroupBox.ResumeLayout(false);
             this.TaxJurisdictionManagementPage.ResumeLayout(false);
             this.JurisdictionTableLayoutPanel.ResumeLayout(false);
@@ -1120,18 +1175,15 @@ namespace Igtampe.LitterBox {
         private System.Windows.Forms.TableLayoutPanel UserDetailsTableLayoutPanel;
         private System.Windows.Forms.TableLayoutPanel BankDetailsTableLayoutPanel;
         private System.Windows.Forms.TableLayoutPanel JurisdictionDetailsTableLayoutPanel;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label UserIDNameLabel;
         private System.Windows.Forms.GroupBox BankAccountGroupBox;
         private System.Windows.Forms.TabPage UserTypeManagementPage;
         private System.Windows.Forms.TableLayoutPanel UserTypesTableLayoutPanel;
         private System.Windows.Forms.GroupBox UserTypeDetailsGroupBox;
         private System.Windows.Forms.TableLayoutPanel UserTypeDetailsTableLayoutPanel;
-        private System.Windows.Forms.ListView listView4;
         private System.Windows.Forms.GroupBox UserTypesGroupBox;
         private System.Windows.Forms.ListView UserTypesListview;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader UserTypesNameColumnHeader;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -1151,5 +1203,11 @@ namespace Igtampe.LitterBox {
         private System.Windows.Forms.ColumnHeader UserDetailsBankNameColumnHeader;
         private System.Windows.Forms.ColumnHeader UserDetailsBankIDColumnHeader;
         private System.Windows.Forms.ColumnHeader UserDetailsBankBalanceColumnHeader;
+        private System.Windows.Forms.Label UserTypeNameLabel;
+        private System.Windows.Forms.Label UserTypeTaxationTypeLabel;
+        private System.Windows.Forms.Label UserTypeUserOpenableLabel;
+        private System.Windows.Forms.TextBox UserTypeNameBox;
+        private System.Windows.Forms.ComboBox UserTypeTaxationTypeComboBox;
+        private System.Windows.Forms.CheckBox UserTypeUserOpenableCheckbox;
     }
 }

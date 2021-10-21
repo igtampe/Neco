@@ -23,6 +23,7 @@ namespace Igtampe.LitterBox {
             MainPannel.Enabled = false;
             Icon = Properties.Resources.MainIco;
             Shown += LaunchForm_Shown;
+            UserTypeNameBox.LostFocus += UserTypeNameBox_LostFocus;
         }
 
         private void LaunchForm_Shown(object sender, EventArgs e) {ConnectDisconnectToolStripMenuItem_Click(sender, e); }
@@ -67,6 +68,27 @@ namespace Igtampe.LitterBox {
         }
 
         private void UserDetailsUserTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+
+        }
+
+        #endregion
+
+        #region UserType
+
+        private void UserTypesListview_SelectedIndexChanged(object sender, EventArgs e) {
+
+        }
+
+        private void UserTypeNameBox_LostFocus(object sender, EventArgs e) {
+            throw new NotImplementedException();
+        }
+
+
+        private void UserTypeTaxationTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+
+        }
+
+        private void UserTypeUserOpenableCheckbox_CheckedChanged(object sender, EventArgs e) {
 
         }
 
@@ -201,6 +223,5 @@ namespace Igtampe.LitterBox {
             MessageBox.Show($"{Header}\n\n{E.Source}:{E.Message}\n\n{E.StackTrace}\n\n{Footer}", "Uh oh spaghettios"
             , MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
         }
-
     }
 }
