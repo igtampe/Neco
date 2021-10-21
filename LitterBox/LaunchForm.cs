@@ -52,6 +52,26 @@ namespace Igtampe.LitterBox {
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e) { Close(); }
         private void LaunchForm_FormClosing(object sender, FormClosingEventArgs e) { NecoDB?.Dispose(); } //Just in case
 
+        #region User
+
+        private void UsersListView_SelectedIndexChanged(object sender, EventArgs e) {
+
+        }
+
+        private void UserChangePinButton_Click(object sender, EventArgs e) {
+
+        }
+
+        private void GenerateIncomeReportButton_Click(object sender, EventArgs e) {
+
+        }
+
+        private void UserDetailsUserTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+
+        }
+
+        #endregion
+
         #region Cleanup
 
         private async void CleanupTransactionsButton_Click(object sender, EventArgs e) {
