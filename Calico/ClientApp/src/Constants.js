@@ -1,3 +1,3 @@
 export default {
-    ApiURL : "http://localhost:12106/"
+    ApiURL : "https://necoapi.herokuapp.com/"
 }
