@@ -203,8 +203,10 @@ namespace Igtampe.Neco.Backend.Controllers {
         private async Task<TaxReport> CommonReportGenerator(User U) {
             ICollection<IncomeItem> Is = await NecoDB.IncomeItem
                 .Include(m => m.User)
-                .Include(m => m.FederalJurisdiction).ThenInclude(m=>m.Account)
+                .Include(m => m.FederalJurisdiction).ThenInclude(m => m.Account)
+                .Include(m => m.FederalJurisdiction).ThenInclude(m => m.Brackets)
                 .Include(m => m.LocalJurisdiction).ThenInclude(m => m.Account)
+                .Include(m => m.LocalJurisdiction).ThenInclude(m => m.Brackets)
                 .Include(m => m.Apartments)
                 .Include(m => m.Hotels)
                 .Include(m => m.Businesses)
