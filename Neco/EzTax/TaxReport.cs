@@ -204,6 +204,9 @@ namespace Igtampe.Neco.Common.EzTax {
             TR.Report += $"GRAND TOTAL TAX : {TR.GrandTotalTax:n0}\n";
             TR.CSVReport += "\n\n";
 
+            //Why had this not been set????
+            TR.Owner = User;
+
 #pragma warning restore S1643 // Strings should not be concatenated using '+' in a loop
 
 
