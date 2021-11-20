@@ -29,7 +29,7 @@ namespace Igtampe.Neco.Common.EzTax {
         /// <param name="I"></param>
         /// <returns></returns>
         public (long,TaxBracket) CalculateTax(User U, long I) {
-            TaxBracket T = Brackets.FirstOrDefault(P => P.Type.Equals(U.Type) && I >= P.Start && I < P.End); //LOOK AT THIS BEAUTY HOW HAD I NOT USED LINQ BEFORE
+            TaxBracket T = Brackets?.FirstOrDefault(P => P.Type.Equals(U.Type) && I >= P.Start && I < P.End); //LOOK AT THIS BEAUTY HOW HAD I NOT USED LINQ BEFORE
             if(T == null) return (0, null);
             return (Convert.ToInt64(I * T.Rate), T);
         }
