@@ -17,10 +17,10 @@ namespace Igtampe.Neco.Common {
 
         /// <summary>Accounts in this bank</summary>
         [JsonIgnore]
-        public ICollection<BankAccount> Accounts { get; set; }
+        public List<BankAccount> Accounts { get; set; }
 
         /// <summary>Bank Account types available in this bank</summary>
-        public ICollection<BankAccountType> AccountTypes { get; set; }
+        public List<BankAccountType> AccountTypes { get; set; }
 
         /// <summary>Compares this Bank to another object</summary>
         /// <param name="obj"></param>
