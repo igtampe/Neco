@@ -19,10 +19,10 @@ namespace Igtampe.Neco.Common {
         public UserType Type { get; set; }
 
         /// <summary>Accoutns this user owns</summary>
-        public ICollection<BankAccount> Accounts { get; set; }
+        public List<BankAccount> Accounts { get; set; }
 
         /// <summary>Notifications this user has</summary>
-        public ICollection<Notification> Notifications { get; set; }
+        public List<Notification> Notifications { get; set; }
 
         /// <summary>Compares this User to another object</summary>
         /// <param name="obj"></param>
