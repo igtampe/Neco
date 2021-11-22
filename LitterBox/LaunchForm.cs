@@ -489,6 +489,24 @@ namespace Igtampe.LitterBox {
             Freeze = false;
         }
 
+        private void UserDetailsContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e) {
+            if (UsersListView.SelectedItems.Count < 1 || UserBankAccountsListView.SelectedItems.Count < 1) { e.Cancel = true; return; }
+        }
+
+        private void CopyUserBankAccountIDMenuItem_Click(object sender, EventArgs e) {
+            if (UsersListView.SelectedItems.Count < 1 || UserBankAccountsListView.SelectedItems.Count < 1) { return; }
+            int I1 = UsersListView.SelectedIndices[0];
+            int I2 = UserBankAccountsListView.SelectedIndices[0];
+            Clipboard.SetText(Users[I1].Accounts[I2].ID );
+        }
+
+        private void CoypUserBankBalanceMenuItem_Click(object sender, EventArgs e) {
+            if (UsersListView.SelectedItems.Count < 1 || UserBankAccountsListView.SelectedItems.Count < 1) { return; }
+            int I1 = UsersListView.SelectedIndices[0];
+            int I2 = UserBankAccountsListView.SelectedIndices[0];
+            Clipboard.SetText(Users[I1].Accounts[I2].Details.Balance+"");
+        }
+
         #endregion
 
         #region Bank UI interactions
@@ -549,6 +567,17 @@ namespace Igtampe.LitterBox {
             ATE.Dispose();
 
             PopulateBankDetails(I1);
+        }
+
+        private void BankAccountTypesMenuItem_Opening(object sender, System.ComponentModel.CancelEventArgs e) {
+            if (BanksListView.SelectedItems.Count < 1 || BankAccountTypesListView.SelectedItems.Count < 1) { e.Cancel = true; return; }
+        }
+
+        private void CopyBankAccountTypeID_Click(object sender, EventArgs e) {
+            if (BanksListView.SelectedItems.Count < 1 || BankAccountTypesListView.SelectedItems.Count < 1) { return; }
+            int I1 = BanksListView.SelectedIndices[0];
+            int I2 = BankAccountTypesListView.SelectedIndices[0];
+            Clipboard.SetText(Banks[I1].AccountTypes[I2].ID + "");
         }
 
         #endregion

@@ -24,25 +24,26 @@ namespace Igtampe.LitterBox {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "57174",
             "Chopo"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "UMSNB",
             "999999999",
             "123,456,789,012p"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "Personal Low Tax",
             ".05",
             "0p",
             "500,000p"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "Personal Low Tax",
             ".05",
             "0p",
             "500,000p"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LaunchForm));
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "UMSNB",
             "999999999",
             "123,456,789,012p"}, -1);
@@ -158,6 +159,11 @@ namespace Igtampe.LitterBox {
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.UserDetailsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CopyUserBankAccountIDMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CoypUserBankBalanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BankAccountTypesMenuItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CopyBankAccountTypeID = new System.Windows.Forms.ToolStripMenuItem();
             this.TheMenuStrip.SuspendLayout();
             this.MainPannel.SuspendLayout();
             this.MainTabController.SuspendLayout();
@@ -199,6 +205,8 @@ namespace Igtampe.LitterBox {
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.UserDetailsContextMenu.SuspendLayout();
+            this.BankAccountTypesMenuItem.SuspendLayout();
             this.SuspendLayout();
             // 
             // TheMenuStrip
@@ -229,40 +237,40 @@ namespace Igtampe.LitterBox {
             // connectDisconnectToolStripMenuItem
             // 
             this.connectDisconnectToolStripMenuItem.Name = "connectDisconnectToolStripMenuItem";
-            this.connectDisconnectToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.connectDisconnectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.connectDisconnectToolStripMenuItem.Text = "&Connect";
             this.connectDisconnectToolStripMenuItem.Click += new System.EventHandler(this.ConnectDisconnectToolStripMenuItem_Click);
             // 
             // SaveToolStripMenuItem
             // 
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
-            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SaveToolStripMenuItem.Text = "Save";
             this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // RefreshToolStripMenuItem
             // 
             this.RefreshToolStripMenuItem.Name = "RefreshToolStripMenuItem";
-            this.RefreshToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.RefreshToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.RefreshToolStripMenuItem.Text = "&Refresh";
             this.RefreshToolStripMenuItem.Click += new System.EventHandler(this.RefreshToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(116, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // fileToolStripMenuItem1
             // 
             this.fileToolStripMenuItem1.Name = "fileToolStripMenuItem1";
-            this.fileToolStripMenuItem1.Size = new System.Drawing.Size(119, 22);
+            this.fileToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.fileToolStripMenuItem1.Text = "&File";
             // 
             // GenerateToolStripMenuItem
@@ -399,7 +407,7 @@ namespace Igtampe.LitterBox {
             this.UsersListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UsersListView.FullRowSelect = true;
             this.UsersListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem11});
+            listViewItem1});
             this.UsersListView.Location = new System.Drawing.Point(3, 3);
             this.UsersListView.Name = "UsersListView";
             this.UsersListView.Size = new System.Drawing.Size(382, 364);
@@ -487,10 +495,11 @@ namespace Igtampe.LitterBox {
             this.UserDetailsBankNameColumnHeader,
             this.UserDetailsBankIDColumnHeader,
             this.UserDetailsBankBalanceColumnHeader});
+            this.UserBankAccountsListView.ContextMenuStrip = this.UserDetailsContextMenu;
             this.UserBankAccountsListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserBankAccountsListView.FullRowSelect = true;
             this.UserBankAccountsListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem12});
+            listViewItem2});
             this.UserBankAccountsListView.Location = new System.Drawing.Point(3, 19);
             this.UserBankAccountsListView.Name = "UserBankAccountsListView";
             this.UserBankAccountsListView.Size = new System.Drawing.Size(408, 239);
@@ -709,10 +718,11 @@ namespace Igtampe.LitterBox {
             this.BankAccountTypeColumnHeader,
             this.InterestRateColumnHeader});
             this.tableLayoutPanel8.SetColumnSpan(this.BankAccountTypesListView, 2);
+            this.BankAccountTypesListView.ContextMenuStrip = this.BankAccountTypesMenuItem;
             this.BankAccountTypesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BankAccountTypesListView.FullRowSelect = true;
             this.BankAccountTypesListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13});
+            listViewItem3});
             this.BankAccountTypesListView.Location = new System.Drawing.Point(3, 3);
             this.BankAccountTypesListView.Name = "BankAccountTypesListView";
             this.BankAccountTypesListView.Size = new System.Drawing.Size(402, 294);
@@ -896,7 +906,7 @@ namespace Igtampe.LitterBox {
             this.JurisdictionBracketsListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JurisdictionBracketsListView.FullRowSelect = true;
             this.JurisdictionBracketsListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem14});
+            listViewItem4});
             this.JurisdictionBracketsListView.Location = new System.Drawing.Point(3, 3);
             this.JurisdictionBracketsListView.Name = "JurisdictionBracketsListView";
             this.JurisdictionBracketsListView.Size = new System.Drawing.Size(402, 261);
@@ -1339,7 +1349,7 @@ namespace Igtampe.LitterBox {
             this.columnHeader5});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem15});
+            listViewItem5});
             this.listView1.Location = new System.Drawing.Point(3, 19);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(188, 239);
@@ -1419,6 +1429,44 @@ namespace Igtampe.LitterBox {
             this.tableLayoutPanel5.Size = new System.Drawing.Size(200, 100);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
+            // UserDetailsContextMenu
+            // 
+            this.UserDetailsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CopyUserBankAccountIDMenuItem,
+            this.CoypUserBankBalanceMenuItem});
+            this.UserDetailsContextMenu.Name = "UserDetailsContextMenu";
+            this.UserDetailsContextMenu.Size = new System.Drawing.Size(165, 48);
+            this.UserDetailsContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.UserDetailsContextMenu_Opening);
+            // 
+            // CopyUserBankAccountIDMenuItem
+            // 
+            this.CopyUserBankAccountIDMenuItem.Name = "CopyUserBankAccountIDMenuItem";
+            this.CopyUserBankAccountIDMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.CopyUserBankAccountIDMenuItem.Text = "Copy Account ID";
+            this.CopyUserBankAccountIDMenuItem.Click += new System.EventHandler(this.CopyUserBankAccountIDMenuItem_Click);
+            // 
+            // CoypUserBankBalanceMenuItem
+            // 
+            this.CoypUserBankBalanceMenuItem.Name = "CoypUserBankBalanceMenuItem";
+            this.CoypUserBankBalanceMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.CoypUserBankBalanceMenuItem.Text = "Copy Balance";
+            this.CoypUserBankBalanceMenuItem.Click += new System.EventHandler(this.CoypUserBankBalanceMenuItem_Click);
+            // 
+            // BankAccountTypesMenuItem
+            // 
+            this.BankAccountTypesMenuItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CopyBankAccountTypeID});
+            this.BankAccountTypesMenuItem.Name = "BankAccountTypesMenuItem";
+            this.BankAccountTypesMenuItem.Size = new System.Drawing.Size(181, 48);
+            this.BankAccountTypesMenuItem.Opening += new System.ComponentModel.CancelEventHandler(this.BankAccountTypesMenuItem_Opening);
+            // 
+            // CopyBankAccountTypeID
+            // 
+            this.CopyBankAccountTypeID.Name = "CopyBankAccountTypeID";
+            this.CopyBankAccountTypeID.Size = new System.Drawing.Size(180, 22);
+            this.CopyBankAccountTypeID.Text = "Copy Type ID";
+            this.CopyBankAccountTypeID.Click += new System.EventHandler(this.CopyBankAccountTypeID_Click);
+            // 
             // LaunchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1480,6 +1528,8 @@ namespace Igtampe.LitterBox {
             this.groupBox4.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
+            this.UserDetailsContextMenu.ResumeLayout(false);
+            this.BankAccountTypesMenuItem.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1598,5 +1648,10 @@ namespace Igtampe.LitterBox {
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.Button NewJurisdictionButton;
         private System.Windows.Forms.Button NewBracketButton;
+        private System.Windows.Forms.ContextMenuStrip UserDetailsContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem CopyUserBankAccountIDMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CoypUserBankBalanceMenuItem;
+        private System.Windows.Forms.ContextMenuStrip BankAccountTypesMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CopyBankAccountTypeID;
     }
 }
