@@ -18,13 +18,13 @@ namespace Igtampe.LitterBox.ItemForms {
             InitializeComponent();
             this.Type = Type;
             NameBox.Text = Type.Name;
-            InterestRateUpDown.Value = Convert.ToDecimal(Type.InterestRate * 100);
+            InterestRateUpDown.Value = (decimal)Type.InterestRate * 100;
         }
 
         private void OKBTN_Click(object sender, EventArgs e) {
             DialogResult = DialogResult.OK;
             Type.Name = NameBox.Text;
-            Type.InterestRate = Convert.ToDouble(InterestRateUpDown.Value) / 100.0;
+            Type.InterestRate = decimal.ToDouble(InterestRateUpDown.Value) / 100.0;
             Close();
         }
 
