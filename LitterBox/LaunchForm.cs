@@ -65,7 +65,10 @@ namespace Igtampe.LitterBox {
 
             StatusLabel.Text = "Getting Users...";
             Users?.Clear();
-            Users = await NecoDB.User.OrderBy(U => U.ID).Where(U=>U.Name.ToLower().Contains(SearchQuery.ToLower())).ToListAsync();
+            Users = await NecoDB.User.OrderBy(U => U.ID).Where(
+                U=>U.Name.ToLower().Contains(SearchQuery.ToLower())||
+                   U.ID.ToLower().Contains(SearchQuery.ToLower()) 
+                ).ToListAsync();
 
             StatusLabel.Text = "Getting Users Auths";
             UserAuths?.Clear();

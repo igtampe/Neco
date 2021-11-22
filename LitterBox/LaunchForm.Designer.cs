@@ -24,25 +24,25 @@ namespace Igtampe.LitterBox {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem(new string[] {
             "57174",
             "Chopo"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem(new string[] {
             "UMSNB",
             "999999999",
             "123,456,789,012p"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
             "Personal Low Tax",
             ".05",
             "0p",
             "500,000p"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
             "Personal Low Tax",
             ".05",
             "0p",
             "500,000p"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LaunchForm));
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem(new string[] {
             "UMSNB",
             "999999999",
             "123,456,789,012p"}, -1);
@@ -399,7 +399,7 @@ namespace Igtampe.LitterBox {
             this.UsersListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UsersListView.FullRowSelect = true;
             this.UsersListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem6});
+            listViewItem11});
             this.UsersListView.Location = new System.Drawing.Point(3, 3);
             this.UsersListView.Name = "UsersListView";
             this.UsersListView.Size = new System.Drawing.Size(382, 364);
@@ -490,7 +490,7 @@ namespace Igtampe.LitterBox {
             this.UserBankAccountsListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserBankAccountsListView.FullRowSelect = true;
             this.UserBankAccountsListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7});
+            listViewItem12});
             this.UserBankAccountsListView.Location = new System.Drawing.Point(3, 19);
             this.UserBankAccountsListView.Name = "UserBankAccountsListView";
             this.UserBankAccountsListView.Size = new System.Drawing.Size(408, 239);
@@ -712,7 +712,7 @@ namespace Igtampe.LitterBox {
             this.BankAccountTypesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BankAccountTypesListView.FullRowSelect = true;
             this.BankAccountTypesListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem8});
+            listViewItem13});
             this.BankAccountTypesListView.Location = new System.Drawing.Point(3, 3);
             this.BankAccountTypesListView.Name = "BankAccountTypesListView";
             this.BankAccountTypesListView.Size = new System.Drawing.Size(402, 294);
@@ -896,7 +896,7 @@ namespace Igtampe.LitterBox {
             this.JurisdictionBracketsListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JurisdictionBracketsListView.FullRowSelect = true;
             this.JurisdictionBracketsListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem9});
+            listViewItem14});
             this.JurisdictionBracketsListView.Location = new System.Drawing.Point(3, 3);
             this.JurisdictionBracketsListView.Name = "JurisdictionBracketsListView";
             this.JurisdictionBracketsListView.Size = new System.Drawing.Size(402, 261);
@@ -1339,7 +1339,7 @@ namespace Igtampe.LitterBox {
             this.columnHeader5});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem10});
+            listViewItem15});
             this.listView1.Location = new System.Drawing.Point(3, 19);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(188, 239);
