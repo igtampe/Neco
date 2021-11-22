@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Igtampe.TinyForms {
     /// <summary>Quick code snippet to ask if the user is sure they want to do something</summary>
