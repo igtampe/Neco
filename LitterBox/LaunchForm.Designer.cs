@@ -25,25 +25,25 @@ namespace Igtampe.LitterBox {
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "57174",
             "Chopo"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "UMSNB",
             "999999999",
             "123,456,789,012p"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Personal Low Tax",
+            ".05",
+            "0p",
+            "500,000p"}, -1);
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "Personal Low Tax",
             ".05",
             "0p",
             "500,000p"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Personal Low Tax",
-            ".05",
-            "0p",
-            "500,000p"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LaunchForm));
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "UMSNB",
             "999999999",
             "123,456,789,012p"}, -1);
@@ -54,7 +54,6 @@ namespace Igtampe.LitterBox {
             this.RefreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.GenerateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateIncomeReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateBankReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -164,6 +163,8 @@ namespace Igtampe.LitterBox {
             this.CoypUserBankBalanceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BankAccountTypesMenuItem = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.CopyBankAccountTypeID = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.generateBankMarketReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TheMenuStrip.SuspendLayout();
             this.MainPannel.SuspendLayout();
             this.MainTabController.SuspendLayout();
@@ -228,8 +229,7 @@ namespace Igtampe.LitterBox {
             this.SaveToolStripMenuItem,
             this.RefreshToolStripMenuItem,
             this.toolStripSeparator1,
-            this.exitToolStripMenuItem,
-            this.fileToolStripMenuItem1});
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
@@ -267,16 +267,12 @@ namespace Igtampe.LitterBox {
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
-            // fileToolStripMenuItem1
-            // 
-            this.fileToolStripMenuItem1.Name = "fileToolStripMenuItem1";
-            this.fileToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.fileToolStripMenuItem1.Text = "&File";
-            // 
             // GenerateToolStripMenuItem
             // 
             this.GenerateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.generateIncomeReportToolStripMenuItem,
+            this.generateBankMarketReportToolStripMenuItem,
+            this.toolStripSeparator2,
             this.generateBankReportToolStripMenuItem,
             this.generateJurisdictionReportToolStripMenuItem});
             this.GenerateToolStripMenuItem.Name = "GenerateToolStripMenuItem";
@@ -286,20 +282,26 @@ namespace Igtampe.LitterBox {
             // generateIncomeReportToolStripMenuItem
             // 
             this.generateIncomeReportToolStripMenuItem.Name = "generateIncomeReportToolStripMenuItem";
-            this.generateIncomeReportToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
-            this.generateIncomeReportToolStripMenuItem.Text = "Generate &Income Report";
+            this.generateIncomeReportToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.generateIncomeReportToolStripMenuItem.Text = "Generate &AsIMOV Report";
+            this.generateIncomeReportToolStripMenuItem.ToolTipText = "Generate a Legacy AsIMOV Report";
+            this.generateIncomeReportToolStripMenuItem.Click += new System.EventHandler(this.generateIncomeReportToolStripMenuItem_Click);
             // 
             // generateBankReportToolStripMenuItem
             // 
             this.generateBankReportToolStripMenuItem.Name = "generateBankReportToolStripMenuItem";
-            this.generateBankReportToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.generateBankReportToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.generateBankReportToolStripMenuItem.Text = "Generate &Bank Report";
+            this.generateBankReportToolStripMenuItem.ToolTipText = "Generate a report for a specific Bank";
+            this.generateBankReportToolStripMenuItem.Click += new System.EventHandler(this.generateBankReportToolStripMenuItem_Click);
             // 
             // generateJurisdictionReportToolStripMenuItem
             // 
             this.generateJurisdictionReportToolStripMenuItem.Name = "generateJurisdictionReportToolStripMenuItem";
-            this.generateJurisdictionReportToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.generateJurisdictionReportToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.generateJurisdictionReportToolStripMenuItem.Text = "Generate &Jurisdiction Report";
+            this.generateJurisdictionReportToolStripMenuItem.ToolTipText = "Generate a report for a specific Jurisdiction";
+            this.generateJurisdictionReportToolStripMenuItem.Click += new System.EventHandler(this.generateJurisdictionReportToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -312,7 +314,7 @@ namespace Igtampe.LitterBox {
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             // 
             // MainPannel
@@ -407,7 +409,7 @@ namespace Igtampe.LitterBox {
             this.UsersListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UsersListView.FullRowSelect = true;
             this.UsersListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem6});
             this.UsersListView.Location = new System.Drawing.Point(3, 3);
             this.UsersListView.Name = "UsersListView";
             this.UsersListView.Size = new System.Drawing.Size(382, 364);
@@ -499,7 +501,7 @@ namespace Igtampe.LitterBox {
             this.UserBankAccountsListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserBankAccountsListView.FullRowSelect = true;
             this.UserBankAccountsListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem7});
             this.UserBankAccountsListView.Location = new System.Drawing.Point(3, 19);
             this.UserBankAccountsListView.Name = "UserBankAccountsListView";
             this.UserBankAccountsListView.Size = new System.Drawing.Size(408, 239);
@@ -722,7 +724,7 @@ namespace Igtampe.LitterBox {
             this.BankAccountTypesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BankAccountTypesListView.FullRowSelect = true;
             this.BankAccountTypesListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3});
+            listViewItem2});
             this.BankAccountTypesListView.Location = new System.Drawing.Point(3, 3);
             this.BankAccountTypesListView.Name = "BankAccountTypesListView";
             this.BankAccountTypesListView.Size = new System.Drawing.Size(402, 294);
@@ -906,7 +908,7 @@ namespace Igtampe.LitterBox {
             this.JurisdictionBracketsListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JurisdictionBracketsListView.FullRowSelect = true;
             this.JurisdictionBracketsListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4});
+            listViewItem3});
             this.JurisdictionBracketsListView.Location = new System.Drawing.Point(3, 3);
             this.JurisdictionBracketsListView.Name = "JurisdictionBracketsListView";
             this.JurisdictionBracketsListView.Size = new System.Drawing.Size(402, 261);
@@ -1349,7 +1351,7 @@ namespace Igtampe.LitterBox {
             this.columnHeader5});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5});
+            listViewItem8});
             this.listView1.Location = new System.Drawing.Point(3, 19);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(188, 239);
@@ -1457,15 +1459,27 @@ namespace Igtampe.LitterBox {
             this.BankAccountTypesMenuItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CopyBankAccountTypeID});
             this.BankAccountTypesMenuItem.Name = "BankAccountTypesMenuItem";
-            this.BankAccountTypesMenuItem.Size = new System.Drawing.Size(181, 48);
+            this.BankAccountTypesMenuItem.Size = new System.Drawing.Size(144, 26);
             this.BankAccountTypesMenuItem.Opening += new System.ComponentModel.CancelEventHandler(this.BankAccountTypesMenuItem_Opening);
             // 
             // CopyBankAccountTypeID
             // 
             this.CopyBankAccountTypeID.Name = "CopyBankAccountTypeID";
-            this.CopyBankAccountTypeID.Size = new System.Drawing.Size(180, 22);
+            this.CopyBankAccountTypeID.Size = new System.Drawing.Size(143, 22);
             this.CopyBankAccountTypeID.Text = "Copy Type ID";
             this.CopyBankAccountTypeID.Click += new System.EventHandler(this.CopyBankAccountTypeID_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(225, 6);
+            // 
+            // generateBankMarketReportToolStripMenuItem
+            // 
+            this.generateBankMarketReportToolStripMenuItem.Name = "generateBankMarketReportToolStripMenuItem";
+            this.generateBankMarketReportToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.generateBankMarketReportToolStripMenuItem.Text = "Generate Bank &Market Report";
+            this.generateBankMarketReportToolStripMenuItem.Click += new System.EventHandler(this.generateBankMarketReportToolStripMenuItem_Click);
             // 
             // LaunchForm
             // 
@@ -1636,7 +1650,6 @@ namespace Igtampe.LitterBox {
         private System.Windows.Forms.Button CleanupTransactionsButton;
         private System.Windows.Forms.Button ModifyUserTypesButton;
         private System.Windows.Forms.Label BankNameLabel;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem SaveToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.TextBox UserSearchBox;
@@ -1653,5 +1666,7 @@ namespace Igtampe.LitterBox {
         private System.Windows.Forms.ToolStripMenuItem CoypUserBankBalanceMenuItem;
         private System.Windows.Forms.ContextMenuStrip BankAccountTypesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CopyBankAccountTypeID;
+        private System.Windows.Forms.ToolStripMenuItem generateBankMarketReportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
