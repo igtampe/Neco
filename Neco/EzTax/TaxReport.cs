@@ -144,21 +144,25 @@ namespace Igtampe.Neco.Common.EzTax {
 
                 TR.StaticIncome += I.TotalMonthlyIncome();
                 //Add to local jurisdiction
-                if (!TR.IncomeBreakdownDictionary.ContainsKey(I.LocalJurisdiction)) {
-                    TR.IncomeBreakdownDictionary.Add(I.LocalJurisdiction, I.TotalMonthlyIncome());
-                } else {
-                    TR.IncomeBreakdownDictionary[I.LocalJurisdiction] += I.TotalMonthlyIncome();
+                if (I.LocalJurisdiction != null) {
+                    if (!TR.IncomeBreakdownDictionary.ContainsKey(I.LocalJurisdiction)) {
+                        TR.IncomeBreakdownDictionary.Add(I.LocalJurisdiction, I.TotalMonthlyIncome());
+                    } else {
+                        TR.IncomeBreakdownDictionary[I.LocalJurisdiction] += I.TotalMonthlyIncome();
+                    }
                 }
 
                 //Add to federal jurisdiction
-                if (!TR.IncomeBreakdownDictionary.ContainsKey(I.FederalJurisdiction)) {
-                    TR.IncomeBreakdownDictionary.Add(I.FederalJurisdiction, I.TotalMonthlyIncome());
-                } else {
-                    TR.IncomeBreakdownDictionary[I.FederalJurisdiction] += I.TotalMonthlyIncome();
+                if (I.FederalJurisdiction != null) {
+                    if (!TR.IncomeBreakdownDictionary.ContainsKey(I.FederalJurisdiction)) {
+                        TR.IncomeBreakdownDictionary.Add(I.FederalJurisdiction, I.TotalMonthlyIncome());
+                    } else {
+                        TR.IncomeBreakdownDictionary[I.FederalJurisdiction] += I.TotalMonthlyIncome();
+                    }
                 }
 
-                TR.CSVReport += string.Join(',', I.ID, I.Name, I.FederalJurisdiction.Name, I.LocalJurisdiction.Name, I.TotalMonthlyIncome(),"\n");
-                TR.Report += $"{I.ID}: {I.Name} located in {I.LocalJurisdiction.Name},{I.FederalJurisdiction.Name}\n";
+                TR.CSVReport += string.Join(',', I.ID, I.Name, I.FederalJurisdiction?.Name, I.LocalJurisdiction?.Name, I.TotalMonthlyIncome(),"\n");
+                TR.Report += $"{I.ID}: {I.Name} located in {I.LocalJurisdiction?.Name},{I.FederalJurisdiction?.Name}\n";
 
                 if (I.Subitems.Count > 0) {
                     TR.Report += "\nSubitems:\n\n";
