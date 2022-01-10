@@ -13,10 +13,4 @@
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Neco.Backend\Igtampe.Neco.Backend.csproj" />
-    <ProjectReference Include="..\Neco.Data\Igtampe.Neco.Data.csproj" />
-    <ProjectReference Include="..\Neco\Igtampe.Neco.Common.csproj" />
-  </ItemGroup>
-
 </Project>

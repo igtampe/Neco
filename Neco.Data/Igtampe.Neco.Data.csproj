@@ -27,8 +27,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Neco\Igtampe.Neco.Common.csproj" />
-  </ItemGroup>
-
 </Project>

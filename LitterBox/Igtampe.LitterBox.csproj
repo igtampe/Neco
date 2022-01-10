@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LandViewPlotter\Igtampe.LandViewPlotter.csproj" />
     <ProjectReference Include="..\Neco.Data\Igtampe.Neco.Data.csproj" />
     <ProjectReference Include="..\Neco\Igtampe.Neco.Common.csproj" />
   </ItemGroup>
