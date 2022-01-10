@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -13,15 +13,9 @@ import Constants from '../Constants'
 // react.school/material-ui
 
 const useStyles = makeStyles((theme) => ({
-  menuButton: {
-    marginRight: theme.spacing(2)
-  },
-  title: {
-    flexGrow: 1
-  },
-  customHeight: {
-    minHeight: 200
-  },
+  menuButton: { marginRight: theme.spacing(2) },
+  title: { flexGrow: 1 },
+  customHeight: { minHeight: 200 },
   offset: theme.mixins.toolbar
 }));
 
@@ -47,7 +41,7 @@ export default function ButtonAppBar() {
   if (cookies.get('SessionID') === undefined && User.ready===false) {
       console.log("No cookie")
       setUser({ ...User, ready:true })
-  } else if(User.ready===false && User.inprogress==false) {
+  } else if(User.ready===false && User.inprogress===false) {
     setUser({ ...User, inprogress:true })
     //We have a cookie and a session. Let's get it
 
@@ -66,6 +60,8 @@ export default function ButtonAppBar() {
             if(!response.ok){
               console.log(response);
               setUser({ ...User, ready:true })
+              cookies.remove('SessionID')
+              return undefined
             }
             return response.json()
         }).then(data => {
@@ -91,11 +87,7 @@ export default function ButtonAppBar() {
 
   return (
     <React.Fragment>
-      <AppBar
-        color={isCustomColor || isCustomHeight ? "primary" : example}
-        className={`${isCustomColor && classes.customColor} ${isCustomHeight && classes.customHeight
-          }`}
-      >
+      <AppBar color={"primary"}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}> Calico </Typography>
           {
@@ -113,7 +105,6 @@ export default function ButtonAppBar() {
                   </React.Fragment>
               }
             </React.Fragment> : <CircularProgress color="secondary" />
-
           }
         </Toolbar>
       </AppBar>
