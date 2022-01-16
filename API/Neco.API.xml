@@ -721,51 +721,6 @@
         <member name="P:Igtampe.Neco.API.ErrorResult.Reusable.InvalidSession">
             <summary>Error Result due to an invalid or expired session</summary>
         </member>
-        <member name="T:Igtampe.Neco.API.Requests.AccountRequest">
-            <summary>Request relating to editing or creating a bank account</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.Name">
-            <summary>Name of this Account</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.PubliclyListed">
-            <summary>Whether or not this account is publicly listed</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.Address">
-            <summary>Address of this Account</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.BankID">
-            <summary>ID of the Bank this account belongs to</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.DistrictID">
-            <summary>ID of the district this account is located in</summary>
-        </member>
-        <member name="T:Igtampe.Neco.API.Requests.BankRequest">
-            <summary>Request relating to editing or creating a Bank</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.BankRequest.Name">
-            <summary>New name of the bank</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.BankRequest.ImageURL">
-            <summary>New ImageURL of the bank</summary>
-        </member>
-        <member name="T:Igtampe.Neco.API.Requests.TransactionRequest">
-            <summary>Request relating to the creation of a transaction</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Origin">
-            <summary>Account from which money will be taken</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Destination">
-            <summary>Account to which money will be deposited</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Amount">
-            <summary>Amount of money to transfer</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Name">
-            <summary>Name of the transaction</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Certify">
-            <summary>Whether or not to certify this transaction</summary>
-        </member>
         <member name="T:Igtampe.Neco.API.Requests.AirlineRequest">
             <summary>An Airline that has gates</summary>
         </member>
@@ -810,6 +765,51 @@
         </member>
         <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.PRent">
             <summary>Penthouse rent in this appartment</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.AccountRequest">
+            <summary>Request relating to editing or creating a bank account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.Name">
+            <summary>Name of this Account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.PubliclyListed">
+            <summary>Whether or not this account is publicly listed</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.Address">
+            <summary>Address of this Account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.BankID">
+            <summary>ID of the Bank this account belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.DistrictID">
+            <summary>ID of the district this account is located in</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.BankRequest">
+            <summary>Request relating to editing or creating a Bank</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BankRequest.Name">
+            <summary>New name of the bank</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BankRequest.ImageURL">
+            <summary>New ImageURL of the bank</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.TransactionRequest">
+            <summary>Request relating to the creation of a transaction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Origin">
+            <summary>Account from which money will be taken</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Destination">
+            <summary>Account to which money will be deposited</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Amount">
+            <summary>Amount of money to transfer</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Name">
+            <summary>Name of the transaction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Certify">
+            <summary>Whether or not to certify this transaction</summary>
         </member>
         <member name="T:Igtampe.Neco.API.Requests.BusinessRequest">
             <summary>A business that is set up at an individual location (Like a store or a restaurant)</summary>
