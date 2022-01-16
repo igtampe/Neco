@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{52A98D7C-0301-479D-AC60-352E0E4D71AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPA", "SPA\SPA.csproj", "{596261CE-5F4F-4415-96A5-AD3442C9DE9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPA", "SPA\SPA.csproj", "{70E7BD47-1CEC-4C62-99FC-1C979D2807AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{52A98D7C-0301-479D-AC60-352E0E4D71AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52A98D7C-0301-479D-AC60-352E0E4D71AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52A98D7C-0301-479D-AC60-352E0E4D71AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{596261CE-5F4F-4415-96A5-AD3442C9DE9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{596261CE-5F4F-4415-96A5-AD3442C9DE9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{596261CE-5F4F-4415-96A5-AD3442C9DE9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{596261CE-5F4F-4415-96A5-AD3442C9DE9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70E7BD47-1CEC-4C62-99FC-1C979D2807AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70E7BD47-1CEC-4C62-99FC-1C979D2807AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70E7BD47-1CEC-4C62-99FC-1C979D2807AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70E7BD47-1CEC-4C62-99FC-1C979D2807AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
