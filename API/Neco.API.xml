@@ -721,51 +721,6 @@
         <member name="P:Igtampe.Neco.API.ErrorResult.Reusable.InvalidSession">
             <summary>Error Result due to an invalid or expired session</summary>
         </member>
-        <member name="T:Igtampe.Neco.API.Requests.AirlineRequest">
-            <summary>An Airline that has gates</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.AirlineRequest.GatesSM">
-            <summary>Number of active small gates this airline has</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.AirlineRequest.GatesMD">
-            <summary>Number of active medium gates this airline has</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.AirlineRequest.GatesLG">
-            <summary>Number of active large gates this airline has</summary>
-        </member>
-        <member name="T:Igtampe.Neco.API.Requests.ApartmentRequest">
-            <summary>An apartment complex</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.SUnits">
-            <summary>Studio units in this appartment</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B1Units">
-            <summary>1 Bedroom units in this appartment</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B2Units">
-            <summary>2 Bedroom units in this appartment</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B3Units">
-            <summary>3 Bedroom units in this appartment</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.PUnits">
-            <summary>Penthouse units in this appartment</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.SRent">
-            <summary>Studio monthly rent in this appartment</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B1Rent">
-            <summary>1 Bedroom monthly rent in this appartment</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B2Rent">
-            <summary>2 Bedroom monthly rent in this appartment</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B3Rent">
-            <summary>3 Bedroom monthly rent in this appartment</summary>
-        </member>
-        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.PRent">
-            <summary>Penthouse rent in this appartment</summary>
-        </member>
         <member name="T:Igtampe.Neco.API.Requests.AccountRequest">
             <summary>Request relating to editing or creating a bank account</summary>
         </member>
@@ -810,6 +765,51 @@
         </member>
         <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Certify">
             <summary>Whether or not to certify this transaction</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.AirlineRequest">
+            <summary>An Airline that has gates</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AirlineRequest.GatesSM">
+            <summary>Number of active small gates this airline has</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AirlineRequest.GatesMD">
+            <summary>Number of active medium gates this airline has</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AirlineRequest.GatesLG">
+            <summary>Number of active large gates this airline has</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.ApartmentRequest">
+            <summary>An apartment complex</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.SUnits">
+            <summary>Studio units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B1Units">
+            <summary>1 Bedroom units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B2Units">
+            <summary>2 Bedroom units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B3Units">
+            <summary>3 Bedroom units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.PUnits">
+            <summary>Penthouse units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.SRent">
+            <summary>Studio monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B1Rent">
+            <summary>1 Bedroom monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B2Rent">
+            <summary>2 Bedroom monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B3Rent">
+            <summary>3 Bedroom monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.PRent">
+            <summary>Penthouse rent in this appartment</summary>
         </member>
         <member name="T:Igtampe.Neco.API.Requests.BusinessRequest">
             <summary>A business that is set up at an individual location (Like a store or a restaurant)</summary>
