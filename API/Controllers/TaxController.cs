@@ -146,8 +146,12 @@ namespace Igtampe.Neco.API.Controllers {
                 if (Parent is null) { return NotFound(ErrorResult.NotFound("Parent jurisdiction was not found","Head")); }
             }
 
-            Account? A = await DB.Account.FindAsync(Request.TiedAccountID);
-            if(A is null) { return NotFound(ErrorResult.NotFound("Tied account was not found","Account")); }
+            Account? A = null;
+
+            if (!string.IsNullOrWhiteSpace(Request.TiedAccountID)) {
+                await DB.Account.FindAsync(Request.TiedAccountID);
+                if (A is null) { return NotFound(ErrorResult.NotFound("Tied account was not found", "Account")); }
+            }
 
             if (Request.Type != JurisdictionType.COUNTRY && Parent is null) { return BadRequest(ErrorResult.BadRequest("No parent jurisdiction is set and this is not a Country","Head")); }
             if (Parent is not null && Parent.Type != Request.Type - 1) { return BadRequest(ErrorResult.BadRequest("Parent type is not one layer above this jurisdiction", "Type")); }
@@ -213,8 +217,12 @@ namespace Igtampe.Neco.API.Controllers {
                 if (Parent is null) { return NotFound(ErrorResult.NotFound("Parent jurisdiction was not found", "Head")); }
             }
 
-            Account? A = await DB.Account.FindAsync(Request.TiedAccountID);
-            if (A is null) { return NotFound(ErrorResult.NotFound("Tied account was not found", "Account")); }
+            Account? A = null;
+
+            if (!string.IsNullOrWhiteSpace(Request.TiedAccountID)) {
+                await DB.Account.FindAsync(Request.TiedAccountID);
+                if (A is null) { return NotFound(ErrorResult.NotFound("Tied account was not found", "Account")); }
+            }
 
             //Change in type:
             //We could hypothetically update all of the children pero sabes? That's going to be far too much.
@@ -316,7 +324,10 @@ namespace Igtampe.Neco.API.Controllers {
                 //Add the Jurisdictions to the payment dictionary
                 foreach (Jurisdiction A in TR.TaxPaymentDictionary.Keys) {
 
-                    if (A.TiedAccount is null) { throw new ArgumentException("Jurisdiction tied accounts are not included"); }
+                    if (A.TiedAccount is null) {
+                        Console.Error.WriteLine($"Could not pay out taxes to {A.Name} because no tied account is set!");
+                        continue; 
+                    }
 
                     if (PaymentDictionary.ContainsKey(A.TiedAccount)) { PaymentDictionary[A.TiedAccount] += TR.TaxPaymentDictionary[A]; } 
                     else { PaymentDictionary.Add(A.TiedAccount, TR.TaxPaymentDictionary[A]); }
