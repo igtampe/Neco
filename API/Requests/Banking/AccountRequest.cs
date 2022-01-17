@@ -15,7 +15,7 @@ namespace Igtampe.Neco.API.Requests {
         public string Address { get; set; } = "";
 
         /// <summary>ID of the Bank this account belongs to</summary>
-        public Guid? BankID { get; set; } = Guid.Empty;
+        public string BankID { get; set; } = "";
 
         /// <summary>ID of the district this account is located in</summary>
         public Guid DistrictID { get; set; } = Guid.Empty;
