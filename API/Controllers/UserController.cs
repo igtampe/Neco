@@ -26,7 +26,7 @@ namespace Igtampe.Neco.API.Controllers {
         /// <returns></returns>
         [HttpGet("Dir")]
         public async Task<IActionResult> Directory([FromQuery] string? Query, [FromQuery] int? Take, [FromQuery] int? Skip) {
-            IQueryable<User> Set = DB.User;
+            IQueryable<User> Set = DB.User.Include(A=>A.Roles);
             if (!string.IsNullOrWhiteSpace(Query)) { Set = Set.Where(U => U.ID != null && U.ID.Contains(Query) || U.Name.ToLower().Contains(Query.ToLower())); }
             Set = Set.Skip(Skip ?? 0).Take(Take ?? 20);
 
@@ -95,6 +95,27 @@ namespace Igtampe.Neco.API.Controllers {
 
             return Ok();
 
+        }
+
+        /// <summary>Updates the image of the user with this session</summary>
+        /// <param name="SessionID"></param>
+        /// <param name="ImageURL"></param>
+        /// <returns></returns>
+        [HttpPut("image")]
+        public async Task<IActionResult> UpdateImage([FromHeader] Guid? SessionID, [FromBody] string ImageURL) {
+            //Check the session:
+            Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
+            if (S is null) { return Unauthorized("Invalid session"); }
+
+            //Check the password
+            User? U = await DB.User.FirstOrDefaultAsync(U => U.ID == S.UserID);
+            if (U is null) { throw new InvalidOperationException("Somehow we're here and we're not supposed to be here"); }
+
+            U.ImageURL = ImageURL;
+            DB.Update(U);
+            await DB.SaveChangesAsync();
+
+            return Ok();
         }
 
         #endregion
