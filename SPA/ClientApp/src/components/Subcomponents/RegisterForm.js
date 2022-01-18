@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { TextField, Button, Typography, CircularProgress, Container, Dialog, DialogTitle, DialogContent, DialogActions, Card, CardContent, Divider } from '@mui/material';
-import Cookies from 'universal-cookie';
 import AlertSnackbar from "../AlertSnackbar";
 
 // react.school/material-ui
 
 
-const cookies = new Cookies();
 
 const TandcCard = (props) => {
 return (
