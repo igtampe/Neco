@@ -3,13 +3,16 @@ import { makeStyles } from "@mui/styles";
 import {
   Dialog, DialogActions, DialogContent, DialogContentText,
   DialogTitle, IconButton, AppBar, CircularProgress, Toolbar, Typography, Button,
-  Drawer, List, Divider, ListItem, ListItemIcon, ListItemText, Box, Switch
+  Drawer, List, Divider, ListItem, ListItemIcon, ListItemText, Box, Switch, MenuItem, Menu, Badge, TableContainer, Paper, Table, TableHead, TableCell, TableRow, TableBody
 } from "@mui/material";
-import Cookies from 'universal-cookie';
 import { useHistory } from "react-router-dom";
 import LogoutButton from "./Subcomponents/LogoutButton"
 import MenuIcon from "@mui/icons-material/Menu";
 import PasswordChangeButton from "./Subcomponents/PasswordChangeButton";
+import { GenerateDelete, GenerateGet, GenerateJSONPut } from "../RequestOptionGenerator";
+import AlertSnackbar from "./AlertSnackbar";
+import { Delete } from "@mui/icons-material";
+import PicturePicker from "./PicturePicker";
 
 // react.school/material-ui
 
@@ -20,11 +23,9 @@ const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar
 }));
 
-const cookies = new Cookies();
-
 const Hamburger = (props) => {
 
-  const GenerateListItem = (props) =>{
+  const GenerateListItem = (props) => {
     return (
 
       <ListItem button key={props.text} onClick={() => props.PushTo(props.url)}>
@@ -32,12 +33,12 @@ const Hamburger = (props) => {
         <ListItemText>{props.text}</ListItemText>
       </ListItem>
     );
-  } 
+  }
 
   const PushTo = (url) => {
-    props.history.push(url); 
-    props.setMenuOpen(false) 
-  } 
+    props.history.push(url);
+    props.setMenuOpen(false)
+  }
 
   console.log(props)
 
@@ -61,20 +62,20 @@ const Hamburger = (props) => {
             ? <>
               <Divider />
               <List>
-                <GenerateListItem text='Accounts' url='/Accounts' image='bank.png' imageAlt='bank' DarkMode={props.DarkMode} PushTo={PushTo}/>
-                <GenerateListItem text='Income' url='/Income' image='Income.png' imageAlt='Income' DarkMode={props.DarkMode} PushTo={PushTo}/>
+                <GenerateListItem text='Accounts' url='/Accounts' image='bank.png' imageAlt='bank' DarkMode={props.DarkMode} PushTo={PushTo} />
+                <GenerateListItem text='Income' url='/Income' image='Income.png' imageAlt='Income' DarkMode={props.DarkMode} PushTo={PushTo} />
                 {
-                  props.User && props.User.roles && (props.User.roles.admin || props.User.roles.sdc) 
-                  ? <GenerateListItem text='SDC' url='/SDC' image='SDC.png' imageAlt='SDC' DarkMode={props.DarkMode} PushTo={PushTo}/>
-                  : <></>}
+                  props.User && props.User.roles && (props.User.roles.admin || props.User.roles.sdc)
+                    ? <GenerateListItem text='SDC' url='/SDC' image='SDC.png' imageAlt='SDC' DarkMode={props.DarkMode} PushTo={PushTo} />
+                    : <></>}
                 {
-                  props.User && props.User.roles && (props.User.roles.admin || props.User.roles.government) 
-                  ?<GenerateListItem text='Statistics' url='/Statistics' image='Statistics.png' imageAlt='Statistics' DarkMode={props.DarkMode} PushTo={PushTo}/>
-                  : <></>}
+                  props.User && props.User.roles && (props.User.roles.admin || props.User.roles.government)
+                    ? <GenerateListItem text='Statistics' url='/Statistics' image='Statistics.png' imageAlt='Statistics' DarkMode={props.DarkMode} PushTo={PushTo} />
+                    : <></>}
                 {
-                  props.User && props.User.roles && (props.User.roles.admin || props.User.roles.admin) 
-                  ? <GenerateListItem text='Administrate' url='/Admin' image='Admin.png' imageAlt='Admin' DarkMode={props.DarkMode} PushTo={PushTo}/>
-                  : <></>}
+                  props.User && props.User.roles && (props.User.roles.admin || props.User.roles.admin)
+                    ? <GenerateListItem text='Administrate' url='/Admin' image='Admin.png' imageAlt='Admin' DarkMode={props.DarkMode} PushTo={PushTo} />
+                    : <></>}
 
               </List>
               <Divider />
@@ -86,8 +87,8 @@ const Hamburger = (props) => {
               </List>
             </>
             : <List>
-              <GenerateListItem text='Login' url='/Login' image='BlankPerson.png' imageAlt='Person' DarkMode={props.DarkMode} PushTo={PushTo}/>
-              <GenerateListItem text='Register' url='/Register' image='Add.png' imageAlt='Add' DarkMode={props.DarkMode} PushTo={PushTo}/>
+              <GenerateListItem text='Login' url='/Login' image='BlankPerson.png' imageAlt='Person' DarkMode={props.DarkMode} PushTo={PushTo} />
+              <GenerateListItem text='Register' url='/Register' image='Add.png' imageAlt='Add' DarkMode={props.DarkMode} PushTo={PushTo} />
             </List>
         }
 
@@ -119,6 +120,185 @@ const Hamburger = (props) => {
 
 }
 
+const UserButton = (props) => {
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [notifsOpen, setNotifsOpen] = useState(false);
+  const [notifs, setNotifs] = useState();
+
+  const [loading, setLoading] = useState(false);
+
+  const [snackOpen, setSnackOpen] = useState(false)
+  const [result, setResult] = useState({ text: 'a', severity: 'success' })
+  const [deleting, setDeleting] = useState(false);
+
+  const [pickerOpen, setPickerOpen] = useState(false)
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => { setAnchorEl(event.currentTarget); };
+  const handleClose = () => { setAnchorEl(null); };
+  const handleNotifOpen = () => {
+    setNotifsOpen(true)
+    handleClose();
+  }
+  
+  const handlePickerOpen = () => {
+    setPickerOpen(true);
+    handleClose();
+  }
+
+  if (!notifs && !loading && props.Session) {
+    //begin loading the notifs!
+
+    setLoading(true)
+
+    fetch('API/Users/Notifs', GenerateGet(props.Session))
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) { } //do nothing
+        else {
+          setLoading(false)
+          setNotifs(data)
+        }
+      })
+
+  }
+
+  const handleDeleteNotif = (notifid) => (event) => {
+
+    setDeleting(true)
+
+    fetch('/API/Users/Notifs/' + notifid, GenerateDelete(props.Session))
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          setDeleting(false)
+          setNotifs(undefined) //load them again
+
+          setResult({ text: 'Could not delete notification', severity: 'error' })
+          setSnackOpen(true);
+        }
+        else {
+          setDeleting(false)
+          setNotifs(undefined) //load them again
+
+          setResult({ ...result, text: 'Notification deleted successfully' })
+          setSnackOpen(true);
+        }
+      })
+  }
+
+  const setImageURL = (e) => {
+     
+    if(!e) {
+      console.log("imageurl was not set")
+      return;
+    }
+
+    //ok we have a new image
+    
+    fetch('/API/Users/image',GenerateJSONPut(props.Session,e))
+    .then(response=> response.ok)
+    .then( data=> {
+      console.log("ok it happeneds")
+      if (!data) {
+        console.log("n o")
+        setResult({ text: "An error occured while updating your picture", severity: 'error' })
+        setSnackOpen(true);
+      }
+      else {
+        console.log("y e s")
+        props.RefreshUser();
+        setResult({ ...result, text: 'Picture updated successfully!' })
+        setSnackOpen(true);
+        
+      }
+      setImageURL(undefined)
+      }
+    )
+  }
+
+  return (
+    <div>
+      <Button onClick={handleClick} style={{ textTransform: 'none' }}>
+        <Badge badgeContent={notifs ? notifs.length : 0} color="secondary">
+          <img src={props.User.imageURL === "" ? "/images/blankperson.png" : props.User.imageURL} alt="Profile" width="30px" style={{ margin: "5px", marginLeft: "10px" }} />
+        </Badge>
+
+      </Button>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose} >
+        <MenuItem onClick={handleNotifOpen}> Notifications {notifs && notifs.length > 0 ? "(" + notifs.length + ")" : ""} </MenuItem>
+        <MenuItem onClick={handlePickerOpen} disabled={!props.User.roles.admin && !props.User.imageUploader}>Change Profile</MenuItem>
+        <Divider />
+        <ListItem key="AccountManagement">
+          <PasswordChangeButton />
+        </ListItem>
+      </Menu>
+
+      <Dialog maxWidth='sm' fullWidth open={notifsOpen} onClose={() => { setNotifsOpen(false) }}>
+        <DialogTitle>Notifications</DialogTitle>
+        <DialogContent>
+          <TableContainer component={Paper}>
+            <Table style={{ minWidth: '100%' }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date and time</TableCell>
+                  <TableCell>Text</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {
+                  !notifs ?
+                    <TableRow>
+                      <TableCell colSpan={3} style={{ textAlign: "center" }}><CircularProgress /></TableCell>
+                    </TableRow> : <>{
+
+                      notifs.length === 0 ?
+                        <TableRow>
+                          <TableCell colSpan={3} style={{ textAlign: "center" }}>You have no notifications</TableCell>
+                        </TableRow> : <>{
+
+                          notifs.map(L => {
+
+                            var D = new Date(L.date)
+
+                            return (
+                              <TableRow>
+                                <TableCell style={{ maxWidth: '50px' }}>{D.toLocaleString()}</TableCell>
+                                <TableCell style={{ maxWidth: '210px' }}>{L.text}</TableCell>
+                                <TableCell style={{ maxWidth: '100%' }}>
+                                  <IconButton onClick={handleDeleteNotif(L.id)} disabled={deleting}> <Delete /> </IconButton>
+                                </TableCell>
+                              </TableRow>
+                            )
+                          }
+                          )
+                        }
+                        </>
+                    }
+                    </>
+                }
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+
+
+
+        </DialogContent>
+      </Dialog>
+
+      <AlertSnackbar open={snackOpen} setOpen={setSnackOpen} result={result} />
+
+      <PicturePicker open={pickerOpen} setOpen={setPickerOpen} imageURL={props.User.imageUrl} setImageURL={setImageURL} defaultImage={"/images/Blankperson.png"}/>
+
+    </div>
+  );
+
+}
+
 export default function ButtonAppBar(props) {
   const classes = useStyles();
   const history = useHistory();
@@ -146,7 +326,7 @@ export default function ButtonAppBar(props) {
             props.Session
               ? <> {props.User
                 ? <React.Fragment>
-                  <img src={props.User.imageURL === "" ? "/images/blankperson.png" : props.User.imageURL} alt="Profile" width="30px" style={{ margin: "5px", marginLeft: "10px" }} /> {props.User.name + " (" + props.User.id + ") "}
+                  <UserButton User={props.User} Session={props.Session} DarkMode={props.DarkMode} RefreshUser = {props.RefreshUser} />
                   <LogoutButton />
                 </React.Fragment>
                 : <CircularProgress color="secondary" />}</>
@@ -166,7 +346,7 @@ export default function ButtonAppBar(props) {
       </Dialog>
 
       <Hamburger DarkMode={props.DarkMode} ToggleDarkMode={props.ToggleDarkMode} Session={props.Session}
-        menuOpen={menuOpen} setMenuOpen={setMenuOpen} sendToLogin={sendToLogin} history={history} User={props.User}/>
+        menuOpen={menuOpen} setMenuOpen={setMenuOpen} sendToLogin={sendToLogin} history={history} User={props.User} />
 
     </React.Fragment>
   );
