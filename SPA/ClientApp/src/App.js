@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Route, Redirect } from 'react-router';
 import  Layout  from './components/Layout';
-import { Home } from './components/Home';
+import Home  from './components/Home';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Cookies from 'universal-cookie/es6';
 import {GenerateGet} from './RequestOptionGenerator'
 import Login from "./components/Login.js"
+import useWindowDimensions from './components/Hooks/useWindowDimensions';
 
 import './custom.css'
 import { CircularProgress, CssBaseline } from '@mui/material';
@@ -35,6 +36,8 @@ const darkTheme = createTheme({
 })
 
 export default function App() {
+
+  const { width } = useWindowDimensions();
 
   const [Session, setSession] = useState(undefined)
   const [User, setUser] = useState(undefined)
@@ -106,32 +109,34 @@ export default function App() {
 
   }
 
+  var Vertical = width < 900;
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
        <CssBaseline />
-      <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User}>
+      <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}>
         <Route exact path='/'>
-          <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User}/>
+          <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
         </Route>
         <Route path='/Login'>
           {Session
           ? <Redirect to='/Accounts'/>
-          : <Login DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User}/> }
+          : <Login DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>  }
           
         </Route>
         <Route path='/Register'>
         {Session
           ? <Redirect to='/Accounts'/>
-          : <RegisterComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User}/> }
+          : <RegisterComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/> }
         </Route>
         <Route path='/Accounts'>
         {Session
-          ? <AccountsComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User}/>
+          ? <AccountsComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
           : <Redirect to='/Login'/> }
         </Route>
         <Route path='/Income'>
         {Session
-          ? <IncomeManagementComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User}/>
+          ? <IncomeManagementComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
           : <Redirect to='/Login'/> }
         </Route>
         <Route path='/Statistics'>
@@ -142,7 +147,7 @@ export default function App() {
                 ? <>
                   {
                     User.roles && (User.roles.admin || User.roles.government) 
-                    ? <StatisticsComponent DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User}/>
+                    ? <StatisticsComponent DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
                     : <>You do not have permission to access this resource</>
                   }
                 </>
@@ -159,7 +164,7 @@ export default function App() {
                 ? <>
                   {
                     User.roles && (User.roles.admin || User.roles.sdc) 
-                    ? <SDCComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User}/>
+                    ? <SDCComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
                     : <>You do not have permission to access this resource</>
                   }
                 </>
@@ -176,7 +181,7 @@ export default function App() {
                 ? <>
                   {
                     User.roles && User.roles.admin 
-                    ? <AdminComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User}/>
+                    ? <AdminComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
                     : <>You do not have permission to access this resource</>
                   }
                 </>
