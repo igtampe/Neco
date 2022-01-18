@@ -60,6 +60,15 @@ namespace Igtampe.Neco.API.Controllers {
                 if (I.Data.Length > MaxSize) { return BadRequest("File must be less than 1mb in size"); }
             }
 
+            if (!U.Roles.Admin) {
+                //We will need to delete any existing photo, because non-admin users will only upload ONE picture: Their profile picture
+
+                //Get all existing images
+                var ImagesToDelete = await DB.Image.Where(I => I.Uploader!=null && I.Uploader.ID == U.ID).ToListAsync();
+                DB.RemoveRange(ImagesToDelete);
+
+            }
+
             DB.Image.Add(I);
             await DB.SaveChangesAsync();
 
