@@ -78,7 +78,7 @@ export default function PasswordChangeButton(props) {
     return (
         <React.Fragment>
 
-            <Button onClick={() => { setPassOpen(true) }}> Change Password </Button>
+            <Button onClick={() => { setPassOpen(true) }} color='secondary'> Change Password </Button>
 
             <Dialog maxWidth="xs" open={PassOpen} onClose={() => setPassOpen(false)}>
                 <DialogTitle>Change Password</DialogTitle>
