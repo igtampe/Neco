@@ -438,7 +438,7 @@ namespace Igtampe.Neco.API.Controllers {
         /// <summary>Checks if a given user is an administrator or not</summary>
         /// <returns></returns>
         [NonAction]
-        private async Task<bool> IsAdmin(string UserID) => await DB.User.AnyAsync(U => U.ID == UserID && U.Roles.Admin);
+        private async Task<bool> IsAdmin(string UserID) => await DB.User.AnyAsync(U => U.ID == UserID && U.IsAdmin);
 
         /// <summary>Gets a DateTime representing the specified day of last month (IE if it's currently December 5th, executing
         /// this function with param day=15, it would return November 15th). Use day 31 to get the last day of the last month.</summary>

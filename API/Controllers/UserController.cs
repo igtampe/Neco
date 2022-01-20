@@ -26,7 +26,7 @@ namespace Igtampe.Neco.API.Controllers {
         /// <returns></returns>
         [HttpGet("Dir")]
         public async Task<IActionResult> Directory([FromQuery] string? Query, [FromQuery] int? Take, [FromQuery] int? Skip) {
-            IQueryable<User> Set = DB.User.Include(A=>A.Roles);
+            IQueryable<User> Set = DB.User;
             if (!string.IsNullOrWhiteSpace(Query)) { Set = Set.Where(U => U.ID != null && U.ID.Contains(Query) || U.Name.ToLower().Contains(Query.ToLower())); }
             Set = Set.Skip(Skip ?? 0).Take(Take ?? 20);
 
@@ -51,7 +51,7 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpGet("{ID}")]
         public async Task<IActionResult> GetUser(string ID) {
             //Get the user
-            User? U = await DB.User.Include(U => U.Roles).FirstOrDefaultAsync(U => U.ID == ID);
+            User? U = await DB.User.FirstOrDefaultAsync(U => U.ID == ID);
             return U is null ? NotFound(ErrorResult.NotFound("User was not found")) : Ok(U);
         }
 
@@ -153,13 +153,12 @@ namespace Igtampe.Neco.API.Controllers {
             User NewUser = new() {
                 Name = Request.Name,
                 Password = Request.Password,
-                Roles = new()
             };
 
             if (!await DB.User.AnyAsync()) {
 
                 //This is the first account and *MUST* be an admin
-                NewUser.Roles.Admin = true;
+                NewUser.IsAdmin = true;
 
             }
 
@@ -208,9 +207,9 @@ namespace Igtampe.Neco.API.Controllers {
             if (S is null) { return Unauthorized("Invalid session"); }
 
             //Get Users
-            User? Executor = await DB.User.Include(U=>U.Roles).FirstOrDefaultAsync(U => U.ID == S.UserID);
+            User? Executor = await DB.User.FirstOrDefaultAsync(U => U.ID == S.UserID);
             if (Executor is null) { return Unauthorized("Invalid Session"); }
-            if (Executor.Roles is null || !Executor.Roles.Admin) { return Forbid(); }
+            if (!Executor.IsAdmin) { return Forbid(); }
 
             User? U = await DB.User.FirstOrDefaultAsync(U => U.ID == Request.User);
             if (U is null) { return NotFound("User was not found"); }

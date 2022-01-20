@@ -179,7 +179,7 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
-            bool IsAdmin = await DB.User.AnyAsync(U => U.ID == S.UserID && U.Roles.Admin);
+            bool IsAdmin = await DB.User.AnyAsync(U => U.ID == S.UserID && U.IsAdmin);
             if (!IsAdmin) { return Forbid(); }
 
             Bank B = new() { ID=ID, Name = Request.Name, ImageURL = Request.ImageURL };
@@ -292,7 +292,7 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
-            bool IsAdmin = await DB.User.AnyAsync(U => U.ID == S.UserID && U.Roles.Admin);
+            bool IsAdmin = await DB.User.AnyAsync(U => U.ID == S.UserID && U.IsAdmin);
             if (!IsAdmin) { return Forbid(); }
 
             Bank? B = await DB.Bank.FindAsync(ID);
