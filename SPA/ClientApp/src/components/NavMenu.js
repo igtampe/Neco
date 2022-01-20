@@ -65,15 +65,15 @@ const Hamburger = (props) => {
                 <GenerateListItem text='Accounts' url='/Accounts' image='bank.png' imageAlt='bank' DarkMode={props.DarkMode} PushTo={PushTo} />
                 <GenerateListItem text='Income' url='/Income' image='Income.png' imageAlt='Income' DarkMode={props.DarkMode} PushTo={PushTo} />
                 {
-                  props.User && props.User.roles && (props.User.roles.admin || props.User.roles.sdc)
+                  props.User && (props.User.isAdmin || props.UserisSdc)
                     ? <GenerateListItem text='SDC' url='/SDC' image='SDC.png' imageAlt='SDC' DarkMode={props.DarkMode} PushTo={PushTo} />
                     : <></>}
                 {
-                  props.User && props.User.roles && (props.User.roles.admin || props.User.roles.government)
+                  props.User && (props.User.isAdmin || props.User.isGov)
                     ? <GenerateListItem text='Statistics' url='/Statistics' image='Statistics.png' imageAlt='Statistics' DarkMode={props.DarkMode} PushTo={PushTo} />
                     : <></>}
                 {
-                  props.User && props.User.roles && (props.User.roles.admin || props.User.roles.admin)
+                  props.User && (props.User.isAdmin)
                     ? <GenerateListItem text='Administrate' url='/Admin' image='Admin.png' imageAlt='Admin' DarkMode={props.DarkMode} PushTo={PushTo} />
                     : <></>}
 
@@ -229,7 +229,7 @@ const UserButton = (props) => {
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose} >
         <MenuItem onClick={handleNotifOpen}> Notifications {notifs && notifs.length > 0 ? "(" + notifs.length + ")" : ""} </MenuItem>
-        <MenuItem onClick={handlePickerOpen} disabled={!props.User.roles.admin && !props.User.imageUploader}>Change Profile</MenuItem>
+        <MenuItem onClick={handlePickerOpen} disabled={!props.User.isAdmin && !props.User.isUploader}>Change Profile</MenuItem>
         <Divider />
         <ListItem key="AccountManagement">
           <PasswordChangeButton />

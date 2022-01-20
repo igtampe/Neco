@@ -77,13 +77,11 @@ export default function RegisterForm(props) {
         {
             "name": "Test",
             "imageURL": "",
-            "roles": {
-              "admin": false,
-              "government": false,
-              "sdc": false,
-              "imageUploader": false,
-              "id": "f0191ffa-de09-473b-b3eb-50a4beabf94c"
-            },
+            "isAdmin": false,
+            "isGov": false,
+            "isSdc": false,
+            "isUploader": false,
+            "id": "f0191ffa-de09-473b-b3eb-50a4beabf94c",
             "idGenerator": {},
             "id": "12633"
           }
