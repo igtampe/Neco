@@ -19,9 +19,6 @@ namespace Igtampe.Neco.Common {
         [JsonIgnore]
         public string Password { get; set; } = "";
 
-        /// <summary>Roles of this user</summary>
-        public Roles Roles { get; set; } = new();
-
         //-[Banking]-
 
         /// <summary>List of all accounts this person holds</summary>
@@ -31,6 +28,20 @@ namespace Igtampe.Neco.Common {
         /// <summary>Notifications this user has</summary>
         [JsonIgnore]
         public List<Notification> Notifications { get; set; } = new();
+
+        //-[Roles]-
+        
+        /// <summary>Whether or not this user is a Neco Admin</summary>
+        public bool IsAdmin { get; set; } = false;
+
+        /// <summary>Whether or not this user is a Government Official</summary>
+        public bool IsGov { get; set; } = false;
+
+        /// <summary>Whether or not this user is a member of the Salary Determination Committee</summary>
+        public bool IsSDC { get; set; } = false;
+
+        /// <summary>Whether or not this user is allowed to upload images to the server</summary>
+        public bool IsUploader { get; set; } = false;
 
         //-[Overrides]-
 
