@@ -341,6 +341,45 @@ namespace Igtampe.Neco.API.Controllers {
             return Ok(A);
         }
 
+        /// <summary>Edits an account</summary>
+        /// <param name="SessionID">ID of the session executing this request</param>
+        /// <param name="ID">ID of the account</param>
+        /// <param name="Amount">Amount to add to the account</param>
+        /// <returns></returns>
+        [HttpPut("Accounts/{ID}/NTA")]
+        public async Task<IActionResult> NonTaxAdd([FromHeader] Guid? SessionID, string ID, [FromQuery] long Amount) {
+            Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
+            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
+
+            if (!DB.User.Any(U => U.ID == S.UserID && U.IsAdmin)) {
+                return Unauthorized(ErrorResult.Forbidden("Invalid session or user is not administrator"));
+            }
+
+            Account? A = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A => A.ID == ID);
+            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found, or is not owned by the given user", "Account")); }
+
+            //Add the amount
+            A.Balance += Amount;
+
+            //Add a notification to each owner of each de-esta cosa
+            foreach (User O in A.Owners) {
+
+                //Create and add a notif
+                Notification N = new() {
+                    Date = DateTime.Now, User = O,
+                    Text = $"Account {A.Name} ({A.ID}) received a non-taxed amount of {Amount:N0}p",
+                };
+
+                DB.Add(N);
+
+            }
+
+            DB.Update(A);
+            await DB.SaveChangesAsync();
+
+            return Ok(A);
+        }
+
         /// <summary>Adds an additional owner to a given account</summary>
         /// <param name="SessionID"></param>
         /// <param name="ID"></param>
