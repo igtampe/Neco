@@ -50,6 +50,11 @@
         /// <returns></returns>
         public static ErrorResult Forbidden(string Reason = "", string Field = "") => new() { Code = FORBIDDEN, Reason = Reason, Field = Field };
 
+        /// <summary>Generates a Forbidden Error Result due to missing roles</summary>
+        /// <param name="Roles"></param>
+        /// <returns></returns>
+        public static ErrorResult ForbiddenRoles(string Roles = "") => new() { Code = FORBIDDEN, Reason = $"User does not have {Roles} role(s)", Field="Roles" };
+
         /// <summary>Generates a Bad Request Error Result</summary>
         /// <param name="Reason">Reason for the error</param>
         /// <param name="Field">Field most likely responsible for the error</param>
@@ -67,7 +72,7 @@
 
             /// <summary>Error Result due to an invalid or expired session</summary>
             public static ErrorResult InvalidSession { get; } = Unauthorized("Invalid Session", "SessionID");
-        
+
         }
     }
 }
