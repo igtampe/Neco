@@ -42,7 +42,7 @@ namespace Igtampe.Neco.API.Controllers {
             User? U = await DB.User.FirstOrDefaultAsync(O=> O.ID == S.UserID);
             if(U is null) { return Unauthorized("Invalid Session"); }
 
-            if (!U.IsUploader && !U.IsAdmin) { return Forbid(); }
+            if (!U.IsUploader && !U.IsAdmin) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or Uploader")); }
 
             //That is all we will check the session for. In some future other project we may have an `Image Uploader` role to verify but for now this is fine
             string? ContentType = Request.ContentType;

@@ -136,9 +136,9 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpPost("Jurisdiction")]
         public async Task<IActionResult> CreateJurisdiction([FromHeader] Guid? SessionID, [FromBody] JurisdictionRequest Request) {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
-            if (S is null) { return Unauthorized("Invalid session"); }
+            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
-            if (!await IsAdmin(S.UserID)) { return Forbid(); }
+            if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
             Jurisdiction? Parent = null;
             if (!string.IsNullOrWhiteSpace(Request.ParentJurisdictionID)) { 
@@ -182,7 +182,7 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized("Invalid session"); }
 
-            if (!await IsAdmin(S.UserID)) { return Forbid(); }
+            if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
             //Find the jurisdiction
             Jurisdiction? J = await DB.Jurisdiction.FindAsync(Jurisdiction ?? Guid.Empty);
@@ -206,7 +206,7 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized("Invalid session"); }
 
-            if (!await IsAdmin(S.UserID)) { return Forbid(); }
+            if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
             Jurisdiction? J = await DB.Jurisdiction.Include(J => J.ChildJurisdictions).FirstOrDefaultAsync(J=>J.ID==ID);
             if(J is null) { return NotFound(ErrorResult.NotFound("Jurisdiction was not found","ID")); }
@@ -256,7 +256,7 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized("Invalid session"); }
 
-            if (!await IsAdmin(S.UserID)) { return Forbid(); }
+            if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
             //Find the existing bracket
             Bracket? B = await DB.Bracket.FindAsync(ID);
@@ -285,7 +285,7 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized("Invalid session"); }
 
-            if (!await IsAdmin(S.UserID)) { return Forbid(); }
+            if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
             Bracket? B = await DB.Bracket.FindAsync(ID);
             if (B is null) { return NotFound(ErrorResult.NotFound("Bracket was not found", "ID")); }
@@ -305,7 +305,7 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized("Invalid Session"); }
 
-            if (!await IsAdmin(S.UserID)) { return Forbid(); }
+            if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
             if (DateTime.Now.Day != 1 && Force != true) { return BadRequest("It is not currently tax day! If you wish to run tax anyways, add Force=true"); }
 

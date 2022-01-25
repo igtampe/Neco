@@ -82,7 +82,7 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized("Invalid Session"); }
 
-            if (!await IsAdmin(S.UserID)) { return Forbid(); }
+            if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
             if (DateTime.Now.Day != 15 && Force != true) { return BadRequest("It is not currently income day! If you wish to run income anyways, add Force=true"); }
 

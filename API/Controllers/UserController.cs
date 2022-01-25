@@ -107,12 +107,12 @@ namespace Igtampe.Neco.API.Controllers {
 
             //Check the session:
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
-            if (S is null) { return Unauthorized("Invalid session"); }
+            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
             //Get Users
-            User? Executor = await DB.User.FirstOrDefaultAsync(U => U.ID == S.UserID);
-            if (Executor is null) { return Unauthorized("Invalid Session"); }
-            if (!Executor.IsAdmin) { return Forbid(); }
+            if(!DB.User.Any(U => U.ID == S.UserID && U.IsAdmin)) {
+                return Unauthorized(ErrorResult.ForbiddenRoles("Admin"));
+            }
 
             User? U = await DB.User.FirstOrDefaultAsync(U => U.ID == ID);
             if (U is null) { return NotFound("User was not found"); }
@@ -146,7 +146,7 @@ namespace Igtampe.Neco.API.Controllers {
             //Get Users
             User? Executor = await DB.User.FirstOrDefaultAsync(U => U.ID == S.UserID);
             if (Executor is null) { return Unauthorized("Invalid Session"); }
-            if (!Executor.IsAdmin) { return Forbid(); }
+            if (!Executor.IsAdmin) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
             User? U = await DB.User.FirstOrDefaultAsync(U => U.ID == ID);
             if (U is null) { return NotFound("User was not found"); }

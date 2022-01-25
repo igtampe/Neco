@@ -180,7 +180,7 @@ namespace Igtampe.Neco.API.Controllers {
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
             bool IsAdmin = await DB.User.AnyAsync(U => U.ID == S.UserID && U.IsAdmin);
-            if (!IsAdmin) { return Forbid(); }
+            if (!IsAdmin) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
             Bank B = new() { ID=ID, Name = Request.Name, ImageURL = Request.ImageURL };
 
@@ -293,8 +293,8 @@ namespace Igtampe.Neco.API.Controllers {
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
             bool IsAdmin = await DB.User.AnyAsync(U => U.ID == S.UserID && U.IsAdmin);
-            if (!IsAdmin) { return Forbid(); }
-
+            if (!IsAdmin) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
+           
             Bank? B = await DB.Bank.FindAsync(ID);
             if(B is null) { return NotFound(ErrorResult.NotFound("Bank was not found","Bank")); }
 
@@ -352,7 +352,7 @@ namespace Igtampe.Neco.API.Controllers {
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
             if (!DB.User.Any(U => U.ID == S.UserID && U.IsAdmin)) {
-                return Unauthorized(ErrorResult.Forbidden("Invalid session or user is not administrator"));
+                return Unauthorized(ErrorResult.ForbiddenRoles("Admin"));
             }
 
             Account? A = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A => A.ID == ID);
