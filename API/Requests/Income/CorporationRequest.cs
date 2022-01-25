@@ -30,8 +30,5 @@ namespace Igtampe.Neco.API.Requests {
         /// <summary>Whether or not this company is a multinational</summary>
         public bool International { get; set; }
 
-        /// <summary>Whether or not this filing has been approved by the Salary Determination Committee</summary>
-        public bool Approved { get; set; } = false;
-
     }
 }
