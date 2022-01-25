@@ -29,6 +29,5 @@ namespace Igtampe.Neco.API.Requests {
 
         /// <summary>Whether or not this company is a multinational</summary>
         public bool International { get; set; }
-
     }
 }

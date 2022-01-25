@@ -14,6 +14,5 @@ namespace Igtampe.Neco.Common {
 
         /// <summary>Date of the last item's update</summary>
         public DateTime DateUpdated { get; set; }
-
     }
 }
