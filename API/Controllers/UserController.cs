@@ -97,6 +97,68 @@ namespace Igtampe.Neco.API.Controllers {
 
         }
 
+        /// <summary>Request to change a user's roles</summary>
+        /// <param name="SessionID"></param>
+        /// <param name="ID"></param>
+        /// <param name="Request"></param>
+        /// <returns></returns>
+        [HttpPut("{ID}/Roles")]
+        public async Task<IActionResult> UpdateRoles([FromHeader] Guid? SessionID, [FromRoute] string ID, [FromBody] ChangeRoleRequest Request) {
+
+            //Check the session:
+            Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
+            if (S is null) { return Unauthorized("Invalid session"); }
+
+            //Get Users
+            User? Executor = await DB.User.FirstOrDefaultAsync(U => U.ID == S.UserID);
+            if (Executor is null) { return Unauthorized("Invalid Session"); }
+            if (!Executor.IsAdmin) { return Forbid(); }
+
+            User? U = await DB.User.FirstOrDefaultAsync(U => U.ID == ID);
+            if (U is null) { return NotFound("User was not found"); }
+
+            U.IsAdmin = Request.IsAdmin;
+            U.IsUploader = Request.IsUploader;
+            U.IsGov = Request.IsGov;
+            U.IsSDC = Request.IsSDC;
+
+            DB.Update(U);
+            await DB.SaveChangesAsync();
+
+            return Ok(U);
+
+        }
+
+        /// <summary>Request to reset the password of a user</summary>
+        /// <param name="SessionID">SessionID of an administrator who wishes to change the password of another user</param>
+        /// <param name="ID">ID of the user to change the password of</param>
+        /// <param name="Request">Request to change</param>
+        /// <returns></returns>
+        [HttpPut("{ID}/Reset")]
+        public async Task<IActionResult> ResetPassword([FromHeader] Guid? SessionID, [FromRoute] string ID, [FromBody] ChangePasswordRequest Request) {
+            //Ensure nothing is null
+            if (Request.New is null) { return BadRequest("Cannot have empty password"); }
+
+            //Check the session:
+            Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
+            if (S is null) { return Unauthorized("Invalid session"); }
+
+            //Get Users
+            User? Executor = await DB.User.FirstOrDefaultAsync(U => U.ID == S.UserID);
+            if (Executor is null) { return Unauthorized("Invalid Session"); }
+            if (!Executor.IsAdmin) { return Forbid(); }
+
+            User? U = await DB.User.FirstOrDefaultAsync(U => U.ID == ID);
+            if (U is null) { return NotFound("User was not found"); }
+
+            U.Password = Request.New;
+            DB.Update(U);
+            await DB.SaveChangesAsync();
+
+            return Ok(U);
+
+        }
+
         /// <summary>Updates the image of the user with this session</summary>
         /// <param name="SessionID"></param>
         /// <param name="ImageURL"></param>
@@ -191,35 +253,6 @@ namespace Igtampe.Neco.API.Controllers {
             //Check the session:
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID));
             return S is null ? Unauthorized("Invalid session") : Ok(await Task.Run(() => SessionManager.Manager.LogOutAll(S.UserID)));
-        }
-
-        /// <summary>Request to reset the password of a user</summary>
-        /// <param name="SessionID">SessionID of an administrator who wishes to change the password of another user</param>
-        /// <param name="Request">Request to change</param>
-        /// <returns></returns>
-        [HttpPost("Reset")]
-        public async Task<IActionResult> ResetPassword([FromHeader] Guid? SessionID, [FromBody] ResetPasswordRequest Request) {
-            //Ensure nothing is null
-            if (Request.User is null || Request.New is null) { return BadRequest("Cannot have empty password"); }
-
-            //Check the session:
-            Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
-            if (S is null) { return Unauthorized("Invalid session"); }
-
-            //Get Users
-            User? Executor = await DB.User.FirstOrDefaultAsync(U => U.ID == S.UserID);
-            if (Executor is null) { return Unauthorized("Invalid Session"); }
-            if (!Executor.IsAdmin) { return Forbid(); }
-
-            User? U = await DB.User.FirstOrDefaultAsync(U => U.ID == Request.User);
-            if (U is null) { return NotFound("User was not found"); }
-
-            U.Password = Request.New;
-            DB.Update(U);
-            await DB.SaveChangesAsync();
-
-            return Ok();
-
         }
 
         #endregion
