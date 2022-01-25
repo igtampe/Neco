@@ -28,6 +28,35 @@ namespace Igtampe.Neco.API.Controllers {
 
     }
 
+    /// <summary>Item for feed unioning of all incomeitems</summary>
+    public class FeedItem : IncomeItem {
+
+        /// <summary>Calculated income saved before this item was converted to a FeedItem</summary>
+        public long CalculatedIncome { get; set; } = 0;
+
+        /// <summary>Returns the calculated income for anything after FeedItem that may need it</summary>
+        /// <returns></returns>
+        public override long Income() => CalculatedIncome;
+
+        /// <summary>Creates a FeedItem</summary>
+        /// <param name="E">Item to copy and convert to a FeedItem</param>
+        /// <param name="Income">Income calculated beforehand to preserve the calculation</param>
+        public FeedItem(IncomeItem E, long Income) {
+
+            Account = E.Account;
+            Address = E.Address;
+            DateCreated = E.DateCreated;
+            DateUpdated = E.DateUpdated;
+            Description = E.Description;
+            CalculatedIncome = Income;
+            ID = E.ID;
+            Jurisdiction = E.Jurisdiction;
+            MiscIncome = E.MiscIncome;
+            Name = E.Name;
+
+        }
+    }
+
     /// <summary>Controller that handles User operations</summary>
     [Route("API/Income")]
     [ApiController]
@@ -124,10 +153,47 @@ namespace Igtampe.Neco.API.Controllers {
 
         #region SDC
 
+        /// <summary>Gets a list of all unapproved corporations in the Neco system</summary>
+        /// <param name="SessionID"></param>
+        /// <returns></returns>
         [HttpGet("SDC/Corporations")]
+        public async Task<IActionResult> GetUnapprovedCorps([FromHeader] Guid SessionID) {
 
+            //Get the session
+            Session? S = await GetSession(SessionID);
+            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
+            //Ensure the Session is either Admin or SDC:
+            if (! await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
+
+            //Just get all of it. Please have the SDC not leave more than a ton of corporations
+            List<Corporation> Corps = await DB.Corporation.Where(C => !C.Approved)
+                .OrderByDescending(C => C.DateUpdated).ToListAsync();
+
+            //Now all we need to do is return it
+            return Ok(Corps);
+
+        }
+
+        /// <summary>Get a feed of the 20 most recently approved income items of any type</summary>
+        /// <param name="SessionID"></param>
+        /// <returns></returns>
         [HttpGet("SDC/Feed")]
+        public async Task<IActionResult> GetFeed([FromHeader] Guid SessionID) {
+
+            //We need to make a massive union of a couple of lists.
+            IQueryable<FeedItem> TheBigSet =
+                DB.Airline.Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income()))
+                .Union(DB.Apartment.Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income())))
+                .Union(DB.Business.Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income())))
+                .Union(DB.Hotel.Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income()))) //Only include approved corps
+                .Union(DB.Corporation.Where(C=>C.Approved).Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income())));
+
+            TheBigSet.OrderByDescending(C => C.DateUpdated).Take(20);
+
+            return Ok(await TheBigSet.ToListAsync());
+                
+        }
 
         #endregion
 
@@ -548,7 +614,16 @@ namespace Igtampe.Neco.API.Controllers {
             //Update the date updated
             Item.DateUpdated = DateTime.Now;
 
-            DB.Add(Item);
+            //If we're dealing with a corporation
+            if (Item is Corporation Corp) {
+
+                //Unapprove it
+                Corp.Approved = false;
+
+                DB.Update(Corp);
+
+            } else { DB.Update(Item); }
+
             await DB.SaveChangesAsync();
 
             return Ok(Item);
