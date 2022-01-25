@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Igtampe.Neco.Common.Income {
 
     /// <summary>Basic usable, but extendable income item</summary>
-    public abstract class IncomeItem : AutomaticallyGeneratableIdentifiable, Nameable, Describable, Locatable, Certifiable, Dateable {
+    public class IncomeItem : AutomaticallyGeneratableIdentifiable, Nameable, Describable, Locatable, Certifiable, Dateable {
 
         /// <summary>Name of the income item</summary>
         public string Name { get; set; } = "";
@@ -29,7 +29,7 @@ namespace Igtampe.Neco.Common.Income {
         public long MiscIncome { get; set; } = 0;
 
         /// <summary>Date this item was created</summary>
-        public DateTime DateCreated { get; set; } = DateTime.;
+        public DateTime DateCreated { get; set; } = DateTime.Now;
 
         /// <summary>Date this item was last updated</summary>
         public DateTime DateUpdated { get; set; } = DateTime.Now;
