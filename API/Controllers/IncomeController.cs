@@ -122,6 +122,15 @@ namespace Igtampe.Neco.API.Controllers {
         }
         #endregion
 
+        #region SDC
+
+        [HttpGet("SDC/Corporations")]
+
+
+        [HttpGet("SDC/Feed")]
+
+        #endregion
+
         #region Get Collections
 
         /// <summary>Gets an account's Airlines</summary>
@@ -440,7 +449,9 @@ namespace Igtampe.Neco.API.Controllers {
                 //Check for the properties we need to skip
                 switch (Prop.Name.ToUpper()) {
                     case "ID":
-                        //Ignore ID
+                    case "DATECREATED":
+                    case "DATEUPDATED":
+                        //Ignore ID and Dates
                         continue;
                     case "JURISDICTIONID":
                         //Look for the District ID then keep going
@@ -470,6 +481,10 @@ namespace Igtampe.Neco.API.Controllers {
                 if (O is not null) { Prop.SetValue(Item, O); }
             }
 
+            //Update the dates
+            Item.DateCreated= DateTime.Now;
+            Item.DateUpdated = DateTime.Now;
+
             DB.Add(Item);
             await DB.SaveChangesAsync();
 
@@ -498,7 +513,9 @@ namespace Igtampe.Neco.API.Controllers {
                 //Check for the properties we need to skip
                 switch (Prop.Name.ToUpper()) {
                     case "ID":
-                        //Ignore ID
+                    case "DATECREATED":
+                    case "DATEUPDATED":
+                        //Ignore ID and dates
                         continue;
                     case "JURISDICTIONID":
                         //Look for the District ID then keep going
@@ -527,6 +544,9 @@ namespace Igtampe.Neco.API.Controllers {
                 //Update the value as long as its not null
                 if (O is not null) { Prop.SetValue(Item, O); }
             }
+
+            //Update the date updated
+            Item.DateUpdated = DateTime.Now;
 
             DB.Add(Item);
             await DB.SaveChangesAsync();
