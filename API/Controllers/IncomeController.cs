@@ -577,12 +577,12 @@ namespace Igtampe.Neco.API.Controllers {
         /// <summary>Checks if given user is either an administrator, or a member of the Salary Determination Committee</summary>
         /// <param name="UserID"></param>
         /// <returns></returns>
-        private async Task<bool> IsAdminOrSDC(string UserID) => await DB.User.AnyAsync(U => U.ID == UserID && (U.Roles.Admin || U.Roles.SDC));
+        private async Task<bool> IsAdminOrSDC(string UserID) => await DB.User.AnyAsync(U => U.ID == UserID && (U.IsAdmin || U.IsSDC));
 
         /// <summary>Checks if given user is an administrator</summary>
         /// <param name="UserID"></param>
         /// <returns></returns>
-        private async Task<bool> IsAdmin(string UserID) => await DB.User.AnyAsync(U => U.ID == UserID && (U.Roles.Admin));
+        private async Task<bool> IsAdmin(string UserID) => await DB.User.AnyAsync(U => U.ID == UserID && (U.IsAdmin));
 
         /// <summary>Gets a session asynchronously</summary> //(this should maybe just be a function within the sesion manager)
         /// <param name="SessionID"></param>

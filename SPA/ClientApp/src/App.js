@@ -146,7 +146,7 @@ export default function App() {
                 User
                 ? <>
                   {
-                    User.roles && (User.roles.admin || User.roles.government) 
+                    (User.isAdmin || User.isGov) 
                     ? <StatisticsComponent DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
                     : <>You do not have permission to access this resource</>
                   }
@@ -163,7 +163,7 @@ export default function App() {
                 User
                 ? <>
                   {
-                    User.roles && (User.roles.admin || User.roles.sdc) 
+                    (User.isAdmin || User.isSdc) 
                     ? <SDCComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
                     : <>You do not have permission to access this resource</>
                   }
@@ -180,7 +180,7 @@ export default function App() {
                 User
                 ? <>
                   {
-                    User.roles && User.roles.admin 
+                    User.isAdmin 
                     ? <AdminComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
                     : <>You do not have permission to access this resource</>
                   }

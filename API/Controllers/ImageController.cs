@@ -39,10 +39,10 @@ namespace Igtampe.Neco.API.Controllers {
             if (S is null) { return Unauthorized("Invalid Session"); }
 
             //Find the user
-            User? U = await DB.User.Include(O => O.Roles).FirstOrDefaultAsync(O=> O.ID == S.UserID);
+            User? U = await DB.User.FirstOrDefaultAsync(O=> O.ID == S.UserID);
             if(U is null) { return Unauthorized("Invalid Session"); }
 
-            if (!U.Roles.ImageUploader && !U.Roles.Admin) { return Forbid(); }
+            if (!U.IsUploader && !U.IsAdmin) { return Forbid(); }
 
             //That is all we will check the session for. In some future other project we may have an `Image Uploader` role to verify but for now this is fine
             string? ContentType = Request.ContentType;
@@ -60,7 +60,7 @@ namespace Igtampe.Neco.API.Controllers {
                 if (I.Data.Length > MaxSize) { return BadRequest("File must be less than 1mb in size"); }
             }
 
-            if (!U.Roles.Admin) {
+            if (!U.IsAdmin) {
                 //We will need to delete any existing photo, because non-admin users will only upload ONE picture: Their profile picture
 
                 //Get all existing images
