@@ -181,6 +181,13 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpGet("SDC/Feed")]
         public async Task<IActionResult> GetFeed([FromHeader] Guid SessionID) {
 
+            //Get the session
+            Session? S = await GetSession(SessionID);
+            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
+
+            //Ensure the Session is either Admin or SDC:
+            if (!await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
+
             //We need to make a massive union of a couple of lists.
             IQueryable<FeedItem> TheBigSet =
                 DB.Airline.Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income()))
@@ -193,6 +200,33 @@ namespace Igtampe.Neco.API.Controllers {
 
             return Ok(await TheBigSet.ToListAsync());
                 
+        }
+
+        /// <summary>Approves a corporation</summary>
+        /// <param name="SessionID"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [HttpPut("SDC/Corporations/{ID}")]
+        public async Task<IActionResult> Approve([FromHeader] Guid SessionID, [FromRoute] Guid ID) {
+
+            //Get the session
+            Session? S = await GetSession(SessionID);
+            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
+
+            //Ensure the Session is either Admin or SDC:
+            if (!await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
+
+            //Get the corporation
+            Corporation? C = await DB.Corporation.FindAsync(ID);
+            if (C is null) { return NotFound(ErrorResult.NotFound("Corporation was not found", "ID")); }
+
+            C.Approved = true;
+            
+            DB.Update(C);
+            await DB.SaveChangesAsync();
+
+            return Ok(C);
+
         }
 
         #endregion
