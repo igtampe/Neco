@@ -12,10 +12,8 @@ export function IncomeTypeSelect(props) {
             <Select fullWidth label="Label" value={props.type} onChange={(event) => { props.setType(event.target.value) }}>
                 <MenuItem value={0}>Personal</MenuItem>
                 <MenuItem value={1}>Corporate</MenuItem>
-                {/**<MenuItem value={2}>Government</MenuItem>
-                <MenuItem value={3}>Charity</MenuItem>
-                These income types pay no taxes
-                **/}
+                <MenuItem value={2} disabled={props.tax || (props.user && !props.user.isAdmin && !props.user.isGov)}>Government</MenuItem>
+                <MenuItem value={3} disabled={props.tax}>Charity</MenuItem>
             </Select></FormControl>
     )
 
@@ -137,7 +135,7 @@ export default function BracketEditor(props) {
                                 style={{ marginTop: "5px", marginBottom: "5px" }} />
                         </Grid>
                         <Grid item xs={6}>
-                            <IncomeTypeSelect type={incomeType} setType={setIncomeType} />
+                            <IncomeTypeSelect type={incomeType} setType={setIncomeType} tax />
                         </Grid>
                         <Grid item xs={6}>
                             <TextField label="Rate Percentage" value={rate} onChange={(event) => setRate(event.target.value)} fullWidth type='number'
