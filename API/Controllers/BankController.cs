@@ -356,7 +356,7 @@ namespace Igtampe.Neco.API.Controllers {
             }
 
             Account? A = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A => A.ID == ID);
-            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found, or is not owned by the given user", "Account")); }
+            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
 
             //Add the amount
             A.Balance += Amount;
