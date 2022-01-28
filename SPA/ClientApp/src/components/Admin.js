@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Tab, Tabs, Typography, Box } from "@mui/material";
 import JurisdictionDisplay from "./AdminComponents/JurisdictionComponents/JurisdictionDisplay";
 import BankDisplay from "./AdminComponents/BankComponents/BankDisplay";
+import UserDisplay from './AdminComponents/UserComponents/UserDisplay';
+import NTAForm from "./AdminComponents/NTAForm";
 
 //Maybe this should've  been a default component? strange....
 function TabPanel(props) {
@@ -17,7 +19,7 @@ function TabPanel(props) {
 function ClosetTabs(props) {
     return (
         <Tabs orientation={props.orientation} variant="scrollable" value={props.value} onChange={props.handleChange} sx={{ borderRight: 1, borderColor: 'divider' }}>
-            <Tab label={"Jurisdictions"} /> <Tab label={"Banks"} /> <Tab label={"Users"} />
+            <Tab label={"Jurisdictions"} /> <Tab label={"Banks"} /> <Tab label={"Users"} /> <Tab label={"NTA"} />
         </Tabs>
     )
 }
@@ -41,7 +43,10 @@ export default function AdminComponent(props) {
                     <BankDisplay {...props}/>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    Users (Roles, NTA)
+                    <UserDisplay {...props}/>
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                    <NTAForm {...props}/>
                 </TabPanel>
             </Box>
 
