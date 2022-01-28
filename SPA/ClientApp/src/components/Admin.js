@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Tab, Tabs, Typography, Box, TextField, Divider, IconButton } from "@mui/material";
+import JurisdictionDisplay from "./JurisdictionComponents/JurisdictionDisplay";
+import BankDisplay from "./BankComponents/BankDisplay";
 
 //Maybe this should've  been a default component? strange....
 function TabPanel(props) {
@@ -26,17 +28,17 @@ export default function AdminComponent(props) {
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => { setValue(newValue); };
-    
+
 
     return (
         <React.Fragment>
-            <ClosetTabs orientation="horizontal" value={value} handleChange={handleChange}/>
+            <ClosetTabs orientation="horizontal" value={value} handleChange={handleChange} />
             <Box sx={{ bgcolor: 'background.paper', display: 'flex' }} >
                 <TabPanel value={value} index={0}>
-                    Jurisdictions (Create, Modify, Add/modify/remove brackets)
+                    <JurisdictionDisplay Vertical={props.Vertical} Session={props.Session}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    Banks (Create, Modify)
+                    <BankDisplay {...props}/>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                     Users (Roles, NTA)
