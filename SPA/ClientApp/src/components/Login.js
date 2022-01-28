@@ -7,14 +7,7 @@ export default function LoginComponent(props) {
     return (
         <React.Fragment>
             <Typography>
-                <Grid
-                    container
-                    spacing={0}
-                    direction="column"
-                    alignItems="center"
-                    justifyContent="center"
-                    style={{ minHeight: '50vh' }}
-                >
+                <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: '50vh' }}>
                     <Grid item xs={12}>
                         <LoginForm DarkMode={props.DarkMode} setSession={props.setSession}/>
                     </Grid>
