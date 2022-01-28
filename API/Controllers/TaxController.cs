@@ -30,8 +30,8 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpGet("Jurisdictions")]
         public async Task<IActionResult> GetJurisdictions([FromQuery] JurisdictionType? Type, [FromQuery] string? Query, int? Skip, int? Take) {
 
-            IQueryable<Jurisdiction> Set = DB.Jurisdiction.Where(J => J.Type == (Type ?? JurisdictionType.COUNTRY));
-            if (!string.IsNullOrWhiteSpace(Query)) { Set = Set.Where(J => J.Name.ToLower().Contains(Query)); }
+            IQueryable<Jurisdiction> Set = DB.Jurisdiction.Include(J=>J.ParentJurisdiction).Where(J => J.Type == (Type ?? JurisdictionType.COUNTRY));
+            if (!string.IsNullOrWhiteSpace(Query)) { Set = Set.Where(J => J.Name.ToLower().Contains(Query.ToLower())); }
 
             Set = Set.Skip(Skip ?? 0).Take(Take ?? 20);
 
@@ -67,14 +67,15 @@ namespace Igtampe.Neco.API.Controllers {
         public async Task<IActionResult> GetJurisdictionBrackets(string ID) {
 
             Jurisdiction? J = await DB.Jurisdiction.Include(J => J.Brackets).FirstOrDefaultAsync(J => J.ID == ID);
-            return J is null ? NotFound(ErrorResult.NotFound("Jurisdiction was not found", "ID")) : Ok(J.ChildJurisdictions);
+
+            return J is null ? NotFound(ErrorResult.NotFound("Jurisdiction was not found", "ID")) : Ok(J.Brackets.OrderBy(J=>J.IncomeType).ThenByDescending(J=>J.Start));
 
         }
 
         /// <summary>Gets a specific bracket</summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        [HttpGet("Bracket/{ID}")]
+        [HttpGet("Brackets/{ID}")]
         public async Task<IActionResult> GetBracket(Guid ID) {
             Bracket? B = await DB.Bracket.FindAsync(ID);
             return B is null ? NotFound(ErrorResult.NotFound("Bracket was not found","ID")): Ok(B);
@@ -178,14 +179,17 @@ namespace Igtampe.Neco.API.Controllers {
         /// <param name="Bracket"></param>
         /// <returns></returns>
         [HttpPost("Brackets")]
-        public async Task<IActionResult> CreateBracket([FromHeader] Guid? SessionID, [FromQuery] Guid? Jurisdiction,  [FromBody] Bracket Bracket) {
+        public async Task<IActionResult> CreateBracket([FromHeader] Guid? SessionID, [FromQuery] string? Jurisdiction,  [FromBody] Bracket Bracket) {
+            if (Bracket.End == -1) { Bracket.End = long.MaxValue; }
+            if (Bracket.Start > Bracket.End) { return BadRequest("Bracket start is after bracket end"); }
+
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized("Invalid session"); }
 
             if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
             //Find the jurisdiction
-            Jurisdiction? J = await DB.Jurisdiction.FindAsync(Jurisdiction ?? Guid.Empty);
+            Jurisdiction? J = await DB.Jurisdiction.FindAsync(Jurisdiction ?? "");
             if (J is null) { return NotFound(ErrorResult.NotFound("Jurisdiction this bracket will belong to was not found","Jurisdiction")); }
 
             Bracket.Jurisdiction = J;
@@ -251,8 +255,11 @@ namespace Igtampe.Neco.API.Controllers {
         /// <param name="ID"></param>
         /// <param name="Bracket"></param>
         /// <returns></returns>
-        [HttpPut("Bracket/{ID}")]
-        public async Task<IActionResult> UpdateBracket([FromHeader] Guid? SessionID, string ID, Bracket Bracket) {
+        [HttpPut("Brackets/{ID}")]
+        public async Task<IActionResult> UpdateBracket([FromHeader] Guid? SessionID, Guid ID, Bracket Bracket) {
+            if (Bracket.End == -1) { Bracket.End = long.MaxValue; }
+            if (Bracket.Start > Bracket.End) { return BadRequest("Bracket start is after bracket end"); }
+
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized("Invalid session"); }
 
@@ -280,8 +287,8 @@ namespace Igtampe.Neco.API.Controllers {
         /// <param name="SessionID"></param>
         /// <param name="ID"></param>
         /// <returns></returns>
-        [HttpDelete("Bracket/{ID}")]
-        public async Task<IActionResult> DeleteBracket([FromHeader] Guid? SessionID, string ID) {
+        [HttpDelete("Brackets/{ID}")]
+        public async Task<IActionResult> DeleteBracket([FromHeader] Guid? SessionID, Guid ID) {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized("Invalid session"); }
 
