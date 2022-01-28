@@ -158,7 +158,7 @@ namespace Igtampe.Neco.API.Controllers {
             DB.Update(U);
             await DB.SaveChangesAsync();
 
-            return Ok(U);
+            return Ok();
 
         }
 
