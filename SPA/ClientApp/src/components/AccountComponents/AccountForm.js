@@ -1,10 +1,8 @@
-import { TextField, Card, CardContent, CircularProgress, Divider, Grid, List, ListItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, FormControl, InputLabel, Select, MenuItem, Typography, Checkbox, FormControlLabel } from "@mui/material";
+import { TextField, CircularProgress, Divider, Grid, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, FormControl, InputLabel, Select, MenuItem, Checkbox, FormControlLabel } from "@mui/material";
 import React, { useState } from "react";
 import { GenerateGet, GenerateJSONPost, GenerateJSONPut } from "../../RequestOptionGenerator";
 import { IncomeTypeSelect } from "../AdminComponents/JurisdictionComponents/BracketEditor";
 import { JurisdictionAutoComplete } from "../AdminComponents/JurisdictionComponents/JurisdictionAutocomplete";
-import { JurisdictionTypeSelect } from "../AdminComponents/JurisdictionComponents/JurisdictionDisplay";
-import { JurisdictionSelect } from "../AdminComponents/JurisdictionComponents/JurisdictionEditor";
 import AlertSnackbar from "../AlertSnackbar";
 
 export function BankSelect(props){
