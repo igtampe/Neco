@@ -1,4 +1,5 @@
 ﻿using Igtampe.Neco.Common;
+using Igtampe.Neco.Common.Income;
 
 namespace Igtampe.Neco.API.Requests {
 
@@ -18,6 +19,9 @@ namespace Igtampe.Neco.API.Requests {
         public string BankID { get; set; } = "";
 
         /// <summary>ID of the district this account is located in</summary>
-        public Guid DistrictID { get; set; } = Guid.Empty;
+        public string JurisdictionID { get; set; } = "";
+
+        /// <summary>Type of income in this account</summary>
+        public IncomeType IncomeType { get; set; } = IncomeType.PERSONAL;
     }
 }
