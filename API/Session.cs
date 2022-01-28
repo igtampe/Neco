@@ -13,7 +13,7 @@
         public string UserID { get; }
 
         /// <summary>Whether or not this session is expired.</summary>
-        public bool Expired => DateTime.Now > ExpirationDate;
+        public bool Expired => DateTime.UtcNow > ExpirationDate;
 
         /// <summary>Creates a session for the given UserID</summary>
         /// <param name="UserID"></param>
@@ -26,7 +26,7 @@
         /// <summary>Extends the Session expiration date to 15 minutes after now</summary>
         public void ExtendSession() {
             if (ExpirationDate != DateTime.MinValue && Expired) { throw new InvalidOperationException("Session is already expired"); }
-            ExpirationDate = DateTime.Now.AddHours(12);
+            ExpirationDate = DateTime.UtcNow.AddHours(12);
         }
 
         /// <summary>Compares this Session to another object</summary>

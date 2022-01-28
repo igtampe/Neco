@@ -29,8 +29,8 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpGet("Transactions/Monthly")]
         public async Task<IActionResult> TransactionsMonthly([FromQuery] DateTime? StartDate, [FromQuery] DateTime? EndDate) {
 
-            DateTime Start = StartDate ?? DateTime.Now.AddMonths(-6).AddDays(-DateTime.Now.Day);
-            DateTime End = EndDate ?? DateTime.Now;
+            DateTime Start = StartDate ?? DateTime.UtcNow.AddMonths(-6).AddDays(-DateTime.UtcNow.Day);
+            DateTime End = EndDate ?? DateTime.UtcNow;
 
             //D a m n 
             var Data = await DB.Transaction.Where(T=>T.Date > Start && T.Date < End).GroupBy(T => new { T.Date.Month, T.Date.Year })

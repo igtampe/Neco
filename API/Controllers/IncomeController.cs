@@ -113,7 +113,7 @@ namespace Igtampe.Neco.API.Controllers {
 
             if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
-            if (DateTime.Now.Day != 15 && Force != true) { return BadRequest("It is not currently income day! If you wish to run income anyways, add Force=true"); }
+            if (DateTime.UtcNow.Day != 15 && Force != true) { return BadRequest("It is not currently income day! If you wish to run income anyways, add Force=true"); }
 
             //Get *all* the accounts along with their income items
             List<Account> Accounts = await DB.Account
@@ -135,7 +135,7 @@ namespace Igtampe.Neco.API.Controllers {
                     //Add the notification
                     //Create and add a notif
                     Notification N = new() {
-                        Date = DateTime.Now, User = Owner,
+                        Date = DateTime.UtcNow, User = Owner,
                         Text = $"Neco has deposited {A.Name} ({A.ID})'s monthly declared income of {TotalIncome:n0}p",
                     };
 
@@ -582,8 +582,8 @@ namespace Igtampe.Neco.API.Controllers {
             }
 
             //Update the dates
-            Item.DateCreated= DateTime.Now;
-            Item.DateUpdated = DateTime.Now;
+            Item.DateCreated= DateTime.UtcNow;
+            Item.DateUpdated = DateTime.UtcNow;
 
             DB.Add(Item);
             await DB.SaveChangesAsync();
@@ -646,7 +646,7 @@ namespace Igtampe.Neco.API.Controllers {
             }
 
             //Update the date updated
-            Item.DateUpdated = DateTime.Now;
+            Item.DateUpdated = DateTime.UtcNow;
 
             //If we're dealing with a corporation
             if (Item is Corporation Corp) {
