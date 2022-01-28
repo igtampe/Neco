@@ -20,11 +20,11 @@ namespace Igtampe.Neco.Common.Taxes {
         public IncomeType IncomeType { get; set; } = IncomeType.PERSONAL;
 
         /// <summary>Start of this bracket (inclusive)</summary>
-        [Range(0, int.MaxValue)]
+        [Range(0, long.MaxValue)]
         public long Start { get; set; } = 0;
 
         /// <summary>End of this bracket (Non-inclusive)</summary>
-        [Range(0, int.MaxValue)]
+        [Range(-1, long.MaxValue)]
         public long End { get; set; } = long.MaxValue;
 
         /// <summary>Jurisdiction this bracket belongs to</summary>
