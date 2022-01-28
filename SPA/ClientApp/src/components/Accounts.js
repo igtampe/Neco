@@ -1,8 +1,38 @@
-import { Card, CardContent, CircularProgress, Divider, Grid, List, ListItem } from "@mui/material";
-import React from "react";
+import { Card, CardContent, CircularProgress, Divider, Grid, List, ListItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@mui/material";
+import React, { useState } from "react";
+import AccountForm from "./AccountComponents/AccountForm";
 import NecoHeader from "./NecoHeader";
 
+export function ComingSoonDialog(props){
+
+    const handleClosing = () => { props.setOpen(false) }
+
+return(
+    <>
+    
+    <Dialog open={props.open} onClose={handleClosing}>
+        <DialogTitle>
+            Coming Soon!
+        </DialogTitle>
+        <DialogContent>
+            <DialogContentText>
+                This feature is not yet implemented!
+            </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={handleClosing}>Ok</Button>
+        </DialogActions>
+    </Dialog>
+
+    </>
+)
+
+}
+
 export default function AccountsComponent(props) {
+
+    const [CSOpen,setCSOpen] = useState(false);
+    const [newOpen, setNewOpen] = useState(false);    
 
     if(!props.User) {return (<CircularProgress/>)}
 
@@ -31,15 +61,19 @@ export default function AccountsComponent(props) {
                             <b>Quick actions</b>
                             <Divider />
                             <List>
-                                <ListItem button> Add an Account </ListItem>
-                                <ListItem button> Send a Check </ListItem>
-                                <ListItem button> Send a Bill </ListItem>
-                                <ListItem button> Add an Income Item </ListItem>
+                                <ListItem button onClick={()=>{setNewOpen(true)}}> Add an Account </ListItem>
+                                <ListItem button onClick={()=>{setCSOpen(true)}}> Send a Check </ListItem>
+                                <ListItem button onClick={()=>{setCSOpen(true)}}> Send a Bill </ListItem>
+                                <ListItem button onClick={()=>{setCSOpen(true)}}> Add an Income Item </ListItem>
                             </List>
                         </CardContent>
                     </Card>
                 </Grid>
             </Grid>
+
+            <AccountForm open={newOpen} setOpen={setNewOpen} {...props}/>
+            <ComingSoonDialog open={CSOpen} setOpen={setCSOpen}/>
+
         </React.Fragment>
     );
 
