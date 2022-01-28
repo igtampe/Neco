@@ -62,9 +62,6 @@ export default function JurisdictionDisplay(props) {
     const [jurisdictions, setJurisdictions] = useState(undefined)
     const [loading, setLoading] = useState(false);
 
-    const [displayedItems, setDisplayedItems] = useState(0)
-    const [noMas, setNoMas] = useState(false)
-
     const [newOpen, setNewOpen] = useState(false)
 
     const startSearch = (event) => { setJurisdictions(undefined) }
@@ -86,9 +83,6 @@ export default function JurisdictionDisplay(props) {
 
                 setJurisdictions(data)
                 setLoading(false)
-
-                setDisplayedItems(data.length)
-                setNoMas(data.length != 20)
 
             })
 

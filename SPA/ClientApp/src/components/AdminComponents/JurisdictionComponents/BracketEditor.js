@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import {
-    Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControl, Grid,
+    Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid,
     InputLabel, MenuItem, Select, TextField
 } from "@mui/material";
 import AlertSnackbar from "../../AlertSnackbar";
-import { CircularProgress } from "@mui/material";
-import { GenerateGet } from "../../../RequestOptionGenerator";
-import BracketDisplay from "./BracketDisplay";
 
 export function IncomeTypeSelect(props) {
     return (

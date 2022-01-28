@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import {
-    Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControl, Grid,
-    InputLabel, MenuItem, Select, TextField
+    Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField
 } from "@mui/material";
 import AlertSnackbar from "../../AlertSnackbar";
 import PicturePicker from "../../PicturePicker";
-import { CircularProgress } from "@mui/material";
-import { GenerateGet } from "../../../RequestOptionGenerator";
 
 export default function BankEditor(props) {
 

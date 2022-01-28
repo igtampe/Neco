@@ -1,4 +1,4 @@
-import { Card, CardContent, CircularProgress, Divider, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Card, CardContent, CircularProgress, Divider, Grid, List, ListItem } from "@mui/material";
 import React from "react";
 import NecoHeader from "./NecoHeader";
 

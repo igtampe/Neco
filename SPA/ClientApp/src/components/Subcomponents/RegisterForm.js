@@ -81,7 +81,6 @@ export default function RegisterForm(props) {
             "isGov": false,
             "isSdc": false,
             "isUploader": false,
-            "id": "f0191ffa-de09-473b-b3eb-50a4beabf94c",
             "idGenerator": {},
             "id": "12633"
           }
