@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { GenerateGet } from '../../../RequestOptionGenerator'
 import JurisdictionEditor from "./JurisdictionEditor";
 
+//Requires type, settype, setcollection
 export function JurisdictionTypeSelect(props) {
     return (
         <FormControl fullWidth style={{ margintop: "15px" }}>

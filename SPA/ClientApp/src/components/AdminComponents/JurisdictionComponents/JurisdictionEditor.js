@@ -10,6 +10,7 @@ import { GenerateGet } from "../../../RequestOptionGenerator";
 import { JurisdictionTypeSelect } from "./JurisdictionDisplay";
 import BracketDisplay from "./BracketDisplay";
 
+//Requires jurisdictions, setJurisdictions, type, jurisdiction, setJurisdiction.
 export function JurisdictionSelect(props) {
 
     const [loading, setLoading] = useState(false);
