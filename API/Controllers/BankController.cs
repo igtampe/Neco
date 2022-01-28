@@ -203,7 +203,7 @@ namespace Igtampe.Neco.API.Controllers {
             User? U = await DB.User.FindAsync(S.UserID);
             if (U is null) { return NotFound(ErrorResult.NotFound("User was not found", "User")); }
 
-            Jurisdiction? D = await DB.Jurisdiction.FindAsync(Request.DistrictID);
+            Jurisdiction? D = await DB.Jurisdiction.FindAsync(Request.JurisdictionID);
             if (D is null) { return NotFound(ErrorResult.NotFound("District was not found","District")); }
 
             Bank? B = await DB.Bank.FindAsync(Request.BankID);
@@ -211,8 +211,12 @@ namespace Igtampe.Neco.API.Controllers {
 
             Account A = new() { 
                 Name = Request.Name, Address = Request.Address, PubliclyListed = Request.PubliclyListed,
-                Balance = 0, Jurisdiction = D, Owners = new(), Bank = B,
+                Balance = 0, Jurisdiction = D, Owners = new(), Bank = B, IncomeType = Request.IncomeType
             };
+
+            if (!U.IsAdmin && !U.IsGov && Request.IncomeType == IncomeType.GOVERNMENT) {
+                return Unauthorized(ErrorResult.Forbidden("Cannot set incometype to government when the user is not from the government or an admin"));
+            }
 
             A.Owners.Add(U);
 
@@ -246,7 +250,7 @@ namespace Igtampe.Neco.API.Controllers {
 
             Transaction T = new() {
                 Amount = Request.Amount,
-                Date = DateTime.Now,
+                Date = DateTime.UtcNow,
                 Destination = Destination,
                 Name = Request.Name,
                 Origin = Origin
@@ -263,7 +267,7 @@ namespace Igtampe.Neco.API.Controllers {
 
                 //Create and add a notif
                 Notification N = new() {
-                    Date = DateTime.Now, User = O,
+                    Date = DateTime.UtcNow, User = O,
                     Text = $"Account {T.Destination.Name} ({T.Destination.ID}) Received {T.Amount:N0}p from {T.Origin.ID}",
                 };
 
@@ -321,7 +325,7 @@ namespace Igtampe.Neco.API.Controllers {
             User? U = await DB.User.FindAsync(S.UserID);
             if (U is null) { return NotFound(ErrorResult.NotFound("User was not found", "User")); }
 
-            Jurisdiction? D = await DB.Jurisdiction.FindAsync(Request.DistrictID);
+            Jurisdiction? D = await DB.Jurisdiction.FindAsync(Request.JurisdictionID);
             if (D is null) { return NotFound(ErrorResult.NotFound("District was not found", "District")); }
 
             //Bank? B = await DB.Bank.FindAsync(Request.BankID);
@@ -334,6 +338,11 @@ namespace Igtampe.Neco.API.Controllers {
             A.Address=Request.Address;
             A.PubliclyListed=Request.PubliclyListed;
             A.Jurisdiction = D;
+            A.IncomeType = Request.IncomeType;
+
+            if (!U.IsAdmin && !U.IsGov && Request.IncomeType==IncomeType.GOVERNMENT) {
+                return Unauthorized(ErrorResult.Forbidden("Cannot set incometype to government when the user is not from the government or an admin"));
+            }
 
             DB.Update(A);
             await DB.SaveChangesAsync();
@@ -366,7 +375,7 @@ namespace Igtampe.Neco.API.Controllers {
 
                 //Create and add a notif
                 Notification N = new() {
-                    Date = DateTime.Now, User = O,
+                    Date = DateTime.UtcNow, User = O,
                     Text = $"Account {A.Name} ({A.ID}) received a non-taxed amount of {Amount:N0}p",
                 };
 
