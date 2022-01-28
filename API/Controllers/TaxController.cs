@@ -30,8 +30,12 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpGet("Jurisdictions")]
         public async Task<IActionResult> GetJurisdictions([FromQuery] JurisdictionType? Type, [FromQuery] string? Query, int? Skip, int? Take) {
 
-            IQueryable<Jurisdiction> Set = DB.Jurisdiction.Include(J=>J.ParentJurisdiction).Where(J => J.Type == (Type ?? JurisdictionType.COUNTRY));
+            IQueryable<Jurisdiction> Set = DB.Jurisdiction.Include(J => J.ParentJurisdiction);
+            if (Type != null) { Set = Set.Where(J => J.Type == (Type ?? JurisdictionType.COUNTRY)); }
+
             if (!string.IsNullOrWhiteSpace(Query)) { Set = Set.Where(J => J.Name.ToLower().Contains(Query.ToLower())); }
+
+            Set = Set.OrderBy(J => J.Type).ThenBy(J => J.Name);
 
             Set = Set.Skip(Skip ?? 0).Take(Take ?? 20);
 
@@ -314,7 +318,7 @@ namespace Igtampe.Neco.API.Controllers {
 
             if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
-            if (DateTime.Now.Day != 1 && Force != true) { return BadRequest("It is not currently tax day! If you wish to run tax anyways, add Force=true"); }
+            if (DateTime.UtcNow.Day != 1 && Force != true) { return BadRequest("It is not currently tax day! If you wish to run tax anyways, add Force=true"); }
 
             //We onyly really need the IDs of the accounts
             List<string?> Accounts = await DB.Account.Select(A => A.ID).ToListAsync();
@@ -349,7 +353,7 @@ namespace Igtampe.Neco.API.Controllers {
                     //Add the notification
                     //Create and add a notif
                     Notification N = new() {
-                        Date = DateTime.Now, User = Owner,
+                        Date = DateTime.UtcNow, User = Owner,
                         Text = $"Neco has withdrawn {TR.Account.Name} ({TR.Account.ID})'s monthly tax of {TR.GrandTotalTax:n0}p. See your newest Tax Report for more details",
                     };
 
@@ -372,7 +376,7 @@ namespace Igtampe.Neco.API.Controllers {
                     //Add the notification
                     //Create and add a notif
                     Notification N = new() {
-                        Date = DateTime.Now, User = Owner,
+                        Date = DateTime.UtcNow, User = Owner,
                         Text = $"Neco has deposited {PaymentDictionary[A]:n0}p in tax for this month to {A.Name} ({A.ID}).",
                     };
 
@@ -418,7 +422,7 @@ namespace Igtampe.Neco.API.Controllers {
             //Decide the time period we'll get transactions from:
             List<Transaction> Ts;
 
-            if (DateTime.Now.Day > 15) {
+            if (DateTime.UtcNow.Day > 15) {
 
                 //Get Transactions since this month's 15th.
                 Ts = await DB.Transaction
@@ -453,8 +457,8 @@ namespace Igtampe.Neco.API.Controllers {
         /// <returns></returns>
         private static DateTime DayOfLastMonth(int Day) {
 
-            int LastMonth = DateTime.Now.Month - 1;
-            int Year = DateTime.Now.Year;
+            int LastMonth = DateTime.UtcNow.Month - 1;
+            int Year = DateTime.UtcNow.Year;
             if (LastMonth == 0) {
                 Year--;
                 LastMonth = 12;
@@ -470,7 +474,7 @@ namespace Igtampe.Neco.API.Controllers {
         /// this function with param day=15, it would return December 15th). Use day 31 to get the last day of this month.</summary>
         /// <param name="Day"></param>
         /// <returns></returns>
-        private static DateTime DayOfThisMonth(int Day) => new (DateTime.Now.Year, DateTime.Now.Month, Math.Min(Day, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)));
+        private static DateTime DayOfThisMonth(int Day) => new (DateTime.UtcNow.Year, DateTime.UtcNow.Month, Math.Min(Day, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month)));
 
         #endregion
 
