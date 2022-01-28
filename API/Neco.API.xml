@@ -793,8 +793,11 @@
         <member name="P:Igtampe.Neco.API.Requests.AccountRequest.BankID">
             <summary>ID of the Bank this account belongs to</summary>
         </member>
-        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.DistrictID">
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.JurisdictionID">
             <summary>ID of the district this account is located in</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.IncomeType">
+            <summary>Type of income in this account</summary>
         </member>
         <member name="T:Igtampe.Neco.API.Requests.BankRequest">
             <summary>Request relating to editing or creating a Bank</summary>
