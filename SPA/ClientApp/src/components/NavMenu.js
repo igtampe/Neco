@@ -40,8 +40,6 @@ const Hamburger = (props) => {
     props.setMenuOpen(false)
   }
 
-  console.log(props)
-
   return (
     <Drawer open={props.menuOpen} onClose={() => props.setMenuOpen(false)}>
       <Box

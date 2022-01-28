@@ -33,11 +33,7 @@ export default function BracketEditor(props) {
 
     const [populated, setPopulated] = useState(false);
 
-    const [result, setResult] = useState({
-        severity: "success",
-        text: "idk"
-    })
-
+    const [result, setResult] = useState({ severity: "success", text: "idk" })
     const [SnackOpen, setSnackOpen] = useState(false);
 
     if (props.bracket && !populated && props.open) {
