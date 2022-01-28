@@ -3,9 +3,9 @@ import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControl, Grid,
     InputLabel, MenuItem, Select, TextField
 } from "@mui/material";
-import AlertSnackbar from "../AlertSnackbar";
+import AlertSnackbar from "../../AlertSnackbar";
 import { CircularProgress } from "@mui/material";
-import { GenerateGet } from "../../RequestOptionGenerator";
+import { GenerateGet } from "../../../RequestOptionGenerator";
 import BracketDisplay from "./BracketDisplay";
 
 export function IncomeTypeSelect(props) {

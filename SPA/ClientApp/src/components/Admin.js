@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Tab, Tabs, Typography, Box, TextField, Divider, IconButton } from "@mui/material";
-import JurisdictionDisplay from "./JurisdictionComponents/JurisdictionDisplay";
-import BankDisplay from "./BankComponents/BankDisplay";
+import JurisdictionDisplay from "./AdminComponents/JurisdictionComponents/JurisdictionDisplay";
+import BankDisplay from "./AdminComponents/BankComponents/BankDisplay";
 
 //Maybe this should've  been a default component? strange....
 function TabPanel(props) {

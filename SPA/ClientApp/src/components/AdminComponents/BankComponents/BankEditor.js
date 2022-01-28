@@ -3,10 +3,10 @@ import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControl, Grid,
     InputLabel, MenuItem, Select, TextField
 } from "@mui/material";
-import AlertSnackbar from "../AlertSnackbar";
-import PicturePicker from "../PicturePicker";
+import AlertSnackbar from "../../AlertSnackbar";
+import PicturePicker from "../../PicturePicker";
 import { CircularProgress } from "@mui/material";
-import { GenerateGet } from "../../RequestOptionGenerator";
+import { GenerateGet } from "../../../RequestOptionGenerator";
 
 export default function BankEditor(props) {
 

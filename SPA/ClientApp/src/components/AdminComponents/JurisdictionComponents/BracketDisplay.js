@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit'
 import DelIcon from '@mui/icons-material/Delete'
 import BracketEditor from "./BracketEditor";
-import DeleteConfirm from "../Subcomponents/DeleteConfirm";
-import { GenerateDelete } from "../../RequestOptionGenerator";
+import DeleteConfirm from "../../Subcomponents/DeleteConfirm";
+import { GenerateDelete } from "../../../RequestOptionGenerator";
 
 export const IncomeTypes = [ "Personal","Corporate","Government", "Charity" ]
 

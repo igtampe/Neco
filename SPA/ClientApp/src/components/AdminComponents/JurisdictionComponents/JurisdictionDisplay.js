@@ -3,7 +3,7 @@ import { Box, TextField, IconButton, Select, MenuItem, FormControl, InputLabel, 
 import SearchIcon from '@mui/icons-material/Search'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
-import { GenerateGet } from '../../RequestOptionGenerator'
+import { GenerateGet } from '../../../RequestOptionGenerator'
 import JurisdictionEditor from "./JurisdictionEditor";
 
 export function JurisdictionTypeSelect(props) {
