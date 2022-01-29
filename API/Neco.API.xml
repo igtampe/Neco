@@ -142,6 +142,25 @@
             <param name="ID"></param>
             <returns></returns>
         </member>
+        <member name="T:Igtampe.Neco.API.Controllers.CertificationController">
+            <summary>Certification controller in charge of handling the generation of certification images, and the verification of said images and text</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.CertificationController.#ctor(Igtampe.Neco.Data.NecoContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.CertificationController.GenerateTransactionCert(System.Guid)">
+            <summary>Generates a transaction certification receipt</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.CertificationController.VerifyTransaction(System.String)">
+            <summary>Verifies a transaction qr code (more specifically the data in the qr code)</summary>
+            <param name="TString"></param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
         <member name="T:Igtampe.Neco.API.Controllers.ImageController">
             <summary>Controller that handles User operations</summary>
         </member>
@@ -777,6 +796,37 @@
         </member>
         <member name="P:Igtampe.Neco.API.ErrorResult.Reusable.InvalidSession">
             <summary>Error Result due to an invalid or expired session</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Properties.Resources.Check">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Properties.Resources.Roboto">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Properties.Resources.TinyNeco">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
         </member>
         <member name="T:Igtampe.Neco.API.Requests.AccountRequest">
             <summary>Request relating to editing or creating a bank account</summary>
