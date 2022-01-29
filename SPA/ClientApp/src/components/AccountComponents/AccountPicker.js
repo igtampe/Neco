@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Grid, TableContainer, Table, TableHead, TableRow, TableCell, Box, TextField, IconButton, Paper, TableBody, CircularProgress } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TableContainer, Table, TableHead, TableRow, TableCell, Box, TextField, IconButton, Paper, TableBody, CircularProgress } from "@mui/material";
 import React, { useState } from "react";
 import { GenerateGet } from '../../RequestOptionGenerator'
 import { IncomeTypes } from '../AdminComponents/JurisdictionComponents/BracketDisplay'
