@@ -1,6 +1,8 @@
 import { Card, CardContent, CircularProgress, Divider, Grid, List, ListItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@mui/material";
 import React, { useState } from "react";
+import AccountDisplay from "./AccountComponents/AccountDisplay";
 import AccountForm from "./AccountComponents/AccountForm";
+import SendMonet from "./AccountComponents/SendMonet";
 import NecoHeader from "./NecoHeader";
 
 export function ComingSoonDialog(props){
@@ -31,6 +33,9 @@ return(
 
 export default function AccountsComponent(props) {
 
+    const [accounts, setAccounts] = useState(undefined);
+    const [sendMoneyOpen, setSendMoneyOpen] = useState(false)
+
     const [CSOpen,setCSOpen] = useState(false);
     const [newOpen, setNewOpen] = useState(false);    
 
@@ -42,26 +47,17 @@ export default function AccountsComponent(props) {
         <React.Fragment>
             <NecoHeader name={props.User ? props.User.name : '...'} />
             <Grid container spacing={2} style={{ minWidth: '100%' }}>
-                <Grid item xs={9}>
-
-                    Accordion for each account that in the summary has Bank name, Account Name, Balance
-                    and in the details includes 3 latest transactions and buttons to:
-
-                    Menu with:
-                        see more transactions
-                        Manage owners
-                        Close account
-                    
-                    Send Money (big)
-
+                <Grid item xs={props.Vertical ? 12 : 9}>
+                    <AccountDisplay accounts={accounts} setAccounts={setAccounts} {...props}/>
                 </Grid>
-                <Grid item xs={3}>
-                    <Card sx={{ minWidth: '100%', maxHeight:'100%', height:'60vh' }}>
+                <Grid item xs={props.Vertical ? 12 : 3}>
+                    <Card sx={{ minWidth: '100%', maxHeight:'100%', height:(props.Vertical ? 'auto': '60vh') }}>
                         <CardContent>
                             <b>Quick actions</b>
                             <Divider />
                             <List>
                                 <ListItem button onClick={()=>{setNewOpen(true)}}> Add an Account </ListItem>
+                                <ListItem button onClick={()=>{setSendMoneyOpen(true)}}> Send Money </ListItem>
                                 <ListItem button onClick={()=>{setCSOpen(true)}}> Send a Check </ListItem>
                                 <ListItem button onClick={()=>{setCSOpen(true)}}> Send a Bill </ListItem>
                                 <ListItem button onClick={()=>{setCSOpen(true)}}> Add an Income Item </ListItem>
@@ -71,7 +67,9 @@ export default function AccountsComponent(props) {
                 </Grid>
             </Grid>
 
-            <AccountForm open={newOpen} setOpen={setNewOpen} {...props}/>
+            <AccountForm open={newOpen} setOpen={setNewOpen} setAccounts={setAccounts} {...props}/>
+            <SendMonet {...props} open={sendMoneyOpen} setOpen={setSendMoneyOpen}/>
+
             <ComingSoonDialog open={CSOpen} setOpen={setCSOpen}/>
 
         </React.Fragment>
