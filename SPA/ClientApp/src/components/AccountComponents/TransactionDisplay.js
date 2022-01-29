@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ReceiptIcon from '@mui/icons-material/Receipt'
 import { GenerateGet } from "../../RequestOptionGenerator";
 import { Search } from "@mui/icons-material";
+import ReceiptDialog from "./ReceiptDIalog";
 
 function TransactionRow(props){
 
@@ -19,6 +20,9 @@ function TransactionRow(props){
                 <TableCell width={'120px'}>{props.T.amount.toLocaleString()}p</TableCell>
                 <TableCell width={'70px'}> <IconButton onClick={() => { setOpen(true)}}><ReceiptIcon /></IconButton></TableCell>
             </TableRow>
+
+            <ReceiptDialog {...props} open={open} setOpen={setOpen} transactionID={props.T.id}/>
+
         </>
     )
 
