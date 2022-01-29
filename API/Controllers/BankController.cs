@@ -90,7 +90,7 @@ namespace Igtampe.Neco.API.Controllers {
             if (U is null) { throw new InvalidOperationException("Uh...."); }
 
             //Get the user
-            return Ok(U.Accounts);
+            return Ok(U.Accounts.OrderBy(A=>A.IncomeType).ThenBy(A=>A.Name));
         }
 
         /// <summary>Gets a specific account from the list of accoutns owned by the session owner</summary>
@@ -155,15 +155,26 @@ namespace Igtampe.Neco.API.Controllers {
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
             IQueryable<Transaction> set = DB.Transaction;
+            if (Type == null || Type == TransactionType.ANY) { set = set.Include(T => T.Origin); }
+
             set = Type switch {
                 TransactionType.DEBIT => set.Where(T => T.Origin != null && T.Origin.ID == ID), //Only origin
                 TransactionType.CREDIT => set.Where(T => T.Destination != null && T.Destination.ID == ID), //Only destination
                 _ => set.Where(T => T.Origin != null && T.Destination != null && (T.Origin.ID == ID || T.Destination.ID == ID)), //Both
             };
 
+            
             if (!string.IsNullOrWhiteSpace(Query)) { set = set.Where(S => S.Name.ToLower().Contains(Query.ToLower())); }
-            if (Start is not null) { set = set.Where(S => S.Date > Start); }
-            if (End is not null) { set = set.Where(S => S.Date < End); }
+            
+            if (Start is not null) {
+                Start = DateTime.SpecifyKind(Start ?? DateTime.UtcNow, DateTimeKind.Utc);
+                set = set.Where(S => S.Date > Start); 
+            }
+            
+            if (End is not null) {
+                End = DateTime.SpecifyKind(End ?? DateTime.UtcNow, DateTimeKind.Utc);
+                set = set.Where(S => S.Date < End); 
+            }
 
             set = Sort switch {
                 TransactionSortType.AMOUNT_ASC => set = set.OrderBy(A => A.Amount), //Amount Ascending
@@ -173,8 +184,24 @@ namespace Igtampe.Neco.API.Controllers {
             };
 
             set = set.Skip(Skip ?? 0).Take(Take ?? 20);
+            List<Transaction> T = await set.ToListAsync();
 
-            return Ok(await set.ToListAsync());
+            switch (Type) {
+                case TransactionType.DEBIT:
+                    T.ForEach(t => t.Amount *= -1); //For debit we need to do a -1 because all the moeny is going out
+                    break;
+                case TransactionType.CREDIT:
+                    break; //For credit nada
+                default:
+                    T.ForEach(T => { //We need to determine who the heck sent this money (us or them)
+                        //We legitimately only include the origin for this
+                        if (T.Origin is not null && T.Origin.ID == ID) { T.Amount *= -1; }
+                        T.Origin = null; //then we adiosito it
+                    });
+                    break;
+            }
+
+            return Ok(T);
         }
 
         //Banks are the only types we allow to specify ID rather than having it generated
@@ -253,6 +280,8 @@ namespace Igtampe.Neco.API.Controllers {
 
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
+
+            if (Request.Origin == Request.Destination) { return BadRequest(ErrorResult.BadRequest("Cannot send money to the same account!")); }
 
             Account? Origin = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A=>A.ID==Request.Origin && !A.Closed);
             
