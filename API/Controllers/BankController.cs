@@ -310,6 +310,9 @@ namespace Igtampe.Neco.API.Controllers {
             //Add a notification to each owner of each de-esta cosa
             foreach (User O in T.Destination.Owners) {
 
+                //prevent sending notifs to the executing user if they happen to also be an owner of this account
+                if (O.ID == S.UserID) { continue; }
+
                 //Create and add a notif
                 Notification N = new() {
                     Date = DateTime.UtcNow, User = O,
@@ -435,12 +438,35 @@ namespace Igtampe.Neco.API.Controllers {
             return Ok(A);
         }
 
+        /// <summary>Gets list of owners for a given account</summary>
+        /// <param name="SessionID"></param>
+        /// <param name="ID"></param>
+        /// <param name="Owner"></param>
+        /// <returns></returns>
+        [HttpGet("Accounts/{ID}/Owners")]
+        public async Task<IActionResult> GetOwners([FromHeader] Guid? SessionID, string ID, [FromQuery] string? Owner) {
+
+            Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
+            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
+            if (S.UserID == Owner) { return BadRequest(ErrorResult.BadRequest("Cannot add yourself to an account!", "Owner")); }
+
+            User? U = await DB.User.FindAsync(Owner);
+            if (U is null) { return NotFound(ErrorResult.NotFound("User was not found", "User")); }
+
+            Account? A = await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == ID && !A.Closed);
+            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
+            if (!A.Owners.Any(U => S.UserID == U.ID)) { return (Unauthorized(ErrorResult.Forbidden("User does not own this account"))); }
+
+            return Ok(A.Owners);
+
+        }
+
         /// <summary>Adds an additional owner to a given account</summary>
         /// <param name="SessionID"></param>
         /// <param name="ID"></param>
         /// <param name="Owner"></param>
         /// <returns></returns>
-        [HttpPut("Accounts/{ID}/AddOwner")]
+        [HttpPost("Accounts/{ID}/Owners")]
         public async Task<IActionResult> AddOwner([FromHeader] Guid? SessionID, string ID, [FromQuery] string? Owner) {
 
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
@@ -462,7 +488,7 @@ namespace Igtampe.Neco.API.Controllers {
             DB.Update(A);
             await DB.SaveChangesAsync();
 
-            return Ok(A);
+            return Ok(A.Owners);
 
         }
 
@@ -471,7 +497,7 @@ namespace Igtampe.Neco.API.Controllers {
         /// <param name="ID"></param>
         /// <param name="Owner"></param>
         /// <returns></returns>
-        [HttpPut("Accounts/{ID}/RemoveOwner")]
+        [HttpDelete("Accounts/{ID}/Owners")]
         public async Task<IActionResult> RemoveOwner([FromHeader] Guid? SessionID, string ID, [FromQuery] string? Owner) {
 
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
@@ -493,7 +519,7 @@ namespace Igtampe.Neco.API.Controllers {
             DB.Update(A);
             await DB.SaveChangesAsync();
 
-            return Ok(A);
+            return Ok(A.Owners);
 
         }
 
