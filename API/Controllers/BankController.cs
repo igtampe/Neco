@@ -82,9 +82,15 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
-            //Get the user
-            return Ok(await DB.Account.Include(A => A.Bank).Include(A => A.Jurisdiction).Where(A => A.Owners != null && A.Owners.Any(O => O.ID == S.UserID) && !A.Closed).ToListAsync());
+            //Get the User
+            User? U = await DB.User
+                .Include(U => U.Accounts.Where(A => !A.Closed)).ThenInclude(A=>A.Jurisdiction)
+                .Include(U => U.Accounts.Where(A => !A.Closed)).ThenInclude(A => A.Bank)
+                .FirstOrDefaultAsync(U=>U.ID==S.UserID);
+            if (U is null) { throw new InvalidOperationException("Uh...."); }
 
+            //Get the user
+            return Ok(U.Accounts);
         }
 
         /// <summary>Gets a specific account from the list of accoutns owned by the session owner</summary>
@@ -95,9 +101,16 @@ namespace Igtampe.Neco.API.Controllers {
         public async Task<IActionResult> GetAccount([FromHeader] Guid? SessionID, string ID) {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
+             
+            Account? A = await DB.Account
+                .Include(A=>A.Bank)
+                .Include(A=>A.Owners)
+                .Include(A => A.Jurisdiction)
+                .FirstOrDefaultAsync(A => A.ID == ID);
+            if (A is null) return NotFound(ErrorResult.NotFound("Bank account was not found"));
+            if (!A.Owners.Any(U => U.ID == S.UserID)) { A.Balance = 0;} //If the executor is not in the owners, clear out the balance information for prvacy
 
-            Account? A = await DB.Account.Include(A=>A.Bank).Include(A => A.Jurisdiction).FirstOrDefaultAsync(A => A.Owners.Any(U => U.ID == S.UserID) && A.ID == ID);
-            return A is null ? NotFound(ErrorResult.NotFound("Bank account was not found or is not accessible by session owner")) : Ok(A);
+            return Ok(A);
         }
 
         /// <summary>Gets the accounts directory</summary>
@@ -241,8 +254,11 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
-            Account? Origin = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A=>A.ID==Request.Origin && A.Owners.Any(O=>O.ID==S.UserID) && !A.Closed);
+            Account? Origin = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A=>A.ID==Request.Origin && !A.Closed);
+            
             if(Origin is null) { return NotFound(ErrorResult.NotFound("Origin was not found or does not belong to the session owner","Origin")); }
+            if(!Origin.Owners.Any(O => O.ID == S.UserID)) { return Unauthorized(ErrorResult.Forbidden("User does not own this account")); }
+
             if (Origin.Balance < Request.Amount) { return BadRequest(ErrorResult.BadRequest("Insufiscient Funds","Origin")); }
 
             Account? Destination = await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A=>A.ID==Request.Destination && !A.Closed);
@@ -331,8 +347,9 @@ namespace Igtampe.Neco.API.Controllers {
             //Bank? B = await DB.Bank.FindAsync(Request.BankID);
             //if (B is null) { return NotFound(ErrorResult.NotFound("Bank was not found", "Bank")); } //Bank is ignored
 
-            Account? A = await DB.Account.FirstOrDefaultAsync(A=> A.ID==ID && A.Owners.Any(O=>O.ID==S.UserID));
-            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found, or is not owned by the given user","Account")); }
+            Account? A = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A=> A.ID==ID);
+            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found","Account")); }
+            if (!A.Owners.Contains(U)) { return Unauthorized(ErrorResult.Forbidden("User does not own this account")); }
 
             A.Name=Request.Name;
             A.Address=Request.Address;
@@ -405,8 +422,10 @@ namespace Igtampe.Neco.API.Controllers {
             User? U = await DB.User.FindAsync(Owner);
             if (U is null) { return NotFound(ErrorResult.NotFound("User was not found", "User")); }
 
-            Account? A = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A => A.ID == ID && A.Owners.Any(O => O.ID == S.UserID));
-            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found, or is not owned by the given user", "Account")); }
+            Account? A = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A => A.ID == ID && !A.Closed);
+            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
+            
+            if (!A.Owners.Any(U => S.UserID==U.ID)) { return (Unauthorized(ErrorResult.Forbidden("User does not own this account"))); }
 
             if (A.Owners.Contains(U)) { return BadRequest(ErrorResult.BadRequest("Given user is already an owner","Owner")); }
             A.Owners.Add(U);
@@ -434,8 +453,9 @@ namespace Igtampe.Neco.API.Controllers {
             User? U = await DB.User.FindAsync(Owner);
             if (U is null) { return NotFound(ErrorResult.NotFound("User was not found", "User")); }
 
-            Account? A = await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == ID && A.Owners.Any(O => O.ID == S.UserID));
-            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found, or is not owned by the given user", "Account")); }
+            Account? A = await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == ID && !A.Closed);
+            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
+            if (!A.Owners.Any(U => S.UserID == U.ID)) { return (Unauthorized(ErrorResult.Forbidden("User does not own this account"))); }
 
             if (!A.Owners.Contains(U)) { return BadRequest(ErrorResult.BadRequest("Given user is not an owner", "Owner")); }
             if (A.Owners.Count==1) { return BadRequest(ErrorResult.BadRequest("Cannot remove only account owner", "Owner")); }
@@ -458,8 +478,9 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
-            Account? A = await DB.Account.FirstOrDefaultAsync(A => A.ID == ID && A.Owners.Any(O => O.ID == S.UserID));
-            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found, or is not owned by the given user", "Account")); }
+            Account? A = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A => A.ID == ID && !A.Closed);
+            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
+            if(!A.Owners.Any(U=>U.ID==S.UserID)) { return Unauthorized(ErrorResult.Forbidden("User does not own account")); }
 
             if (A.Balance > 0) { return BadRequest(ErrorResult.BadRequest("Account is not empty! Empty it out before closing the account!","Account")); }
             A.Closed = true;

@@ -81,7 +81,9 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await GetSession(SessionID);
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
-            bool isAccountOwner = await DB.Account.AnyAsync(A => A.ID == AccountID && A.Owners.Any(O => O.ID == S.UserID));
+            //Manuel is smiling with a big smile of I TOLD U SO :)
+            //Look I know this could be a single SQL Query if I just had access to that table pero pues oops at least most times I have to do this we need the data anyway pero damnit.
+            bool isAccountOwner = (await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A => A.ID == AccountID))?.Owners.Any(U=>U.ID==S.UserID) ?? false;
             if (!isAccountOwner && !await IsAdminOrSDC(S.UserID)) { return NotFound(ErrorResult.NotFound("Account was not found or is not owned by session owner", "AccountID")); }
 
             //Total income from all item subtypes individual and grand total
@@ -494,7 +496,7 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await GetSession(SessionID);
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
-            bool isAccountOwner = await DB.Account.AnyAsync(A => A.ID == AccountID && A.Owners.Any(O => O.ID == S.UserID));
+            bool isAccountOwner = (await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == AccountID))?.Owners.Any(U => U.ID == S.UserID) ?? false;
             if (!isAccountOwner && ! await IsAdminOrSDC(S.UserID)) { return NotFound(ErrorResult.NotFound("Account was not found or is not owned by session owner", "AccountID")); }
 
             BaseSet = BaseSet.Where(I => I.Account != null && I.Account.ID == AccountID);
@@ -565,8 +567,10 @@ namespace Igtampe.Neco.API.Controllers {
                     case "ACCOUNTID":
                         //Look for the account ID then keep going
 
-                        Account? A = await DB.Account.FirstOrDefaultAsync(A => A.ID == ItemRequest.AccountID && A.Owners.Any(O => O.ID == S.UserID));
-                        if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found or is not owned by session owner", "Account")); }
+                        Account? A = await DB.Account.Include(A=>A.Owners).FirstOrDefaultAsync(A => A.ID == ItemRequest.AccountID);
+                        if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
+                        if (!A.Owners.Any(u => u.ID == S.UserID)) { return Unauthorized(ErrorResult.Unauthorized("User does not own account")); }
+
                         Item.Account = A;
 
                         continue;
@@ -629,9 +633,9 @@ namespace Igtampe.Neco.API.Controllers {
                     case "ACCOUNTID":
                         //Look for the account ID then keep going
 
-                        Account? A = await DB.Account.FirstOrDefaultAsync(A => A.ID == ItemRequest.AccountID && A.Owners.Any(O => O.ID == S.UserID));
-                        if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found or is not owned by session owner", "Account")); }
-                        Item.Account = A;
+                        Account? A = await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == ItemRequest.AccountID);
+                        if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
+                        if (!A.Owners.Any(u => u.ID == S.UserID)) { return Unauthorized(ErrorResult.Unauthorized("User does not own account")); }
 
                         continue;
                     default:
@@ -695,11 +699,17 @@ namespace Igtampe.Neco.API.Controllers {
         /// <returns></returns>
         private async Task<E?> GetItem<E>(IQueryable<E> BaseSet, Session S, Guid? ID) where E : IncomeItem{
 
-            BaseSet = BaseSet.Include(I => I.Jurisdiction);
+            //Goddamnit this is probably the worst one
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            BaseSet = BaseSet.Include(I => I.Jurisdiction).Where(A => A.Account != null).Include(A => A.Account).ThenInclude(A => A.Owners);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-            return await IsAdminOrSDC(S.UserID) 
-                ? await BaseSet.FirstOrDefaultAsync(I=>I.ID==ID) 
-                : await BaseSet.FirstOrDefaultAsync(I => I.ID == ID && I.Account != null && I.Account.Owners.Any(O => O.ID == S.UserID));
+            E? Item = await BaseSet.FirstOrDefaultAsync(I => I.ID == ID);
+            return Item is null || await IsAdminOrSDC(S.UserID)
+                ? Item
+                : Item.Account != null && Item.Account.Owners != null && !Item.Account.Owners.Any(U => U.ID == S.UserID) 
+                    ? null 
+                    : Item; //have whatever deals with this deal with this
 
         }
 

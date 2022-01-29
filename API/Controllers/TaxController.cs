@@ -94,11 +94,10 @@ namespace Igtampe.Neco.API.Controllers {
 
             //Check the session:
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
-            if (S is null) { return Unauthorized("Invalid session"); }
+            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
             //Check the account
-            bool IsOwned = await DB.Account.AnyAsync(A => A.ID == AccountID && A.Owners.Any(O => O.ID==S.UserID));
-            return !IsOwned && ! await IsAdmin(S.UserID)
+            return !await IsOwned(S,AccountID) && ! await IsAdmin(S.UserID)
                 ? NotFound(ErrorResult.NotFound("Account was not found or is not owned by the session owner","Account"))
                 : Ok(await GenerateReport(DB,AccountID));
         }
@@ -111,10 +110,14 @@ namespace Igtampe.Neco.API.Controllers {
         public async Task<IActionResult> GetTaxReports([FromHeader] Guid? SessionID, [FromQuery] string ID) {
 
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
-            if (S is null) { return Unauthorized("Invalid session"); }
+            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
 
-            List<TaxReport> TRs = await DB.TaxReport.Where(A => A.Account != null && A.Account.ID==ID && A.Account.Owners.Any(O => O.ID == S.UserID))
+            //Verify the session
+            if (!await IsOwned(S, ID)) { return NotFound(); }
+
+            List<TaxReport> TRs = await DB.TaxReport.Where(A => A.Account != null && A.Account.ID==ID)
                 .OrderByDescending(A => A.DateGenerated).ToListAsync(); ;
+
             return Ok(TRs);
         }
 
@@ -128,7 +131,7 @@ namespace Igtampe.Neco.API.Controllers {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized("Invalid session"); }
 
-            TaxReport? TR = await DB.TaxReport.FirstOrDefaultAsync(A => A.ID == ID && A.Account != null && A.Account.Owners.Any(O => O.ID == S.UserID));
+            TaxReport? TR = await DB.TaxReport.FirstOrDefaultAsync(A => A.ID == ID && A.Account != null );
             return TR is null
                 ? NotFound(ErrorResult.NotFound("Tax Report was not found, or is not from an account this session owner owns","ID"))
                 : Ok(TR);
@@ -450,6 +453,14 @@ namespace Igtampe.Neco.API.Controllers {
         /// <returns></returns>
         [NonAction]
         private async Task<bool> IsAdmin(string UserID) => await DB.User.AnyAsync(U => U.ID == UserID && U.IsAdmin);
+
+        [NonAction]
+        private async Task<bool> IsOwned(Session S, string ID) {
+
+            Account? A = await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == ID);
+            return A != null && A.Owners.Any(U => U.ID == S.UserID);
+
+        }
 
         /// <summary>Gets a DateTime representing the specified day of last month (IE if it's currently December 5th, executing
         /// this function with param day=15, it would return November 15th). Use day 31 to get the last day of the last month.</summary>
