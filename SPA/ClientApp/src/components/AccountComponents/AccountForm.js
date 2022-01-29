@@ -33,7 +33,7 @@ export function BankSelect(props){
         <>
             <FormControl fullWidth style={{ margintop: "15px" }} disabled={props.type===0}>
                 <InputLabel fullWidth>Bank</InputLabel>
-                <Select fullWidth label="Label" value={props.bankID} onChange={(event) => { props.setBankID(event.target.value) }}>
+                <Select disabled={props.disabled} fullWidth label="Label" value={props.bankID} onChange={(event) => { props.setBankID(event.target.value) }}>
                     { banks.map( B=>{ return( <MenuItem value={B.id}>{B.id}: {B.name}</MenuItem> )}) }
                 </Select></FormControl>
         </>
@@ -107,8 +107,6 @@ export default function AccountForm(props){
             RequestOptions=GenerateJSONPost(props.Session,request)
         }
 
-        console.log(RequestOptions.body);
-
         fetch(URL,RequestOptions)
         .then(response=>response.json())
         .then(data=>{
@@ -124,8 +122,12 @@ export default function AccountForm(props){
                 setResult({severity:'success', text:'Account ' + data.name + ' (' + data.id + ') has been ' + (props.account ? 'updated' : 'created') + '!'})
                 setSnackOpen(true)
 
-                if(props.setAccount) {props.setAccount(data)}
-                if(props.setAccounts) {props.setAccounts(undefined)}
+                //console.log(props)
+                if(props.setAccount) {props.setAccount({...props.account,data})}
+                if(props.setAccounts) {
+                    //console.log("adios")
+                    props.setAccounts(undefined)
+                }
                 handleClosing()
 
                 return;
@@ -148,7 +150,7 @@ return(
                                 style={{ marginTop: "5px", marginBottom: "5px" }} />
                     </Grid>
                     <Grid item xs={6}>
-                        <BankSelect bankID={request.bankID} setBankID={(bankID)=>{setRequest({...request,bankID:bankID})}}/>
+                        <BankSelect disabled={props.account} bankID={request.bankID} setBankID={(bankID)=>{setRequest({...request,bankID:bankID})}}/>
                     </Grid>
                     <Grid item xs={6}>
                         <IncomeTypeSelect type={request.incomeType} setType={(type)=>{setRequest({...request,incomeType:type})}}/>
