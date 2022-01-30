@@ -1,5 +1,5 @@
 import { ExpandMore } from "@mui/icons-material";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Divider, IconButton, Menu, MenuItem, CircularProgress} from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Divider, IconButton, Menu, MenuItem, CircularProgress, Tooltip} from "@mui/material";
 import React, { useState } from "react";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { GenerateGet } from "../../RequestOptionGenerator";
@@ -8,6 +8,7 @@ import TransactionDisplay from "./TransactionDisplay";
 import TransactionsDialog from "./TransactionsDialog";
 import SendMonet from "./SendMonet";
 import OwnerForm from "./OwnerForm";
+import CloseAccountForm from "./CloseAccountForm";
 
 const Accountheaders = [
     "/AccountHeaders/Personal.png", "/AccountHeaders/Corp.png",
@@ -43,6 +44,8 @@ export function AccountRow(props) {
 
     const handleClick = (event) => { setAnchorEl(event.currentTarget); };
     const handleClose = () => { setAnchorEl(null); };
+
+    if(Account.closed){ return (<></>)}
 
     return (
         <>
@@ -82,13 +85,14 @@ export function AccountRow(props) {
             <TransactionsDialog account={Account} open={transactionsOpen} setOpen={setTransactionsOpen} {...props}/>
             <SendMonet {...props} open={sendMoneyOpen} setOpen={setSendMoneyOpen} account={Account}/>
             <OwnerForm {...props} open={ownersOpen} setOpen={setOwnersOpen} account={Account}/>
+            <CloseAccountForm {...props} open={delOpen} setOpen={setDelOpen} setAccount={setAccount} accountID={Account.id}/>
 
             <Menu anchorEl={anchorEl} open={open} onClose={handleClose} >
                 <MenuItem onClick={() => { handleClose(); setTransactionsOpen(true)}}>See More Transactions</MenuItem>
                 <MenuItem onClick={() => { handleClose(); setOwnersOpen(true)}}>Manage Owners</MenuItem>
                 <MenuItem onClick={() => { handleClose(); setEditorOpen(true) }}>Edit Account Details</MenuItem>
                 <Divider />
-                <MenuItem onClick={() => { handleClose(); setDelOpen(true)}}>Close Account</MenuItem>
+                <MenuItem disabled={Account.balance > 0} onClick={() => { handleClose(); setDelOpen(true)}}>Close Account</MenuItem>
             </Menu>
         </>
     )
