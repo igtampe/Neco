@@ -122,6 +122,12 @@
             <param name="Amount">Amount to add to the account</param>
             <returns></returns>
         </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.GetOwners(System.Nullable{System.Guid},System.String)">
+            <summary>Gets list of owners for a given account</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
         <member name="M:Igtampe.Neco.API.Controllers.BankController.AddOwner(System.Nullable{System.Guid},System.String,System.String)">
             <summary>Adds an additional owner to a given account</summary>
             <param name="SessionID"></param>
@@ -151,7 +157,6 @@
         </member>
         <member name="M:Igtampe.Neco.API.Controllers.CertificationController.GenerateTransactionCert(System.Guid)">
             <summary>Generates a transaction certification receipt</summary>
-            <param name="SessionID"></param>
             <param name="ID"></param>
             <returns></returns>
         </member>
