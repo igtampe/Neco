@@ -14,6 +14,17 @@ const Accountheaders = [
     "/AccountHeaders/Gov.png", "/AccountHeaders/Charity.png"
 ]
 
+export function FormatAccountID(ID){
+
+    if(!ID || !ID.length || !ID.substring || ID.length !==9) {return ID;}
+    var P1=ID.substring(0,3);
+    var P2=ID.substring(3,6);
+    var P3=ID.substring(6,9);
+    
+    return(P1 + '-' + P2 + '-' + P3)
+    
+}
+
 export function AccountRow(props) {
 
     const [Account, setAccount] = useState(props.account);
@@ -42,7 +53,7 @@ export function AccountRow(props) {
                             <tr>
                                 <td width={'100px'} rowSpan={2}> <img src={Account.bank && Account.bank.imageURL === "" ? "/bank.png" : Account.bank.imageURL}
                                     alt={'Bank Logo'} height='50px' style={{ marginRight: '20px' }} /> </td>
-                                <td> {Account.name} ({Account.id})</td>
+                                <td> {Account.name} ({FormatAccountID(Account.id)})</td>
                                 <td rowSpan={2} style={{ flexGrow: true, textAlign: 'right' }}>
                                     <img src={Accountheaders[Account.incomeType]} alt={'Account Type Header'} height='50px' /></td>
                             </tr>

@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import { GenerateGet } from '../../RequestOptionGenerator'
 import { IncomeTypes } from '../AdminComponents/JurisdictionComponents/BracketDisplay'
 import { IncomeTypeSelect } from "../AdminComponents/JurisdictionComponents/BracketEditor";
+import { FormatAccountID } from "./AccountDisplay";
 
 function AccountPickerRow(props) {
 
     return (<>
         <TableRow>
-            <TableCell width={'120px'}>{props.A.id}</TableCell>
+            <TableCell width={'120px'}>{FormatAccountID(props.A.id)}</TableCell>
             <TableCell>{props.A.name}</TableCell>
             <TableCell width={'120px'}>{IncomeTypes[props.A.incomeType]}</TableCell>
             <TableCell width={'70px'}> <Button onClick={() => { props.handleOK(props.A.id) }} variant='contained'>Select</Button></TableCell>
