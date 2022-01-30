@@ -7,6 +7,7 @@ import AccountForm from "./AccountForm";
 import TransactionDisplay from "./TransactionDisplay";
 import TransactionsDialog from "./TransactionsDialog";
 import SendMonet from "./SendMonet";
+import OwnerForm from "./OwnerForm";
 
 const Accountheaders = [
     "/AccountHeaders/Personal.png", "/AccountHeaders/Corp.png",
@@ -23,7 +24,6 @@ export function AccountRow(props) {
     const [editorOpen, setEditorOpen] = useState(false);
     const [transactionsOpen, setTransactionsOpen] = useState(false);
     const [ownersOpen, setOwnersOpen] = useState(false);
-    const [receiptOpen, setReceiptOpen] = useState(false);
 
     const [sendMoneyOpen, setSendMoneyOpen] = useState(false)
 
@@ -70,13 +70,14 @@ export function AccountRow(props) {
             <AccountForm account={Account} setAccount={setAccount} open={editorOpen} setOpen={setEditorOpen} {...props} />
             <TransactionsDialog account={Account} open={transactionsOpen} setOpen={setTransactionsOpen} {...props}/>
             <SendMonet {...props} open={sendMoneyOpen} setOpen={setSendMoneyOpen} account={Account}/>
+            <OwnerForm {...props} open={ownersOpen} setOpen={setOwnersOpen} account={Account}/>
 
             <Menu anchorEl={anchorEl} open={open} onClose={handleClose} >
                 <MenuItem onClick={() => { handleClose(); setTransactionsOpen(true)}}>See More Transactions</MenuItem>
-                <MenuItem onClick={() => { handleClose(); }}>Manage Owners</MenuItem>
+                <MenuItem onClick={() => { handleClose(); setOwnersOpen(true)}}>Manage Owners</MenuItem>
                 <MenuItem onClick={() => { handleClose(); setEditorOpen(true) }}>Edit Account Details</MenuItem>
                 <Divider />
-                <MenuItem onClick={() => { handleClose(); }}>Close Account</MenuItem>
+                <MenuItem onClick={() => { handleClose(); setDelOpen(true)}}>Close Account</MenuItem>
             </Menu>
         </>
     )
