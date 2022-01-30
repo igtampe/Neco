@@ -43,27 +43,16 @@ namespace Igtampe.Neco.API.Controllers {
         }
 
         /// <summary>Generates a transaction certification receipt</summary>
-        /// <param name="SessionID"></param>
         /// <param name="ID"></param>
         /// <returns></returns>
         [HttpGet("Transaction/{ID}")]
-        public async Task<IActionResult> GenerateTransactionCert([FromHeader] Guid? SessionID, [FromRoute] Guid ID) {
-
-            Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
-            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
+        public async Task<IActionResult> GenerateTransactionCert([FromRoute] Guid ID) {
 
             Transaction? T = await DB.Transaction.Where(T => T.Origin != null && T.Destination != null)
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-                .Include(T => T.Origin).ThenInclude(D => D.Owners)
-                .Include(T => T.Destination).ThenInclude(D => D.Owners)
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                .Include(T => T.Origin).Include(T => T.Destination)
                 .FirstOrDefaultAsync(T => T.ID == ID);
 
             if (T is null || T.Origin is null || T.Destination is null) { return NotFound("Transaction was not found"); }
-
-            if (!T.Origin.Owners.Any(A => A.ID == S.UserID) && !T.Destination.Owners.Any(A => A.ID == S.UserID)) {
-                return Unauthorized("Transaction does not originate or destinate to account owned by session owner");
-            }
 
             //ok we have all the data we need.
 
