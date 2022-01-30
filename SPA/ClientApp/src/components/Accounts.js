@@ -56,7 +56,7 @@ export default function AccountsComponent(props) {
                             <b>Quick actions</b>
                             <Divider />
                             <List>
-                                <ListItem button onClick={()=>{setNewOpen(true)}}> Add an Account </ListItem>
+                                <ListItem button onClick={()=>{setNewOpen(true)}}> Open an Account </ListItem>
                                 <ListItem button onClick={()=>{setSendMoneyOpen(true)}}> Send Money </ListItem>
                                 <ListItem button onClick={()=>{setCSOpen(true)}}> Send a Check </ListItem>
                                 <ListItem button onClick={()=>{setCSOpen(true)}}> Send a Bill </ListItem>
