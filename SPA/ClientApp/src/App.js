@@ -9,7 +9,7 @@ import Login from "./components/Login.js"
 import useWindowDimensions from './components/Hooks/useWindowDimensions';
 
 import './custom.css'
-import { CircularProgress, CssBaseline } from '@mui/material';
+import { CircularProgress, CssBaseline, Divider, Typography } from '@mui/material';
 import RegisterComponent from './components/Register';
 import AccountsComponent from './components/Accounts';
 import IncomeManagementComponent from './components/IncomeManagement';
@@ -34,6 +34,22 @@ const darkTheme = createTheme({
     secondary: { main: '#f50057', },
   },
 })
+
+function CenteredCircular() { return( <div style={{textAlign:'center'}}> <CircularProgress/> </div> ) }
+function Footer() {
+
+  return(
+    <>
+      <Divider style={{marginTop:'25px', marginBottom:'25px'}}/>
+      <Typography textAlign={'center'} color={'gray'} fontSize={'15px'} style={{marginBottom:'5x'}}>
+            ©2022 <a href='https://sites.google.com/view/igtampe' style={{color:"gray"}}>Igtampe</a>, no rights reserved. 
+            Built using ReactJS and ASP.NET. 
+            See the <a href='https://www.github.com/igtampe/neco' style={{color:"gray"}}>Github</a>
+      </Typography>
+    </>
+  )
+
+}
 
 export default function App() {
 
@@ -151,7 +167,7 @@ export default function App() {
                     : <>You do not have permission to access this resource</>
                   }
                 </>
-                : <CircularProgress/>
+                : <CenteredCircular/>
               }
             </>
             : <Redirect to='/Login'/> }
@@ -168,7 +184,7 @@ export default function App() {
                     : <>You do not have permission to access this resource</>
                   }
                 </>
-                : <CircularProgress/>
+                : <CenteredCircular/>
               }
             </>
             : <Redirect to='/Login'/> }
@@ -185,11 +201,12 @@ export default function App() {
                     : <>You do not have permission to access this resource</>
                   }
                 </>
-                : <CircularProgress/>
+                : <CenteredCircular/>
               }
             </>
             : <Redirect to='/Login'/> }
         </Route>
+        <Footer/>
       </Layout>
     </ThemeProvider>
   );
