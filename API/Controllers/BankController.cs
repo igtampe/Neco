@@ -449,11 +449,11 @@ namespace Igtampe.Neco.API.Controllers {
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
             
             Account? A = await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == ID && !A.Closed);
-            if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
-            if (!A.Owners.Any(U => S.UserID == U.ID)) { return (Unauthorized(ErrorResult.Forbidden("User does not own this account"))); }
-
-            return Ok(A.Owners);
-
+            return A is null
+                ? NotFound(ErrorResult.NotFound("Account was not found", "Account"))
+                : !A.Owners.Any(U => S.UserID == U.ID) 
+                    ? Unauthorized(ErrorResult.Forbidden("User does not own this account")) 
+                    : Ok(A.Owners);
         }
 
         /// <summary>Adds an additional owner to a given account</summary>
