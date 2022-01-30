@@ -441,18 +441,13 @@ namespace Igtampe.Neco.API.Controllers {
         /// <summary>Gets list of owners for a given account</summary>
         /// <param name="SessionID"></param>
         /// <param name="ID"></param>
-        /// <param name="Owner"></param>
         /// <returns></returns>
         [HttpGet("Accounts/{ID}/Owners")]
-        public async Task<IActionResult> GetOwners([FromHeader] Guid? SessionID, string ID, [FromQuery] string? Owner) {
+        public async Task<IActionResult> GetOwners([FromHeader] Guid? SessionID, string ID) {
 
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
             if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
-            if (S.UserID == Owner) { return BadRequest(ErrorResult.BadRequest("Cannot add yourself to an account!", "Owner")); }
-
-            User? U = await DB.User.FindAsync(Owner);
-            if (U is null) { return NotFound(ErrorResult.NotFound("User was not found", "User")); }
-
+            
             Account? A = await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == ID && !A.Closed);
             if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
             if (!A.Owners.Any(U => S.UserID == U.ID)) { return (Unauthorized(ErrorResult.Forbidden("User does not own this account"))); }
