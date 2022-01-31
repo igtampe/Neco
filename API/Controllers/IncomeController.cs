@@ -20,11 +20,17 @@ namespace Igtampe.Neco.API.Controllers {
         /// <summary>Sort by name descending</summary>
         NAME_DESC = 1,
 
-        /// <summary>Sort by income descending</summary>
-        INCOME = 2,
+        /// <summary>Sort by date created descending</summary>
+        DATE_CREATED = 2,
 
-        /// <summary>Sort by income ascending</summary>
-        INCOME_ASC = 3
+        /// <summary>Sort by date created ascending</summary>
+        DATE_CREATED_ASC = 3,
+
+        /// <summary>Sort by date updated descending</summary>
+        DATE_UPDATED = 4,
+
+        /// <summary>Sort by date updated ascending</summary>
+        DATE_UPDATED_ASC = 5,
 
     }
 
@@ -538,8 +544,10 @@ namespace Igtampe.Neco.API.Controllers {
 
             BaseSet = Sort switch {
                 IncomeItemSortType.NAME_DESC => BaseSet.OrderByDescending(I => I.Name),
-                IncomeItemSortType.INCOME => BaseSet.OrderByDescending(I => I.Income()), //This may not map
-                IncomeItemSortType.INCOME_ASC => BaseSet.OrderBy(I => I.Income()),
+                IncomeItemSortType.DATE_CREATED => BaseSet.OrderByDescending(I => I.DateCreated),
+                IncomeItemSortType.DATE_CREATED_ASC => BaseSet.OrderBy(I => I.DateCreated),
+                IncomeItemSortType.DATE_UPDATED => BaseSet.OrderByDescending(I => I.DateUpdated),
+                IncomeItemSortType.DATE_UPDATED_ASC => BaseSet.OrderBy(I => I.DateUpdated),
                 _ => BaseSet.OrderBy(I => I.Name),
             };
 
