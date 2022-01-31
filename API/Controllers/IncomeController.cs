@@ -70,6 +70,40 @@ namespace Igtampe.Neco.API.Controllers {
 
         #region Summary
 
+        private struct IncomeItemSummary {
+
+            public long TotalIncome { get; set; } = 0;
+            public int Count { get; set; } = 0;
+            public List<IncomeItem> Top5 { get; set; } = new();
+
+            public static async Task<IncomeItemSummary> CreateSummary<E>(DbSet<E> Set, string Account) where E : IncomeItem{
+
+                //what a disaster
+                List<E> TheList = await Set.Where(A=>A.Account != null && A.Account.ID==Account).ToListAsync();
+                return new() {
+                    TotalIncome = TheList.Sum(A => A.Income()),
+                    Count = TheList.Count,
+                    Top5 = TheList.OrderByDescending(A => A.Income()).Take(5).ToList<IncomeItem>()
+                };
+            }
+
+            public static IncomeItemSummary CreateTotalSummary(params IncomeItemSummary[] Summaries) {
+
+                List<IncomeItem> AllTops = new();
+                foreach (var S in Summaries) { AllTops.AddRange(S.Top5); }
+
+                return new() {
+                    TotalIncome = Summaries.Sum(A => A.TotalIncome),
+                    Count = Summaries.Sum(A => A.Count),
+                    Top5 = AllTops.OrderByDescending(A => A.Income()).Take(5).ToList()
+                };
+
+            }
+        
+        }
+
+        
+
         /// <summary>Gets a summary</summary>
         /// <param name="SessionID"></param>
         /// <param name="AccountID"></param>
@@ -89,13 +123,13 @@ namespace Igtampe.Neco.API.Controllers {
             //Total income from all item subtypes individual and grand total
 
             //I really REALLY hope this maps, but I have a sneaking suspicion it won't
-            long Airline = await DB.Airline.Where(I=>I.Account != null && I.Account.ID==AccountID).SumAsync(A=>A.Income());
-            long Apartment = await DB.Apartment.Where(I => I.Account != null && I.Account.ID == AccountID).SumAsync(A => A.Income());
-            long Business = await DB.Apartment.Where(I => I.Account != null && I.Account.ID == AccountID).SumAsync(A => A.Income());
-            long Corporation = await DB.Corporation.Where(I => I.Account != null && I.Account.ID == AccountID).SumAsync(A => A.Income());
-            long Hotel = await DB.Hotel.Where(I => I.Account != null && I.Account.ID == AccountID).SumAsync(A => A.Income());
-
-            long Total = Airline + Apartment + Business + Corporation + Hotel;
+            var Airline     = await IncomeItemSummary.CreateSummary(DB.Airline, AccountID);
+            var Apartment   = await IncomeItemSummary.CreateSummary(DB.Apartment, AccountID);
+            var Business    = await IncomeItemSummary.CreateSummary(DB.Business, AccountID);
+            var Corporation = await IncomeItemSummary.CreateSummary(DB.Corporation, AccountID);
+            var Hotel       = await IncomeItemSummary.CreateSummary(DB.Hotel, AccountID);
+            var Total = IncomeItemSummary.CreateTotalSummary(Airline, Apartment, Business, Corporation, Hotel);
+            
 
             return Ok(new { Airline, Apartment, Business, Corporation, Hotel, Total });
         }
