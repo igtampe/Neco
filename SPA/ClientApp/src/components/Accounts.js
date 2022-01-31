@@ -60,7 +60,6 @@ export default function AccountsComponent(props) {
                                 <ListItem button onClick={()=>{setSendMoneyOpen(true)}}> Send Money </ListItem>
                                 <ListItem button onClick={()=>{setCSOpen(true)}}> Send a Check </ListItem>
                                 <ListItem button onClick={()=>{setCSOpen(true)}}> Send a Bill </ListItem>
-                                <ListItem button onClick={()=>{setCSOpen(true)}}> Add an Income Item </ListItem>
                             </List>
                         </CardContent>
                     </Card>
