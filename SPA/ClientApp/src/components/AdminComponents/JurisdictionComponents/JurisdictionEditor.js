@@ -47,9 +47,7 @@ export function JurisdictionSelect(props) {
                     { props.jurisdictions.map( j=>{ return( <MenuItem value={j.id}>{j.id}: {j.name}</MenuItem> )}) }
                 </Select></FormControl>
         </>
-
     )
-
 }
 
 export default function JurisdictionEditor(props) {
