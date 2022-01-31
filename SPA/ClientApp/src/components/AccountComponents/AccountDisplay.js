@@ -1,5 +1,5 @@
 import { ExpandMore } from "@mui/icons-material";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Divider, IconButton, Menu, MenuItem, CircularProgress, Tooltip} from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Divider, IconButton, Menu, MenuItem, CircularProgress} from "@mui/material";
 import React, { useState } from "react";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { GenerateGet } from "../../RequestOptionGenerator";
@@ -10,7 +10,7 @@ import SendMonet from "./SendMonet";
 import OwnerForm from "./OwnerForm";
 import CloseAccountForm from "./CloseAccountForm";
 
-const Accountheaders = [
+export const Accountheaders = [
     "/AccountHeaders/Personal.png", "/AccountHeaders/Corp.png",
     "/AccountHeaders/Gov.png", "/AccountHeaders/Charity.png"
 ]
@@ -40,7 +40,6 @@ export function AccountRow(props) {
     const [sendMoneyOpen, setSendMoneyOpen] = useState(false)
 
     const [delOpen, setDelOpen] = useState(false);
-    const [delInProgress, setDelInProgress] = useState(false);
 
     const handleClick = (event) => { setAnchorEl(event.currentTarget); };
     const handleClose = () => { setAnchorEl(null); };
