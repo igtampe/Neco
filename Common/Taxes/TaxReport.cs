@@ -8,7 +8,7 @@ namespace Igtampe.Neco.Common.Taxes {
     /// <summary>A report of taxes to be paid based on income earned during the current month</summary>
     public class TaxReport : AutomaticallyGeneratableIdentifiable {
 
-        private const string SectionLine = "================================================================================\n";
+        private const string SectionLine = "    \n";
         private const string ItemLine = "-------------------------------------------------------------------------------\n";
 
         /// <summary>Account this Tax Report belongs to</summary>
@@ -146,7 +146,7 @@ namespace Igtampe.Neco.Common.Taxes {
                 TR.StaticIncome += I.Income();
                 if (I.Jurisdiction is null) { throw new ArgumentException($"Income Item {I.ID} did not include District"); }
 
-                Jurisdiction Parent = AddIncomeToBreakdownDictionary(ref IncomeBreakdownDictionary, I.Jurisdiction, TR.ExtraIncomeTaxable);
+                Jurisdiction Parent = AddIncomeToBreakdownDictionary(ref IncomeBreakdownDictionary, I.Jurisdiction, I.Income());
 
                 TR.CSVReport += string.Join(',', I.ID, I.Name, Parent.Name, I.Jurisdiction.Name, I.Income(), "\n");
                 TR.TextReport += $"{I.ID}: {I.Name} located in {I.Address}, {I.Jurisdiction.Name},{Parent.Name}: {I.Income()}\n";
@@ -157,22 +157,21 @@ namespace Igtampe.Neco.Common.Taxes {
             TR.TextReport += $"{ItemLine}TOTAL STATIC INCOME  : {TR.StaticIncome:n0}\n{SectionLine}";
             TR.CSVReport += "\n\n";
 
-            TR.TextReport += $"\n\nBreakdown:\n\n";
+            TR.TextReport += $"\n{SectionLine}Breakdown:\n{SectionLine}";
 
             //Breakdown Section
             foreach (Jurisdiction J in IncomeBreakdownDictionary.Keys) { TR.TextReport += $"{J.Name} INCOME : {IncomeBreakdownDictionary[J]:n0}\n"; }
 
-            TR.TextReport += $"GRAND TOTAL INCOME : {TR.GrandTotalIncome:n0}\n";
+            TR.TextReport += $"GRAND TOTAL INCOME : {TR.GrandTotalIncome:n0}\n"; 
 
-            TR.TextReport += $"\n\nTaxes:\n\n";
+            TR.TextReport += $"\n{SectionLine}Taxes:\n{SectionLine}";
             TR.CSVReport += "Jurisdiction,Income,Bracket,Percent,Tax\n";
 
             //Lastly, let's calcualte tax
             foreach (Jurisdiction J in IncomeBreakdownDictionary.Keys) {
                 (long, Bracket?) Result = J.CalculateTax(IncomeBreakdownDictionary[J], Account.IncomeType);
-                if (J.TiedAccount is null) { throw new ArgumentException($"Tied account for jurisdiction {J.ID} was not included"); }
 
-                TR.TaxPaymentDictionary.Add(J, Result.Item1); //Split here for the report
+                TR.TaxPaymentDictionary.Add(J, Result.Item1);
                 TR.CSVReport += string.Join(',', J.Name, IncomeBreakdownDictionary[J], Result.Item2 != null ? Result.Item2.Name : "NO TAX",
                                                  Result.Item2 != null ? Result.Item2.Rate : 0.0, Result.Item1, "\n");
                 
