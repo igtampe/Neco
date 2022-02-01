@@ -2,6 +2,7 @@
 using Igtampe.Neco.Common.Banking;
 using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Igtampe.Neco.Common.Income {
 
@@ -39,6 +40,10 @@ namespace Igtampe.Neco.Common.Income {
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public CertifiedItem GenerateCertification(User Certifier) => new() { CertifiedBy = Certifier, Date = DateTime.Now, Text = $"{Name} was certified with {Income():n0} Income" };
+
+        /// <summary>Calculated income for this incomeitem. Shortcut for the json serialization</summary>
+        [NotMapped]
+        public long CalculatedIncome => Income();
 
         /// <summary>Total income of this item</summary>
         public virtual long Income() => MiscIncome;
