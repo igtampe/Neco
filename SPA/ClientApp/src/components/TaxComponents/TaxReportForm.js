@@ -1,5 +1,4 @@
 import { Dialog, DialogContent, DialogContentText, Grid, Divider, CircularProgress, Card, CardContent, DialogTitle, Button } from "@mui/material";
-import { fontFamily } from "@mui/system";
 import React, { useState } from "react";
 import { GenerateGet } from "../../RequestOptionGenerator";
 
@@ -32,6 +31,16 @@ export default function TaxReportForm(props) {
                 setReport(data)
                 setLoading(false)
             })
+    }
+
+    const downloadText=(text,filename)=>{
+        const element = document.createElement("a");
+        const file = new Blob([text], {type: 'text/plain'});
+        element.href = URL.createObjectURL(file);
+        element.download = filename ? filename : "File.txt";
+        document.body.appendChild(element); // Required for this to work in FireFox. Good god though oops
+        element.click();
+
     }
 
     if (report && !props.open) { setReport(false); }
@@ -84,10 +93,10 @@ export default function TaxReportForm(props) {
                                         <Grid item xs={2} textAlign={'center'}>
                                         </Grid>
                                         <Grid item xs={4} textAlign={'center'}>
-                                            <Button variant='contained'>Download Text Report</Button>
+                                            <Button onClick={()=>{downloadText(report.textReport,props.account.id + '_TaxReport.txt')}} variant='contained'>Download Text Report</Button>
                                         </Grid>
                                         <Grid item xs={4} textAlign={'center'}>
-                                            <Button variant='contained'>Download CSV Report</Button>
+                                            <Button onClick={()=>{downloadText(report.csvReport,props.account.id + '_TaxReport.csv')}} variant='contained'>Download CSV Report</Button>
                                         </Grid>
                                         <Grid item xs={2} textAlign={'center'}>
                                         </Grid>
