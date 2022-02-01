@@ -54,6 +54,7 @@ export default function AccountForm(props){
     const [SnackOpen, setSnackOpen] = useState(false);
 
     const [populated,setPopulated] = useState(false);
+    const [inProgress,setInProgress] = useState(false);
 
     if(props.account && !populated && props.open){
         setPopulated(true);
@@ -98,6 +99,8 @@ export default function AccountForm(props){
             return;
         }
 
+        setInProgress(true)
+
         var RequestOptions;
         var URL = '/API/Bank/Accounts'
         if(props.account){
@@ -110,6 +113,7 @@ export default function AccountForm(props){
         fetch(URL,RequestOptions)
         .then(response=>response.json())
         .then(data=>{
+            setInProgress(false)
             if(data.error) {
                 setResult({severity:'danger', text:data.reason})
                 setSnackOpen(true)
@@ -174,8 +178,8 @@ return(
             </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button onClick={handleOK}>Ok</Button>
-            <Button onClick={handleClosing}>Cancel</Button>
+            <Button disabled={inProgress} onClick={handleOK}>Ok</Button>
+            <Button disabled={inProgress} onClick={handleClosing}>Cancel</Button>
         </DialogActions>
 
         <AlertSnackbar open={SnackOpen} setOpen={setSnackOpen} result={result} />

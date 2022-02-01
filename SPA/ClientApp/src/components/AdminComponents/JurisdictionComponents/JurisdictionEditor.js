@@ -65,6 +65,8 @@ export default function JurisdictionEditor(props) {
     const [pickerOpen, setPickerOpen] = useState(false)
 
     const [populated, setPopulated] = useState(false);
+    
+    const [inProgress, setInProgress] = useState(false)
 
     const [result, setResult] = useState({
         severity: "success",
@@ -110,6 +112,8 @@ export default function JurisdictionEditor(props) {
             setSnackOpen(true);
         }
 
+        setInProgress(true)
+
         //Send the request 
         var requestOptions;
         var url;
@@ -132,11 +136,10 @@ export default function JurisdictionEditor(props) {
             })
         }
         
-        console.log(requestOptions.body)
-
         fetch(url,requestOptions)
             .then(response => { return response.json() })
             .then(data => {
+                setInProgress(false);
                 if (data.error) {
 
                     setResult({
@@ -209,8 +212,8 @@ export default function JurisdictionEditor(props) {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleOK}>OK</Button>
-                    <Button onClick={handleClosing}>Cancel</Button>
+                    <Button disabled={inProgress} onClick={handleOK}>OK</Button>
+                    <Button disabled={inProgress} onClick={handleClosing}>Cancel</Button>
                 </DialogActions>
             </Dialog>
 
