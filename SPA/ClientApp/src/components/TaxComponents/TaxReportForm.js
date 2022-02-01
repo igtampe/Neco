@@ -17,10 +17,19 @@ function ReportCard(props) {
 
 export default function TaxReportForm(props) {
 
-    const [report, setReport] = useState(false)
+    const [report, setReport] = useState(props.report)
     const [loading, setLoading] = useState(false);
 
     if (!report && !loading && props.open) {
+        
+        //if there's one specified use that one
+        if(props.report){
+            setReport(props.report)
+            return;
+        }
+        
+        //else its tiem to generate
+
         setLoading(true)
 
         fetch('/API/Taxes/GenerateReport?AccountID=' + props.account.id, GenerateGet(props.Session))
