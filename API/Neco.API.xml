@@ -192,11 +192,17 @@
         <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.NAME_DESC">
             <summary>Sort by name descending</summary>
         </member>
-        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.INCOME">
-            <summary>Sort by income descending</summary>
+        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.DATE_CREATED">
+            <summary>Sort by date created descending</summary>
         </member>
-        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.INCOME_ASC">
-            <summary>Sort by income ascending</summary>
+        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.DATE_CREATED_ASC">
+            <summary>Sort by date created ascending</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.DATE_UPDATED">
+            <summary>Sort by date updated descending</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.DATE_UPDATED_ASC">
+            <summary>Sort by date updated ascending</summary>
         </member>
         <member name="T:Igtampe.Neco.API.Controllers.FeedItem">
             <summary>Item for feed unioning of all incomeitems</summary>
@@ -237,8 +243,13 @@
             <param name="SessionID"></param>
             <returns></returns>
         </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetUnapprovedAirlines(System.Guid)">
+            <summary>Gets a list of all unapproved corporations in the Neco system</summary>
+            <param name="SessionID"></param>
+            <returns></returns>
+        </member>
         <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetFeed(System.Guid)">
-            <summary>Get a feed of the 20 most recently approved income items of any type</summary>
+            <summary>Get a feed of the 20 most recently approved non-corporation income items of any type</summary>
             <param name="SessionID"></param>
             <returns></returns>
         </member>
