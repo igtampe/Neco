@@ -106,7 +106,7 @@ namespace Igtampe.Neco.Common.Taxes {
                     if (T.Origin.IncomeType!=IncomeType.GOVERNMENT) {
                         TR.ExtraIncomeTaxable += T.Amount; //add the transaction's amount to the taxable extra income.
 
-                        TR.TextReport += $"{T.ID}: {T.Name}, {T.Amount:n0} from {T.Origin.ID} to {T.Destination.ID} (Taxable)\n{ItemLine}";
+                        TR.TextReport += $"{T.Name}: {T.Amount:n0} from {T.Origin.ID} to {T.Destination.ID} (Taxable)\n{ItemLine}";
                         TR.CSVReport += string.Join(',', T.ID, T.Name, T.Amount, T.Origin.ID, T.Destination.ID, "Taxable", "\n");
                     } else {
                         TR.TextReport += $"{T.ID}: {T.Name}, {T.Amount:n0} from {T.Origin.ID} to {T.Destination.ID} (Non-Taxable)\n{ItemLine}";
@@ -149,7 +149,7 @@ namespace Igtampe.Neco.Common.Taxes {
                 Jurisdiction Parent = AddIncomeToBreakdownDictionary(ref IncomeBreakdownDictionary, I.Jurisdiction, I.Income());
 
                 TR.CSVReport += string.Join(',', I.ID, I.Name, Parent.Name, I.Jurisdiction.Name, I.Income(), "\n");
-                TR.TextReport += $"{I.ID}: {I.Name} located in {I.Address}, {I.Jurisdiction.Name},{Parent.Name}: {I.Income()}\n";
+                TR.TextReport += $"{I.Name}:{I.Income()}\nlocated in {I.Address}, {I.Jurisdiction.Name}, {Parent.Name}\n{ItemLine}";
 
             }
 
