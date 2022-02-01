@@ -33,7 +33,7 @@ export function JurisdictionAutoComplete(props) {
     return (
         <> 
             <Autocomplete
-                value={props.jurisdictionID} onChange={(event, newValue) => { props.setJurisdictionID(newValue.value);}}
+                value={props.jurisdictionID} onChange={(event, newValue) => { if(newValue) {props.setJurisdictionID(newValue.value)};}}
                 inputValue={inputValue} onInputChange={(event, newInputValue) => { setInputValue(newInputValue);}}
                 fullWidth renderInput={(params) => <TextField {...params} label="Jurisdiction" />}
                 options={jurisdictions.map(j=>{ return ({
