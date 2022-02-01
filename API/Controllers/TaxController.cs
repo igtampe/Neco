@@ -37,7 +37,7 @@ namespace Igtampe.Neco.API.Controllers {
 
             Set = Set.OrderBy(J => J.Type).ThenBy(J => J.Name);
 
-            Set = Set.Skip(Skip ?? 0).Take(Take ?? 20);
+            if (Skip is not null && Take is not null) { Set = Set.Skip(Skip ?? 0).Take(Take ?? 20); }
 
             return Ok(await Set.ToListAsync());
 
