@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import { Box, TextField, IconButton, Select, MenuItem, FormControl, InputLabel, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, CircularProgress, Paper } from '@mui/material'
+import { Grid, Checkbox, Box, TextField, IconButton, Select, MenuItem, FormControl, InputLabel, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, CircularProgress, Paper } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import EditIcon from '@mui/icons-material/Edit'
-import { GenerateGet } from '../../../RequestOptionGenerator'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { GenerateDelete, GenerateGet } from '../../RequestOptionGenerator'
+import DeleteConfirm from "../Subcomponents/DeleteConfirm";
+import IncomeForm from './IncomeItemForm'
 
 //Requires type, settype, setcollection
 export function IncomeItemSortSelect(props) {
     return (
         <FormControl fullWidth style={{ margintop: "15px" }}>
-            <InputLabel fullWidth>Type</InputLabel>
-            <Select fullWidth label="Label" value={props.type} onChange={(event) => {
-                props.setType(event.target.value)
+            <InputLabel fullWidth>Sort</InputLabel>
+            <Select fullWidth label="Sort" value={props.sort} onChange={(event) => {
+                props.setSort(event.target.value)
                 props.setCollection(undefined)
             }}>
                 <MenuItem value={0}>Name</MenuItem>
@@ -28,60 +31,117 @@ function IncomeItemRow(props) {
 
     //This is basically a component
     const [open, setOpen] = useState(false);
+    const [delOpen, setDelOpen] = useState(false);
+    const [delInProgress, setDelInProgress] = useState(false);
+
+    const realDelete=()=>{
+
+        setDelInProgress(true)
+
+        fetch(props.baseUrl+'/'+props.i.id,GenerateDelete(props.Session))
+        .then(response=>response.json())
+        .then(data=>{
+            if(data.error || data.error){ return; }
+
+            setDelInProgress(false)
+            //Success:
+            props.setCollection(undefined)
+
+        })
+
+    }
 
     return (
         <>
             <TableRow>
-                <TableCell width={'90px'}>
-                    <a href={props.J.imageURL === "" ? "/Flag.png" : props.J.imageURL}>
-                        <img alt={'Flag'} src={props.J.imageURL === "" ? "/Flag.png" : props.J.imageURL} height={'50px'} /></a>
-                </TableCell>
-                <TableCell width={'90px'}>{props.J.id}</TableCell>
-                <TableCell>{props.J.name}</TableCell>
-                <TableCell>{!props.J.parentJurisdiction ? "None" : props.J.parentJurisdiction.id + ": " + props.J.parentJurisdiction.name }</TableCell>
-                <TableCell width={'90px'}>
-
-                    {/** Edit Button. Potentially make the editor here too */}
-                    <IconButton onClick={() => { setOpen(true)}}><EditIcon /></IconButton>
-
+                <TableCell>{props.i.name}</TableCell>
+                <TableCell width={'250px'}>{props.i.calculatedIncome.toLocaleString()}p</TableCell>
+                {
+                    props.airline || props.corporation ? 
+                        <TableCell width={'70px'}>
+                            <Checkbox checked={props.i.approved} readOnly/>
+                        </TableCell> : <></>
+                }
+                <TableCell width={'120px'}>
+                    <IconButton disabled={delInProgress} onClick={() => { setOpen(true) }}><EditIcon /></IconButton>
+                    <IconButton disabled={delInProgress} onClick={() => { setDelOpen(true) }}><DeleteIcon /></IconButton>
                 </TableCell>
             </TableRow>
 
-            <JurisdictionEditor jurisdiction={props.J} setJurisdictions={props.setJurisdictions} open={open} setOpen={setOpen} Session={props.Session}/>
+            <IncomeForm {...props} open={open} setOpen={setOpen} item={props.i}/>
+
+            <DeleteConfirm {...props} open={delOpen} setOpen={setDelOpen} delete={realDelete}>
+                Are you sure you want to delete {props.i.name}? You will cease receiving income from this item, and it will not show up on any future reports.
+            </DeleteConfirm>
 
         </>
     )
 }
 
-function TableHeaders(props){
-    return(<TableRow>
-        <TableCell></TableCell>
-        <TableCell>ID</TableCell>
+function TableHeaders(props) {
+    return (<TableRow>
         <TableCell>Name</TableCell>
-        <TableCell>Parent</TableCell>
+        <TableCell>Income</TableCell>
+        {props.airline || props.corporation ? <TableCell>Approved</TableCell> : <></>}
         <TableCell>Actions</TableCell>
     </TableRow>
     )
 }
 
-export default function JurisdictionDisplay(props) {
+export default function IncomeItemDisplay(props) {
 
     const [query, setQuery] = useState("");
-    const [type, setType] = useState(0)
+    const [sort, setSort] = useState(0)
 
-    const [jurisdictions, setJurisdictions] = useState(undefined)
     const [loading, setLoading] = useState(false);
 
-    const [newOpen, setNewOpen] = useState(false)
+    //what a mess
+    const collection = props.airline
+        ? props.airlines
+        : props.corporation
+            ? props.corporations
+            : props.business
+                ? props.businesses
+                : props.hotel
+                    ? props.hotels
+                    : props.apartment
+                        ? props.apartments
+                        : undefined
 
-    const startSearch = (event) => { setJurisdictions(undefined) }
+
+    const setCollection = props.airline
+        ? props.setAirlines
+        : props.corporation
+            ? props.setCorporations
+            : props.business
+                ? props.setBusinesses
+                : props.hotel
+                    ? props.setHotels
+                    : props.apartment
+                        ? props.setApartments
+                        : undefined
+
+    const baseUrl = props.airline
+        ? "/API/Income/Airlines"
+        : props.corporation
+            ? "/API/Income/Corporations"
+            : props.business
+                ? "/API/Income/Businesses"
+                : props.hotel
+                    ? "/API/Income/Hotels"
+                    : props.apartment
+                        ? "/API/Income/Apartments"
+                        : undefined
+
+
+    const startSearch = (event) => { setCollection(undefined) }
 
     //OK now 
-    if (!jurisdictions && !loading) {
+    if (!collection && setCollection && props.open && !loading) {
 
         setLoading(true)
 
-        var URL = '/API/Taxes/Jurisdictions?Type=' + type
+        var URL = baseUrl + '?AccountID='+ props.account.id +'&Sort=' + sort
         if (query !== "") { URL = URL + '&Query=' + query }
 
         fetch(URL, GenerateGet(props.Session)) //This actually isn't authenticated pero sabes que zoop.
@@ -91,56 +151,60 @@ export default function JurisdictionDisplay(props) {
                 //if there was an error then oops
                 if (data.error) { return; }
 
-                setJurisdictions(data)
+                setCollection(data)
                 setLoading(false)
 
             })
 
     }
 
-
     return (
         <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                <TextField fullWidth label="Search" value={query} onChange={(event) => { setQuery(event.target.value) }} />
-                {props.Vertical ? <></> :
-                    <Box sx={{ display: 'flex', alignItems: 'flex-end' }} style={{ marginLeft: "25px" }}>
-                        <JurisdictionTypeSelect type={type} setType={setType} setCollection={setJurisdictions} /> </Box>
-                }
+                <Grid container spacing={2}>
+                    <Grid item xs={props.Vertical ? 12 : 8}>
+                        <TextField fullWidth label="Search" value={query} onChange={(event) => { setQuery(event.target.value) }} />
+                    </Grid>
+                    {props.Vertical ? <></> : <Grid item xs={4}><IncomeItemSortSelect sort={sort} setSort={setSort} setCollection={setCollection} /></Grid>}
+                </Grid>
                 <IconButton onClick={startSearch} style={{ marginLeft: '10px', marginBottom: '7px' }}><SearchIcon /></IconButton>
-                <IconButton onClick={() => { setNewOpen(true)}} style={{ marginBottom: '7px' }}><AddIcon /></IconButton>
             </Box>
             {props.Vertical ?
                 <Box sx={{ display: 'flex', alignItems: 'flex-end' }} style={{ marginTop: "25px" }}>
-                    <JurisdictionTypeSelect type={type} setType={setType} setCollection={setJurisdictions} />
+                    <IncomeItemSortSelect sort={sort} setSort={setSort} setCollection={setCollection} />
                 </Box>
                 : <></>}
 
             <TableContainer component={Paper} style={{ marginTop: '25px' }}>
                 <Table>
                     <TableHead>
-                        <TableHeaders {...props}/>
+                        <TableHeaders {...props} /> 
                     </TableHead>
                     <TableBody>
                         {
-                            !jurisdictions ?
-                                <TableRow>
-                                    <TableCell colSpan={5} style={{ textAlign: "center" }}><CircularProgress /></TableCell>
-                                </TableRow> : <>{
+                            !collection
+                                ? <TableRow><TableCell colSpan={props.airline || props.corporation ? 4 : 3} style={{ textAlign: 'center' }}> <CircularProgress /> </TableCell></TableRow>
+                                : <>
+                                    {
+                                        collection.length === 0
+                                            ? <TableRow><TableCell colSpan={props.airline || props.corporation ? 4 : 3} style={{ textAlign: 'center' }}> No items were found </TableCell></TableRow>
+                                            : <>
+                                                {
+                                                    collection.map(i=>{
 
-                                    jurisdictions.length === 0 ?
-                                        <TableRow>
-                                            <TableCell colSpan={5} style={{ textAlign: "center" }}>No jurisdictions</TableCell>
-                                        </TableRow> : <>{ jurisdictions.map(J => { return (<JurisdictionRow J={J} setJurisdictions={setJurisdictions} Session={props.Session}/>)})}</>
-                                }
+                                                        return(
+                                                            <IncomeItemRow {...props} i={i} collection={collection} setCollection={setCollection} baseUrl={baseUrl}/>
+                                                        )
+                                                    })
+
+                                                }
+                                            </>
+                                    }
                                 </>
                         }
                     </TableBody>
                 </Table>
             </TableContainer>
-
-            <JurisdictionEditor setJurisdictions={setJurisdictions} open={newOpen} setOpen={setNewOpen} Session={props.Session}/>
-
         </React.Fragment>
     );
 

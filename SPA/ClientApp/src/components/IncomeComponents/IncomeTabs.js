@@ -1,5 +1,6 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import React, { useState } from "react";
+import IncomeItemDisplay from "./IncomeItemDisplay";
 import IncomeSummaryDisplay from "./IncomeSummaryDisplay";
 
 //Maybe this should've  been a default component? strange....
@@ -47,22 +48,22 @@ export default function IncomeTabs(props) {
             <IncomeTabGroup orientation="horizontal" value={value} handleChange={handleChange}/>
             <Box sx={{ bgcolor: 'background.paper', display: 'flex' }} >
                 <TabPanel value={value} index={0}>
-                    <IncomeSummaryDisplay {...props} summary={props.summary} setSummary={props.setSummary} account={props.account} open={value===0}/>
+                    <IncomeSummaryDisplay {...props} open={value===0}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    Manage Airlines
+                    <IncomeItemDisplay {...props} airline open={value===1}/>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    Manage Corps
+                    <IncomeItemDisplay {...props} corporation open={value===2}/>
                 </TabPanel>
                 <TabPanel value={value} index={3}>
-                    Manage Businesses
+                    <IncomeItemDisplay {...props} business open={value===3}/>
                 </TabPanel>
                 <TabPanel value={value} index={4}>
-                    Manage Hotels
+                    <IncomeItemDisplay {...props} hotel open={value===4}/>
                 </TabPanel>
                 <TabPanel value={value} index={5}>
-                    Manage Apartments
+                    <IncomeItemDisplay {...props} apartment open={value===5}/>
                 </TabPanel>
             </Box>
 
