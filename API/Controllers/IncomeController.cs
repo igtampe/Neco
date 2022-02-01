@@ -38,7 +38,7 @@ namespace Igtampe.Neco.API.Controllers {
     public class FeedItem : IncomeItem {
 
         /// <summary>Calculated income saved before this item was converted to a FeedItem</summary>
-        public long CalculatedIncome { get; set; } = 0;
+        public new long CalculatedIncome { get; set; } = 0;
 
         /// <summary>Returns the calculated income for anything after FeedItem that may need it</summary>
         /// <returns></returns>
@@ -49,14 +49,12 @@ namespace Igtampe.Neco.API.Controllers {
         /// <param name="Income">Income calculated beforehand to preserve the calculation</param>
         public FeedItem(IncomeItem E, long Income) {
 
-            Account = E.Account;
             Address = E.Address;
             DateCreated = E.DateCreated;
             DateUpdated = E.DateUpdated;
             Description = E.Description;
             CalculatedIncome = Income;
             ID = E.ID;
-            Jurisdiction = E.Jurisdiction;
             MiscIncome = E.MiscIncome;
             Name = E.Name;
 
@@ -80,35 +78,23 @@ namespace Igtampe.Neco.API.Controllers {
 
             public long TotalIncome { get; set; } = 0;
             public int Count { get; set; } = 0;
-            public List<IncomeItem> Top5 { get; set; } = new();
 
             public static async Task<IncomeItemSummary> CreateSummary<E>(DbSet<E> Set, string Account) where E : IncomeItem{
-
                 //what a disaster
                 List<E> TheList = await Set.Where(A=>A.Account != null && A.Account.ID==Account).ToListAsync();
                 return new() {
                     TotalIncome = TheList.Sum(A => A.Income()),
                     Count = TheList.Count,
-                    Top5 = TheList.OrderByDescending(A => A.Income()).Take(5).ToList<IncomeItem>()
                 };
             }
 
             public static IncomeItemSummary CreateTotalSummary(params IncomeItemSummary[] Summaries) {
-
-                List<IncomeItem> AllTops = new();
-                foreach (var S in Summaries) { AllTops.AddRange(S.Top5); }
-
                 return new() {
                     TotalIncome = Summaries.Sum(A => A.TotalIncome),
                     Count = Summaries.Sum(A => A.Count),
-                    Top5 = AllTops.OrderByDescending(A => A.Income()).Take(5).ToList()
                 };
-
             }
-        
         }
-
-        
 
         /// <summary>Gets a summary</summary>
         /// <param name="SessionID"></param>
@@ -198,7 +184,7 @@ namespace Igtampe.Neco.API.Controllers {
         /// <summary>Gets a list of all unapproved corporations in the Neco system</summary>
         /// <param name="SessionID"></param>
         /// <returns></returns>
-        [HttpGet("SDC/Corporations")]
+        [HttpGet("SDC/Corps")]
         public async Task<IActionResult> GetUnapprovedCorps([FromHeader] Guid SessionID) {
 
             //Get the session
@@ -209,15 +195,35 @@ namespace Igtampe.Neco.API.Controllers {
             if (! await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
 
             //Just get all of it. Please have the SDC not leave more than a ton of corporations
-            List<Corporation> Corps = await DB.Corporation.Where(C => !C.Approved)
-                .OrderByDescending(C => C.DateUpdated).ToListAsync();
+            List<Corporation> Corps = await DB.Corporation.Where(C => !C.Approved).OrderByDescending(C => C.DateUpdated).ToListAsync();
 
             //Now all we need to do is return it
             return Ok(Corps);
 
         }
 
-        /// <summary>Get a feed of the 20 most recently approved income items of any type</summary>
+        /// <summary>Gets a list of all unapproved corporations in the Neco system</summary>
+        /// <param name="SessionID"></param>
+        /// <returns></returns>
+        [HttpGet("SDC/Airlines")]
+        public async Task<IActionResult> GetUnapprovedAirlines([FromHeader] Guid SessionID) {
+
+            //Get the session
+            Session? S = await GetSession(SessionID);
+            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
+
+            //Ensure the Session is either Admin or SDC:
+            if (!await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
+
+            //Just get all of it. Please have the SDC not leave more than a ton of corporations
+            List<Airline> Corps = await DB.Airline.Where(C => !C.Approved).OrderByDescending(C => C.DateUpdated).ToListAsync();
+
+            //Now all we need to do is return it
+            return Ok(Corps);
+
+        }
+
+        /// <summary>Get a feed of the 20 most recently approved non-corporation income items of any type</summary>
         /// <param name="SessionID"></param>
         /// <returns></returns>
         [HttpGet("SDC/Feed")]
@@ -231,14 +237,13 @@ namespace Igtampe.Neco.API.Controllers {
             if (!await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
 
             //We need to make a massive union of a couple of lists.
-            IQueryable<FeedItem> TheBigSet =
-                DB.Airline.Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income()))
-                .Union(DB.Apartment.Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income())))
-                .Union(DB.Business.Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income())))
-                .Union(DB.Hotel.Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income()))) //Only include approved corps
-                .Union(DB.Corporation.Where(C=>C.Approved).Include(T => T.Account).Include(T => T.Jurisdiction).Select(T => new FeedItem(T, T.Income())));
-
-            TheBigSet.OrderByDescending(C => C.DateUpdated).Take(20);
+            IQueryable<FeedItem> TheBigSet =DB.Airline.Select(T => new FeedItem(T, T.Income()))
+                .Union(DB.Corporation.Select(T => new FeedItem(T, T.Income())))
+                .Union(DB.Apartment.Select(T => new FeedItem(T, T.Income())))
+                .Union(DB.Business.Select(T => new FeedItem(T, T.Income())))
+                .Union(DB.Hotel.Select(T => new FeedItem(T, T.Income())));
+                
+            TheBigSet = TheBigSet.OrderByDescending(C => C.DateUpdated).Take(20);
 
             return Ok(await TheBigSet.ToListAsync());
                 
@@ -539,7 +544,7 @@ namespace Igtampe.Neco.API.Controllers {
             bool isAccountOwner = (await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == AccountID))?.Owners.Any(U => U.ID == S.UserID) ?? false;
             if (!isAccountOwner && ! await IsAdminOrSDC(S.UserID)) { return NotFound(ErrorResult.NotFound("Account was not found or is not owned by session owner", "AccountID")); }
 
-            BaseSet = BaseSet.Where(I => I.Account != null && I.Account.ID == AccountID);
+            BaseSet = BaseSet.Include(A=>A.Jurisdiction).Where(I => I.Account != null && I.Account.ID == AccountID);
             if (!string.IsNullOrWhiteSpace(Query)) { BaseSet = BaseSet.Where(I => I.Name.ToLower().Contains(Query.ToLower()) || I.Description.ToLower().Contains(Query.ToLower())); }
 
             BaseSet = Sort switch {
@@ -613,6 +618,10 @@ namespace Igtampe.Neco.API.Controllers {
                         if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
                         if (!A.Owners.Any(u => u.ID == S.UserID)) { return Unauthorized(ErrorResult.Unauthorized("User does not own account")); }
 
+                        if (A.IncomeType != IncomeType.CORPORATE && Item is Corporation) {
+                            return BadRequest(ErrorResult.BadRequest("Only corporate accounts can hold corporate income items", "Account"));
+                        }
+
                         Item.Account = A;
 
                         continue;
@@ -624,7 +633,11 @@ namespace Igtampe.Neco.API.Controllers {
                 object? O = Prop.GetValue(ItemRequest);
 
                 //Update the value as long as its not null
-                if (O is not null) { Prop.SetValue(Item, O); }
+                if (O is not null) {
+                    PropertyInfo? DestProp = typeof(E).GetProperty(Prop.Name);
+                    if (DestProp is null) { throw new InvalidOperationException("Property in this request did not appear on the destination object"); }
+                    DestProp.SetValue(Item, O);
+                }
             }
 
             //Update the dates
@@ -678,6 +691,9 @@ namespace Igtampe.Neco.API.Controllers {
                         Account? A = await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == ItemRequest.AccountID);
                         if (A is null) { return NotFound(ErrorResult.NotFound("Account was not found", "Account")); }
                         if (!A.Owners.Any(u => u.ID == S.UserID)) { return Unauthorized(ErrorResult.Unauthorized("User does not own account")); }
+                        if (A.IncomeType != IncomeType.CORPORATE && Item is Corporation) {
+                            return BadRequest(ErrorResult.BadRequest("Only corporate accounts can hold corporate income items","Account"));
+                        }
 
                         continue;
                     default:
@@ -688,7 +704,11 @@ namespace Igtampe.Neco.API.Controllers {
                 object? O = Prop.GetValue(ItemRequest);
 
                 //Update the value as long as its not null
-                if (O is not null) { Prop.SetValue(Item, O); }
+                if (O is not null) {
+                    PropertyInfo? DestProp = typeof(E).GetProperty(Prop.Name);
+                    if (DestProp is null) { throw new InvalidOperationException("Property in this request did not appear on the destination object"); }
+                    DestProp.SetValue(Item, O);
+                }
             }
 
             //Update the date updated
