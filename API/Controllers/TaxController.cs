@@ -411,11 +411,16 @@ namespace Igtampe.Neco.API.Controllers {
                 .Include(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction)
                 .Include(A => A.Jurisdiction).ThenInclude(D => D.ChildJurisdictions)
                 .Include(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Airlines).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction)
-                .Include(A => A.Apartments).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction)
-                .Include(A => A.Businessses).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction)
-                .Include(A => A.Corporations).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction)
-                .Include(A => A.Hotels).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction)
+                .Include(A => A.Airlines).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.Airlines).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.Apartments).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.Apartments).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.Businessses).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.Businessses).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.Corporations).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.Corporations).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.Hotels).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.Hotels).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
                 .FirstOrDefaultAsync(A => A.ID == AccountID);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
@@ -478,14 +483,14 @@ namespace Igtampe.Neco.API.Controllers {
             //The one condition this may fail in is if we ask for the last 31st and last month didn't have a 31st.
             //In this and similar instances (if the previous month does not have this date), let's use the month's maximum length.
 
-            return new (Year, LastMonth, Math.Min(Day, DateTime.DaysInMonth(Year, LastMonth)));
+            return DateTime.SpecifyKind(new(Year, LastMonth, Math.Min(Day, DateTime.DaysInMonth(Year, LastMonth))),DateTimeKind.Utc);
         }
 
         /// <summary>Gets a DateTime representing the specified day of this month (IE if it's currently December 5th, executing
         /// this function with param day=15, it would return December 15th). Use day 31 to get the last day of this month.</summary>
         /// <param name="Day"></param>
         /// <returns></returns>
-        private static DateTime DayOfThisMonth(int Day) => new (DateTime.UtcNow.Year, DateTime.UtcNow.Month, Math.Min(Day, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month)));
+        private static DateTime DayOfThisMonth(int Day) => DateTime.SpecifyKind(new (DateTime.UtcNow.Year, DateTime.UtcNow.Month, Math.Min(Day, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month))), DateTimeKind.Utc);
 
         #endregion
 
