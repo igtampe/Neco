@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { GenerateGet } from "../RequestOptionGenerator";
 import { Accountheaders, FormatAccountID } from "./AccountComponents/AccountDisplay";
 import { ComingSoonDialog } from "./Accounts";
+import IncomeForm from "./IncomeComponents/IncomeItemForm";
 import IncomeTabs from "./IncomeComponents/IncomeTabs";
 import NecoHeader from "./NecoHeader";
+import TaxReportForm from "./TaxComponents/TaxReportForm";
 
 function AccountSelectMenuItem(props){
 
@@ -73,9 +75,20 @@ export default function IncomeComponent(props) {
     const [CSOpen,setCSOpen] = useState(false);
 
     const [summary, setSummary] = useState(undefined);
+    const [airlines,setAirlines] = useState(undefined);
+    const [corporations,setCorporations] = useState(undefined);
+    const [businesses,setBusinesses] = useState(undefined);
+    const [hotels,setHotels] = useState(undefined);
+    const [apartments,setApartments] = useState(undefined);
+
+    const setCollections = [ setAirlines, setCorporations, setBusinesses, setHotels, setApartments]
+
+    const [creator,setCreator] = useState({ open:false, type:-1 })
+    const [genOpen, setGenOpen] = useState(false);
 
     const updateAccount=(account)=>{
-        setSummary(undefined)
+        setSummary(undefined); setAirlines(undefined); setCorporations(undefined);
+        setBusinesses(undefined); setHotels(undefined); setApartments(undefined);
         setAccount(account)
     }
 
@@ -86,7 +99,10 @@ export default function IncomeComponent(props) {
             <NecoHeader name={props.User ? props.User.name : '...'} />
             <Grid container spacing={2} style={{ minWidth: '100%' }}>
                 <Grid item xs={props.Vertical ? 12 : 9}>
-                    <IncomeTabs {...props} summary={summary} setSummary={setSummary} account={Account}/>
+                    <IncomeTabs {...props} summary={summary} setSummary={setSummary} account={Account}
+                    airlines={airlines} setAirlines={setAirlines} corporations={corporations} setCorporations={setCorporations}
+                    businesses={businesses} setBusinesses={setBusinesses} hotels={hotels} setHotels={setHotels}
+                    apartments={apartments} setApartments={setApartments}/>
                 </Grid>
                 <Grid item xs={props.Vertical ? 12 : 3}>
                     <Card sx={{ minWidth: '100%', maxHeight:'100%', height:(props.Vertical ? 'auto': '60vh') }}>
@@ -96,22 +112,29 @@ export default function IncomeComponent(props) {
                             <b>Quick actions</b>
                             <Divider />
                             <List>
-                                <ListItem button disabled={!Account} onClick={()=>{setCSOpen(true)}}> Generate a Tax Report  </ListItem>
+                                <ListItem button disabled={!Account} onClick={()=>{setGenOpen(true)}}> Generate a Tax Report  </ListItem>
                                 <ListItem button disabled={!Account} onClick={()=>{setCSOpen(true)}}> See past Tax Reports </ListItem>
                             </List>
                             <br/><b>File New Income Items:</b>
                             <Divider/>
                             <List>
-                                <ListItem button disabled={!Account || Account.incomeType!==1} onClick={()=>{setCSOpen(true)}}> File an Airline </ListItem>
-                                <ListItem button disabled={!Account || Account.incomeType!==1} onClick={()=>{setCSOpen(true)}}> File a Corporation </ListItem>
-                                <ListItem button disabled={!Account} onClick={()=>{setCSOpen(true)}}> File a Business </ListItem>
-                                <ListItem button disabled={!Account} onClick={()=>{setCSOpen(true)}}> File a Hotel </ListItem>
-                                <ListItem button disabled={!Account} onClick={()=>{setCSOpen(true)}}> File an Apartment Building </ListItem>                                
+                                <ListItem button disabled={!Account || Account.incomeType!==1} onClick={()=>{setCreator({open:true, type:0})}}> File an Airline </ListItem>
+                                <ListItem button disabled={!Account || Account.incomeType!==1} onClick={()=>{setCreator({open:true, type:1})}}> File a Corporation </ListItem>
+                                <ListItem button disabled={!Account} onClick={()=>{setCreator({open:true, type:2})}}> File a Business </ListItem>
+                                <ListItem button disabled={!Account} onClick={()=>{setCreator({open:true, type:3})}}> File a Hotel </ListItem>
+                                <ListItem button disabled={!Account} onClick={()=>{setCreator({open:true, type:4})}}> File an Apartment Building </ListItem>                                
                             </List>
                         </CardContent>
                     </Card>
                 </Grid>
             </Grid>
+
+            <IncomeForm {...props} open={creator.open && creator.type!==-1} setOpen={(val)=>setCreator({...creator, open:val})} account={Account}
+                airline={creator.type===0} corporation={creator.type===1} business={creator.type===2} hotel={creator.type===3} apartment={creator.type===4}
+                setCollection={setCollections[creator.type]}
+                />
+            
+            <TaxReportForm {...props} open={genOpen} setOpen={setGenOpen} account={Account}/>
 
             <ComingSoonDialog open={CSOpen} setOpen={setCSOpen}/>
 
