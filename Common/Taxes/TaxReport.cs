@@ -8,7 +8,7 @@ namespace Igtampe.Neco.Common.Taxes {
     /// <summary>A report of taxes to be paid based on income earned during the current month</summary>
     public class TaxReport : AutomaticallyGeneratableIdentifiable {
 
-        private const string SectionLine = "    \n";
+        private const string SectionLine = "================================================================================\n";
         private const string ItemLine = "-------------------------------------------------------------------------------\n";
 
         /// <summary>Account this Tax Report belongs to</summary>
@@ -136,7 +136,7 @@ namespace Igtampe.Neco.Common.Taxes {
 
             //Headers for the static income items
             TR.TextReport += $"\n{SectionLine}Static Income Items\n{SectionLine}";
-            TR.CSVReport += "ID,Name,Federal Jurisdiction,Local Jurisdiction,Income";
+            TR.CSVReport += "ID,Name,Federal Jurisdiction,Local Jurisdiction,Income\n";
 
             //Add incomes from every 
             foreach (IncomeItem I in IncomeItems) {
