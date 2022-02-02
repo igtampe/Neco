@@ -79,7 +79,7 @@ namespace Igtampe.Neco.API.Controllers {
             public long TotalIncome { get; set; } = 0;
             public int Count { get; set; } = 0;
 
-            public static async Task<IncomeItemSummary> CreateSummary<E>(DbSet<E> Set, string Account) where E : IncomeItem{
+            public static async Task<IncomeItemSummary> CreateSummary<E>(IQueryable<E> Set, string Account) where E : IncomeItem{
                 //what a disaster
                 List<E> TheList = await Set.Where(A=>A.Account != null && A.Account.ID==Account).ToListAsync();
                 return new() {
@@ -115,15 +115,15 @@ namespace Igtampe.Neco.API.Controllers {
             //Total income from all item subtypes individual and grand total
 
             //I really REALLY hope this maps, but I have a sneaking suspicion it won't
-            var Airline     = await IncomeItemSummary.CreateSummary(DB.Airline, AccountID);
+            //var Airline     = await IncomeItemSummary.CreateSummary(DB.Airline, AccountID);
             var Apartment   = await IncomeItemSummary.CreateSummary(DB.Apartment, AccountID);
             var Business    = await IncomeItemSummary.CreateSummary(DB.Business, AccountID);
-            var Corporation = await IncomeItemSummary.CreateSummary(DB.Corporation, AccountID);
+            var Corporation = await IncomeItemSummary.CreateSummary(DB.Corporation.Include(A=>A.Jurisdiction), AccountID);
             var Hotel       = await IncomeItemSummary.CreateSummary(DB.Hotel, AccountID);
-            var Total = IncomeItemSummary.CreateTotalSummary(Airline, Apartment, Business, Corporation, Hotel);
+            var Total = IncomeItemSummary.CreateTotalSummary(Apartment, Business, Corporation, Hotel);
             
 
-            return Ok(new { Airline, Apartment, Business, Corporation, Hotel, Total });
+            return Ok(new { /*Airline,*/ Apartment, Business, Corporation, Hotel, Total });
         }
 
         #endregion
