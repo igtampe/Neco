@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TableContainer, Table, TableHead, TableRow, TableCell, Box, TextField, IconButton, Paper, TableBody, CircularProgress } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogContentText, TableContainer, Table, TableHead, TableRow, TableCell, IconButton, Paper, TableBody, CircularProgress, Alert } from "@mui/material";
 import React, { useState } from "react";
 import { GenerateGet } from '../../RequestOptionGenerator'
 import { FileOpen } from "@mui/icons-material";
@@ -23,7 +23,7 @@ function TaxReportRow(props) {
 
 export default function PastTaxReportsForm(props) {
 
-    const [reports, setReports] = useState(undefined)
+    const [reports, setReports] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const [openReport, setOpenReport] = useState(false)
@@ -52,7 +52,10 @@ export default function PastTaxReportsForm(props) {
                 <DialogTitle> Pick a Tax Report</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <TableContainer component={Paper}>
+                        <Alert severity="warning">Tax reports older than 3 months are deleted automatically by Neco. 
+                        If you want to preserve the data, consider downloading the Text or CSV copies of old reports.</Alert>
+
+                        <TableContainer component={Paper} style={{marginTop:'15px'}}>
                             <Table>
                                 <TableHead>
                                     <TableRow>
