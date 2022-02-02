@@ -23,7 +23,6 @@ function IncomeSummaryCard(props) {
 function SummaryToChartData(summary) {
 
     return [
-        { type: 'Airlines', income: summary.airline.totalIncome, count: summary.airline.count },
         { type: 'Corporations', income: summary.corporation.totalIncome, count: summary.corporation.count },
         { type: 'Businesses', income: summary.business.totalIncome, count: summary.business.count },
         { type: 'Hotels', income: summary.hotel.totalIncome, count: summary.hotel.count },
@@ -94,12 +93,11 @@ export default function IncomeSummaryDisplay(props) {
                 </Grid> : <></>}
             <Grid item xs={props.Vertical ? 12 : 7}>
                 <Grid container spacing={2}>
-                    <Grid item xs={6}><IncomeSummaryCard {...props} type={'Airlines'} airline summary={props.summary ? props.summary.airline : undefined} /></Grid>
-                    <Grid item xs={6}><IncomeSummaryCard {...props} type={'Corporations'} corporation summary={props.summary ? props.summary.corporation : undefined} /></Grid>
+                    <Grid item xs={6}><IncomeSummaryCard {...props} type={'Corps & Airlines'} corporation summary={props.summary ? props.summary.corporation : undefined} /></Grid>
                     <Grid item xs={6}><IncomeSummaryCard {...props} type={'Businesses'} business summary={props.summary ? props.summary.business : undefined} /></Grid>
                     <Grid item xs={6}><IncomeSummaryCard {...props} type={'Hotels'} hotel summary={props.summary ? props.summary.hotel : undefined} /></Grid>
                     <Grid item xs={6}><IncomeSummaryCard {...props} type={'Apartments'} apartment summary={props.summary ? props.summary.apartment : undefined} /></Grid>
-                    <Grid item xs={6}><IncomeSummaryCard {...props} type={'Totals'} summary={props.summary ? props.summary.total : undefined} /></Grid>
+                    <Grid item xs={12}><IncomeSummaryCard {...props} type={'Totals'} summary={props.summary ? props.summary.total : undefined} /></Grid>
                 </Grid>
             </Grid>
             {!props.Vertical && props.summary ?
