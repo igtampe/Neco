@@ -389,6 +389,9 @@ namespace Igtampe.Neco.API.Controllers {
                 DB.Update(A);
             }
 
+            //Cleanup old tax reports
+            DB.RemoveRange(DB.TaxReport.Where(A => A.DateGenerated < DateTime.SpecifyKind(DateTime.Now.AddMonths(-3).AddDays(1), DateTimeKind.Utc)));
+
             await DB.SaveChangesAsync();
             return Ok();
 
