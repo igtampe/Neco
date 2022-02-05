@@ -57,6 +57,20 @@ namespace Igtampe.Neco.Data {
 
         public DbSet<Image> Image { get; set; }
 
+        public DbSet<IncomeItem2> IncomeItem2 { get; set; }
+
+        public DbSet<Apartment2> Apartment2 { get; set; }
+
+        public DbSet<Business2> Business2 { get; set; }
+
+        public DbSet<Hotel2> Hotel2 { get; set; }
+
+        public DbSet<Corporation2> Corporation2 { get; set; }
+
+        public DbSet<Airline2> Airline2 { get; set; }
+
+
+
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     }
