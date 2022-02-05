@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Igtampe.Neco.Common.Income {
 
@@ -7,6 +8,10 @@ namespace Igtampe.Neco.Common.Income {
 
         /// <summary>US population (Useful in determining the base percentage for income calculation)</summary>
         private const long US_POPULATION = 329500000;
+
+        /// <summary>Type of this income item. Helps the frontend determine what this is</summary>
+        [NotMapped]
+        public override int Type { get; set; } = 3;
 
         /// <summary>Name of the real life equivalent company to base this on</summary>
         public string RLE { get; set; } = "";
@@ -31,9 +36,6 @@ namespace Igtampe.Neco.Common.Income {
 
         /// <summary>Whether or not this company is a multinational</summary>
         public bool International { get; set; }
-
-        /// <summary>Whether or not this filing has been approved by the Salary Determination Committee</summary>
-        public bool Approved { get; set; } = false;
 
         /// <summary>Gets corporate income percentage of RLE</summary>
         /// <returns></returns>

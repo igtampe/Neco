@@ -1,9 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Igtampe.Neco.Common.Income {
 
     /// <summary>A business that is set up at an individual location (Like a store or a restaurant)</summary>
     public class Business : IncomeItem {
+
+        /// <summary>Type of this income item. Helps the frontend determine what this is</summary>
+        [NotMapped]
+        public override int Type { get; set; } = 2;
 
         /// <summary>Points of Sale for this business (IE: Lines in a supermarket, chairs in a restaurant)</summary>
         [Range(0, int.MaxValue)]
