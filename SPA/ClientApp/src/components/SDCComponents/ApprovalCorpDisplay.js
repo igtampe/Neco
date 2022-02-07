@@ -48,7 +48,7 @@ export default function ApproveCorpDisplay(props) {
 
         setLoading(true)
 
-        fetch('/API/Income/SDC/Corps', GenerateGet(props.Session)) //This actually isn't authenticated pero sabes que zoop.
+        fetch('/API/Income/SDC/Unapproved', GenerateGet(props.Session)) //This actually isn't authenticated pero sabes que zoop.
             .then(response => { return (response.json()) })
             .then(data => {
 
