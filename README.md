@@ -1,12 +1,12 @@
  <img src="https://raw.githubusercontent.com/igtampe/Neco/master/SPA/ClientApp/public/NecoColor.png" width="300"/>
 Neco (.NET Economy) is a successor and complete rework of <a href="https://github.com/igtampe/ViBE">ViBE</a>, working with more industry standard tools. The Backend runs on ASP.NET Core, and uses Entity Framework to communicate to a PostgreSQL database. While we're currently working with the essentials of ViBE (Sending and receiving money, managing income and taxes, and generating statistics data), we hope to make Neco flexible enough eventually to encompass all programs and subprograms in the ViBE Suite, including the <a href="https://github.com/igtampe/UMSAssetTrack">UMS Asset Tracking System (UMSAT)</a>, and a complete overhaul to LandView.<br>
 <br>
-Due to using a SQL database and changes to the domain, Neco is no longer cross compatible with ViBE (as ViBE was with its own predecessor)<br>
+Due to using a SQL database and changes to the domain, Neco is no longer cross compatible with ViBE. An unfortunate reprocussion, given that ViBE was at least semi-cross compatible with TeBEcon (its predecessor)<br>
 <br>
 Neco's primary purpose beyond itself is to help me practice the use of new technologies, including C#, ASP.NET Web APIs, EF Core, Heroku, React.JS and Material UI.<br>
 <br>
 
-# Changes from ViBE
+## Changes from ViBE
 - Multiple bank accounts with the same banks are now permitted under one user account
     - Money is now sent to bank account IDs (9 digit numerical codes) rather than going through a user ID, then a bank ID (57174/UMSNB)
 - Bank accounts can now be shared between users
@@ -16,7 +16,7 @@ Neco's primary purpose beyond itself is to help me practice the use of new techn
         - Income Items
         - Taxes
 
-# Changes from Neco Pre-Reset
+## Changes from Neco Pre-Reset
 <i>This is the second attempt to create Neco. To see the first attempt, see the <a href="https://github.com/igtampe/Neco/tree/pre-reset">Pre-Reset branch</a>.</i><br>
 <br>
 After learning the lessons of project organization and construction from <a href="https://github.com/igtampe/Clothespin">Clothespin</a>, we decided to restart development in Neco and simplify its scope temporarily. The massiveness of pre-reset Neco made it cahllenging to focus on delivering the minimum viable product. Post-reset Neco expects to be flexible and extensible enough to eventually implement Pre-reset Neco's planned and semi-implemented features. Some of the content cut and changed at reset includes:<br>
