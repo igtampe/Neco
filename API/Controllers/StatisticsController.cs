@@ -82,6 +82,21 @@ namespace Igtampe.Neco.API.Controllers {
 
         }
 
+        /// <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
+        /// <returns></returns>
+        //Total amount taken by tax (involves generating tax reports)
+        [HttpGet("WealthReport")]
+        public async Task<IActionResult> JurisdictionWealthReport() {
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            var Report = DB.Account.Where(A=>A.Jurisdiction!=null).GroupBy(A => A.Jurisdiction)
+                .Select(T => new { T.Key.ID, T.Key.Name, Wealth = T.Sum(A => A.Balance) });
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+            return Ok(await Report.ToListAsync());
+
+        }
+
         //Total amount of each type of income entities
         //Total amount of each type of static monthly income generated.
 
@@ -110,11 +125,18 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpGet("Income/Hotel")]
         public async Task<IActionResult> HotelStatistics() => await IncomeItemStatistics(DB.Hotel);
 
+        //Total amount of monthly income generated
+        /// <summary>Gets total income statistics for all types of income items in the neco system</summary>
+        /// <typeparam name="E"></typeparam>
+        /// <returns></returns>
+        [HttpGet("Income")]
+        public async Task<IActionResult> Income<E>() => await IncomeItemStatistics(DB.IncomeItem);
+
         private async Task<IActionResult> IncomeItemStatistics<E>(IQueryable<E> BaseSet) where E : IncomeItem {
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference. //Wheres still don't deal with dereference
-            var Breakdown = await BaseSet.Where(T => T.Jurisdiction != null).GroupBy(T => new { T.Jurisdiction.ID, T.Jurisdiction.Name })
-                .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.Income()) }).ToListAsync();
+            var Breakdown = await BaseSet.Where(T => T.Jurisdiction != null).Where(A=>A.Approved).GroupBy(T => new { T.Jurisdiction.ID, T.Jurisdiction.Name })
+                .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.CalculatedIncome) }).ToListAsync();
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             int TotalCount = Breakdown.Sum(T => T.Count);
@@ -122,39 +144,6 @@ namespace Igtampe.Neco.API.Controllers {
 
             return Ok(new { Breakdown, TotalCount, TotalIncome });
         
-        }
-
-        //Total amount of monthly income generated
-        /// <summary>Gets total income statistics for all types of income items in the neco system</summary>
-        /// <typeparam name="E"></typeparam>
-        /// <returns></returns>
-        [HttpGet("Income")]
-        public async Task<IActionResult> Income<E>() {
-
-#pragma warning disable CS8602 // Dereference of a possibly null reference. //Wheres still don't deal with dereference
-            var TheMegaQuery = await
-                DB.Airline.Where(T => T.Jurisdiction != null).GroupBy(T => new { T.Jurisdiction.ID, T.Jurisdiction.Name })
-                .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.Income()) }).Union(
-                    DB.Apartment.Where(T => T.Jurisdiction != null).GroupBy(T => new { T.Jurisdiction.ID, T.Jurisdiction.Name })
-                .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.Income()) })).Union(
-                    DB.Business.Where(T => T.Jurisdiction != null).GroupBy(T => new { T.Jurisdiction.ID, T.Jurisdiction.Name }) //Good god what the *heck*
-                .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.Income()) })).Union(
-                    DB.Corporation.Where(T => T.Jurisdiction != null).GroupBy(T => new { T.Jurisdiction.ID, T.Jurisdiction.Name })
-                .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.Income()) })).Union(
-                    DB.Hotel.Where(T => T.Jurisdiction != null).GroupBy(T => new { T.Jurisdiction.ID, T.Jurisdiction.Name })
-                .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.Income()) }))
-                .GroupBy(T => new { T.ID, T.Name}).Select(T => new { T.Key.ID, T.Key.Name, Count = T.Sum(T=>T.Count), Income = T.Sum(T => T.Income) })
-                .ToListAsync(); //REGROUP AND RE-SELECT
-
-            //What on earth did we create.
-
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-
-            int TotalCount = TheMegaQuery.Sum(T => T.Count);
-            long TotalIncome = TheMegaQuery.Sum(T => T.Income);
-
-            return Ok(new { Breakdown = TheMegaQuery, TotalCount, TotalIncome });
-
         }
 
         /// <summary>Gets statistics for all banks in the Neco system</summary>
