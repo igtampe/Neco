@@ -414,16 +414,8 @@ namespace Igtampe.Neco.API.Controllers {
                 .Include(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction)
                 .Include(A => A.Jurisdiction).ThenInclude(D => D.ChildJurisdictions)
                 .Include(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Airlines).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Airlines).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Apartments).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Apartments).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Businessses).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Businessses).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Corporations).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Corporations).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Hotels).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.Hotels).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.IncomeItems).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
+                .Include(A => A.IncomeItems).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
                 .FirstOrDefaultAsync(A => A.ID == AccountID);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
