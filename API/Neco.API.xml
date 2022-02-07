@@ -243,11 +243,6 @@
             <param name="SessionID"></param>
             <returns></returns>
         </member>
-        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetUnapprovedAirlines(System.Guid)">
-            <summary>Gets a list of all unapproved corporations in the Neco system</summary>
-            <param name="SessionID"></param>
-            <returns></returns>
-        </member>
         <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetFeed(System.Guid)">
             <summary>Get a feed of the 20 most recently approved non-corporation income items of any type</summary>
             <param name="SessionID"></param>
@@ -521,6 +516,10 @@
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.JurisdictionsReport">
+            <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.JurisdictionWealthReport">
             <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
             <returns></returns>
         </member>
