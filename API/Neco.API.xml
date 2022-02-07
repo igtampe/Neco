@@ -1,0 +1,1158 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Neco.API</name>
+    </assembly>
+    <members>
+        <member name="T:Igtampe.Neco.API.Controllers.TransactionType">
+            <summary>Type of transaction from the perspective of an executor</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.TransactionType.ANY">
+            <summary>Indicates any transaction where the executor is either origin or destination</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.TransactionType.DEBIT">
+            <summary>Indicates a transaction where from the executor's perspective, they are the origin</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.TransactionType.CREDIT">
+            <summary>Indicates a transaction where from the executor's perspective, they are the destination</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Controllers.TransactionSortType">
+            <summary>Type of sort to execute on transactions</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.TransactionSortType.DATE">
+            <summary>Sort by Date (Descending)</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.TransactionSortType.DATE_ASC">
+            <summary>Sort by Date (Ascending)</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.TransactionSortType.AMOUNT">
+            <summary>Sort by Amount (descending)</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.TransactionSortType.AMOUNT_ASC">
+            <summary>Sort by Amount (Ascending)</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Controllers.BankController">
+            <summary>Controller that handles User operations</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.#ctor(Igtampe.Neco.Data.NecoContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.GetBanks(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets all banks</summary>
+            <param name="Query">Search query to search the ID or name of a bank</param>
+            <param name="Skip">Banks to skip</param>
+            <param name="Take">Amount of banks to return</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.GetBank(System.String)">
+            <summary>Gets a specific Bank</summary>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.GetAccounts(System.Nullable{System.Guid})">
+            <summary>Get all accounts owned by a session owner</summary>
+            <param name="SessionID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.GetAccount(System.Nullable{System.Guid},System.String)">
+            <summary>Gets a specific account from the list of accoutns owned by the session owner</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.AccountDirectory(System.String,System.Nullable{Igtampe.Neco.Common.Income.IncomeType},System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets the accounts directory</summary>
+            <param name="Query"></param>
+            <param name="Type"></param>
+            <param name="Skip"></param>
+            <param name="Take"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.GetAccountTransactions(System.Nullable{System.Guid},System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{Igtampe.Neco.API.Controllers.TransactionType},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{Igtampe.Neco.API.Controllers.TransactionSortType})">
+            <summary>Gets Transactions for a given account</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <param name="Query"></param>
+            <param name="Skip"></param>
+            <param name="Take"></param>
+            <param name="Type"></param>
+            <param name="Start"></param>
+            <param name="End"></param>
+            <param name="Sort"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.CreateBank(System.Nullable{System.Guid},Igtampe.Neco.API.Requests.BankRequest,System.String)">
+            <summary>Creates a Bank</summary>
+            <param name="SessionID">ID of the administrator session that is executing this request</param>
+            <param name="Request">Request with Bank details</param>
+            <param name="ID">ID of the bank to create</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.CreateAccount(System.Nullable{System.Guid},Igtampe.Neco.API.Requests.AccountRequest)">
+            <summary>Creates an account with given details</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.CreateTransaction(System.Nullable{System.Guid},Igtampe.Neco.API.Requests.TransactionRequest)">
+            <summary>Creates and processes a transaction</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.EditBank(System.Nullable{System.Guid},System.String,Igtampe.Neco.API.Requests.BankRequest)">
+            <summary>Edits a Bank</summary>
+            <param name="SessionID">ID of an administrator session</param>
+            <param name="ID">ID of the bank</param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.EditAccount(System.Nullable{System.Guid},System.String,Igtampe.Neco.API.Requests.AccountRequest)">
+            <summary>Edits an account</summary>
+            <param name="SessionID">ID of the session executing this request</param>
+            <param name="ID">ID of the account</param>
+            <param name="Request">Request to edit account details</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.NonTaxAdd(System.Nullable{System.Guid},System.String,System.Int64)">
+            <summary>Edits an account</summary>
+            <param name="SessionID">ID of the session executing this request</param>
+            <param name="ID">ID of the account</param>
+            <param name="Amount">Amount to add to the account</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.GetOwners(System.Nullable{System.Guid},System.String)">
+            <summary>Gets list of owners for a given account</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.AddOwner(System.Nullable{System.Guid},System.String,System.String)">
+            <summary>Adds an additional owner to a given account</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <param name="Owner"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.RemoveOwner(System.Nullable{System.Guid},System.String,System.String)">
+            <summary>Removes an additional owner to a given account</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <param name="Owner"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.BankController.CloseAccount(System.Nullable{System.Guid},System.String)">
+            <summary>Closes a Neco bank account</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.API.Controllers.CertificationController">
+            <summary>Certification controller in charge of handling the generation of certification images, and the verification of said images and text</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.CertificationController.#ctor(Igtampe.Neco.Data.NecoContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.CertificationController.GenerateTransactionCert(System.Guid)">
+            <summary>Generates a transaction certification receipt</summary>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.CertificationController.VerifyTransaction(System.String)">
+            <summary>Verifies a transaction qr code (more specifically the data in the qr code)</summary>
+            <param name="TString"></param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="T:Igtampe.Neco.API.Controllers.ImageController">
+            <summary>Controller that handles User operations</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.ImageController.#ctor(Igtampe.Neco.Data.NecoContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.ImageController.GetImage(System.Guid)">
+            <summary>Gets an image from the DB</summary>
+            <param name="ID">ID of the image to retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.ImageController.UploadImage(System.Guid)">
+            <summary>Uploads an Image to the DB.</summary>
+            <param name="SessionID">ID of the session executing this request</param>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.API.Controllers.IncomeItemSortType">
+            <summary>Sort by income</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.NAME">
+            <summary>Sort by name ascending</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.NAME_DESC">
+            <summary>Sort by name descending</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.DATE_CREATED">
+            <summary>Sort by date created descending</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.DATE_CREATED_ASC">
+            <summary>Sort by date created ascending</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.DATE_UPDATED">
+            <summary>Sort by date updated descending</summary>
+        </member>
+        <member name="F:Igtampe.Neco.API.Controllers.IncomeItemSortType.DATE_UPDATED_ASC">
+            <summary>Sort by date updated ascending</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Controllers.FeedItem">
+            <summary>Item for feed unioning of all incomeitems</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Controllers.FeedItem.CalculatedIncome">
+            <summary>Calculated income saved before this item was converted to a FeedItem</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.FeedItem.Income">
+            <summary>Returns the calculated income for anything after FeedItem that may need it</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.FeedItem.#ctor(Igtampe.Neco.Common.Income.IncomeItem,System.Int64)">
+            <summary>Creates a FeedItem</summary>
+            <param name="E">Item to copy and convert to a FeedItem</param>
+            <param name="Income">Income calculated beforehand to preserve the calculation</param>
+        </member>
+        <member name="T:Igtampe.Neco.API.Controllers.IncomeController">
+            <summary>Controller that handles User operations</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.#ctor(Igtampe.Neco.Data.NecoContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.Summary(System.Guid,System.String)">
+            <summary>Gets a summary</summary>
+            <param name="SessionID"></param>
+            <param name="AccountID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.IncomeDay(System.Nullable{System.Guid},System.Nullable{System.Boolean})">
+            <summary>Executes an Income Day event</summary>
+            <param name="SessionID"></param>
+            <param name="Force"></param>
+            <returns></returns> 
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetUnapprovedCorps(System.Guid)">
+            <summary>Gets a list of all unapproved corporations in the Neco system</summary>
+            <param name="SessionID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetFeed(System.Guid)">
+            <summary>Get a feed of the 20 most recently approved non-corporation income items of any type</summary>
+            <param name="SessionID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.Approve(System.Guid,System.Guid)">
+            <summary>Approves a corporation</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetAirlines(System.Guid,System.String,System.Nullable{Igtampe.Neco.API.Controllers.IncomeItemSortType},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets an account's Airlines</summary>
+            <param name="SessionID"></param>
+            <param name="AccountID"></param>
+            <param name="Sort"></param>
+            <param name="Query"></param>
+            <param name="Skip"></param>
+            <param name="Take"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetApartments(System.Guid,System.String,System.Nullable{Igtampe.Neco.API.Controllers.IncomeItemSortType},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets an account's apartments</summary>
+            <param name="SessionID"></param>
+            <param name="AccountID"></param>
+            <param name="Sort"></param>
+            <param name="Query"></param>
+            <param name="Skip"></param>
+            <param name="Take"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetBusinesses(System.Guid,System.String,System.Nullable{Igtampe.Neco.API.Controllers.IncomeItemSortType},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets an account's Businesses</summary>
+            <param name="SessionID"></param>
+            <param name="AccountID"></param>
+            <param name="Sort"></param>
+            <param name="Query"></param>
+            <param name="Skip"></param>
+            <param name="Take"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetCorporations(System.Guid,System.String,System.Nullable{Igtampe.Neco.API.Controllers.IncomeItemSortType},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets an account's corporations</summary>
+            <param name="SessionID"></param>
+            <param name="AccountID"></param>
+            <param name="Sort"></param>
+            <param name="Query"></param>
+            <param name="Skip"></param>
+            <param name="Take"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetHotels(System.Guid,System.String,System.Nullable{Igtampe.Neco.API.Controllers.IncomeItemSortType},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets an account's Hotels</summary>
+            <param name="SessionID"></param>
+            <param name="AccountID"></param>
+            <param name="Sort"></param>
+            <param name="Query"></param>
+            <param name="Skip"></param>
+            <param name="Take"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetAirline(System.Guid,System.Guid)">
+            <summary>Gets specific airline</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetApartment(System.Guid,System.Guid)">
+            <summary>Gets specific Apartment</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetBusiness(System.Guid,System.Guid)">
+            <summary>Gets a specific Business</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetCorporation(System.Guid,System.Guid)">
+            <summary>Gets specific Corporation</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetHotel(System.Guid,System.Guid)">
+            <summary>Gets a specific Hotel</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.CreateAirline(System.Guid,Igtampe.Neco.API.Requests.AirlineRequest)">
+            <summary>Creates an Airline</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.CreateApartment(System.Guid,Igtampe.Neco.API.Requests.ApartmentRequest)">
+            <summary>Creates an apartment</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.CreateBusiness(System.Guid,Igtampe.Neco.API.Requests.BusinessRequest)">
+            <summary>Creates a Business</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.CreateCorporation(System.Guid,Igtampe.Neco.API.Requests.CorporationRequest{Igtampe.Neco.Common.Income.Corporation})">
+            <summary>Creates a corporation</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.CreateHotel(System.Guid,Igtampe.Neco.API.Requests.HotelRequest)">
+            <summary>Creates a hotel</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.UpdateAirline(System.Guid,System.Guid,Igtampe.Neco.API.Requests.AirlineRequest)">
+            <summary>Updates an Airline</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.UpdateApartment(System.Guid,System.Guid,Igtampe.Neco.API.Requests.ApartmentRequest)">
+            <summary>Updates an apartment</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.UpdateBusiness(System.Guid,System.Guid,Igtampe.Neco.API.Requests.BusinessRequest)">
+            <summary>Updates a Business</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.UpdateCorporation(System.Guid,System.Guid,Igtampe.Neco.API.Requests.CorporationRequest{Igtampe.Neco.Common.Income.Corporation})">
+            <summary>Updates a corporation</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.UpdateHotel(System.Guid,System.Guid,Igtampe.Neco.API.Requests.HotelRequest)">
+            <summary>Updates a hotel</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.DeleteAirline(System.Guid,System.Guid)">
+            <summary>Deletes specific airline</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.DeleteApartment(System.Guid,System.Guid)">
+            <summary>Deletes specific Apartment</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.DeleteBusiness(System.Guid,System.Guid)">
+            <summary>Deletes a specific Business</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.DeleteCorporation(System.Guid,System.Guid)">
+            <summary>Deletes specific Corporation</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.DeleteHotel(System.Guid,System.Guid)">
+            <summary>Deletes a specific Hotel</summary>
+            <param name="SessionID"></param>
+            <param name="ItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetIncomeItems``1(System.Linq.IQueryable{``0},System.Nullable{System.Guid},System.String,System.Nullable{Igtampe.Neco.API.Controllers.IncomeItemSortType},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Generic function to get any type of income item list</summary>
+            <typeparam name="E">Type of income item list to retrieve</typeparam>
+            <param name="BaseSet">Set to take IncomeItems from</param>
+            <param name="SessionID">ID of the session executing this request</param>
+            <param name="Sort">Sort order the item list</param>
+            <param name="Query">Search query to search the name or description of item type</param>
+            <param name="Skip">How many items to skip</param>
+            <param name="Take">How many items to take</param>
+            <param name="AccountID">Account ID to get </param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetIncomeItem``1(System.Linq.IQueryable{``0},System.Nullable{System.Guid},System.Nullable{System.Guid})">
+            <summary>Generic function to get any type of income item</summary>
+            <typeparam name="E"></typeparam>
+            <param name="BaseSet"></param>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.CreateIncomeItem``2(System.Nullable{System.Guid},``1)">
+            <summary>Generic function to create any type of income item</summary>
+            <typeparam name="E"></typeparam>
+            <typeparam name="F"></typeparam>
+            <param name="SessionID"></param>
+            <param name="ItemRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.UpdateIncomeItem``2(System.Linq.IQueryable{``0},System.Nullable{System.Guid},System.Nullable{System.Guid},``1)">
+            <summary>Generic function to update any type of income item</summary>
+            <typeparam name="E"></typeparam>
+            <typeparam name="F"></typeparam>
+            <param name="BaseSet"></param>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <param name="ItemRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.DeleteIncomeItem``1(System.Linq.IQueryable{``0},System.Nullable{System.Guid},System.Nullable{System.Guid})">
+            <summary>Generic function to delete any type of income item</summary>
+            <typeparam name="E"></typeparam>
+            <param name="BaseSet"></param>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetItem``1(System.Linq.IQueryable{``0},Igtampe.ChopoSessionManager.Session,System.Nullable{System.Guid})">
+            <summary>Actually gets an item (verifying if the user has access)</summary>
+            <typeparam name="E"></typeparam>
+            <param name="BaseSet"></param>
+            <param name="S"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.IsAdminOrSDC(System.String)">
+            <summary>Checks if given user is either an administrator, or a member of the Salary Determination Committee</summary>
+            <param name="UserID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.IsAdmin(System.String)">
+            <summary>Checks if given user is an administrator</summary>
+            <param name="UserID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.GetSession(System.Nullable{System.Guid})">
+            <summary>Gets a session asynchronously</summary> //(this should maybe just be a function within the sesion manager)
+            <param name="SessionID"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.API.Controllers.StatisticsController">
+            <summary>Controller that handles User operations</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.#ctor(Igtampe.Neco.Data.NecoContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.TransactionsMonthly(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>Gets a month by month breakdown of transaction amount and count month by month</summary>
+            <param name="StartDate"></param>
+            <param name="EndDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.Transactions">
+            <summary>Gets global overall statistics on transactions</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.JurisdictionsReport">
+            <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.JurisdictionWealthReport">
+            <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.AirlineStatistics">
+            <summary>Gets statistics for all airlines in the Neco system</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.ApartmentStatistics">
+            <summary>Gets statistics for all apartments in the Neco system</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.BusinessStatistics">
+            <summary>Gets statistics for all businesses in the Neco system</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.CorporationStatistics">
+            <summary>Gets statistics for all corporations in the Neco system</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.HotelStatistics">
+            <summary>Gets statistics for all hotels in the neco system</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.Income``1">
+            <summary>Gets total income statistics for all types of income items in the neco system</summary>
+            <typeparam name="E"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.Banks">
+            <summary>Gets statistics for all banks in the Neco system</summary>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.API.Controllers.TaxController">
+            <summary>Controller that handles User operations</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.#ctor(Igtampe.Neco.Data.NecoContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.GetJurisdictions(System.Nullable{Igtampe.Neco.Common.Taxes.JurisdictionType},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets Jurisdictions based on a type</summary>
+            <param name="Type">Type of jurisdictions to return. By default: Country</param>
+            <param name="Query"></param>
+            <param name="Skip"></param>
+            <param name="Take"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.GetJurisdiction(System.String)">
+            <summary>Gets a specific jurisdiction</summary>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.GetJurisdictionChildren(System.String)">
+            <summary>Gets a specific jurisdiction's children</summary>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.GetJurisdictionBrackets(System.String)">
+            <summary>Gets a specific Jurisdiction's brackets</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.GetBracket(System.Guid)">
+            <summary>Gets a specific bracket</summary>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.GetTaxReport(System.Nullable{System.Guid},System.String)">
+            <summary>Generates a tax report for given account ID</summary>
+            <param name="SessionID"></param>
+            <param name="AccountID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.GetTaxReports(System.Nullable{System.Guid},System.String)">
+            <summary>Gets a previously saved tax report with given ID</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.GetTaxReport(System.Nullable{System.Guid},System.Guid)">
+            <summary>Gets a previously saved tax report with given ID</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.CreateJurisdiction(System.Nullable{System.Guid},Igtampe.Neco.API.Requests.JurisdictionRequest)">
+            <summary>Creates a jurisdiction</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.CreateBracket(System.Nullable{System.Guid},System.String,Igtampe.Neco.Common.Taxes.Bracket)">
+            <summary>Creates a Tax Bracket</summary>
+            <param name="SessionID"></param>
+            <param name="Jurisdiction"></param>
+            <param name="Bracket"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.UpdateJurisdiction(System.Nullable{System.Guid},System.String,Igtampe.Neco.API.Requests.JurisdictionRequest)">
+            <summary>Updates a Jurisdiction</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.UpdateBracket(System.Nullable{System.Guid},System.Guid,Igtampe.Neco.Common.Taxes.Bracket)">
+            <summary>Edits a bracket</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <param name="Bracket"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.DeleteBracket(System.Nullable{System.Guid},System.Guid)">
+            <summary>Deletes a Bracket</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.TaxDay(System.Nullable{System.Guid},System.Nullable{System.Boolean})">
+            <summary>Executes a Tax Day event</summary>
+            <param name="SessionID"></param>
+            <param name="Force"></param>
+            <returns></returns> 
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.GenerateReport(Igtampe.Neco.Data.NecoContext,System.String)">
+            <summary>Generates a report for a user</summary>
+            <param name="DB">Neco Context to pull all data from</param>
+            <param name="AccountID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.IsAdmin(System.String)">
+            <summary>Checks if a given user is an administrator or not</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.DayOfLastMonth(System.Int32)">
+            <summary>Gets a DateTime representing the specified day of last month (IE if it's currently December 5th, executing
+            this function with param day=15, it would return November 15th). Use day 31 to get the last day of the last month.</summary>
+            <param name="Day"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.TaxController.DayOfThisMonth(System.Int32)">
+            <summary>Gets a DateTime representing the specified day of this month (IE if it's currently December 5th, executing
+            this function with param day=15, it would return December 15th). Use day 31 to get the last day of this month.</summary>
+            <param name="Day"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.API.Controllers.UserController">
+            <summary>Controller that handles User operations</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.#ctor(Igtampe.Neco.Data.NecoContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.Directory(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets a directory of this Neco server</summary>
+            <param name="Query">Search query to search in IDs and </param>
+            <param name="Take"></param>
+            <param name="Skip"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.GetCurrentLoggedIn(System.Nullable{System.Guid})">
+            <summary>Gets username of the currently logged in session</summary>
+            <param name="SessionID">ID of the session</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.GetUser(System.String)">
+            <summary>Gets a given user</summary>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.GetNotifs(System.Nullable{System.Guid})">
+            <summary>Gets a logged in user's notifications</summary>
+            <param name="SessionID">Session ID of the user you wish to retrieve notificaitons from</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.Update(System.Nullable{System.Guid},Igtampe.Neco.API.Requests.ChangePasswordRequest)">
+            <summary>Handles user password changes</summary>
+            <param name="Request">Request with their current and new password</param>
+            <param name="SessionID">ID of the session executing this request</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.UpdateRoles(System.Nullable{System.Guid},System.String,Igtampe.Neco.API.Requests.ChangeRoleRequest)">
+            <summary>Request to change a user's roles</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.ResetPassword(System.Nullable{System.Guid},System.String,Igtampe.Neco.API.Requests.ChangePasswordRequest)">
+            <summary>Request to reset the password of a user</summary>
+            <param name="SessionID">SessionID of an administrator who wishes to change the password of another user</param>
+            <param name="ID">ID of the user to change the password of</param>
+            <param name="Request">Request to change</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.UpdateImage(System.Nullable{System.Guid},System.String)">
+            <summary>Updates the image of the user with this session</summary>
+            <param name="SessionID"></param>
+            <param name="ImageURL"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.LogIn(Igtampe.Neco.API.Requests.LoginRequest)">
+            <summary>Handles logging in to Clothespin</summary>
+            <param name="Request">Request with a User and Password attempt to log in</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.Register(Igtampe.Neco.API.Requests.RegistrationRequest)">
+            <summary>Handles user registration</summary>
+            <param name="Request">User and password combination to create</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.LogOut(System.Guid)">
+            <summary>Handles user logout</summary>
+            <param name="SessionID">Session to log out of</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.LogOutAll(System.Guid)">
+            <summary>Handles user logout of *all* sessions</summary>
+            <param name="SessionID">Session that wants to log out of all tied sessions</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.UserController.DeleteNotif(System.Nullable{System.Guid},System.Guid)">
+            <summary>Deletes a notification</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.API.ErrorResult">
+            <summary>Object that represents an error result from the API <br/><br/> 
+            This is mostly here to make it easier for the frontend to determine if there was an error with their request when the default return is an object.
+            </summary>
+            Further explanation: 
+             
+             Because of the way we parse returns as either .text() or .json(), having a usual return be an object but an error result be text can make it difficult for the body of the
+             result to be parsed correctly, even if we know there's been an error. So, to make my life a little easier, let's do this instead.
+             
+             I'm sure there's a better way to do this but this is a relatively quick and easy fix. Plus we get to specify additional data:
+             This could probably be an anonymous type generated at error but may as well make a reusable object.
+            *
+        </member>
+        <member name="P:Igtampe.Neco.API.ErrorResult.Code">
+            <summary>Code for this error</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.ErrorResult.Error">
+            <summary>Error flag set to true to make it easier for the frontend to realize there's been an error</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.ErrorResult.Reason">
+            <summary>Reason for the error</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.ErrorResult.Field">
+            <summary>Field that is most likely responsible for this error</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.ErrorResult.NotFound(System.String,System.String)">
+            <summary>Generates a NotFound Error Result</summary>
+            <param name="Reason">Reason for the error</param>
+            <param name="Field">Field most likely responsible for the error</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.ErrorResult.Unauthorized(System.String,System.String)">
+            <summary>Generates a Unauthorized Error Result</summary>
+            <param name="Reason">Reason for the error</param>
+            <param name="Field">Field most likely responsible for the error</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.ErrorResult.Forbidden(System.String,System.String)">
+            <summary>Generates a Forbidden Error Result</summary>
+            <param name="Reason">Reason for the error</param>
+            <param name="Field">Field most likely responsible for the error</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.ErrorResult.ForbiddenRoles(System.String)">
+            <summary>Generates a Forbidden Error Result due to missing roles</summary>
+            <param name="Roles"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.ErrorResult.BadRequest(System.String,System.String)">
+            <summary>Generates a Bad Request Error Result</summary>
+            <param name="Reason">Reason for the error</param>
+            <param name="Field">Field most likely responsible for the error</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.ErrorResult.ServerError(System.String,System.String)">
+            <summary>Generates a Server Error Result</summary>
+            <param name="Reason">Reason for the error</param>
+            <param name="Field">Field most likely responsible for the error</param>
+            <returns></returns>
+        </member>
+        <member name="T:Igtampe.Neco.API.ErrorResult.Reusable">
+            <summary>Reusable error results</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.ErrorResult.Reusable.InvalidSession">
+            <summary>Error Result due to an invalid or expired session</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Properties.Resources.Check">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Properties.Resources.Roboto">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Properties.Resources.TinyNeco">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.AccountRequest">
+            <summary>Request relating to editing or creating a bank account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.Name">
+            <summary>Name of this Account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.PubliclyListed">
+            <summary>Whether or not this account is publicly listed</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.Address">
+            <summary>Address of this Account</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.BankID">
+            <summary>ID of the Bank this account belongs to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.JurisdictionID">
+            <summary>ID of the district this account is located in</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AccountRequest.IncomeType">
+            <summary>Type of income in this account</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.BankRequest">
+            <summary>Request relating to editing or creating a Bank</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BankRequest.Name">
+            <summary>New name of the bank</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BankRequest.ImageURL">
+            <summary>New ImageURL of the bank</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.TransactionRequest">
+            <summary>Request relating to the creation of a transaction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Origin">
+            <summary>Account from which money will be taken</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Destination">
+            <summary>Account to which money will be deposited</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Amount">
+            <summary>Amount of money to transfer</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Name">
+            <summary>Name of the transaction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.TransactionRequest.Certify">
+            <summary>Whether or not to certify this transaction</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.AirlineRequest">
+            <summary>An Airline that has gates</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AirlineRequest.GatesSM">
+            <summary>Number of active small gates this airline has</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AirlineRequest.GatesMD">
+            <summary>Number of active medium gates this airline has</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AirlineRequest.GatesLG">
+            <summary>Number of active large gates this airline has</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.ApartmentRequest">
+            <summary>An apartment complex</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.SUnits">
+            <summary>Studio units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B1Units">
+            <summary>1 Bedroom units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B2Units">
+            <summary>2 Bedroom units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B3Units">
+            <summary>3 Bedroom units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.PUnits">
+            <summary>Penthouse units in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.SRent">
+            <summary>Studio monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B1Rent">
+            <summary>1 Bedroom monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B2Rent">
+            <summary>2 Bedroom monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.B3Rent">
+            <summary>3 Bedroom monthly rent in this appartment</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ApartmentRequest.PRent">
+            <summary>Penthouse rent in this appartment</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.BusinessRequest">
+            <summary>A business that is set up at an individual location (Like a store or a restaurant)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BusinessRequest.PointsOfSale">
+            <summary>Points of Sale for this business (IE: Lines in a supermarket, chairs in a restaurant)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BusinessRequest.AvgSpend">
+            <summary>Average spending of a customer per point of sale</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BusinessRequest.CustPerHour">
+            <summary>Average customers per hour per point of sale</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BusinessRequest.HoursOpen">
+            <summary>Hours this business is open a day (should be between 0 and 24)</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.CorporationRequest`1">
+            <summary>Corporation that generates monthly income</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.CorporationRequest`1.RLE">
+            <summary>Name of the real life equivalent company to base this on</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.CorporationRequest`1.RLENetYearly">
+            <summary>Net yearly income of the real life equivalent (In US Dollars)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.CorporationRequest`1.Buildings">
+            <summary>Additional buildings this company contains</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.CorporationRequest`1.Mergers">
+            <summary>Company mergers</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.CorporationRequest`1.MetroAds">
+            <summary>Whether or not this company has purchased metro ads</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.CorporationRequest`1.AirportAds">
+            <summary>Whether or not this company has purchased airport ads</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.CorporationRequest`1.International">
+            <summary>Whether or not this company is a multinational</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.HotelRequest">
+            <summary>A hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.HotelRequest.Rooms">
+            <summary>Number of rooms in this hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.HotelRequest.Suites">
+            <summary>Number of suites in this hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.HotelRequest.RoomRate">
+            <summary>Nightly rate of a room in this hotel</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.HotelRequest.SuiteRate">
+            <summary>Nightly rate of a suite at this hotel</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.IncomeItemRequest`1">
+            <summary>Abstract class for any type of request relating to any type of income item</summary>
+            <typeparam name="E">Income Item this request corresponds to</typeparam>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.IncomeItemRequest`1.Name">
+            <summary>Name of the income item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.IncomeItemRequest`1.Description">
+            <summary>Description of the income item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.IncomeItemRequest`1.Address">
+            <summary>Address of this income item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.IncomeItemRequest`1.JurisdictionID">
+            <summary>District of this income item</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.IncomeItemRequest`1.AccountID">
+            <summary>Account where this income will be deposited to</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.IncomeItemRequest`1.MiscIncome">
+            <summary>Miscellaneous income of this item</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.JurisdictionRequest">
+            <summary>Any request relating to a Jurisdiction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.JurisdictionRequest.Name">
+            <summary>Name of this jurisdiction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.JurisdictionRequest.ImageURL">
+            <summary>Image URL for the Flag of this jurisdiction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.JurisdictionRequest.Type">
+            <summary>Type of this jurisdiction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.JurisdictionRequest.Population">
+            <summary>Population of this jurisdiction (useful for Corporation income calculation)</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.JurisdictionRequest.TiedAccountID">
+            <summary>ID of the account tied to this jurisdiction</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.JurisdictionRequest.ParentJurisdictionID">
+            <summary>ID of the parent of this jurisdiction</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.ChangePasswordRequest">
+            <summary>Request to change a password</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ChangePasswordRequest.Current">
+            <summary>Current password</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ChangePasswordRequest.New">
+            <summary>New Password</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.ChangeRoleRequest">
+            <summary>Request to change a user's roles</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ChangeRoleRequest.IsAdmin">
+            <summary>Whether or not this user is an Administrator</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ChangeRoleRequest.IsGov">
+            <summary>Whether or not this user is a government entity or a member of the government</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ChangeRoleRequest.IsSDC">
+            <summary>Whether or not this user is a member of the Salary Determination Committee</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.ChangeRoleRequest.IsUploader">
+            <summary>Whether or not this user is allowed to upload images to the database</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.LoginRequest">
+            <summary>Request to log in to Neco </summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.LoginRequest.Password">
+            <summary>Password of the user</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.RegistrationRequest">
+            <summary>Request to register to Neco</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.RegistrationRequest.Name">
+            <summary>Name of the user registering</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.RegistrationRequest.Password">
+            <summary>Password of the user registering</summary>
+        </member>
+        <member name="T:Igtampe.ChopoSessionManager.Session">
+            <summary>Holds a Neco Session</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.Session.ID">
+            <summary>ID of this session</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.Session.ExpirationDate">
+            <summary>Time at which this session will no longer be valid</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.Session.UserID">
+            <summary>User tied to this Session</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.Session.Expired">
+            <summary>Whether or not this session is expired.</summary>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.Session.#ctor(System.String)">
+            <summary>Creates a session for the given UserID</summary>
+            <param name="UserID"></param>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.Session.ExtendSession">
+            <summary>Extends the Session expiration date to 15 minutes after now</summary>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.Session.Equals(System.Object)">
+            <summary>Compares this Session to another object</summary>
+            <param name="obj"></param>
+            <returns>True if and only if object is a session and the ID matches</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.Session.GetHashCode">
+            <summary>Gets hashcode for this session</summary>
+            <returns><see cref="P:Igtampe.ChopoSessionManager.Session.ID"/>'s hashcode</returns>
+        </member>
+        <member name="T:Igtampe.ChopoSessionManager.SessionManager">
+            <summary>Session Manager for Neco</summary>
+        </member>
+        <member name="F:Igtampe.ChopoSessionManager.SessionManager.SingletonSM">
+            <summary>Internal Singleton Session Manager object</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.SessionManager.Manager">
+            <summary>Gets the static, singleton session manager for Neco</summary>
+        </member>
+        <member name="F:Igtampe.ChopoSessionManager.SessionManager.Sessions">
+            <summary>Collection of all sessions in this manager</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.SessionManager.Count">
+            <summary>Amount of sessions in the collection (including those that are expired)</summary>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.#ctor">
+            <summary>Internal constructor to create a session manager</summary>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.LogIn(System.String)">
+            <summary>Logs specified user in to a new session.</summary>
+            <param name="UserID">ID of the user to sign in</param>
+            <returns>GUID of the added session</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.FindSession(System.Guid)">
+            <summary>Returns a session with sepcified ID. 
+            If the Session is expired, it returns null, and removes the session from the collection.
+            Otherwise, it extends the session before returning it.</summary>
+            <param name="ID"></param>
+            <returns>Returns a session if one exists, if not NULL</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.ExtendSession(System.Guid)">
+            <summary>Extends a session with given UID</summary>
+            <returns>True if a session was found and it was able to be extended. False otherwise</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.LogOut(System.Guid)">
+            <summary>Removes a session with specified ID</summary>
+            <param name="ID"></param>
+            <returns>Returns true if the session was found and was removed, false otherwise</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.LogOutAll(System.String)">
+            <summary>Removes all sessions for the specified user</summary>
+            <param name="UserID"></param>
+            <returns>Number of sessions logged out of</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.RemoveExpiredSessions">
+            <summary>Removes all expired sessions from the collection of active sessions</summary>
+            <returns>Amount of removed sessions</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.SessionRemoverThread(System.Int32)">
+            <summary>Routine to periodically remove all expired sessions from the collection</summary>
+        </member>
+    </members>
+</doc>
