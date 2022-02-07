@@ -125,29 +125,6 @@ namespace Igtampe.Neco.Data.Migrations
                     b.ToTable("Transaction");
                 });
 
-            modelBuilder.Entity("Igtampe.Neco.Common.CertifiedItem", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("CertifiedByID")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CertifiedByID");
-
-                    b.ToTable("CertifiedItem");
-                });
-
             modelBuilder.Entity("Igtampe.Neco.Common.Image", b =>
                 {
                     b.Property<Guid>("ID")
@@ -171,208 +148,18 @@ namespace Igtampe.Neco.Data.Migrations
                     b.ToTable("Image");
                 });
 
-            modelBuilder.Entity("Igtampe.Neco.Common.Income.Apartment", b =>
+            modelBuilder.Entity("Igtampe.Neco.Common.Income.IncomeItem", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("AccountID")
-                        .HasColumnType("text");
-
                     b.Property<string>("Address")
                         .HasColumnType("text");
-
-                    b.Property<int>("B1Rent")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("B1Units")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("B2Rent")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("B2Units")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("B3Rent")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("B3Units")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("JurisdictionID")
-                        .HasColumnType("text");
-
-                    b.Property<long>("MiscIncome")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("PRent")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PUnits")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SRent")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SUnits")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("AccountID");
-
-                    b.HasIndex("JurisdictionID");
-
-                    b.ToTable("Apartment");
-                });
-
-            modelBuilder.Entity("Igtampe.Neco.Common.Income.Business", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("AccountID")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
-
-                    b.Property<int>("AvgSpend")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CustPerHour")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("HoursOpen")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("JurisdictionID")
-                        .HasColumnType("text");
-
-                    b.Property<long>("MiscIncome")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("PointsOfSale")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("AccountID");
-
-                    b.HasIndex("JurisdictionID");
-
-                    b.ToTable("Business");
-                });
-
-            modelBuilder.Entity("Igtampe.Neco.Common.Income.Corporation", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("AccountID")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("AirportAds")
-                        .HasColumnType("boolean");
 
                     b.Property<bool>("Approved")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Buildings")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("International")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("JurisdictionID")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Mergers")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("MetroAds")
-                        .HasColumnType("boolean");
-
-                    b.Property<long>("MiscIncome")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("RLE")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("RLENetYearly")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("AccountID");
-
-                    b.HasIndex("JurisdictionID");
-
-                    b.ToTable("Corporation");
-                });
-
-            modelBuilder.Entity("Igtampe.Neco.Common.Income.Hotel", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("AccountID")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -393,25 +180,11 @@ namespace Igtampe.Neco.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("RoomRate")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Rooms")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SuiteRate")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Suites")
-                        .HasColumnType("integer");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("AccountID");
 
                     b.HasIndex("JurisdictionID");
 
-                    b.ToTable("Hotel");
+                    b.ToTable("IncomeItem");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.Notification", b =>
@@ -580,6 +353,130 @@ namespace Igtampe.Neco.Data.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Igtampe.Neco.Common.Income.Apartment", b =>
+                {
+                    b.HasBaseType("Igtampe.Neco.Common.Income.IncomeItem");
+
+                    b.Property<string>("AccountID")
+                        .HasColumnType("text");
+
+                    b.Property<int>("B1Rent")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("B1Units")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("B2Rent")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("B2Units")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("B3Rent")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("B3Units")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PRent")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PUnits")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SRent")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SUnits")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("AccountID");
+
+                    b.ToTable("Apartment");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Income.Business", b =>
+                {
+                    b.HasBaseType("Igtampe.Neco.Common.Income.IncomeItem");
+
+                    b.Property<string>("AccountID")
+                        .HasColumnType("text");
+
+                    b.Property<int>("AvgSpend")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CustPerHour")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("HoursOpen")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PointsOfSale")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("AccountID");
+
+                    b.ToTable("Business");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Income.Corporation", b =>
+                {
+                    b.HasBaseType("Igtampe.Neco.Common.Income.IncomeItem");
+
+                    b.Property<string>("AccountID")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("AirportAds")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Buildings")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("International")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Mergers")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("MetroAds")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("RLE")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("RLENetYearly")
+                        .HasColumnType("bigint");
+
+                    b.HasIndex("AccountID");
+
+                    b.ToTable("Corporation");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Income.Hotel", b =>
+                {
+                    b.HasBaseType("Igtampe.Neco.Common.Income.IncomeItem");
+
+                    b.Property<string>("AccountID")
+                        .HasColumnType("text");
+
+                    b.Property<int>("RoomRate")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Rooms")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SuiteRate")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Suites")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("AccountID");
+
+                    b.ToTable("Hotel");
+                });
+
             modelBuilder.Entity("Igtampe.Neco.Common.Income.Airline", b =>
                 {
                     b.HasBaseType("Igtampe.Neco.Common.Income.Corporation");
@@ -646,15 +543,6 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Navigation("Origin");
                 });
 
-            modelBuilder.Entity("Igtampe.Neco.Common.CertifiedItem", b =>
-                {
-                    b.HasOne("Igtampe.Neco.Common.User", "CertifiedBy")
-                        .WithMany()
-                        .HasForeignKey("CertifiedByID");
-
-                    b.Navigation("CertifiedBy");
-                });
-
             modelBuilder.Entity("Igtampe.Neco.Common.Image", b =>
                 {
                     b.HasOne("Igtampe.Neco.Common.User", "Uploader")
@@ -664,62 +552,11 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Navigation("Uploader");
                 });
 
-            modelBuilder.Entity("Igtampe.Neco.Common.Income.Apartment", b =>
+            modelBuilder.Entity("Igtampe.Neco.Common.Income.IncomeItem", b =>
                 {
-                    b.HasOne("Igtampe.Neco.Common.Banking.Account", "Account")
-                        .WithMany("Apartments")
-                        .HasForeignKey("AccountID");
-
                     b.HasOne("Igtampe.Neco.Common.Taxes.Jurisdiction", "Jurisdiction")
                         .WithMany()
                         .HasForeignKey("JurisdictionID");
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Jurisdiction");
-                });
-
-            modelBuilder.Entity("Igtampe.Neco.Common.Income.Business", b =>
-                {
-                    b.HasOne("Igtampe.Neco.Common.Banking.Account", "Account")
-                        .WithMany("Businessses")
-                        .HasForeignKey("AccountID");
-
-                    b.HasOne("Igtampe.Neco.Common.Taxes.Jurisdiction", "Jurisdiction")
-                        .WithMany()
-                        .HasForeignKey("JurisdictionID");
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Jurisdiction");
-                });
-
-            modelBuilder.Entity("Igtampe.Neco.Common.Income.Corporation", b =>
-                {
-                    b.HasOne("Igtampe.Neco.Common.Banking.Account", "Account")
-                        .WithMany("Corporations")
-                        .HasForeignKey("AccountID");
-
-                    b.HasOne("Igtampe.Neco.Common.Taxes.Jurisdiction", "Jurisdiction")
-                        .WithMany()
-                        .HasForeignKey("JurisdictionID");
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Jurisdiction");
-                });
-
-            modelBuilder.Entity("Igtampe.Neco.Common.Income.Hotel", b =>
-                {
-                    b.HasOne("Igtampe.Neco.Common.Banking.Account", "Account")
-                        .WithMany("Hotels")
-                        .HasForeignKey("AccountID");
-
-                    b.HasOne("Igtampe.Neco.Common.Taxes.Jurisdiction", "Jurisdiction")
-                        .WithMany()
-                        .HasForeignKey("JurisdictionID");
-
-                    b.Navigation("Account");
 
                     b.Navigation("Jurisdiction");
                 });
@@ -762,6 +599,66 @@ namespace Igtampe.Neco.Data.Migrations
                     b.HasOne("Igtampe.Neco.Common.Banking.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountID");
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Income.Apartment", b =>
+                {
+                    b.HasOne("Igtampe.Neco.Common.Banking.Account", "Account")
+                        .WithMany("Apartments")
+                        .HasForeignKey("AccountID");
+
+                    b.HasOne("Igtampe.Neco.Common.Income.IncomeItem", null)
+                        .WithOne()
+                        .HasForeignKey("Igtampe.Neco.Common.Income.Apartment", "ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Income.Business", b =>
+                {
+                    b.HasOne("Igtampe.Neco.Common.Banking.Account", "Account")
+                        .WithMany("Businessses")
+                        .HasForeignKey("AccountID");
+
+                    b.HasOne("Igtampe.Neco.Common.Income.IncomeItem", null)
+                        .WithOne()
+                        .HasForeignKey("Igtampe.Neco.Common.Income.Business", "ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Income.Corporation", b =>
+                {
+                    b.HasOne("Igtampe.Neco.Common.Banking.Account", "Account")
+                        .WithMany("Corporations")
+                        .HasForeignKey("AccountID");
+
+                    b.HasOne("Igtampe.Neco.Common.Income.IncomeItem", null)
+                        .WithOne()
+                        .HasForeignKey("Igtampe.Neco.Common.Income.Corporation", "ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Income.Hotel", b =>
+                {
+                    b.HasOne("Igtampe.Neco.Common.Banking.Account", "Account")
+                        .WithMany("Hotels")
+                        .HasForeignKey("AccountID");
+
+                    b.HasOne("Igtampe.Neco.Common.Income.IncomeItem", null)
+                        .WithOne()
+                        .HasForeignKey("Igtampe.Neco.Common.Income.Hotel", "ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Account");
                 });

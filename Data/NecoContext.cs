@@ -37,6 +37,8 @@ namespace Igtampe.Neco.Data {
 
         public DbSet<TaxReport> TaxReport { get; set; }
 
+        public DbSet<IncomeItem> IncomeItem { get; set; }
+
         public DbSet<Airline> Airline { get; set; }
         
         public DbSet<Apartment> Apartment { get; set; }
@@ -54,8 +56,6 @@ namespace Igtampe.Neco.Data {
         public DbSet<Transaction> Transaction { get; set; }
 
         public DbSet<Notification> Notification { get; set; }
-
-        public DbSet<CertifiedItem> CertifiedItems { get; set; }
 
         public DbSet<Image> Image { get; set; }
 

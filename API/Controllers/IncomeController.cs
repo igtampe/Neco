@@ -195,7 +195,10 @@ namespace Igtampe.Neco.API.Controllers {
             if (! await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
 
             //Just get all of it. Please have the SDC not leave more than a ton of corporations
-            List<Corporation> Corps = await DB.Corporation.Where(C => !C.Approved).OrderByDescending(C => C.DateUpdated).ToListAsync();
+            List<Corporation> Corps = await DB.Corporation
+                .Include(C=>C.Jurisdiction)
+                .Where(C => !C.Approved)
+                .OrderByDescending(C => C.DateUpdated).ToListAsync();
 
             //Now all we need to do is return it
             return Ok(Corps);
@@ -237,11 +240,11 @@ namespace Igtampe.Neco.API.Controllers {
             if (!await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
 
             //We need to make a massive union of a couple of lists.
-            IQueryable<FeedItem> TheBigSet =DB.Airline.Select(T => new FeedItem(T, T.Income()))
-                .Union(DB.Corporation.Select(T => new FeedItem(T, T.Income())))
-                .Union(DB.Apartment.Select(T => new FeedItem(T, T.Income())))
-                .Union(DB.Business.Select(T => new FeedItem(T, T.Income())))
-                .Union(DB.Hotel.Select(T => new FeedItem(T, T.Income())));
+            IQueryable<FeedItem> TheBigSet = DB.Airline.Select(T => new FeedItem(T, T.Income()))
+                .Union(DB.Corporation.Select(T => new FeedItem(T, T.Income())));
+                //.Union(DB.Apartment.Select(T => new FeedItem(T, T.Income())))
+                //.Union(DB.Business.Select(T => new FeedItem(T, T.Income())))
+                //.Union(DB.Hotel.Select(T => new FeedItem(T, T.Income())));
                 
             TheBigSet = TheBigSet.OrderByDescending(C => C.DateUpdated).Take(20);
 

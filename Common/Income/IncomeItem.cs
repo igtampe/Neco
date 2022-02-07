@@ -7,7 +7,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Igtampe.Neco.Common.Income {
 
     /// <summary>Basic usable, but extendable income item</summary>
-    public class IncomeItem : AutomaticallyGeneratableIdentifiable, Nameable, Describable, Locatable, Certifiable, Dateable {
+    public class IncomeItem : AutomaticallyGeneratableIdentifiable, Nameable, Describable, Locatable, Dateable {
+
+        /// <summary>Type of this income item. Helps the frontend determine what this is</summary>
+        [NotMapped]
+        public virtual int Type { get; set; } = -1;
 
         /// <summary>Name of the income item</summary>
         public string Name { get; set; } = "";
@@ -22,7 +26,6 @@ namespace Igtampe.Neco.Common.Income {
         public Jurisdiction? Jurisdiction { get; set; }
 
         /// <summary>Account where this income will be deposited to</summary>
-        [JsonIgnore]
         public Account? Account { get; set; }
 
         /// <summary>Miscellaneous income of this item</summary>
@@ -35,11 +38,8 @@ namespace Igtampe.Neco.Common.Income {
         /// <summary>Date this item was last updated</summary>
         public DateTime DateUpdated { get; set; } = DateTime.Now;
 
-        /// <summary>Creates a certification for this income item</summary>
-        /// <param name="Certifier"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public CertifiedItem GenerateCertification(User Certifier) => new() { CertifiedBy = Certifier, Date = DateTime.Now, Text = $"{Name} was certified with {Income():n0} Income" };
+        /// <summary>Whether or not this income item is approved and provides income</summary>
+        public bool Approved { get; set; } = false;
 
         /// <summary>Calculated income for this incomeitem. Shortcut for the json serialization</summary>
         [NotMapped]

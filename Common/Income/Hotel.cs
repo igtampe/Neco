@@ -1,9 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Igtampe.Neco.Common.Income {
 
     /// <summary>A hotel</summary>
     public class Hotel : IncomeItem {
+
+        /// <summary>Type of this income item. Helps the frontend determine what this is</summary>
+        [NotMapped]
+        public override int Type { get; set; } = 1;
+
         /// <summary>Number of rooms in this hotel</summary>
         [Range(0, int.MaxValue)]
         public int Rooms { get; set; } = 0;

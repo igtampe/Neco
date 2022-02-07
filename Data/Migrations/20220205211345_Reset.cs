@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Igtampe.Neco.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Reset : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,19 +17,10 @@ namespace Igtampe.Neco.Data.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     ImageURL = table.Column<string>(type: "text", nullable: false)
                 },
-                constraints: table => table.PrimaryKey("PK_Bank", x => x.ID));
-
-            migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
+                constraints: table =>
                 {
-                    ID = table.Column<Guid>(type: "uuid", nullable: false),
-                    Admin = table.Column<bool>(type: "boolean", nullable: false),
-                    Government = table.Column<bool>(type: "boolean", nullable: false),
-                    SDC = table.Column<bool>(type: "boolean", nullable: false),
-                    ImageUploader = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table => table.PrimaryKey("PK_Roles", x => x.ID));
+                    table.PrimaryKey("PKey_Bank", x => x.ID);
+                });
 
             migrationBuilder.CreateTable(
                 name: "User",
@@ -39,36 +30,14 @@ namespace Igtampe.Neco.Data.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     ImageURL = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
-                    RolesID = table.Column<Guid>(type: "uuid", nullable: false)
+                    IsAdmin = table.Column<bool>(type: "boolean", nullable: false),
+                    IsGov = table.Column<bool>(type: "boolean", nullable: false),
+                    IsSDC = table.Column<bool>(type: "boolean", nullable: false),
+                    IsUploader = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_User_Roles_RolesID",
-                        column: x => x.RolesID,
-                        principalTable: "Roles",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CertifiedItem",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uuid", nullable: false),
-                    Text = table.Column<string>(type: "text", nullable: false),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CertifiedByID = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CertifiedItem", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_CertifiedItem_User_CertifiedByID",
-                        column: x => x.CertifiedByID,
-                        principalTable: "User",
-                        principalColumn: "ID");
+                    table.PrimaryKey("PKey_User", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,9 +51,9 @@ namespace Igtampe.Neco.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Image", x => x.ID);
+                    table.PrimaryKey("PKey_Image", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Image_User_UploaderID",
+                        name: "FKey_Image_User_UploaderID",
                         column: x => x.UploaderID,
                         principalTable: "User",
                         principalColumn: "ID");
@@ -101,9 +70,9 @@ namespace Igtampe.Neco.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notification", x => x.ID);
+                    table.PrimaryKey("PKey_Notification", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Notification_User_UserID",
+                        name: "FKey_Notification_User_UserID",
                         column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "ID");
@@ -125,9 +94,9 @@ namespace Igtampe.Neco.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Account", x => x.ID);
+                    table.PrimaryKey("PKey_Account", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Account_Bank_BankID",
+                        name: "FKey_Account_Bank_BankID",
                         column: x => x.BankID,
                         principalTable: "Bank",
                         principalColumn: "ID");
@@ -142,15 +111,15 @@ namespace Igtampe.Neco.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountUser (Dictionary<string, object>)", x => new { x.AccountsID, x.OwnersID });
+                    table.PrimaryKey("PKey_AccountUser (Dictionary<string, object>)", x => new { x.AccountsID, x.OwnersID });
                     table.ForeignKey(
-                        name: "FK_AccountUser (Dictionary<string, object>)_Account_AccountsID",
+                        name: "FKey_AccountUser (Dictionary<string, object>)_Account_AccountsID",
                         column: x => x.AccountsID,
                         principalTable: "Account",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AccountUser (Dictionary<string, object>)_User_OwnersID",
+                        name: "FKey_AccountUser (Dictionary<string, object>)_User_OwnersID",
                         column: x => x.OwnersID,
                         principalTable: "User",
                         principalColumn: "ID",
@@ -171,14 +140,14 @@ namespace Igtampe.Neco.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Jurisdiction", x => x.ID);
+                    table.PrimaryKey("PKey_Jurisdiction", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Jurisdiction_Account_TiedAccountID",
+                        name: "FKey_Jurisdiction_Account_TiedAccountID",
                         column: x => x.TiedAccountID,
                         principalTable: "Account",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_Jurisdiction_Jurisdiction_ParentJurisdictionID",
+                        name: "FKey_Jurisdiction_Jurisdiction_ParentJurisdictionID",
                         column: x => x.ParentJurisdictionID,
                         principalTable: "Jurisdiction",
                         principalColumn: "ID");
@@ -200,9 +169,9 @@ namespace Igtampe.Neco.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TaxReport", x => x.ID);
+                    table.PrimaryKey("PKey_TaxReport", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_TaxReport_Account_AccountID",
+                        name: "FKey_TaxReport_Account_AccountID",
                         column: x => x.AccountID,
                         principalTable: "Account",
                         principalColumn: "ID");
@@ -221,53 +190,16 @@ namespace Igtampe.Neco.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transaction", x => x.ID);
+                    table.PrimaryKey("PKey_Transaction", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Transaction_Account_DestinationID",
+                        name: "FKey_Transaction_Account_DestinationID",
                         column: x => x.DestinationID,
                         principalTable: "Account",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_Transaction_Account_OriginID",
+                        name: "FKey_Transaction_Account_OriginID",
                         column: x => x.OriginID,
                         principalTable: "Account",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Apartment",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uuid", nullable: false),
-                    SUnits = table.Column<int>(type: "integer", nullable: false),
-                    B1Units = table.Column<int>(type: "integer", nullable: false),
-                    B2Units = table.Column<int>(type: "integer", nullable: false),
-                    B3Units = table.Column<int>(type: "integer", nullable: false),
-                    PUnits = table.Column<int>(type: "integer", nullable: false),
-                    SRent = table.Column<int>(type: "integer", nullable: false),
-                    B1Rent = table.Column<int>(type: "integer", nullable: false),
-                    B2Rent = table.Column<int>(type: "integer", nullable: false),
-                    B3Rent = table.Column<int>(type: "integer", nullable: false),
-                    PRent = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    Address = table.Column<string>(type: "text", nullable: true),
-                    JurisdictionID = table.Column<string>(type: "text", nullable: true),
-                    AccountID = table.Column<string>(type: "text", nullable: true),
-                    MiscIncome = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Apartment", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Apartment_Account_AccountID",
-                        column: x => x.AccountID,
-                        principalTable: "Account",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Apartment_Jurisdiction_JurisdictionID",
-                        column: x => x.JurisdictionID,
-                        principalTable: "Jurisdiction",
                         principalColumn: "ID");
                 });
 
@@ -286,12 +218,69 @@ namespace Igtampe.Neco.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bracket", x => x.ID);
+                    table.PrimaryKey("PKey_Bracket", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Bracket_Jurisdiction_JurisdictionID",
+                        name: "FKey_Bracket_Jurisdiction_JurisdictionID",
                         column: x => x.JurisdictionID,
                         principalTable: "Jurisdiction",
                         principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IncomeItem",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Address = table.Column<string>(type: "text", nullable: true),
+                    JurisdictionID = table.Column<string>(type: "text", nullable: true),
+                    MiscIncome = table.Column<long>(type: "bigint", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Approved = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PKey_IncomeItem", x => x.ID);
+                    table.ForeignKey(
+                        name: "FKey_IncomeItem_Jurisdiction_JurisdictionID",
+                        column: x => x.JurisdictionID,
+                        principalTable: "Jurisdiction",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Apartment",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    SUnits = table.Column<int>(type: "integer", nullable: false),
+                    B1Units = table.Column<int>(type: "integer", nullable: false),
+                    B2Units = table.Column<int>(type: "integer", nullable: false),
+                    B3Units = table.Column<int>(type: "integer", nullable: false),
+                    PUnits = table.Column<int>(type: "integer", nullable: false),
+                    SRent = table.Column<int>(type: "integer", nullable: false),
+                    B1Rent = table.Column<int>(type: "integer", nullable: false),
+                    B2Rent = table.Column<int>(type: "integer", nullable: false),
+                    B3Rent = table.Column<int>(type: "integer", nullable: false),
+                    PRent = table.Column<int>(type: "integer", nullable: false),
+                    AccountID = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PKey_Apartment", x => x.ID);
+                    table.ForeignKey(
+                        name: "FKey_Apartment_Account_AccountID",
+                        column: x => x.AccountID,
+                        principalTable: "Account",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FKey_Apartment_IncomeItem_ID",
+                        column: x => x.ID,
+                        principalTable: "IncomeItem",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -303,26 +292,22 @@ namespace Igtampe.Neco.Data.Migrations
                     AvgSpend = table.Column<int>(type: "integer", nullable: false),
                     CustPerHour = table.Column<int>(type: "integer", nullable: false),
                     HoursOpen = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    Address = table.Column<string>(type: "text", nullable: true),
-                    JurisdictionID = table.Column<string>(type: "text", nullable: true),
-                    AccountID = table.Column<string>(type: "text", nullable: true),
-                    MiscIncome = table.Column<long>(type: "bigint", nullable: false)
+                    AccountID = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Business", x => x.ID);
+                    table.PrimaryKey("PKey_Business", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Business_Account_AccountID",
+                        name: "FKey_Business_Account_AccountID",
                         column: x => x.AccountID,
                         principalTable: "Account",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_Business_Jurisdiction_JurisdictionID",
-                        column: x => x.JurisdictionID,
-                        principalTable: "Jurisdiction",
-                        principalColumn: "ID");
+                        name: "FKey_Business_IncomeItem_ID",
+                        column: x => x.ID,
+                        principalTable: "IncomeItem",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -337,27 +322,22 @@ namespace Igtampe.Neco.Data.Migrations
                     MetroAds = table.Column<bool>(type: "boolean", nullable: false),
                     AirportAds = table.Column<bool>(type: "boolean", nullable: false),
                     International = table.Column<bool>(type: "boolean", nullable: false),
-                    Approved = table.Column<bool>(type: "boolean", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    Address = table.Column<string>(type: "text", nullable: true),
-                    JurisdictionID = table.Column<string>(type: "text", nullable: true),
-                    AccountID = table.Column<string>(type: "text", nullable: true),
-                    MiscIncome = table.Column<long>(type: "bigint", nullable: false)
+                    AccountID = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Corporation", x => x.ID);
+                    table.PrimaryKey("PKey_Corporation", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Corporation_Account_AccountID",
+                        name: "FKey_Corporation_Account_AccountID",
                         column: x => x.AccountID,
                         principalTable: "Account",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_Corporation_Jurisdiction_JurisdictionID",
-                        column: x => x.JurisdictionID,
-                        principalTable: "Jurisdiction",
-                        principalColumn: "ID");
+                        name: "FKey_Corporation_IncomeItem_ID",
+                        column: x => x.ID,
+                        principalTable: "IncomeItem",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -369,26 +349,22 @@ namespace Igtampe.Neco.Data.Migrations
                     Suites = table.Column<int>(type: "integer", nullable: false),
                     RoomRate = table.Column<int>(type: "integer", nullable: false),
                     SuiteRate = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    Address = table.Column<string>(type: "text", nullable: true),
-                    JurisdictionID = table.Column<string>(type: "text", nullable: true),
-                    AccountID = table.Column<string>(type: "text", nullable: true),
-                    MiscIncome = table.Column<long>(type: "bigint", nullable: false)
+                    AccountID = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hotel", x => x.ID);
+                    table.PrimaryKey("PKey_Hotel", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Hotel_Account_AccountID",
+                        name: "FKey_Hotel_Account_AccountID",
                         column: x => x.AccountID,
                         principalTable: "Account",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_Hotel_Jurisdiction_JurisdictionID",
-                        column: x => x.JurisdictionID,
-                        principalTable: "Jurisdiction",
-                        principalColumn: "ID");
+                        name: "FKey_Hotel_IncomeItem_ID",
+                        column: x => x.ID,
+                        principalTable: "IncomeItem",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -403,14 +379,14 @@ namespace Igtampe.Neco.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Airline", x => x.ID);
+                    table.PrimaryKey("PKey_Airline", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Airline_Account_AccountID1",
+                        name: "FKey_Airline_Account_AccountID1",
                         column: x => x.AccountID1,
                         principalTable: "Account",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_Airline_Corporation_ID",
+                        name: "FKey_Airline_Corporation_ID",
                         column: x => x.ID,
                         principalTable: "Corporation",
                         principalColumn: "ID",
@@ -418,117 +394,92 @@ namespace Igtampe.Neco.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Account_BankID",
+                name: "INDEX_Account_BankID",
                 table: "Account",
                 column: "BankID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Account_JurisdictionID",
+                name: "INDEX_Account_JurisdictionID",
                 table: "Account",
                 column: "JurisdictionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccountUser (Dictionary<string, object>)_OwnersID",
+                name: "INDEX_AccountUser (Dictionary<string, object>)_OwnersID",
                 table: "AccountUser (Dictionary<string, object>)",
                 column: "OwnersID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Airline_AccountID1",
+                name: "INDEX_Airline_AccountID1",
                 table: "Airline",
                 column: "AccountID1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Apartment_AccountID",
+                name: "INDEX_Apartment_AccountID",
                 table: "Apartment",
                 column: "AccountID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Apartment_JurisdictionID",
-                table: "Apartment",
-                column: "JurisdictionID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bracket_JurisdictionID",
+                name: "INDEX_Bracket_JurisdictionID",
                 table: "Bracket",
                 column: "JurisdictionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Business_AccountID",
+                name: "INDEX_Business_AccountID",
                 table: "Business",
                 column: "AccountID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Business_JurisdictionID",
-                table: "Business",
-                column: "JurisdictionID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CertifiedItem_CertifiedByID",
-                table: "CertifiedItem",
-                column: "CertifiedByID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Corporation_AccountID",
+                name: "INDEX_Corporation_AccountID",
                 table: "Corporation",
                 column: "AccountID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Corporation_JurisdictionID",
-                table: "Corporation",
-                column: "JurisdictionID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Hotel_AccountID",
+                name: "INDEX_Hotel_AccountID",
                 table: "Hotel",
                 column: "AccountID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hotel_JurisdictionID",
-                table: "Hotel",
-                column: "JurisdictionID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Image_UploaderID",
+                name: "INDEX_Image_UploaderID",
                 table: "Image",
                 column: "UploaderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jurisdiction_ParentJurisdictionID",
+                name: "INDEX_IncomeItem_JurisdictionID",
+                table: "IncomeItem",
+                column: "JurisdictionID");
+
+            migrationBuilder.CreateIndex(
+                name: "INDEX_Jurisdiction_ParentJurisdictionID",
                 table: "Jurisdiction",
                 column: "ParentJurisdictionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jurisdiction_TiedAccountID",
+                name: "INDEX_Jurisdiction_TiedAccountID",
                 table: "Jurisdiction",
                 column: "TiedAccountID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notification_UserID",
+                name: "INDEX_Notification_UserID",
                 table: "Notification",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaxReport_AccountID",
+                name: "INDEX_TaxReport_AccountID",
                 table: "TaxReport",
                 column: "AccountID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_DestinationID",
+                name: "INDEX_Transaction_DestinationID",
                 table: "Transaction",
                 column: "DestinationID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_OriginID",
+                name: "INDEX_Transaction_OriginID",
                 table: "Transaction",
                 column: "OriginID");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_User_RolesID",
-                table: "User",
-                column: "RolesID");
-
             migrationBuilder.AddForeignKey(
-                name: "FK_Account_Jurisdiction_JurisdictionID",
+                name: "FKey_Account_Jurisdiction_JurisdictionID",
                 table: "Account",
                 column: "JurisdictionID",
                 principalTable: "Jurisdiction",
@@ -538,11 +489,11 @@ namespace Igtampe.Neco.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Account_Bank_BankID",
+                name: "FKey_Account_Bank_BankID",
                 table: "Account");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Account_Jurisdiction_JurisdictionID",
+                name: "FKey_Account_Jurisdiction_JurisdictionID",
                 table: "Account");
 
             migrationBuilder.DropTable(
@@ -559,9 +510,6 @@ namespace Igtampe.Neco.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Business");
-
-            migrationBuilder.DropTable(
-                name: "CertifiedItem");
 
             migrationBuilder.DropTable(
                 name: "Hotel");
@@ -585,7 +533,7 @@ namespace Igtampe.Neco.Data.Migrations
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "IncomeItem");
 
             migrationBuilder.DropTable(
                 name: "Bank");
