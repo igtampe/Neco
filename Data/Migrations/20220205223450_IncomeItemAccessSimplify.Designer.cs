@@ -3,6 +3,7 @@ using System;
 using Igtampe.Neco.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Igtampe.Neco.Data.Migrations
 {
     [DbContext(typeof(NecoContext))]
-    partial class NecoContextModelSnapshot : ModelSnapshot
+    [Migration("20220205223450_IncomeItemAccessSimplify")]
+    partial class IncomeItemAccessSimplify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
