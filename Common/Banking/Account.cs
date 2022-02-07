@@ -41,36 +41,7 @@ namespace Igtampe.Neco.Common.Banking {
 
         /// <summary>List of all incomeitems tied to this bank account (used for tax reporting)</summary>
         [JsonIgnore]
-        [NotMapped]
-        public List<IncomeItem> IncomeItems { get {
-                List<IncomeItem> Items = new();
-                Items.AddRange(Airlines);
-                Items.AddRange(Apartments);
-                Items.AddRange(Businessses);
-                Items.AddRange(Corporations);
-                Items.AddRange(Hotels);
-                return Items;
-        }}
-
-        /// <summary>Airlines this Bank Account receives income from</summary>
-        [JsonIgnore]
-        public List<Airline> Airlines { get; set; } = new();
-
-        /// <summary>Apartments this bank account receives income from</summary>
-        [JsonIgnore]
-        public List<Apartment> Apartments { get; set; } = new();
-
-        /// <summary>Businesses this bank account receives income from</summary>
-        [JsonIgnore]
-        public List<Business> Businessses { get; set; } = new();
-
-        /// <summary>Corporations this bank account receives income from</summary>
-        [JsonIgnore]
-        public List<Corporation> Corporations { get; set; } = new();
-
-        /// <summary>Hotels this bank account receives income from</summary>
-        [JsonIgnore]
-        public List<Hotel> Hotels { get; set; } = new();
+        public List<IncomeItem> IncomeItems { get; set; } = new();
 
         /// <summary>ID Generator for bank accounts</summary>
         [JsonIgnore]
