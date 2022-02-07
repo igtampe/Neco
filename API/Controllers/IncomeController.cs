@@ -145,14 +145,13 @@ namespace Igtampe.Neco.API.Controllers {
 
             //Get *all* the accounts along with their income items
             List<Account> Accounts = await DB.Account
-                .Include(A => A.Airlines).Include(A => A.Apartments)
-                .Include(A => A.Businessses).Include(A => A.Corporations)
-                .Include(A => A.Hotels).Include(A=>A.Owners).ToListAsync();
+                .Include(A => A.IncomeItems.Where(A=>A.Approved)).ThenInclude(I => I.Jurisdiction)
+                .Include(A=>A.Owners).ToListAsync();
 
             foreach (Account A in Accounts) {
 
                 //Get the total income
-                long TotalIncome = A.IncomeItems.Sum(I => I.Income());
+                long TotalIncome = A.IncomeItems.Sum(I => I.CalculatedIncome);
 
                 //Deposit it
                 A.Balance += TotalIncome; //Don't do a transaction. It'll be taxed twice.
@@ -184,7 +183,7 @@ namespace Igtampe.Neco.API.Controllers {
         /// <summary>Gets a list of all unapproved corporations in the Neco system</summary>
         /// <param name="SessionID"></param>
         /// <returns></returns>
-        [HttpGet("SDC/Corps")]
+        [HttpGet("SDC/Unapproved")]
         public async Task<IActionResult> GetUnapprovedCorps([FromHeader] Guid SessionID) {
 
             //Get the session
@@ -195,7 +194,7 @@ namespace Igtampe.Neco.API.Controllers {
             if (! await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
 
             //Just get all of it. Please have the SDC not leave more than a ton of corporations
-            List<Corporation> Corps = await DB.Corporation
+            List<IncomeItem> Corps = await DB.IncomeItem
                 .Include(C=>C.Jurisdiction)
                 .Where(C => !C.Approved)
                 .OrderByDescending(C => C.DateUpdated).ToListAsync();
@@ -205,31 +204,10 @@ namespace Igtampe.Neco.API.Controllers {
 
         }
 
-        /// <summary>Gets a list of all unapproved corporations in the Neco system</summary>
-        /// <param name="SessionID"></param>
-        /// <returns></returns>
-        [HttpGet("SDC/Airlines")]
-        public async Task<IActionResult> GetUnapprovedAirlines([FromHeader] Guid SessionID) {
-
-            //Get the session
-            Session? S = await GetSession(SessionID);
-            if (S is null) { return Unauthorized(ErrorResult.Reusable.InvalidSession); }
-
-            //Ensure the Session is either Admin or SDC:
-            if (!await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
-
-            //Just get all of it. Please have the SDC not leave more than a ton of corporations
-            List<Airline> Corps = await DB.Airline.Where(C => !C.Approved).OrderByDescending(C => C.DateUpdated).ToListAsync();
-
-            //Now all we need to do is return it
-            return Ok(Corps);
-
-        }
-
         /// <summary>Get a feed of the 20 most recently approved non-corporation income items of any type</summary>
         /// <param name="SessionID"></param>
         /// <returns></returns>
-        [HttpGet("SDC/Feed")]
+        [HttpGet("SDC/Approved")]
         public async Task<IActionResult> GetFeed([FromHeader] Guid SessionID) {
 
             //Get the session
@@ -240,11 +218,9 @@ namespace Igtampe.Neco.API.Controllers {
             if (!await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
 
             //We need to make a massive union of a couple of lists.
-            IQueryable<FeedItem> TheBigSet = DB.Airline.Select(T => new FeedItem(T, T.Income()))
-                .Union(DB.Corporation.Select(T => new FeedItem(T, T.Income())));
-                //.Union(DB.Apartment.Select(T => new FeedItem(T, T.Income())))
-                //.Union(DB.Business.Select(T => new FeedItem(T, T.Income())))
-                //.Union(DB.Hotel.Select(T => new FeedItem(T, T.Income())));
+            IQueryable<IncomeItem> TheBigSet = DB.IncomeItem 
+                .Include(A => A.Account).Include(A => A.Jurisdiction)
+                .Where(A=>A.Approved);
                 
             TheBigSet = TheBigSet.OrderByDescending(C => C.DateUpdated).Take(20);
 
@@ -647,6 +623,9 @@ namespace Igtampe.Neco.API.Controllers {
             Item.DateCreated= DateTime.UtcNow;
             Item.DateUpdated = DateTime.UtcNow;
 
+            //If we're dealing with a corporation, do not approve. Else approve.
+            Item.Approved = Item is not Corporation;
+
             DB.Add(Item);
             await DB.SaveChangesAsync();
 
@@ -717,16 +696,10 @@ namespace Igtampe.Neco.API.Controllers {
             //Update the date updated
             Item.DateUpdated = DateTime.UtcNow;
 
-            //If we're dealing with a corporation
-            if (Item is Corporation Corp) {
+            //If we're dealing with a corporation, do not approve. Else approve.
+            Item.Approved = Item is not Corporation;
 
-                //Unapprove it
-                Corp.Approved = false;
-
-                DB.Update(Corp);
-
-            } else { DB.Update(Item); }
-
+            DB.Update(Item);
             await DB.SaveChangesAsync();
 
             return Ok(Item);
