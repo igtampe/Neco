@@ -1,1 +1,0 @@
-Data Source=Localhost;Initial Catalog=Neco;Integrated Security=True
