@@ -3,7 +3,7 @@
 namespace Igtampe.Neco.Common.Banking {
 
     /// <summary>A Transaction between two bank accounts</summary>
-    public class Transaction : AutomaticallyGeneratableIdentifiable, Nameable, Certifiable {
+    public class Transaction : AutomaticallyGeneratableIdentifiable, Nameable  {
 
         /// <summary>Origin of this transaction</summary>
         public Account? Origin { get; set; }
@@ -20,11 +20,6 @@ namespace Igtampe.Neco.Common.Banking {
 
         /// <summary>Name of this transaction</summary>
         public string Name { get; set; } = "";
-
-        /// <summary>Generates a certification for this transaction</summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public CertifiedItem GenerateCertification(User Certifier) => new() { CertifiedBy = Certifier, Date = DateTime.Now, Text = $"{Name}: Transfered {Amount:n0} from {Origin?.ID} to {Destination?.ID}" };
 
     }
 }
