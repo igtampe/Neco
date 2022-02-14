@@ -341,6 +341,12 @@ export default function IncomeForm(props) {
                                                     style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
                                         </Grid>
                                     </> : <></>}
+
+                            {!props.corporation && !props.airline ?
+                                <Grid item xs={12}>
+                                    <Alert severity='warning'>Any item that generates over 500k pecunia/month will require approval from the Salary Determination Committee (SDC)</Alert>
+                                </Grid>
+                                : <></>}
                             <Grid item xs={12}> <Divider /> </Grid>
 
                         </Grid>
