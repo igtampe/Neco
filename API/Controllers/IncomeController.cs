@@ -247,7 +247,7 @@ namespace Igtampe.Neco.API.Controllers {
             IncomeItem? C = await DB.IncomeItem.FindAsync(ID);
             if (C is null) { return NotFound(ErrorResult.NotFound("Item was not found", "ID")); }
 
-            C.Approved = true;
+            C.Approved = !C.Approved;
             C.DateUpdated = DateTime.UtcNow;
             
             DB.Update(C);
