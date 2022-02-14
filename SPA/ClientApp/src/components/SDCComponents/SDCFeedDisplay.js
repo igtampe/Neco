@@ -8,11 +8,13 @@ function ApproveCorpRow(props) {
 
     //This is basically a component
     const [open, setOpen] = useState(false);
+    const ItemTypes = ['Apartment','Hotel','Business','Corporation','Airline']
 
     return (
         <>
             <TableRow>
                 <TableCell>{props.c.name}</TableCell>
+                <TableCell width={'250px'}>{ItemTypes[props.c.type]} ({props.c.type})</TableCell>
                 <TableCell width={'250px'}>{props.c.account ? props.c.account.name + " (" + props.c.account.id + ")" : "" }</TableCell>
                 <TableCell width={'250px'}>{props.c.jurisdiction ? props.c.jurisdiction.name + " (" + props.c.jurisdiction.id + ")" : "" }</TableCell>
                 <TableCell width={'250px'}>{props.c.calculatedIncome.toLocaleString()}p</TableCell>
@@ -21,7 +23,9 @@ function ApproveCorpRow(props) {
                 </TableCell>
             </TableRow>
 
-            <IncomeApprovalForm {...props} open={open} setOpen={setOpen} item={props.c} setItems={props.setCorps}/>
+            <IncomeApprovalForm {...props} open={open} setOpen={setOpen} item={props.c} setItems={props.setCorps}
+                airline={props.c.type===4} corporation={props.c.type===3} business={props.c.type===2} hotel={props.c.type===1} apartment={props.c.type===0}
+            />
 
         </>
     )
@@ -59,6 +63,7 @@ export default function SDCFeedDisplay  (props) {
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
+                            <TableCell>Type</TableCell>
                             <TableCell>Account</TableCell>
                             <TableCell>Jurisdiction</TableCell>
                             <TableCell>Income</TableCell>
@@ -66,11 +71,11 @@ export default function SDCFeedDisplay  (props) {
                         </TableRow>
                     </TableHead>
                     <TableBody> {!corps
-                        ? <TableRow><TableCell colSpan={5} style={{ textAlign: 'center' }}> <CircularProgress /> </TableCell></TableRow>
+                        ? <TableRow><TableCell colSpan={6} style={{ textAlign: 'center' }}> <CircularProgress /> </TableCell></TableRow>
                         : <>
                             {
                                 corps.length === 0
-                                    ? <TableRow><TableCell colSpan={5} style={{ textAlign: 'center' }}> No items have yet to be approved</TableCell></TableRow>
+                                    ? <TableRow><TableCell colSpan={6} style={{ textAlign: 'center' }}> No items have yet to be approved</TableCell></TableRow>
                                     : <> {corps.map(c => {
                                         return ( <ApproveCorpRow {...props} c={c} setCorps={setCorps} /> )
                                     })}
