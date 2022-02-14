@@ -1,6 +1,5 @@
 import { Divider } from "@mui/material";
 import React from "react";
-import ApprovalCorpDisplay from "./SDCComponents/ApprovalCorpDisplay";
 import SDCFeedDisplay from "./SDCComponents/SDCFeedDisplay";
 
 export default function SDCComponent(props) {
@@ -11,14 +10,14 @@ export default function SDCComponent(props) {
                     <td>
                         <h3>Corporations Pending Approval</h3>
                         <Divider/>
-                        <ApprovalCorpDisplay {...props}/>
+                        <SDCFeedDisplay {...props}/>
                     </td>
                 </tr>
                 <tr style={{height:'40vh'}}>
                     <td>
                         <h3>Recently approved items</h3>
                         <Divider/>
-                        <SDCFeedDisplay {...props}/>
+                        <SDCFeedDisplay {...props} approved/>
                     </td>
                 </tr>
             </table>
