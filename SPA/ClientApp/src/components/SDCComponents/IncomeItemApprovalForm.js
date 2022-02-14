@@ -1,8 +1,8 @@
-import { TextField, CircularProgress, Divider, Grid, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Checkbox, FormControlLabel, Tooltip, Alert } from "@mui/material";
+import { CircularProgress, Divider, Grid, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Checkbox, FormControlLabel } from "@mui/material";
 import React, { useState } from "react";
 import { GenerateGet, GenerateJSONPut } from "../../RequestOptionGenerator";
-import { JurisdictionAutoComplete } from "../AdminComponents/JurisdictionComponents/JurisdictionAutocomplete";
 import AlertSnackbar from "../AlertSnackbar";
+import { ItemTypes } from "./SDCFeedDisplay";
 
 export default function IncomeApprovalForm(props) {
 
@@ -23,7 +23,7 @@ export default function IncomeApprovalForm(props) {
 
     //This massive item will be usable for *ANYTHING*
     const [item, setItem] = useState({
-        name: '', description: '', address: '', jurisdictionID: '', accountID: (props.account ? props.account.id : ""), miscIncome: 0, approved:false,
+        name: '', description: '', address: '', jurisdictionID: '', accountID: (props.account ? props.account.id : ""), miscIncome: 0, approved: false,
         gatesSM: 0, gatesMD: 0, gatesLG: 0,
         rle: '', rleNetYearly: 0, buildings: 0, mergers: 0, metroAds: false, airportAds: false, international: false,
         pointsOfSale: 0, avgSpend: 0, custPerHour: 0, hoursOpen: 0,
@@ -38,23 +38,23 @@ export default function IncomeApprovalForm(props) {
     const [inProgress, setInProgress] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const [changed,setChanged] = useState(false);
+    const [changed, setChanged] = useState(false);
 
     if (props.item && !populated && !loading && props.open) {
-        
+
         setLoading(true)
 
-        fetch(DetailsBaseUrl+'/'+ props.item.id,GenerateGet(props.Session))
-        .then(r=>r.json()).then(data=>{
+        fetch(DetailsBaseUrl + '/' + props.item.id, GenerateGet(props.Session))
+            .then(r => r.json()).then(data => {
 
-            if(data.error || data.errors) {return;}
+                if (data.error || data.errors) { return; }
 
-            setLoading(false)
+                setLoading(false)
 
-            setItem({ ...item, ...data, jurisdictionID : (data.jurisdiction ? data.jurisdiction.id : '') })
-            setPopulated(true);
+                setItem({ ...item, ...data, jurisdictionID: (data.jurisdiction ? data.jurisdiction.id : '') })
+                setPopulated(true);
 
-        })
+            })
 
     }
 
@@ -73,7 +73,7 @@ export default function IncomeApprovalForm(props) {
 
     const handleClosing = () => {
         clearForm();
-        if(changed && props.setItems) {props.setItems(undefined)}
+        if (changed && props.setItems) { props.setItems(undefined) }
         props.setOpen(false)
     }
 
@@ -81,7 +81,7 @@ export default function IncomeApprovalForm(props) {
 
         setInProgress(true)
 
-        fetch(ApproveUrl, GenerateJSONPut(props.Session))
+        fetch(ApproveUrl + item.id, GenerateJSONPut(props.Session))
             .then(response => response.json())
             .then(data => {
                 setInProgress(false)
@@ -97,7 +97,7 @@ export default function IncomeApprovalForm(props) {
                     setResult({ severity: 'success', text: 'Item has been ' + (data.approved ? '' : 'un') + 'approved' })
                     setSnackOpen(true)
                     setChanged(!changed)
-                    setItem({...item},data);
+                    setItem({ ...item, approved:data.approved });
                     return;
                 }
             })
@@ -108,219 +108,94 @@ export default function IncomeApprovalForm(props) {
         <>
 
             <Dialog maxWidth='sm' scroll='body' fullWidth open={props.open} onClose={handleClosing}>
-                <DialogTitle> Item details </DialogTitle>
+                <DialogTitle> {item.name} </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField label="Name" value={item.name} fullWidth 
-                                    style={{ marginTop: "5px", marginBottom: "5px" }} />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField label="Description" value={item.description} fullWidth
-                                    multiline maxRows={4} minRows={4} variant='filled' style={{ marginTop: "5px", marginBottom: "5px" }} />
-                            </Grid>
-                            <Grid item xs={12}> <Divider /> </Grid>
-                            <Grid item xs={6}>
-                                <Tooltip title={'Address of the main HQ of this item. This location must be furnished'}>
-                                    <TextField label="Address" value={item.address} fullWidth
-                                        style={{ marginTop: "5px", marginBottom: "5px" }} /></Tooltip>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <JurisdictionAutoComplete jurisdictionID={item.jurisdictionID} />
-                            </Grid>
-                            {props.corporation || props.airline
-                                ? <>
-                                    <Grid item xs={12}> <Divider /> </Grid>
-                                    <Grid item xs={6}>
-                                        <Tooltip title={'The Real Life Equivalent, or counterpart to the corporation or airline you are attempting to file. The SDC will look over and verify this information, so be prepared to justify it!'}>
-                                            <TextField label="RLE" value={item.rle} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} /></Tooltip>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Tooltip title={'The *NET* yearly income of the RLE specified in the last box. Keep the source as it will be useful if questioned by the SDC. A figure before taxes is prefered'}>
-                                            <TextField label="RLE Net Yearly" value={item.rleNetYearly} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                </> : <></>}
-                            {props.airline ? <>
-                                <Grid item xs={12}> <Divider /> </Grid>
-                                <Grid item xs={4}>
-                                    <Tooltip title={'Gates that hold small or ultra small planes'}>
-                                        <TextField label="Small gates" value={item.gatesSM} fullWidth
-                                            style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Tooltip title={'Gates that hold medium planes'}>
-                                        <TextField label="Medium gates" value={item.gatesMD} fullWidth
-                                            style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Tooltip title={'Gates that hold large or ultra-large planes'}>
-                                        <TextField label="Large gates" value={item.gatesLG} fullWidth
-                                            style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                </Grid>
-                            </> : <></>}
-                            {props.corporation || props.airline
-                                ? <>
-                                    <Grid item xs={12}> <Divider /> </Grid>
-                                    <Grid item xs={6}>
-                                        <Tooltip title={'Any number of *additional* buildings this corporation has'}>
-                                            <TextField label="Buildings" value={item.buildings} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Tooltip title={'Number of mergers that this corporation has done'}>
-                                            <TextField label="Mergers" value={item.mergers} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Tooltip title={'Indicates whether or not this corporation or airline has metro ads. Contact the SDC to see how these can be purchased'}>
-                                            <FormControlLabel label="Metro Ads" control={
-                                                <Checkbox checked={item.metroAds}/>}
-                                            />
-                                        </Tooltip>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Tooltip title={'Indicates whether or not this corporation or airline has airport ads. Contact the SDC to see how these can be purchased'}>
-                                            <FormControlLabel label="Airport Ads" control={
-                                                <Checkbox checked={item.airportAds}/>}
-                                            />
-                                        </Tooltip>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Tooltip title={'Indicates whether or not this corporation or airline is international. This provides a boost to your income. There is no but. Please click this.'}>
-                                            <FormControlLabel label="International" control={
-                                                <Checkbox checked={item.international}/>}
-                                            />
-                                        </Tooltip>
+                        {
+                            !populated ? <div style={{textAlign:'center'}}><CircularProgress /></div> : <>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        A(n) <u>{item.international ? 'International ' : ''}{ItemTypes[item.type]}</u> <br/>
+                                        Filed by <u>{item.account ? item.account.name + " (" + item.account.id + ")" : ''}</u><br/>
+                                        Located in <u>{item.address}, {item.jurisdiction ? item.jurisdiction.name + " (" + item.jurisdiction.id + ")" : ''}</u>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Alert severity='warning'>{
-                                            !props.item
-                                                ? "Your corporation or airline will not immediately generate income, and is subject to approval by the Salary Determination Committee (SDC)"
-                                                : "Edits to this corporation or airline will requrie it to be re-approved by the SDC. You will not have income from this item until then"
-                                        }</Alert>
+                                        <b>Description:</b> <br/>
+                                        {item.description==="" ? <i>No description</i>: item.description}
                                     </Grid>
-                                </> : <></>}
-                            {props.business
-                                ? <>
-                                    <Grid item xs={12}> <Divider /> </Grid>
-                                    <Grid item xs={3}>
-                                        <Tooltip title={'Points at which a sale can occur in this business. For most businesses, this represents the number of cash registers. For restaurants, this is the number of chairs'}>
-                                            <TextField label="Points of Sale" value={item.pointsOfSale} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <Tooltip title={'Average spending at *per point of sale* (IE: The average price of a meal)'}>
-                                            <TextField label="Average Spending" value={item.avgSpend} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <Tooltip title={'Customers per hour *per point of sale* (IE: customers a chair at a restaurant sees per hour)'}>
-                                            <TextField label="Customers/Hour" value={item.custPerHour} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <Tooltip title={'Hours a day this business is open'}>
-                                            <TextField label="Hours Open" value={item.hoursOpen} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                </> : <></>}
-                            {props.hotel
-                                ? <>
-                                    <Grid item xs={12}> <Divider /> </Grid>
-                                    <Grid item xs={3}>
-                                        <Tooltip title={'Amount of standard rooms in this hotel.'}>
-                                            <TextField label="Rooms" value={item.rooms} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <Tooltip title={'Amount of suites in this hotel'}>
-                                            <TextField label="Suites" value={item.suites} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <Tooltip title={'Average nightly rate of all standard rooms in this hotel'}>
-                                            <TextField label="Room Rate" value={item.roomRate} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <Tooltip title={'Average nightly rate of all suites in this hotel'}>
-                                            <TextField label="Suite Rate" value={item.suiteRate} fullWidth
-                                                style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                    </Grid>
-                                </> : <></>}
-                            {
-                                props.apartment
-                                    ? <>
-                                        <Grid item xs={12}> <Divider /> </Grid>
-                                        <Grid item xs={4}>
-                                            <Tooltip title={'Amount of studio units in this apartment'}>
-                                                <TextField label="Studio Units" value={item.sUnits} fullWidth
-                                                    style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <Tooltip title={'Amount of 1 Bedroom units in this apartment'}>
-                                                <TextField label="1 Bedroom Units" value={item.b1Units} fullWidth
-                                                    style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <Tooltip title={'Amount of 2 Bedroom units in this apartment'}>
-                                                <TextField label="2 Bedroom units" value={item.b2Units} fullWidth
-                                                    style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Tooltip title={'Amount of 3 Bedroom units'}>
-                                                <TextField label="3 Bedroom units" value={item.b3Units} fullWidth
-                                                    style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Tooltip title={'Amount of 4 Bedroom or Penthouse'}>
-                                                <TextField label="Penthouse Units" value={item.pUnits} fullWidth
-                                                    style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                        </Grid>
-                                        <Grid item xs={12}> <Divider /> </Grid>
-                                        <Grid item xs={4}>
-                                            <Tooltip title={'Average rent for all studio units'}>
-                                                <TextField label="Studio Units" value={item.sRent} fullWidth
-                                                    style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <Tooltip title={'Average rent for all 1 Bedroom units'}>
-                                                <TextField label="1 Bedroom Units" value={item.b1Rent} fullWidth
-                                                    style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <Tooltip title={'Average rent for all 2 Bedroom units'}>
-                                                <TextField label="2 Bedroom units" value={item.b2Rent} fullWidth
-                                                    style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Tooltip title={'Average rent of all 3 Bedroom units'}>
-                                                <TextField label="3 Bedroom units" value={item.b3Rent} fullWidth
-                                                    style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <Tooltip title={'Average rent of all 4 bedroom or penthouse units'}>
-                                                <TextField label="Penthouse Units" value={item.pRent} fullWidth
-                                                    style={{ marginTop: "5px", marginBottom: "5px" }} type='number' /></Tooltip>
+                                    {props.corporation || props.airline
+                                        ? <>
+                                            <Grid item xs={12}><Divider /> </Grid>
+                                            <Grid item xs={12}>
+                                                RLE: <u>{item.rle}</u> making <u>${item.rleNetYearly.toLocaleString()}</u> USD/Year
+                                            </Grid>
+                                            <Grid item xs={12}> <Divider /> </Grid>
+                                        </> : <></>}
+                                    {props.airline ? <>
+                                        <Grid item xs={12}>
+                                            <u>{item.gatesSM}</u> small gate(s), <u>{item.gatesMD}</u> medium gate(s), and <u>{item.gatesLG}</u> large gate(s), 
                                         </Grid>
                                     </> : <></>}
-                            <Grid item xs={12}> <Divider /> </Grid>
-
-                        </Grid>
+                                    {props.corporation || props.airline
+                                        ? <>
+                                            <Grid item xs={12}>
+                                                <u>{item.buildings}</u> Additional Building(s) and <u>{item.mergers}</u> Merger(s)
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                Has {!item.metroAds && !item.airportAds ? "no" : <>
+                                                    { item.metroAds ? "Metro" : "" }{item.metroAds && item.airportAds ? " and " : ""}{item.airportAds ? "Airport": ""}
+                                                </>} Ads
+                                            </Grid>
+                                        </> : <></>}
+                                    {props.business
+                                        ? <>
+                                            <Grid item xs={12}> <Divider /> </Grid>
+                                            <Grid item xs={12}>
+                                                <u>{item.pointsOfSale}</u> points of sale serving <u>{item.custPerHour}</u> customer(s) per hour spending <u>~{item.avgSpend}p</u> each
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                Open <u>{item.hoursOpen}</u> hours a day
+                                            </Grid>
+                                        </> : <></>}
+                                    {props.hotel
+                                        ? <>
+                                            <Grid item xs={12}>
+                                                <u>{item.rooms}</u> room(s) at <u>{item.roomRate.toLocaleString()}</u>p/night and{' '}
+                                                <u>{item.suites}</u> suite(s) at <u>{item.suiteRate.toLocaleString()}</u>p/night
+                                            </Grid>
+                                        </> : <></>}
+                                    {
+                                        props.apartment
+                                            ? <>
+                                                <Grid item xs={12}> <Divider /> </Grid>
+                                                <Grid item xs={12}>
+                                                    {item.sUnits > 0 ? <><u>{item.sUnits}</u> studio unit(s) at <u>{item.sRent.toLocaleString()}</u>p/month<br/></> : '' }
+                                                    {item.b1Units > 0 ? <><u>{item.b1Units}</u> 1 Bedroom unit(s) at <u>{item.b1Rent.toLocaleString()}</u>p/month<br/></> : '' }
+                                                    {item.b2Units > 0 ? <><u>{item.b2Units}</u> 2 Bedroom unit(s) at <u>{item.b2Rent.toLocaleString()}</u>p/month<br/></> : '' }
+                                                    {item.b3Units > 0 ? <><u>{item.b3Units}</u> 3 Bedroom unit(s) at <u>{item.b3Rent.toLocaleString()}</u>p/month<br/></> : '' }
+                                                    {item.pUnits > 0 ? <><u>{item.pUnits}</u> 4 Bedroom or Penthouse unit(s) at <u>{item.pRent.toLocaleString()}</u>p/month<br/></> : '' }
+                                                </Grid>
+                                            </> : <></>}
+                                    <Grid item xs={12}> <Divider /> </Grid>
+                                    <Grid item xs={3}> <b>Total Income:</b></Grid>
+                                    <Grid item xs={9}> {item.calculatedIncome.toLocaleString()}p/month</Grid>
+                                    <Grid item xs={12}> <Divider /> </Grid>
+                                    <Grid item xs={3}>
+                                        {inProgress 
+                                            ? <div style={{textAlign:'center'}}><CircularProgress /></div>
+                                            : <FormControlLabel label="Approved" control={<Checkbox checked={item.approved} onChange={handleCheck} />}/>
+                                        }
+                                    </Grid>
+                                    <Grid item xs={9}>
+                                        By approving or unapproving this item, you certify that this item has passed, or failed the checks of the SDC, and that you have been authorized to commit this action by the rest of the committee
+                                    </Grid>
+                                </Grid>
+                            </>
+                        }
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    {
-                        inProgress
-                            ? <CircularProgress />
-                            : <>
-                                <Button onClick={handleClosing}>OK</Button>
-                            </>
-                    }
+                    <Button disbaled={inProgress} onClick={handleClosing}>OK</Button>
                 </DialogActions>
 
                 <AlertSnackbar open={SnackOpen} setOpen={setSnackOpen} result={result} />
