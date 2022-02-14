@@ -34,20 +34,20 @@ function IncomeItemRow(props) {
     const [delOpen, setDelOpen] = useState(false);
     const [delInProgress, setDelInProgress] = useState(false);
 
-    const realDelete=()=>{
+    const realDelete = () => {
 
         setDelInProgress(true)
 
-        fetch(props.baseUrl+'/'+props.i.id,GenerateDelete(props.Session))
-        .then(response=>response.json())
-        .then(data=>{
-            if(data.error || data.error){ return; }
+        fetch(props.baseUrl + '/' + props.i.id, GenerateDelete(props.Session))
+            .then(response => response.json())
+            .then(data => {
+                if (data.error || data.error) { return; }
 
-            setDelInProgress(false)
-            //Success:
-            props.setCollection(undefined)
+                setDelInProgress(false)
+                //Success:
+                props.setCollection(undefined)
 
-        })
+            })
 
     }
 
@@ -55,20 +55,16 @@ function IncomeItemRow(props) {
         <>
             <TableRow>
                 <TableCell>{props.i.name}</TableCell>
-                <TableCell width={'250px'}>{props.i.calculatedIncome.toLocaleString()}p</TableCell>
-                {
-                    props.airline || props.corporation ? 
-                        <TableCell width={'70px'}>
-                            <Checkbox checked={props.i.approved} readOnly/>
-                        </TableCell> : <></>
-                }
-                <TableCell width={'120px'}>
+                <TableCell width={'150px'}>{props.i.calculatedIncome.toLocaleString()}p</TableCell>
+                <TableCell width={'70px'}>
+                    <Checkbox checked={props.i.approved} readOnly />
+                </TableCell><TableCell width={'120px'}>
                     <IconButton disabled={delInProgress} onClick={() => { setOpen(true) }}><EditIcon /></IconButton>
                     <IconButton disabled={delInProgress} onClick={() => { setDelOpen(true) }}><DeleteIcon /></IconButton>
                 </TableCell>
             </TableRow>
 
-            <IncomeForm {...props} open={open} setOpen={setOpen} item={props.i}/>
+            <IncomeForm {...props} open={open} setOpen={setOpen} item={props.i} />
 
             <DeleteConfirm {...props} open={delOpen} setOpen={setDelOpen} delete={realDelete}>
                 Are you sure you want to delete {props.i.name}? You will cease receiving income from this item, and it will not show up on any future reports.
@@ -82,7 +78,7 @@ function TableHeaders(props) {
     return (<TableRow>
         <TableCell>Name</TableCell>
         <TableCell>Income</TableCell>
-        {props.airline || props.corporation ? <TableCell>Approved</TableCell> : <></>}
+        <TableCell>Approved</TableCell>
         <TableCell>Actions</TableCell>
     </TableRow>
     )
@@ -141,7 +137,7 @@ export default function IncomeItemDisplay(props) {
 
         setLoading(true)
 
-        var URL = baseUrl + '?AccountID='+ props.account.id +'&Sort=' + sort
+        var URL = baseUrl + '?AccountID=' + props.account.id + '&Sort=' + sort
         if (query !== "") { URL = URL + '&Query=' + query }
 
         fetch(URL, GenerateGet(props.Session)) //This actually isn't authenticated pero sabes que zoop.
@@ -178,22 +174,22 @@ export default function IncomeItemDisplay(props) {
             <TableContainer component={Paper} style={{ marginTop: '25px' }}>
                 <Table>
                     <TableHead>
-                        <TableHeaders {...props} /> 
+                        <TableHeaders {...props} />
                     </TableHead>
                     <TableBody>
                         {
                             !collection
-                                ? <TableRow><TableCell colSpan={props.airline || props.corporation ? 4 : 3} style={{ textAlign: 'center' }}> <CircularProgress /> </TableCell></TableRow>
+                                ? <TableRow><TableCell colSpan={4} style={{ textAlign: 'center' }}> <CircularProgress /> </TableCell></TableRow>
                                 : <>
                                     {
                                         collection.length === 0
-                                            ? <TableRow><TableCell colSpan={props.airline || props.corporation ? 4 : 3} style={{ textAlign: 'center' }}> No items were found </TableCell></TableRow>
+                                            ? <TableRow><TableCell colSpan={4} style={{ textAlign: 'center' }}> No items were found </TableCell></TableRow>
                                             : <>
                                                 {
-                                                    collection.map(i=>{
+                                                    collection.map(i => {
 
-                                                        return(
-                                                            <IncomeItemRow {...props} i={i} collection={collection} setCollection={setCollection} baseUrl={baseUrl}/>
+                                                        return (
+                                                            <IncomeItemRow {...props} i={i} collection={collection} setCollection={setCollection} baseUrl={baseUrl} />
                                                         )
                                                     })
 
