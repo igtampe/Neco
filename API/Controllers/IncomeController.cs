@@ -248,6 +248,7 @@ namespace Igtampe.Neco.API.Controllers {
             if (C is null) { return NotFound(ErrorResult.NotFound("Item was not found", "ID")); }
 
             C.Approved = true;
+            C.DateUpdated = DateTime.UtcNow;
             
             DB.Update(C);
             await DB.SaveChangesAsync();
@@ -625,7 +626,7 @@ namespace Igtampe.Neco.API.Controllers {
             Item.DateUpdated = DateTime.UtcNow;
 
             //If we're dealing with a corporation, do not approve. Else approve.
-            Item.Approved = Item is not Corporation;
+            Item.Approved = Item is not Corporation && Item.Income() < 500000   ;
 
             DB.Add(Item);
             await DB.SaveChangesAsync();
@@ -698,7 +699,7 @@ namespace Igtampe.Neco.API.Controllers {
             Item.DateUpdated = DateTime.UtcNow;
 
             //If we're dealing with a corporation, do not approve. Else approve.
-            Item.Approved = Item is not Corporation;
+            Item.Approved = Item is not Corporation && Item.Income() < 500000; ;
 
             DB.Update(Item);
             await DB.SaveChangesAsync();
