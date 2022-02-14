@@ -133,7 +133,6 @@ export default function IncomeComponent(props) {
                                     <List>
                                         <ListItem button disabled={!Account} onClick={() => { setGenOpen(true) }}> Generate a Tax Report  </ListItem>
                                         <ListItem button disabled={!Account} onClick={() => { setPastOpen(true) }}> See past Tax Reports </ListItem>
-                                        <ListItem button disabled={!Account} onClick={() => { setCSOpen(true) }}> See Tax Brackets </ListItem>
                                     </List>
                                     <br /><b>File New Income Items:</b>
                                     <Divider />
