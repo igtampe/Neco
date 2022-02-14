@@ -196,6 +196,7 @@ namespace Igtampe.Neco.API.Controllers {
             //Just get all of it. Please have the SDC not leave more than a ton of corporations
             List<IncomeItem> Corps = await DB.IncomeItem
                 .Include(C=>C.Jurisdiction)
+                .Include(C=>C.Account)
                 .Where(C => !C.Approved)
                 .OrderByDescending(C => C.DateUpdated).ToListAsync();
 
@@ -232,7 +233,7 @@ namespace Igtampe.Neco.API.Controllers {
         /// <param name="SessionID"></param>
         /// <param name="ID"></param>
         /// <returns></returns>
-        [HttpPut("SDC/Corporations/{ID}")]
+        [HttpPut("SDC/{ID}")]
         public async Task<IActionResult> Approve([FromHeader] Guid SessionID, [FromRoute] Guid ID) {
 
             //Get the session
@@ -243,8 +244,8 @@ namespace Igtampe.Neco.API.Controllers {
             if (!await IsAdminOrSDC(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin or SDC")); }
 
             //Get the corporation
-            Corporation? C = await DB.Corporation.FindAsync(ID);
-            if (C is null) { return NotFound(ErrorResult.NotFound("Corporation was not found", "ID")); }
+            IncomeItem? C = await DB.IncomeItem.FindAsync(ID);
+            if (C is null) { return NotFound(ErrorResult.NotFound("Item was not found", "ID")); }
 
             C.Approved = true;
             
