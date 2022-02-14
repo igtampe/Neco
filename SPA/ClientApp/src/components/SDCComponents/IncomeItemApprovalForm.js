@@ -6,16 +6,16 @@ import AlertSnackbar from "../AlertSnackbar";
 
 export default function IncomeApprovalForm(props) {
 
-    //AGAIN AGAIN!!!!!!!!!!!!!!!!
-    const DetailsBaseUrl = props.item.type === 4 
-        ? "/API/Income/Airlines "
-        : props.item.type === 3
+    //We have to do this again que lindo :dancing emoji:
+    const DetailsBaseUrl = props.airline
+        ? "/API/Income/Airlines"
+        : props.corporation
             ? "/API/Income/Corporations"
-            : props.item.type === 2
+            : props.business
                 ? "/API/Income/Businesses"
-                : props.item.type === 1
+                : props.hotel
                     ? "/API/Income/Hotels"
-                    : props.item.type === 0
+                    : props.apartment
                         ? "/API/Income/Apartments"
                         : undefined
 
@@ -51,7 +51,7 @@ export default function IncomeApprovalForm(props) {
 
             setLoading(false)
 
-            setItem({ ...item, ...data })
+            setItem({ ...item, ...data, jurisdictionID : (data.jurisdiction ? data.jurisdiction.id : '') })
             setPopulated(true);
 
         })
@@ -114,7 +114,7 @@ export default function IncomeApprovalForm(props) {
 
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <TextField label="Name" value={item.name} fullWidth
+                                <TextField label="Name" value={item.name} fullWidth 
                                     style={{ marginTop: "5px", marginBottom: "5px" }} />
                             </Grid>
                             <Grid item xs={12}>
