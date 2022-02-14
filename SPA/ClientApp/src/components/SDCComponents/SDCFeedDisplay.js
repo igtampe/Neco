@@ -4,11 +4,12 @@ import OpenIcon from '@mui/icons-material/FileOpen'
 import { GenerateGet} from "../../RequestOptionGenerator";
 import IncomeApprovalForm from "./IncomeItemApprovalForm";
 
+export const ItemTypes = ['Apartment','Hotel','Business','Corporation','Airline']
+
 function ApproveCorpRow(props) {
 
     //This is basically a component
     const [open, setOpen] = useState(false);
-    const ItemTypes = ['Apartment','Hotel','Business','Corporation','Airline']
 
     return (
         <>
@@ -50,10 +51,7 @@ export default function SDCFeedDisplay  (props) {
 
                 setCorps(data)
                 setLoading(false)
-                console.log(data)
-
             })
-
     }
 
     return (
@@ -75,7 +73,12 @@ export default function SDCFeedDisplay  (props) {
                         : <>
                             {
                                 corps.length === 0
-                                    ? <TableRow><TableCell colSpan={6} style={{ textAlign: 'center' }}> No items have yet to be approved</TableCell></TableRow>
+                                    ? <TableRow><TableCell colSpan={6} style={{ textAlign: 'center' }}> 
+                                        {props.approved
+                                            ? 'No items have yet to be approved'
+                                            : 'No items currently pending approval'
+                                        }
+                                    </TableCell></TableRow>
                                     : <> {corps.map(c => {
                                         return ( <ApproveCorpRow {...props} c={c} setCorps={setCorps} /> )
                                     })}
