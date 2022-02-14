@@ -82,7 +82,7 @@ export default function PastTaxReportsForm(props) {
                     </DialogContentText>
                 </DialogContent>
             </Dialog>
-            <TaxReportForm open={openReport!==false} setOpen={setOpenReport} report={reports[openReport]}/>
+            <TaxReportForm {...props} open={openReport!==false} setOpen={setOpenReport} report={reports[openReport]}/>
 
         </>
     )
