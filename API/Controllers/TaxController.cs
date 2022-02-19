@@ -334,8 +334,13 @@ namespace Igtampe.Neco.API.Controllers {
             public long TaxCollected { get; set; }
         }
 
+        internal struct JurisdictionTaxReport {
+            public List<JurisdictionTaxReportItem> Breakdown { get; set; }
+            public long TotalTaxCollected => Breakdown.Sum(A => A.TaxCollected);
+        }
+
         [NonAction]
-        internal static async Task<List<JurisdictionTaxReportItem>> TaxDay(NecoContext DB, bool Simulate = true) {
+        internal static async Task<JurisdictionTaxReport> TaxDay(NecoContext DB, bool Simulate = true) {
             //Get a list of all the accounts/
             Console.WriteLine($"[Running {(Simulate ? "Model" : "")} Tax Day]----------------------------------------------------------------------------------------------");
             Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Getting all accounts");
@@ -437,7 +442,7 @@ namespace Igtampe.Neco.API.Controllers {
             }
 
             var TaxPayments = PaymentDictionary.Select(T => new JurisdictionTaxReportItem() { ID = T.Key.ID!, Name = T.Key.Name, TaxCollected = T.Value });
-            return TaxPayments.ToList();
+            return new() { Breakdown = TaxPayments.ToList() };
 
         }
 
