@@ -59,26 +59,43 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpGet("TaxDayReport")]
         public async Task<IActionResult> JurisdictionsReport() {
 
-            //We only really need the IDs of the accounts
-            List<string?> Accounts = await DB.Account.Select(A => A.ID).ToListAsync();
+            //Get a list of all the accounts/
+            Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Getting all accounts");
+            List<Account> Accounts = await TaxController.GetAccountsForTaxReport(DB);
+
+            //Get a list of all the transactions that occurred.
+            Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Getting all transactions for this tax period");
+            List<Transaction> Transactions = await TaxController.GetAccountTransactionsForTaxReport(DB);
+
             Dictionary<Jurisdiction, long> PaymentDictionary = new();
 
-            foreach (string? ID in Accounts) {
+            Parallel.ForEach(Accounts, A => {
+                Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Preparing to generate a tax day report for account {A.ID}. Waiting on lock to get account and transactions");
 
-                if (ID is null) { continue; }
+                //Get the transactions from *this* user
+                List<Transaction> Ts = Transactions.Where(T => (T.Origin!.ID == A.ID || T.Destination!.ID == A.ID)).ToList();
 
                 //Generate a tax report for this account
-                TaxReport TR = await TaxController.GenerateReport(DB, ID);
-                if (TR.IsEmpty || TR.Account is null) { continue; }
+                TaxReport TR = TaxReport.Create(A,Ts);
+                if (TR.IsEmpty) { return; }
+
+                Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Report generated {A.ID}");
 
                 //Add the Jurisdictions to the payment dictionary
-                foreach (Jurisdiction A in TR.TaxPaymentDictionary.Keys) {
-                    if (PaymentDictionary.ContainsKey(A)) { PaymentDictionary[A] += TR.TaxPaymentDictionary[A]; } 
-                    else { PaymentDictionary.Add(A, TR.TaxPaymentDictionary[A]); }
+                foreach (Jurisdiction J in TR.TaxPaymentDictionary.Keys) {
+                    Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Waiting on lock of payment dictionary to add {TR.TaxPaymentDictionary[J]:n0}p to {J.Name} to main payment dictionary");
+                    lock (PaymentDictionary) {
+                        Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Adding or Updating");
+                        if (PaymentDictionary.ContainsKey(J)) { PaymentDictionary[J] += TR.TaxPaymentDictionary[J]; } 
+                        else { PaymentDictionary.Add(J, TR.TaxPaymentDictionary[J]); }
+                        Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Done. Out of here.");
+                    }
                 }
-            }
+            });
 
-            return Ok(PaymentDictionary);
+            var TaxPayments = PaymentDictionary.Select(T => new { T.Key.ID, T.Key.Name, TaxCollected = T.Value });
+
+            return Ok(TaxPayments);
 
         }
 
@@ -89,7 +106,7 @@ namespace Igtampe.Neco.API.Controllers {
         public async Task<IActionResult> JurisdictionWealthReport() {
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-            var Report = DB.Account.Where(A=>A.Jurisdiction!=null).GroupBy(A => A.Jurisdiction)
+            var Report = DB.Account.Where(A=>A.Jurisdiction!=null).GroupBy(A => new { A.Jurisdiction.ID, A.Jurisdiction.Name })
                 .Select(T => new { T.Key.ID, T.Key.Name, Wealth = T.Sum(A => A.Balance) });
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
@@ -135,8 +152,14 @@ namespace Igtampe.Neco.API.Controllers {
         private async Task<IActionResult> IncomeItemStatistics<E>(IQueryable<E> BaseSet) where E : IncomeItem {
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference. //Wheres still don't deal with dereference
-            var Breakdown = await BaseSet.Where(T => T.Jurisdiction != null).Where(A=>A.Approved).GroupBy(T => new { T.Jurisdiction.ID, T.Jurisdiction.Name })
-                .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.CalculatedIncome) }).ToListAsync();
+            var Breakdown = (await BaseSet
+                    .Where(T => T.Jurisdiction != null).Where(A => A.Approved)
+                    .Include(A => A.Jurisdiction)
+                    .ToListAsync()
+                    )
+                .GroupBy(T => new { T.Jurisdiction.ID, T.Jurisdiction.Name })
+                .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.Income()) })
+                .ToList();
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             int TotalCount = Breakdown.Sum(T => T.Count);
