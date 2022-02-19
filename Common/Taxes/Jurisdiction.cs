@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Igtampe.Neco.Common.Banking;
 using Igtampe.Neco.Common.IDGenerators;
 using Igtampe.Neco.Common.Income;
@@ -23,7 +24,8 @@ namespace Igtampe.Neco.Common.Taxes {
         public int Population { get; set; } = 0;
 
         /// <summary>ID of the tied account</summary>
-        public string? TiedAccountID => TiedAccount?.ID;
+        [NotMapped]
+        public string? AccountID => TiedAccount?.ID;
 
         /// <summary>Account tied to this jurisdiction (where taxes will be paid to)</summary>
         [JsonIgnore]
