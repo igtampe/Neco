@@ -407,46 +407,44 @@ namespace Igtampe.Neco.API.Controllers {
         internal static async Task<TaxReport> GenerateReport(NecoContext DB, string AccountID) {
 
             //Get account with districts
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            Account? A = await DB.Account
-                .Where(A=>A.Jurisdiction!=null) //This check should cover the null dereference
-                .Include(A=>A.Jurisdiction).ThenInclude(A=>A.TiedAccount).ThenInclude(A=>A.Owners) //Do self joins require incldues?
-                .Include(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction)
-                .Include(A => A.Jurisdiction).ThenInclude(D => D.ChildJurisdictions)
-                .Include(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.IncomeItems).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.ParentJurisdiction).ThenInclude(D => D.Brackets)
-                .Include(A => A.IncomeItems).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D.Brackets)
-                .FirstOrDefaultAsync(A => A.ID == AccountID);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-
+            Account? A = (await GetAccountsForTaxReport(DB, AccountID)).FirstOrDefault();
+            
             //Governments and charities pay no taxes
             if (A is null || A.IncomeType == IncomeType.GOVERNMENT || A.IncomeType == IncomeType.CHARITY) { return TaxReport.Empty; }
             
             //Decide the time period we'll get transactions from:
-            List<Transaction> Ts;
-
-            if (DateTime.UtcNow.Day > 15) {
-
-                //Get Transactions since this month's 15th.
-                Ts = await DB.Transaction
-                    .Include(T => T.Origin).Include(T => T.Destination)
-                    .Where(T => T.Origin !=  null && T.Destination != null && (T.Origin.ID == A.ID || T.Destination.ID == A.ID))
-                    .Where(T => T.Date > DayOfThisMonth(15))
-                    .ToListAsync();
-
-            } else {
-                //Get Transactions from the last 15th to this 15th
-
-                Ts = await DB.Transaction
-                    .Include(T => T.Origin).Include(T => T.Destination)
-                    .Where(T => T.Origin != null && T.Destination != null && (T.Origin.ID == A.ID || T.Destination.ID == A.ID))
-                    .Where(T => T.Date > DayOfLastMonth(15) && T.Date < DayOfThisMonth(15))
-                    .ToListAsync();
-
-            }
+            List<Transaction> Ts = await GetAccountTransactionsForTaxReport(DB,AccountID);
 
             return TaxReport.Create(A, Ts);
 
+        }
+
+        internal static async Task<List<Account>> GetAccountsForTaxReport(NecoContext DB, string AccountID = "") {
+            var Set = DB.Account //This check should cover the null dereference
+                .Include(A => A.Jurisdiction).ThenInclude(A => A!.TiedAccount).ThenInclude(A => A!.Owners) //Do self joins require incldues?
+                .Include(A => A.Jurisdiction).ThenInclude(D => D!.ParentJurisdiction)
+                .Include(A => A.Jurisdiction).ThenInclude(D => D!.ChildJurisdictions)
+                .Include(A => A.Jurisdiction).ThenInclude(D => D!.Brackets)
+                .Include(A => A.IncomeItems).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D!.ParentJurisdiction).ThenInclude(D => D!.Brackets)
+                .Include(A => A.IncomeItems).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D!.Brackets)
+                .Where(A => A.Jurisdiction != null && A.IncomeType!=IncomeType.GOVERNMENT && A.IncomeType!=IncomeType.CHARITY);
+
+            if (!string.IsNullOrWhiteSpace(AccountID)) { Set=Set.Where(A=>A.ID==AccountID); }
+            return await Set.ToListAsync();
+        }
+
+        internal static async Task<List<Transaction>> GetAccountTransactionsForTaxReport(NecoContext DB, string AccountID="") {
+            var Set = DB.Transaction
+                    .Include(T => T.Origin).ThenInclude(O => O!.Owners)
+                    .Include(T => T.Destination).ThenInclude(O => O!.Owners)
+                    .Where(T => T.Origin != null && T.Destination != null);
+
+            if (!string.IsNullOrWhiteSpace(AccountID)) { Set = Set.Where(T => (T.Origin!.ID == AccountID || T.Destination!.ID == AccountID)); }
+
+            Set = DateTime.UtcNow.Day > 15
+                ? Set.Where(T => T.Date > DayOfThisMonth(15))
+                : Set.Where(T => T.Date > DayOfLastMonth(15) && T.Date < DayOfThisMonth(15));
+            return await Set.ToListAsync();
         }
 
         /// <summary>Checks if a given user is an administrator or not</summary>
