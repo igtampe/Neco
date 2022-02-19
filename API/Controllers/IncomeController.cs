@@ -141,11 +141,11 @@ namespace Igtampe.Neco.API.Controllers {
 
             if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
 
-            if (DateTime.UtcNow.Day != 15 && Force != true) { return BadRequest("It is not currently income day! If you wish to run income anyways, add Force=true"); }
+            if (DateTime.UtcNow.Day != 1 && Force != true) { return BadRequest("It is not currently income day! If you wish to run income anyways, add Force=true"); }
 
             //Get *all* the accounts along with their income items
             List<Account> Accounts = await DB.Account
-                .Include(A => A.IncomeItems.Where(A=>A.Approved)).ThenInclude(I => I.Jurisdiction)
+                .Include(A => A.IncomeItems.Where(A=>A.Approved)).ThenInclude(I => I.Jurisdiction).ThenInclude(J=>J!.ParentJurisdiction)
                 .Include(A=>A.Owners).ToListAsync();
 
             foreach (Account A in Accounts) {
