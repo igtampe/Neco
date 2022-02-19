@@ -157,7 +157,7 @@ namespace Igtampe.Neco.API.Controllers {
             Account? A = null;
 
             if (!string.IsNullOrWhiteSpace(Request.TiedAccountID)) {
-                await DB.Account.FindAsync(Request.TiedAccountID);
+                A = await DB.Account.FindAsync(Request.TiedAccountID);
                 if (A is null) { return NotFound(ErrorResult.NotFound("Tied account was not found", "Account")); }
             }
 
@@ -231,7 +231,7 @@ namespace Igtampe.Neco.API.Controllers {
             Account? A = null;
 
             if (!string.IsNullOrWhiteSpace(Request.TiedAccountID)) {
-                await DB.Account.FindAsync(Request.TiedAccountID);
+                A = await DB.Account.FindAsync(Request.TiedAccountID);
                 if (A is null) { return NotFound(ErrorResult.NotFound("Tied account was not found", "Account")); }
             }
 
