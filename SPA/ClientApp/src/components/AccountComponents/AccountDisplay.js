@@ -122,6 +122,9 @@ export default function AccountDisplay(props) {
     const handleOpenAccordion = (panel) => (event, isExpanded) => { setOpenAccordion(isExpanded ? panel : -1); };
 
     if (!props.accounts) { return (<><CircularProgress /></>) }
+    if(props.accounts.length === 0){
+        return(<div style={{textAlign:'center'}}>Welcome to Neco! It appears you have no accounts. Consider opening one!</div>)
+    }
 
     return (<>
         {props.accounts.map((a, i) => {
