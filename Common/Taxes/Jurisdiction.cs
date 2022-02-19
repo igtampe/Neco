@@ -22,6 +22,9 @@ namespace Igtampe.Neco.Common.Taxes {
         /// <summary>Population of this jurisdiction (useful for Corporation income calculation)</summary>
         public int Population { get; set; } = 0;
 
+        /// <summary>ID of the tied account</summary>
+        public string? TiedAccountID => TiedAccount?.ID;
+
         /// <summary>Account tied to this jurisdiction (where taxes will be paid to)</summary>
         [JsonIgnore]
         public Account? TiedAccount { get; set; }
