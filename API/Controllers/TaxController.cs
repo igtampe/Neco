@@ -315,40 +315,69 @@ namespace Igtampe.Neco.API.Controllers {
         /// <param name="Force"></param>
         /// <returns></returns> 
         [HttpPost("TaxDay")] //There's no real reason to make this a post, but I just want this to not be accessible via a standard web-browser
-        public async Task<IActionResult> TaxDay([FromHeader] Guid? SessionID, [FromQuery] bool? Force) {
+        public async Task<IActionResult> ExecuteTaxDay([FromHeader] Guid? SessionID, [FromQuery] bool? Force) {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
-            if (S is null) { return Unauthorized("Invalid Session"); }
+            return S is null
+                ? Unauthorized("Invalid Session")
+                : !await IsAdmin(S.UserID)
+                    ? Unauthorized(ErrorResult.ForbiddenRoles("Admin"))
+                    : DateTime.UtcNow.Day != 1 && Force != true
+                        ? BadRequest("It is not currently tax day! If you wish to run tax anyways, add Force=true")
+                        : Ok(TaxDay(DB, false));
+        }
 
-            if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
+        #region Helpers
 
-            if (DateTime.UtcNow.Day != 1 && Force != true) { return BadRequest("It is not currently tax day! If you wish to run tax anyways, add Force=true"); }
+        internal struct JurisdictionTaxReportItem {
+            public string ID { get; set; }
+            public string Name { get; set; }
+            public long TaxCollected { get; set; }
+        }
 
-            //We onyly really need the IDs of the accounts
-            List<string?> Accounts = await DB.Account.Select(A => A.ID).ToListAsync();
-            Dictionary<Account, long> PaymentDictionary = new();
+        [NonAction]
+        internal static async Task<List<JurisdictionTaxReportItem>> TaxDay(NecoContext DB, bool Simulate = true) {
+            //Get a list of all the accounts/
+            Console.WriteLine($"[Running {(Simulate ? "Model" : "")} Tax Day]----------------------------------------------------------------------------------------------");
+            Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Getting all accounts");
+            List<Account> Accounts = await GetAccountsForTaxReport(DB);
 
-            foreach (string? ID in Accounts) {
+            //Get a list of all the transactions that occurred.
+            Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Getting all transactions for this tax period");
+            List<Transaction> Transactions = await GetAccountTransactionsForTaxReport(DB);
 
-                if (ID is null) { continue; }
+            Dictionary<Jurisdiction, long> PaymentDictionary = new();
+
+            Parallel.ForEach(Accounts, A => {
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Preparing to generate a tax day report for account {A.ID}.");
+
+                //Get the transactions from *this* user
+                List<Transaction> Ts = Transactions.Where(T => (T.Origin!.ID == A.ID || T.Destination!.ID == A.ID)).ToList();
 
                 //Generate a tax report for this account
-                TaxReport TR = await GenerateReport(DB, ID);
-                if (TR.IsEmpty || TR.Account is null) { continue; }
+                TaxReport TR = TaxReport.Create(A, Ts);
+                if (TR.IsEmpty || TR.Account is null) { return; }
+
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Report generated {A.ID}");
 
                 //Add the Jurisdictions to the payment dictionary
-                foreach (Jurisdiction A in TR.TaxPaymentDictionary.Keys) {
-
-                    if (A.TiedAccount is null) {
-                        Console.Error.WriteLine($"Could not pay out taxes to {A.Name} because no tied account is set!");
-                        continue; 
+                foreach (Jurisdiction J in TR.TaxPaymentDictionary.Keys) {
+                    Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Waiting on lock of payment dictionary to add {TR.TaxPaymentDictionary[J]:n0}p to {J.Name} to main payment dictionary");
+                    lock (PaymentDictionary) {
+                        Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss.FFFFFFF}] Adding or Updating");
+                        if (PaymentDictionary.ContainsKey(J)) { PaymentDictionary[J] += TR.TaxPaymentDictionary[J]; } else { PaymentDictionary.Add(J, TR.TaxPaymentDictionary[J]); }
+                        Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Done. Out of here.");
                     }
-
-                    if (PaymentDictionary.ContainsKey(A.TiedAccount)) { PaymentDictionary[A.TiedAccount] += TR.TaxPaymentDictionary[A]; } 
-                    else { PaymentDictionary.Add(A.TiedAccount, TR.TaxPaymentDictionary[A]); }
                 }
 
+                //If we're simulating, we just return
+                if (Simulate) { return; }
+
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Taking money out of {TR.Account.ID}");
+
                 //Remove the grand total tax from the account
-                TR.Account.Balance -= TR.GrandTotalTax;
+                TR.Account.Balance -= TR.GrandTotalTax; //These updates ***should*** be passed along when we save the tax report
+
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] {TR.Account.ID}'s balance is now {TR.Account.Balance}");
 
                 //Send notifications to all the owners of this account
                 foreach (User Owner in TR.Account.Owners) {
@@ -360,44 +389,57 @@ namespace Igtampe.Neco.API.Controllers {
                         Text = $"Neco has withdrawn {TR.Account.Name} ({TR.Account.ID})'s monthly tax of {TR.GrandTotalTax:n0}p. See your newest Tax Report for more details",
                     };
 
-                    DB.Add(N);
+                    Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Waiting on lock to add notification to {Owner.ID}");
+                    lock (DB) { DB.Add(N); }
                 }
 
-                //To the best of my knowledge this will also update the account
-                DB.Add(TR);
-            }
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Waiting on lock to add TaxReport for {TR.Account.ID}");
+                lock (DB) { DB.Add(TR); }
+            });
 
-            //Now then that we have the total amount of tax to actually send the tax
+            if (!Simulate) {
 
-            foreach (Account A in PaymentDictionary.Keys) {
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Sending money to jurisdictions");
 
-                A.Balance += PaymentDictionary[A];
+                //For each jurisdiction that needs to be paid, pay it
+                foreach (Jurisdiction J in PaymentDictionary.Keys) {
+                    
+                    //We can skip accounts that will get nada
+                    if (PaymentDictionary[J] == 0) { continue; }
 
-                //Send notifications to all the owners of this account
-                foreach (User Owner in A.Owners) {
+                    if (J.TiedAccount == null) {
+                        Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Jurisdiction {J.Name} has no tied account. We will be skipping it");
+                        continue; 
+                    }
 
-                    //Add the notification
-                    //Create and add a notif
-                    Notification N = new() {
-                        Date = DateTime.UtcNow, User = Owner,
-                        Text = $"Neco has deposited {PaymentDictionary[A]:n0}p in tax for this month to {A.Name} ({A.ID}).",
-                    };
+                    J.TiedAccount.Balance += PaymentDictionary[J];
 
-                    DB.Add(N);
+                    //Send notifications to all the owners of this account
+                    foreach (User Owner in J.TiedAccount.Owners) {
+
+                        //Add the notification
+                        //Create and add a notif
+                        Notification N = new() {
+                            Date = DateTime.UtcNow, User = Owner,
+                            Text = $"Neco has deposited {PaymentDictionary[J]:n0}p in tax for this month to {J.TiedAccount.Name} ({J.TiedAccount.ID}).",
+                        };
+
+                        DB.Add(N);
+                    }
+
+                    DB.Update(J.TiedAccount);
                 }
 
-                DB.Update(A);
+                //Cleanup old tax reports
+                DB.RemoveRange(DB.TaxReport.Where(A => A.DateGenerated < DateTime.SpecifyKind(DateTime.Now.AddMonths(-3).AddDays(1), DateTimeKind.Utc)));
+
+                await DB.SaveChangesAsync();
             }
 
-            //Cleanup old tax reports
-            DB.RemoveRange(DB.TaxReport.Where(A => A.DateGenerated < DateTime.SpecifyKind(DateTime.Now.AddMonths(-3).AddDays(1), DateTimeKind.Utc)));
-
-            await DB.SaveChangesAsync();
-            return Ok();
+            var TaxPayments = PaymentDictionary.Select(T => new JurisdictionTaxReportItem() { ID = T.Key.ID!, Name = T.Key.Name, TaxCollected = T.Value });
+            return TaxPayments.ToList();
 
         }
-
-        #region Helpers
 
         /// <summary>Generates a report for a user</summary>
         /// <param name="DB">Neco Context to pull all data from</param>
@@ -422,8 +464,8 @@ namespace Igtampe.Neco.API.Controllers {
         internal static async Task<List<Account>> GetAccountsForTaxReport(NecoContext DB, string AccountID = "") {
             var Set = DB.Account //This check should cover the null dereference
                 .Include(A => A.Jurisdiction).ThenInclude(A => A!.TiedAccount).ThenInclude(A => A!.Owners) //Do self joins require incldues?
-                .Include(A => A.Jurisdiction).ThenInclude(D => D!.ParentJurisdiction)
-                .Include(A => A.Jurisdiction).ThenInclude(D => D!.ChildJurisdictions)
+                .Include(A => A.Jurisdiction).ThenInclude(D => D!.ParentJurisdiction).ThenInclude(A => A!.TiedAccount).ThenInclude(A => A!.Owners)
+                .Include(A => A.Jurisdiction).ThenInclude(D => D!.ChildJurisdictions).ThenInclude(A => A!.TiedAccount).ThenInclude(A => A!.Owners)
                 .Include(A => A.Jurisdiction).ThenInclude(D => D!.Brackets)
                 .Include(A => A.IncomeItems).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D!.ParentJurisdiction).ThenInclude(D => D!.Brackets)
                 .Include(A => A.IncomeItems).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D!.Brackets)

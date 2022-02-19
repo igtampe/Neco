@@ -57,48 +57,7 @@ namespace Igtampe.Neco.API.Controllers {
         /// <returns></returns>
         //Total amount taken by tax (involves generating tax reports)
         [HttpGet("TaxDayReport")]
-        public async Task<IActionResult> JurisdictionsReport() {
-
-            //Get a list of all the accounts/
-            Console.WriteLine("[Running Model Tax Day]----------------------------------------------------------------------------------------------");
-            Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Getting all accounts");
-            List<Account> Accounts = await TaxController.GetAccountsForTaxReport(DB);
-
-            //Get a list of all the transactions that occurred.
-            Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Getting all transactions for this tax period");
-            List<Transaction> Transactions = await TaxController.GetAccountTransactionsForTaxReport(DB);
-
-            Dictionary<Jurisdiction, long> PaymentDictionary = new();
-
-            Parallel.ForEach(Accounts, A => {
-                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Preparing to generate a tax day report for account {A.ID}.");
-
-                //Get the transactions from *this* user
-                List<Transaction> Ts = Transactions.Where(T => (T.Origin!.ID == A.ID || T.Destination!.ID == A.ID)).ToList();
-
-                //Generate a tax report for this account
-                TaxReport TR = TaxReport.Create(A,Ts);
-                if (TR.IsEmpty) { return; }
-
-                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Report generated {A.ID}");
-
-                //Add the Jurisdictions to the payment dictionary
-                foreach (Jurisdiction J in TR.TaxPaymentDictionary.Keys) {
-                    Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Waiting on lock of payment dictionary to add {TR.TaxPaymentDictionary[J]:n0}p to {J.Name} to main payment dictionary");
-                    lock (PaymentDictionary) {
-                        Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss.FFFFFFF}] Adding or Updating");
-                        if (PaymentDictionary.ContainsKey(J)) { PaymentDictionary[J] += TR.TaxPaymentDictionary[J]; } 
-                        else { PaymentDictionary.Add(J, TR.TaxPaymentDictionary[J]); }
-                        Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Done. Out of here.");
-                    }
-                }
-            });
-
-            var TaxPayments = PaymentDictionary.Select(T => new { T.Key.ID, T.Key.Name, TaxCollected = T.Value });
-
-            return Ok(TaxPayments);
-
-        }
+        public async Task<IActionResult> JurisdictionsReport() => Ok(await TaxController.TaxDay(DB));
 
         /// <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
         /// <returns></returns>
