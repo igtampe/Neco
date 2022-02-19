@@ -30,7 +30,7 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpGet("Jurisdictions")]
         public async Task<IActionResult> GetJurisdictions([FromQuery] JurisdictionType? Type, [FromQuery] string? Query, int? Skip, int? Take) {
 
-            IQueryable<Jurisdiction> Set = DB.Jurisdiction.Include(J => J.ParentJurisdiction);
+            IQueryable<Jurisdiction> Set = DB.Jurisdiction.Include(J => J.ParentJurisdiction).Include(J=>J.TiedAccount);
             if (Type != null) { Set = Set.Where(J => J.Type == (Type ?? JurisdictionType.COUNTRY)); }
 
             if (!string.IsNullOrWhiteSpace(Query)) { Set = Set.Where(J => J.Name.ToLower().Contains(Query.ToLower())); }
