@@ -82,6 +82,7 @@ export default function JurisdictionEditor(props) {
         setImageURL(props.jurisdiction.imageURL)
         setType(props.jurisdiction.type)    
         setPopulation(props.jurisdiction.population)
+        setAccountID(props.jurisdiction.tiedAccountID)
         if (props.jurisdiction.parentJurisdiction) { setParentID(props.jurisdiction.parentJurisdiction.id) }
     }
 
@@ -90,7 +91,7 @@ export default function JurisdictionEditor(props) {
         setImageURL("")
         setType(0)
         setPopulation(0)
-
+        setAccountID("")
         setPopulated(false)
     }
 
