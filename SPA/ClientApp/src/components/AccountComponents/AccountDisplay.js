@@ -43,6 +43,7 @@ export function AccountRow(props) {
 
     const handleClick = (event) => { setAnchorEl(event.currentTarget); };
     const handleClose = () => { setAnchorEl(null); };
+    const copyID = () => { navigator.clipboard.writeText(Account.id) }    
 
     if(Account.closed){ return (<></>)}
 
@@ -87,6 +88,7 @@ export function AccountRow(props) {
             <CloseAccountForm {...props} open={delOpen} setOpen={setDelOpen} setAccount={setAccount} accountID={Account.id}/>
 
             <Menu anchorEl={anchorEl} open={open} onClose={handleClose} >
+                <MenuItem onClick={() => { handleClose(); copyID()}}>Copy Account ID</MenuItem>
                 <MenuItem onClick={() => { handleClose(); setTransactionsOpen(true)}}>See More Transactions</MenuItem>
                 <MenuItem onClick={() => { handleClose(); setOwnersOpen(true)}}>Manage Owners</MenuItem>
                 <MenuItem onClick={() => { handleClose(); setEditorOpen(true) }}>Edit Account Details</MenuItem>
