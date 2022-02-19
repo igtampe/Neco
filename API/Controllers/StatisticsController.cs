@@ -60,17 +60,18 @@ namespace Igtampe.Neco.API.Controllers {
         public async Task<IActionResult> JurisdictionsReport() {
 
             //Get a list of all the accounts/
-            Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Getting all accounts");
+            Console.WriteLine("[Running Model Tax Day]----------------------------------------------------------------------------------------------");
+            Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Getting all accounts");
             List<Account> Accounts = await TaxController.GetAccountsForTaxReport(DB);
 
             //Get a list of all the transactions that occurred.
-            Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Getting all transactions for this tax period");
+            Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Getting all transactions for this tax period");
             List<Transaction> Transactions = await TaxController.GetAccountTransactionsForTaxReport(DB);
 
             Dictionary<Jurisdiction, long> PaymentDictionary = new();
 
             Parallel.ForEach(Accounts, A => {
-                Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Preparing to generate a tax day report for account {A.ID}. Waiting on lock to get account and transactions");
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Preparing to generate a tax day report for account {A.ID}.");
 
                 //Get the transactions from *this* user
                 List<Transaction> Ts = Transactions.Where(T => (T.Origin!.ID == A.ID || T.Destination!.ID == A.ID)).ToList();
@@ -79,16 +80,16 @@ namespace Igtampe.Neco.API.Controllers {
                 TaxReport TR = TaxReport.Create(A,Ts);
                 if (TR.IsEmpty) { return; }
 
-                Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Report generated {A.ID}");
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Report generated {A.ID}");
 
                 //Add the Jurisdictions to the payment dictionary
                 foreach (Jurisdiction J in TR.TaxPaymentDictionary.Keys) {
-                    Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Waiting on lock of payment dictionary to add {TR.TaxPaymentDictionary[J]:n0}p to {J.Name} to main payment dictionary");
+                    Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Waiting on lock of payment dictionary to add {TR.TaxPaymentDictionary[J]:n0}p to {J.Name} to main payment dictionary");
                     lock (PaymentDictionary) {
-                        Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Adding or Updating");
+                        Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss.FFFFFFF}] Adding or Updating");
                         if (PaymentDictionary.ContainsKey(J)) { PaymentDictionary[J] += TR.TaxPaymentDictionary[J]; } 
                         else { PaymentDictionary.Add(J, TR.TaxPaymentDictionary[J]); }
-                        Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] Done. Out of here.");
+                        Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Done. Out of here.");
                     }
                 }
             });
