@@ -442,7 +442,7 @@ namespace Igtampe.Neco.API.Controllers {
             }
 
             var TaxPayments = PaymentDictionary.Select(T => new JurisdictionTaxReportItem() { ID = T.Key.ID!, Name = T.Key.Name, TaxCollected = T.Value });
-            return new() { Breakdown = TaxPayments.ToList() };
+            return new() { Breakdown = TaxPayments.OrderByDescending(A=>A.TaxCollected).ThenBy(A=>A.Name).ToList() };
 
         }
 

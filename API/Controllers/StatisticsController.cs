@@ -34,7 +34,8 @@ namespace Igtampe.Neco.API.Controllers {
 
             //D a m n 
             var Data = await DB.Transaction.Where(T=>T.Date > Start && T.Date < End).GroupBy(T => new { T.Date.Month, T.Date.Year })
-                .Select(T => new { T.Key.Year, T.Key.Month, Count = T.Count(), Sum = T.Sum(T => T.Amount) }).ToListAsync();
+                .Select(T => new { T.Key.Year, T.Key.Month, Count = T.Count(), Sum = T.Sum(T => T.Amount) })
+                .OrderByDescending(A=>A.Year).ThenByDescending(A=>A.Month).ToListAsync();
                 
             return Ok(Data);
 
@@ -65,10 +66,10 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpGet("WealthReport")]
         public async Task<IActionResult> JurisdictionWealthReport() {
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            var Report = DB.Account.Where(A=>A.Jurisdiction!=null).GroupBy(A => new { A.Jurisdiction.ID, A.Jurisdiction.Name })
-                .Select(T => new { T.Key.ID, T.Key.Name, Wealth = T.Sum(A => A.Balance) });
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            var Report = DB.Account.Where(A=>A.Jurisdiction!=null)
+                .GroupBy(A => new { A.Jurisdiction!.ID, A.Jurisdiction.Name })
+                .Select(T => new { T.Key.ID, T.Key.Name, Wealth = T.Sum(A => A.Balance) })
+                .OrderByDescending(A=>A.Wealth).ThenBy(A=>A.Name);
 
             return Ok(await Report.ToListAsync());
 
@@ -111,16 +112,15 @@ namespace Igtampe.Neco.API.Controllers {
 
         private async Task<IActionResult> IncomeItemStatistics<E>(IQueryable<E> BaseSet) where E : IncomeItem {
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference. //Wheres still don't deal with dereference
             var Breakdown = (await BaseSet
                     .Where(T => T.Jurisdiction != null).Where(A => A.Approved)
                     .Include(A => A.Jurisdiction)
                     .ToListAsync()
                     )
-                .GroupBy(T => new { T.Jurisdiction.ID, T.Jurisdiction.Name })
+                .GroupBy(T => new { T.Jurisdiction!.ID, T.Jurisdiction.Name })
                 .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.Income()) })
+                .OrderByDescending(A=>A.Income).ThenBy(A=>A.Name) //We'll order by income and not count
                 .ToList();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             int TotalCount = Breakdown.Sum(T => T.Count);
             long TotalIncome = Breakdown.Sum(T => T.Income);
@@ -135,11 +135,11 @@ namespace Igtampe.Neco.API.Controllers {
         public async Task<IActionResult> Banks() {
 
             //Get all Banks, include accounts
-#pragma warning disable CS8602 // Dereference of a possibly null reference. //Wheres still don't deal with dereference
             var AccountSummary = await DB.Account.Where(T => T.Bank != null)
-                .GroupBy(T => new { T.Bank.ID, T.Bank.Name, T.Bank.ImageURL }) //We don't calculate market share even though with SQL we probably could (:Shrug:)
-                .Select(T => new { T.Key.ID, T.Key.Name, T.Key.ImageURL, Count = T.Count(), Balance = T.Sum(T => T.Balance) }).ToListAsync();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                .GroupBy(T => new { T.Bank!.ID, T.Bank.Name, T.Bank.ImageURL }) //We don't calculate market share even though with SQL we probably could (:Shrug:)
+                .Select(T => new { T.Key.ID, T.Key.Name, T.Key.ImageURL, Count = T.Count(), Balance = T.Sum(T => T.Balance) })
+                .OrderByDescending(T => T.Balance).ThenBy(T => T.Name)
+                .ToListAsync();
 
             int TotalCount = AccountSummary.Sum(T => T.Count);
             long TotalMoney = AccountSummary.Sum(T => T.Balance);
