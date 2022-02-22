@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Igtampe.Neco.API.Requests;
 using Igtampe.Neco.Common.Banking;
-using Igtampe.Neco.Common.Income;
 using Igtampe.Neco.Data;
-using Igtampe.ChopoSessionManager;
 using Microsoft.EntityFrameworkCore;
-using Igtampe.Neco.Common.Taxes;
 using QRCoder;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;

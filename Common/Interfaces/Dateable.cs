@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Igtampe.Neco.Common {
+﻿namespace Igtampe.Neco.Common {
     
     /// <summary>Any item that can have a date (Like a date created or date updated)</summary>
     public interface Dateable {

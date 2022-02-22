@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Igtampe.Neco.Common {
+﻿namespace Igtampe.Neco.Common {
 
     /// <summary>Abstract class for any object that has a GUID ID</summary>
     public abstract class Identifiable<E> {

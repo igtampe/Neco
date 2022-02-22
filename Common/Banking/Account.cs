@@ -1,7 +1,6 @@
 ﻿using Igtampe.Neco.Common.IDGenerators;
 using Igtampe.Neco.Common.Income;
 using Igtampe.Neco.Common.Taxes;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Igtampe.Neco.Common.Banking {
