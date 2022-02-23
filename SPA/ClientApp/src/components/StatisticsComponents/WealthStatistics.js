@@ -1,7 +1,7 @@
 //Here the bank and jurisdiction wealths
 
 import { EventTracker } from "@devexpress/dx-react-chart";
-import { Chart, Legend, PieSeries, Title, Tooltip } from "@devexpress/dx-react-chart-material-ui";
+import { Chart, PieSeries, Title, Tooltip } from "@devexpress/dx-react-chart-material-ui";
 import { Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import React, { useState } from "react";
 import CommonStatisticsDisplay, { GraphAndListStatisticsDisplay } from "./CommonStatisticsDisplay";
@@ -35,8 +35,8 @@ function BankStatistics(props) {
         }
 
         return (<>
-            <TableContainer component={Paper}>
-                <Table>
+            <TableContainer component={Paper} style={{ height:'350px', overflowY:'auto'}}>
+                <Table stickyHeader>
                     <TableHead>
                         <TableRow>
                             <TableCell>Logo</TableCell>
@@ -130,8 +130,8 @@ function JurisdictionStatistics(props) {
         }
 
         return (<>
-            <TableContainer component={Paper}>
-                <Table>
+            <TableContainer component={Paper} style={{ height:'350px', overflowY:'auto'}}>
+                <Table stickyHeader>
                     <TableHead>
                         <TableRow>
                             <TableCell>Flag</TableCell>
