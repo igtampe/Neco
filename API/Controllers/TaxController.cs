@@ -330,6 +330,7 @@ namespace Igtampe.Neco.API.Controllers {
 
         internal struct JurisdictionTaxReportItem {
             public string ID { get; set; }
+            public string ImageURL { get; set; }
             public string Name { get; set; }
             public long TaxCollected { get; set; }
         }
@@ -441,7 +442,7 @@ namespace Igtampe.Neco.API.Controllers {
                 await DB.SaveChangesAsync();
             }
 
-            var TaxPayments = PaymentDictionary.Select(T => new JurisdictionTaxReportItem() { ID = T.Key.ID!, Name = T.Key.Name, TaxCollected = T.Value });
+            var TaxPayments = PaymentDictionary.Select(T => new JurisdictionTaxReportItem() { ID = T.Key.ID!, Name = T.Key.Name, ImageURL = T.Key.ImageURL, TaxCollected = T.Value });
             return new() { Breakdown = TaxPayments.OrderByDescending(A=>A.TaxCollected).ThenBy(A=>A.Name).ToList() };
 
         }
