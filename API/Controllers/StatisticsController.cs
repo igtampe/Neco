@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Igtampe.Neco.Common;
-using Igtampe.Neco.Common.Banking;
 using Igtampe.Neco.Common.Income;
-using Igtampe.Neco.Common.Taxes;
 using Igtampe.Neco.Data;
-using Igtampe.ChopoSessionManager;
 using Microsoft.EntityFrameworkCore;
 
 namespace Igtampe.Neco.API.Controllers {
@@ -57,18 +53,18 @@ namespace Igtampe.Neco.API.Controllers {
         /// <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
         /// <returns></returns>
         //Total amount taken by tax (involves generating tax reports)
-        [HttpGet("TaxDayReport")]
+        [HttpGet("Tax")]
         public async Task<IActionResult> JurisdictionsReport() => Ok(await TaxController.TaxDay(DB));
 
         /// <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
         /// <returns></returns>
         //Total amount taken by tax (involves generating tax reports)
-        [HttpGet("WealthReport")]
+        [HttpGet("Jurisdictions")]
         public async Task<IActionResult> JurisdictionWealthReport() {
 
             var Report = DB.Account.Where(A=>A.Jurisdiction!=null)
-                .GroupBy(A => new { A.Jurisdiction!.ID, A.Jurisdiction.Name })
-                .Select(T => new { T.Key.ID, T.Key.Name, Wealth = T.Sum(A => A.Balance) })
+                .GroupBy(A => new { A.Jurisdiction!.ID, A.Jurisdiction.Name, A.Jurisdiction.ImageURL })
+                .Select(T => new { T.Key.ID, T.Key.Name,T.Key.ImageURL, Wealth = T.Sum(A => A.Balance) })
                 .OrderByDescending(A=>A.Wealth).ThenBy(A=>A.Name);
 
             return Ok(await Report.ToListAsync());
@@ -108,7 +104,7 @@ namespace Igtampe.Neco.API.Controllers {
         /// <typeparam name="E"></typeparam>
         /// <returns></returns>
         [HttpGet("Income")]
-        public async Task<IActionResult> Income<E>() => await IncomeItemStatistics(DB.IncomeItem);
+        public async Task<IActionResult> Income() => await IncomeItemStatistics(DB.IncomeItem);
 
         private async Task<IActionResult> IncomeItemStatistics<E>(IQueryable<E> BaseSet) where E : IncomeItem {
 
