@@ -156,55 +156,31 @@ export default function App() {
           : <Redirect to='/Login'/> }
         </Route>
         <Route path='/Statistics'>
-            { Session
-            ? <>
-              {
-                User
-                ? <>
-                  {
+            { Session ? <>
+              { User ? <> {
                     (User.isAdmin || User.isGov) 
                     ? <StatisticsComponent DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
-                    : <>You do not have permission to access this resource</>
-                  }
-                </>
-                : <CenteredCircular/>
-              }
-            </>
-            : <Redirect to='/Login'/> }
+                    : <>You do not have permission to access this resource</> }
+                </> : <CenteredCircular/>
+              } </> : <Redirect to='/Login'/> }
         </Route>
         <Route path='/SDC'>
-        { Session
-            ? <>
-              {
-                User
-                ? <>
-                  {
+        { Session ? <>
+              { User ? <> {
                     (User.isAdmin || User.isSdc) 
                     ? <SDCComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
                     : <>You do not have permission to access this resource</>
-                  }
-                </>
-                : <CenteredCircular/>
-              }
-            </>
-            : <Redirect to='/Login'/> }
+                  } </> : <CenteredCircular/>
+              } </> : <Redirect to='/Login'/> }
         </Route>
         <Route path='/Admin'>
-        { Session
-            ? <>
-              {
-                User
-                ? <>
-                  {
+        { Session ? <>
+              { User ? <> {
                     User.isAdmin 
                     ? <AdminComponent DarkMode={darkMode}Session={Session} InvalidSession={InvalidSession} setSession = {SetSession} RefreshUser = {RefreshUser} User={User} Vertical={Vertical}/>
-                    : <>You do not have permission to access this resource</>
-                  }
-                </>
-                : <CenteredCircular/>
-              }
-            </>
-            : <Redirect to='/Login'/> }
+                    : <>You do not have permission to access this resource</> }
+                </> : <CenteredCircular/>
+              } </> : <Redirect to='/Login'/> }
         </Route>
         <Footer/>
       </Layout>
