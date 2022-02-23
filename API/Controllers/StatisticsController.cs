@@ -113,8 +113,8 @@ namespace Igtampe.Neco.API.Controllers {
                     .Include(A => A.Jurisdiction)
                     .ToListAsync()
                     )
-                .GroupBy(T => new { T.Jurisdiction!.ID, T.Jurisdiction.Name })
-                .Select(T => new { T.Key.ID, T.Key.Name, Count = T.Count(), Income = T.Sum(T => T.Income()) })
+                .GroupBy(T => new { T.Jurisdiction!.ID, T.Jurisdiction.Name, T.Jurisdiction.ImageURL })
+                .Select(T => new { T.Key.ID, T.Key.Name, T.Key.ImageURL, Count = T.Count(), Income = T.Sum(T => T.Income()) })
                 .OrderByDescending(A=>A.Income).ThenBy(A=>A.Name) //We'll order by income and not count
                 .ToList();
 
