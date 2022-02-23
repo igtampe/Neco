@@ -69,6 +69,28 @@ function BankStatistics(props) {
             )
         }
 
+        const graphToolTip = (info) => {
+            const b = props.banks.accountSummary[info.targetItem.point];
+            return (<>
+            <table>
+                <tr>
+                    <td colSpan={2} style={{textAlign:'center'}}>{b.name}</td>
+                </tr>
+                <tr>
+                    <td rowSpan={2}>
+                        <a href={b.imageURL === "" ? "/Bank.png" : b.imageURL}>
+                            <img alt={'Bank Logo'} src={b.imageURL === "" ? "/Bank.png" : b.imageURL} width={'100px'} style={{marginRight:'10px'}}/>
+                        </a>
+                    </td>
+                    <td> {Number(b.count).toLocaleString()} Account(s)</td>
+                </tr>
+                <tr>
+                    <td>{Number(b.balance).toLocaleString()}p in funds</td>
+                </tr>
+            </table>
+            </>);
+        }
+
         return (<>
             <Chart data={props.banks.accountSummary} height={300}>
                 <PieSeries
@@ -87,7 +109,7 @@ function BankStatistics(props) {
                 />
                 <Title text="Banks"/>
                 <EventTracker />
-                <Tooltip />
+                <Tooltip contentComponent={graphToolTip} />
             </Chart>
         </>)
 
@@ -164,6 +186,25 @@ function JurisdictionStatistics(props) {
             )
         }
 
+        const graphToolTip = (info) => {
+            const b = stats[info.targetItem.point];
+            return (<>
+                <table>
+                    <tr>
+                        <td rowSpan={2}>
+                            <a href={b.flag === "" ? "/Flag.png" : b.flag}>
+                                <img alt={'Flag'} src={b.flag === "" ? "/Flag.png" : b.flag} width={'100px'} style={{marginRight:'10px'}}/>
+                            </a>
+                        </td>
+                        <td>{b.name}</td>
+                    </tr>
+                    <tr>
+                        <td>{Number(b.wealth).toLocaleString()}p in funds</td>
+                    </tr>
+                </table>
+                </>);
+        }
+
         return (<>
             <Chart data={stats} height={300}>
                 <PieSeries
@@ -175,7 +216,7 @@ function JurisdictionStatistics(props) {
                 />
                 <Title text="Jurisdictions"/>
                 <EventTracker />
-                <Tooltip />
+                <Tooltip contentComponent={graphToolTip}/>
             </Chart>
         </>)
 

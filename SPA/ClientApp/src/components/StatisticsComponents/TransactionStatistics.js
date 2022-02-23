@@ -58,6 +58,12 @@ function TransactionMonthlyCountStatistics(props) {
         })
     }).reverse()
 
+    const CountTooltip = (info) => {
+        return (<>
+            {Number(info.text).toLocaleString()} Transactions
+        </>);
+    }
+    
     return (<>
         <Chart data={ConvertedData}>
             <ArgumentAxis/>
@@ -70,7 +76,7 @@ function TransactionMonthlyCountStatistics(props) {
             <ValueAxis />
             <Stack />
             <EventTracker />
-            <Tooltip />
+            <Tooltip  contentComponent={CountTooltip} />
             <Title text="Transactions Month by Month" />
         </Chart>
     </>)
@@ -92,6 +98,12 @@ function TransactionMonthlyVolumeStatistics(props) {
         })
     }).reverse()
 
+    const VolumeToolTip = (info) => {
+        return (<>
+            {Number(info.text).toLocaleString()}p
+        </>);
+    }
+    
     return (<>
         <Chart data={ConvertedData}>
             <ArgumentAxis />
@@ -104,8 +116,8 @@ function TransactionMonthlyVolumeStatistics(props) {
             <ValueAxis />
             <Stack />
             <EventTracker />
-            <Tooltip />
-            <Title text="Transaction Volume Month by Month" />
+            <Tooltip contentComponent={VolumeToolTip} />
+            <Title enabled text="Transaction Volume Month by Month" />
         </Chart>
     </>)
 

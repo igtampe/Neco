@@ -80,6 +80,28 @@ function IncomeStatisticsPane(url, title, horizontal, setOverall) {
 
                 if (!stats) { return (<Skeleton variant="rectangular" width={'100%'} height={'200px'} />) }
 
+                const GraphToolTip=(info)=>{
+                    const b = stats.breakdown[info.targetItem.point];
+                    return (<>
+                        <table>
+                            <tr>
+                                <td colSpan={2} style={{textAlign:'center'}}>{b.name}</td>
+                            </tr>
+                            <tr>
+                                <td rowSpan={2}>
+                                    <a href={b.flag === "" ? "/Flag.png" : b.flag}>
+                                        <img alt={'Flag'} src={b.flag === "" ? "/Flag.png" : b.flag} width={'100px'} style={{marginRight:'10px'}}/>
+                                    </a>
+                                </td>
+                                <td> {Number(b.count).toLocaleString()} Item(s)</td>
+                            </tr>
+                            <tr>
+                                <td>{Number(b.income).toLocaleString()}p/month</td>
+                            </tr>
+                        </table>
+                        </>);
+                }
+
                 return (<>
                     <Chart data={stats.breakdown} height={300}>
                         <PieSeries
@@ -98,7 +120,7 @@ function IncomeStatisticsPane(url, title, horizontal, setOverall) {
                         />
                         <Title text={title ? title : "set the title dumb dumb"} />
                         <EventTracker />
-                        <Tooltip />
+                        <Tooltip contentComponent={GraphToolTip} />
                     </Chart>
                 </>)
 

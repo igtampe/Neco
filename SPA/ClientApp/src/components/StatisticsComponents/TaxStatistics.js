@@ -70,6 +70,25 @@ export default function TaxStatistics(props){
 
         if (!stats) { return (<Skeleton variant="rectangular" width={'100%'} height={'200px'} />) }
 
+        const graphToolTip = (info) => {
+            const b = stats.breakdown[info.targetItem.point];
+            return (<>
+                <table>
+                    <tr>
+                        <td rowSpan={2}>
+                            <a href={b.flag === "" ? "/Flag.png" : b.flag}>
+                                <img alt={'Flag'} src={b.flag === "" ? "/Flag.png" : b.flag} width={'100px'} style={{marginRight:'10px'}}/>
+                            </a>
+                        </td>
+                        <td>{b.name}</td>
+                    </tr>
+                    <tr>
+                        <td>{Number(b.taxCollected).toLocaleString()}p in funds</td>
+                    </tr>
+                </table>
+                </>);
+        }
+
         return (<>
             <Chart data={stats.breakdown} height={350}>
                 <PieSeries
@@ -81,7 +100,7 @@ export default function TaxStatistics(props){
                 />
                 <Title text={"Tax Collected by District"} />
                 <EventTracker />
-                <Tooltip />
+                <Tooltip contentComponent={graphToolTip}/>
             </Chart>
         </>)
 
