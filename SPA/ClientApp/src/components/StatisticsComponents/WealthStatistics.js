@@ -142,8 +142,8 @@ function JurisdictionStatistics(props) {
                     <TableBody>
                         {stats.map(b => {
                             return (<TableRow>
-                                <TableCell width={'100px'}> <a href={b.imageURL === "" ? "/Flag.png" : b.imageURL}>
-                                    <img alt={'Flag'} src={b.imageURL === "" ? "/Flag.png" : b.imageURL} width={'100px'} /></a>
+                                <TableCell width={'100px'}> <a href={b.flag === "" ? "/Flag.png" : b.flag}>
+                                    <img alt={'Flag'} src={b.flag === "" ? "/Flag.png" : b.flag} width={'100px'} /></a>
                                 </TableCell>
                                 <TableCell>{b.name}</TableCell>
                                 <TableCell>{b.wealth.toLocaleString()}p</TableCell>

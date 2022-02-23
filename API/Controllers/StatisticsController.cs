@@ -62,12 +62,12 @@ namespace Igtampe.Neco.API.Controllers {
         [HttpGet("Jurisdictions")]
         public async Task<IActionResult> JurisdictionWealthReport() {
 
-            var Report = DB.Account.Where(A=>A.Jurisdiction!=null)
-                .GroupBy(A => new { A.Jurisdiction!.ID, A.Jurisdiction.Name, A.Jurisdiction.ImageURL })
-                .Select(T => new { T.Key.ID, T.Key.Name,T.Key.ImageURL, Wealth = T.Sum(A => A.Balance) })
+            var Report = (await DB.Account.Where(A=>A.Jurisdiction!=null).Include(A=>A.Jurisdiction).ThenInclude(A=>A!.ParentJurisdiction).ToListAsync())
+                .GroupBy(A => new { A.Jurisdiction!.ID, A.Jurisdiction.Name, A.Jurisdiction.Flag })
+                .Select(T => new { T.Key.ID, T.Key.Name,T.Key.Flag, Wealth = T.Sum(A => A.Balance) })
                 .OrderByDescending(A=>A.Wealth).ThenBy(A=>A.Name);
 
-            return Ok(await Report.ToListAsync());
+            return Ok(Report.ToList());
 
         }
 
@@ -101,7 +101,6 @@ namespace Igtampe.Neco.API.Controllers {
 
         //Total amount of monthly income generated
         /// <summary>Gets total income statistics for all types of income items in the neco system</summary>
-        /// <typeparam name="E"></typeparam>
         /// <returns></returns>
         [HttpGet("Income")]
         public async Task<IActionResult> Income() => await IncomeItemStatistics(DB.IncomeItem);
@@ -110,11 +109,10 @@ namespace Igtampe.Neco.API.Controllers {
 
             var Breakdown = (await BaseSet
                     .Where(T => T.Jurisdiction != null).Where(A => A.Approved)
-                    .Include(A => A.Jurisdiction)
-                    .ToListAsync()
-                    )
-                .GroupBy(T => new { T.Jurisdiction!.ID, T.Jurisdiction.Name, T.Jurisdiction.ImageURL })
-                .Select(T => new { T.Key.ID, T.Key.Name, T.Key.ImageURL, Count = T.Count(), Income = T.Sum(T => T.Income()) })
+                    .Include(A => A.Jurisdiction).ThenInclude(A => A!.ParentJurisdiction)
+                    .ToListAsync())
+                .GroupBy(T => new { T.Jurisdiction!.ID, T.Jurisdiction.Name, T.Jurisdiction.Flag })
+                .Select(T => new { T.Key.ID, T.Key.Name, T.Key.Flag, Count = T.Count(), Income = T.Sum(T => T.Income()) })
                 .OrderByDescending(A=>A.Income).ThenBy(A=>A.Name) //We'll order by income and not count
                 .ToList();
 

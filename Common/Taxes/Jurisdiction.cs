@@ -14,7 +14,12 @@ namespace Igtampe.Neco.Common.Taxes {
         /// <summary>Name of this jurisdiction</summary>
         public string Name { get; set; } = "";
 
-        /// <summary>Image URL for the Flag of this jurisdiction</summary>
+        /// <summary>Flag of this jurisdiction. If this jurisdiction has no flag, we return the parent jurisdiction's flag. 
+        /// If that jurisdiction has no flag or is not set, we return a blank string. </summary>
+        [NotMapped]
+        public string Flag => !string.IsNullOrWhiteSpace(ImageURL) ? ImageURL : ParentJurisdiction?.Flag ?? "";
+
+        /// <summary>Image URL for the Flag set of *this specific* jurisdiction</summary>
         public string ImageURL { get; set; } = "";
 
         /// <summary>Type of this jurisdiction</summary>

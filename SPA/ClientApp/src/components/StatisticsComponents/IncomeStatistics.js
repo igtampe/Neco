@@ -1,6 +1,5 @@
 //Here all the incomes including a big one del Income itself
 
-import { Card, Grid } from "@mui/material";
 import React, { useState } from "react";
 import CommonStatisticsDisplay, { GraphAndListStatisticsDisplay } from "./CommonStatisticsDisplay";
 import { EventTracker } from "@devexpress/dx-react-chart";
@@ -46,8 +45,8 @@ function IncomeStatisticsPane(url, title, horizontal, setOverall) {
             const listItem = (b) => {
                 return (
                     <TableRow>
-                        <TableCell width={'100px'}> <a href={b.imageURL === "" ? "/Flag.png" : b.imageURL}>
-                            <img alt={'Flag'} src={b.imageURL === "" ? "/Flag.png" : b.imageURL} width={'100px'} /></a>
+                        <TableCell width={'100px'}> <a href={b.flag === "" ? "/Flag.png" : b.flag}>
+                            <img alt={'Flag'} src={b.flag === "" ? "/Flag.png" : b.flag} width={'100px'} /></a>
                         </TableCell>
                         <TableCell>{b.name}</TableCell>
                         <TableCell>{b.count.toLocaleString()}</TableCell>

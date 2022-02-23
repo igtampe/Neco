@@ -545,7 +545,6 @@
         </member>
         <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.Income">
             <summary>Gets total income statistics for all types of income items in the neco system</summary>
-            <typeparam name="E"></typeparam>
             <returns></returns>
         </member>
         <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.Banks">
