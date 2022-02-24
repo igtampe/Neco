@@ -4,6 +4,7 @@ import JurisdictionDisplay from "./AdminComponents/JurisdictionComponents/Jurisd
 import BankDisplay from "./AdminComponents/BankComponents/BankDisplay";
 import UserDisplay from './AdminComponents/UserComponents/UserDisplay';
 import NTAForm from "./AdminComponents/NTAForm";
+import DaysForm from "./AdminComponents/DaysForm";
 
 //Maybe this should've  been a default component? strange....
 function TabPanel(props) {
@@ -19,7 +20,7 @@ function TabPanel(props) {
 function ClosetTabs(props) {
     return (
         <Tabs orientation={props.orientation} variant="scrollable" value={props.value} onChange={props.handleChange} sx={{ borderRight: 1, borderColor: 'divider' }}>
-            <Tab label={"Jurisdictions"} /> <Tab label={"Banks"} /> <Tab label={"Users"} /> <Tab label={"NTA"} />
+            <Tab label={"Jurisdictions"} /> <Tab label={"Banks"} /> <Tab label={"Users"} /> <Tab label={"NTA"} /> <Tab label={"Days"} />
         </Tabs>
     )
 }
@@ -47,6 +48,9 @@ export default function AdminComponent(props) {
                 </TabPanel>
                 <TabPanel value={value} index={3}>
                     <NTAForm {...props}/>
+                </TabPanel>
+                <TabPanel value={value} index={4}>
+                    <DaysForm {...props}/>
                 </TabPanel>
             </Box>
 
