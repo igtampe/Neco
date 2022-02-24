@@ -54,7 +54,13 @@ namespace Igtampe.Neco.API.Controllers {
         /// <returns></returns>
         //Total amount taken by tax (involves generating tax reports)
         [HttpGet("Tax")]
-        public async Task<IActionResult> JurisdictionsReport() => Ok(await TaxController.TaxDay(DB));
+        public async Task<IActionResult> TaxReport() => Ok(await TaxController.TaxDay(DB));
+
+        /// <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
+        /// <returns></returns>
+        //Total amount taken by tax (involves generating tax reports)
+        [HttpGet("Income/Accounts")]
+        public async Task<IActionResult> IncomeReport() => Ok(await IncomeController.IncomeDay(DB));
 
         /// <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
         /// <returns></returns>
@@ -109,7 +115,7 @@ namespace Igtampe.Neco.API.Controllers {
 
             var Breakdown = (await BaseSet
                     .Where(T => T.Jurisdiction != null).Where(A => A.Approved)
-                    .Include(A => A.Jurisdiction).ThenInclude(A => A!.ParentJurisdiction)
+                    .Include(A => A.Jurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction)
                     .ToListAsync())
                 .GroupBy(T => new { T.Jurisdiction!.ID, T.Jurisdiction.Name, T.Jurisdiction.Flag })
                 .Select(T => new { T.Key.ID, T.Key.Name, T.Key.Flag, Count = T.Count(), Income = T.Sum(T => T.Income()) })
