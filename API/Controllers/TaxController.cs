@@ -323,7 +323,7 @@ namespace Igtampe.Neco.API.Controllers {
                     ? Unauthorized(ErrorResult.ForbiddenRoles("Admin"))
                     : DateTime.UtcNow.Day != 1 && Force != true
                         ? BadRequest("It is not currently tax day! If you wish to run tax anyways, add Force=true")
-                        : Ok(TaxDay(DB, false));
+                        : Ok(await TaxDay(DB, false));
         }
 
         #region Helpers
@@ -408,10 +408,17 @@ namespace Igtampe.Neco.API.Controllers {
                 Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Sending money to jurisdictions");
 
                 //For each jurisdiction that needs to be paid, pay it
-                foreach (Jurisdiction J in PaymentDictionary.Keys) {
+                foreach (Jurisdiction Jp in PaymentDictionary.Keys) {
                     
                     //We can skip accounts that will get nada
-                    if (PaymentDictionary[J] == 0) { continue; }
+                    if (PaymentDictionary[Jp] == 0) { continue; }
+
+                    //Just get the account again Something's not right here
+                    Jurisdiction? J = await DB.Jurisdiction
+                        .Include(A=>A.TiedAccount).ThenInclude(A=>A!.Owners)
+                        .FirstOrDefaultAsync(a=>a.ID==Jp.ID);
+
+                    if (J is null) { throw new InvalidOperationException("this really isn't supposed to be a possibility"); }
 
                     if (J.TiedAccount == null) {
                         Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Jurisdiction {J.Name} has no tied account. We will be skipping it");
@@ -469,13 +476,11 @@ namespace Igtampe.Neco.API.Controllers {
 
         internal static async Task<List<Account>> GetAccountsForTaxReport(NecoContext DB, string AccountID = "") {
             var Set = DB.Account //This check should cover the null dereference
-                .Include(A => A.Jurisdiction).ThenInclude(A => A!.TiedAccount).ThenInclude(A => A!.Owners) //Do self joins require incldues?
-                .Include(A => A.Jurisdiction).ThenInclude(D => D!.ParentJurisdiction).ThenInclude(A => A!.TiedAccount).ThenInclude(A => A!.Owners)
-                .Include(A => A.Jurisdiction).ThenInclude(D => D!.ChildJurisdictions).ThenInclude(A => A!.TiedAccount).ThenInclude(A => A!.Owners)
+                .Include(A => A.Jurisdiction).ThenInclude(D => D!.ParentJurisdiction)
                 .Include(A => A.Jurisdiction).ThenInclude(D => D!.Brackets)
                 .Include(A => A.IncomeItems).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D!.ParentJurisdiction).ThenInclude(D => D!.Brackets)
                 .Include(A => A.IncomeItems).ThenInclude(A => A.Jurisdiction).ThenInclude(D => D!.Brackets)
-                .Where(A => A.Jurisdiction != null && A.IncomeType!=IncomeType.GOVERNMENT && A.IncomeType!=IncomeType.CHARITY);
+                .Where(A => A.Jurisdiction != null && !A.Closed && A.IncomeType!=IncomeType.GOVERNMENT && A.IncomeType!=IncomeType.CHARITY);
 
             if (!string.IsNullOrWhiteSpace(AccountID)) { Set=Set.Where(A=>A.ID==AccountID); }
             return await Set.ToListAsync();
