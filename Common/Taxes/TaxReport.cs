@@ -37,7 +37,7 @@ namespace Igtampe.Neco.Common.Taxes {
         public string CSVReport { get; set; } = "";
 
         /// <summary>Date this report was generated</summary>
-        public DateTime DateGenerated { get; set; } = DateTime.Now;
+        public DateTime DateGenerated { get; set; } = DateTime.UtcNow;
 
         /// <summary>Indicates whetehr or not this tax report is empty</summary>
         [JsonIgnore]
@@ -53,7 +53,7 @@ namespace Igtampe.Neco.Common.Taxes {
         public readonly static TaxReport Empty = new() {
             Account = null,
             CSVReport = "",
-            DateGenerated = DateTime.Now,
+            DateGenerated = DateTime.UtcNow,
             ExtraIncome = 0,
             ExtraIncomeTaxable = 0,
             StaticIncome = 0,
@@ -74,13 +74,13 @@ namespace Igtampe.Neco.Common.Taxes {
             if (Transactions.Count == 0 && IncomeItems.Count == 0) { return Empty; }
 
             TaxReport TR = new() {
-                Account= Account,  DateGenerated = DateTime.Now,
+                Account= Account,  DateGenerated = DateTime.UtcNow,
                 StaticIncome = 0, ExtraIncome = 0, ExtraIncomeTaxable = 0, GrandTotalTax = 0,
                 TextReport = "", CSVReport = ""
             };
 
-            TR.TextReport = $"EZTax Tax Report\nPrepared on {DateTime.Now} for {Account.Name}\n\n";
-            TR.CSVReport = $"EZTax Tax Report\nPrepared on {DateTime.Now} for {Account.Name}\n\n";
+            TR.TextReport = $"EZTax Tax Report\nPrepared on {DateTime.UtcNow} for {Account.Name}\n\n";
+            TR.CSVReport = $"EZTax Tax Report\nPrepared on {DateTime.UtcNow} for {Account.Name}\n\n";
 
             TR.TextReport += $"{SectionLine}Transactions this month\n{SectionLine}";
             TR.CSVReport += $"ID,Name,Amount,FromBank,ToBank,Type\n";
