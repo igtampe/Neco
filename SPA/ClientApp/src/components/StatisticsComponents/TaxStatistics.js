@@ -8,10 +8,16 @@ import { Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead
 
 export default function TaxStatistics(props){
 
-    const [stats, setStats] = useState(undefined)
+    const [stats, setStats] = useState(props.stats)
     const [loading, setLoading] = useState(false)
 
     if (!stats && !loading) {
+
+        if(props.stats){
+            setStats(props.stats)
+            return;
+        }
+
         setLoading(true)
         fetch('/API/Statistics/Tax')
             .then(r => r.json()).then(data => {
