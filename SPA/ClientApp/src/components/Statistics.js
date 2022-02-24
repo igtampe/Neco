@@ -4,6 +4,7 @@ import { Divider } from "@mui/material";
 import TransactionStatistics from "./StatisticsComponents/TransactionStatistics";
 import WealthStatistics from "./StatisticsComponents/WealthStatistics";
 import TaxStatistics from "./StatisticsComponents/TaxStatistics";
+import AccountIncomeStatistics from "./StatisticsComponents/AccountIncomeStatistics";
 
 export default function StatisticsComponent(props) {
     return (
@@ -13,6 +14,8 @@ export default function StatisticsComponent(props) {
             <WealthStatistics {...props}/>
             <Divider/>
             <IncomeStatistics {...props}/>
+            <Divider/>
+            <AccountIncomeStatistics {...props}/>
             <Divider/>
             <TaxStatistics {...props}/>
         </React.Fragment>
