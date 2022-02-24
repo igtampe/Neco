@@ -232,7 +232,7 @@
             <param name="AccountID"></param>
             <returns></returns>
         </member>
-        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.IncomeDay(System.Nullable{System.Guid},System.Nullable{System.Boolean})">
+        <member name="M:Igtampe.Neco.API.Controllers.IncomeController.ExecuteIncomeDay(System.Nullable{System.Guid},System.Nullable{System.Boolean})">
             <summary>Executes an Income Day event</summary>
             <param name="SessionID"></param>
             <param name="Force"></param>
@@ -515,7 +515,11 @@
             <summary>Gets global overall statistics on transactions</summary>
             <returns></returns>
         </member>
-        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.JurisdictionsReport">
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.TaxReport">
+            <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.StatisticsController.IncomeReport">
             <summary>Runs a Model Tax day to see how much each jurisdiction is projected to make</summary>
             <returns></returns>
         </member>
