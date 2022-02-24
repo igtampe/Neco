@@ -44,6 +44,8 @@ export default function PastTaxReportsForm(props) {
 
     }
 
+    if(!props.open && reports){ setReports(false) }
+
     const handleClosing = () => { props.setOpen(false) }
 
     return (
