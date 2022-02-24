@@ -33,6 +33,23 @@ function SummaryToChartData(summary) {
 
 function IncomeSumamryCharts(props) {
 
+    const GraphToolTip=(info)=>{
+        const b = props.data[info.targetItem.point];
+        return (<>
+            <table>
+                <tr>
+                    <td style={{textAlign:'center'}}>{b.type}</td>
+                </tr>
+                <tr>
+                    <td> {Number(b.count).toLocaleString()} Item(s)</td>
+                </tr>
+                <tr>
+                    <td>{Number(b.income).toLocaleString()}p/month</td>
+                </tr>
+            </table>
+            </>);
+    }
+
     return (
         <Card sx={{ minWidth: '100%' }}>
             <CardContent>
@@ -53,7 +70,7 @@ function IncomeSumamryCharts(props) {
                         argumentField="type"
                     />
                     <EventTracker />
-                    <Tooltip />
+                    <Tooltip contentComponent={GraphToolTip}/>
                 </Chart>
             </CardContent>
         </Card>
