@@ -81,9 +81,10 @@ namespace Igtampe.Neco.API.Controllers {
 
             public static async Task<IncomeItemSummary> CreateSummary<E>(IQueryable<E> Set, string Account) where E : IncomeItem{
                 //what a disaster
-                List<E> TheList = await Set.Where(A=>A.Account != null && A.Account.ID==Account).ToListAsync();
+                List<E> TheList = await Set.Include(A => A.Jurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction)
+                    .Where(A=>A.Account != null && A.Account.ID==Account && A.Approved).ToListAsync();
                 return new() {
-                    TotalIncome = TheList.Sum(A => A.Income()),
+                    TotalIncome = TheList.Sum(A => A.CalculatedIncome),
                     Count = TheList.Count,
                 };
             }
@@ -118,7 +119,7 @@ namespace Igtampe.Neco.API.Controllers {
             //var Airline     = await IncomeItemSummary.CreateSummary(DB.Airline, AccountID);
             var Apartment   = await IncomeItemSummary.CreateSummary(DB.Apartment, AccountID);
             var Business    = await IncomeItemSummary.CreateSummary(DB.Business, AccountID);
-            var Corporation = await IncomeItemSummary.CreateSummary(DB.Corporation.Include(A=>A.Jurisdiction), AccountID);
+            var Corporation = await IncomeItemSummary.CreateSummary(DB.Corporation, AccountID);
             var Hotel       = await IncomeItemSummary.CreateSummary(DB.Hotel, AccountID);
             var Total = IncomeItemSummary.CreateTotalSummary(Apartment, Business, Corporation, Hotel);
             
@@ -135,26 +136,57 @@ namespace Igtampe.Neco.API.Controllers {
         /// <param name="Force"></param>
         /// <returns></returns> 
         [HttpPost("IncomeDay")] //There's no real reason to make this a post, but I just want this to not be accessible via a standard web-browser
-        public async Task<IActionResult> IncomeDay([FromHeader] Guid? SessionID, [FromQuery] bool? Force) {
+        public async Task<IActionResult> ExecuteIncomeDay([FromHeader] Guid? SessionID, [FromQuery] bool? Force) {
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID ?? Guid.Empty));
-            if (S is null) { return Unauthorized("Invalid Session"); }
+            return S is null
+                ? Unauthorized("Invalid Session")
+                : !await IsAdmin(S.UserID)
+                    ? Unauthorized(ErrorResult.ForbiddenRoles("Admin"))
+                    : DateTime.UtcNow.Day != 1 && Force != true
+                        ? BadRequest("It is not currently income day! If you wish to run income anyways, add Force=true")
+                        : Ok(await IncomeDay(DB, false));
+        }
+        internal struct IncomeReportItem {
+            public string ID { get; set; }
+            public string Name { get; set; }
+            public long Income { get; set; }
+        }
 
-            if (!await IsAdmin(S.UserID)) { return Unauthorized(ErrorResult.ForbiddenRoles("Admin")); }
+        internal struct IncomeReport {
+            public List<IncomeReportItem> Breakdown { get; set; } = new();
+            public long TotalIncome => Breakdown.Sum(A => A.Income);
+        }
 
-            if (DateTime.UtcNow.Day != 1 && Force != true) { return BadRequest("It is not currently income day! If you wish to run income anyways, add Force=true"); }
+        [NonAction]
+        internal static async Task<IncomeReport> IncomeDay(NecoContext DB, bool Simulate = true) {
+
+            Console.WriteLine($"[Running {(Simulate ? "Model " : "")} Income Day]----------------------------------------------------------------------------------------------");
+            Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Getting all accounts");
 
             //Get *all* the accounts along with their income items
             List<Account> Accounts = await DB.Account
-                .Include(A => A.IncomeItems.Where(A=>A.Approved)).ThenInclude(I => I.Jurisdiction).ThenInclude(J=>J!.ParentJurisdiction)
-                .Include(A=>A.Owners).ToListAsync();
+                .Where(A=>!A.Closed)
+                .Include(A => A.IncomeItems.Where(A => A.Approved)).ThenInclude(I => I.Jurisdiction).ThenInclude(J => J!.ParentJurisdiction)
+                .Include(A => A.Owners).ToListAsync();
+
+            IncomeReport Report = new();
 
             foreach (Account A in Accounts) {
+
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] Processing account {A.Name} ({A.ID})");
 
                 //Get the total income
                 long TotalIncome = A.IncomeItems.Sum(I => I.CalculatedIncome);
 
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] TotalIncome is {TotalIncome:n0}p");
+                Report.Breakdown.Add(new() {ID=A.ID!, Name=A.Name, Income=TotalIncome });
+
+                if (Simulate) { continue; }
+
                 //Deposit it
                 A.Balance += TotalIncome; //Don't do a transaction. It'll be taxed twice.
+
+                Console.WriteLine($"[{DateTime.UtcNow:HH:mm:ss:FFFFFFF}] New Balance {A.Balance}");
 
                 //Send a notification
                 foreach (User Owner in A.Owners) {
@@ -172,10 +204,11 @@ namespace Igtampe.Neco.API.Controllers {
                 DB.Update(A);
             }
 
-            await DB.SaveChangesAsync();
-            return Ok();
-
+            if (!Simulate) { await DB.SaveChangesAsync(); }
+            Report.Breakdown = Report.Breakdown.OrderByDescending(A => A.Income).ToList();
+            return Report;
         }
+
         #endregion
 
         #region SDC
@@ -195,7 +228,7 @@ namespace Igtampe.Neco.API.Controllers {
 
             //Just get all of it. Please have the SDC not leave more than a ton of corporations
             List<IncomeItem> Corps = await DB.IncomeItem
-                .Include(C=>C.Jurisdiction)
+                .Include(C=>C.Jurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction)
                 .Include(C=>C.Account)
                 .Where(C => !C.Approved)
                 .OrderByDescending(C => C.DateUpdated).ToListAsync();
@@ -220,7 +253,8 @@ namespace Igtampe.Neco.API.Controllers {
 
             //We need to make a massive union of a couple of lists.
             IQueryable<IncomeItem> TheBigSet = DB.IncomeItem 
-                .Include(A => A.Account).Include(A => A.Jurisdiction)
+                .Include(A => A.Account)
+                .Include(A => A.Jurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction)
                 .Where(A=>A.Approved);
                 
             TheBigSet = TheBigSet.OrderByDescending(C => C.DateUpdated).Take(20);
@@ -525,7 +559,8 @@ namespace Igtampe.Neco.API.Controllers {
             bool isAccountOwner = (await DB.Account.Include(A => A.Owners).FirstOrDefaultAsync(A => A.ID == AccountID))?.Owners.Any(U => U.ID == S.UserID) ?? false;
             if (!isAccountOwner && ! await IsAdminOrSDC(S.UserID)) { return NotFound(ErrorResult.NotFound("Account was not found or is not owned by session owner", "AccountID")); }
 
-            BaseSet = BaseSet.Include(A=>A.Jurisdiction).Where(I => I.Account != null && I.Account.ID == AccountID);
+            BaseSet = BaseSet.Include(A=>A.Jurisdiction).ThenInclude(A=>A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction)
+                .Where(I => I.Account != null && I.Account.ID == AccountID);
             if (!string.IsNullOrWhiteSpace(Query)) { BaseSet = BaseSet.Where(I => I.Name.ToLower().Contains(Query.ToLower()) || I.Description.ToLower().Contains(Query.ToLower())); }
 
             BaseSet = Sort switch {
@@ -741,7 +776,8 @@ namespace Igtampe.Neco.API.Controllers {
 
             //Goddamnit this is probably the worst one
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-            BaseSet = BaseSet.Include(I => I.Jurisdiction).Where(A => A.Account != null).Include(A => A.Account).ThenInclude(A => A.Owners);
+            BaseSet = BaseSet.Include(I => I.Jurisdiction).ThenInclude(A => A.ParentJurisdiction).ThenInclude(A => A.ParentJurisdiction).ThenInclude(A => A.ParentJurisdiction)
+                .Where(A => A.Account != null).Include(A => A.Account).ThenInclude(A => A.Owners);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             E? Item = await BaseSet.FirstOrDefaultAsync(I => I.ID == ID);
