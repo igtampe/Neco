@@ -40,7 +40,12 @@ namespace Igtampe.Neco.Common.Income {
         /// <summary>Gets corporate income percentage of RLE</summary>
         /// <returns></returns>
         protected virtual double GetIncomePercentage() {
-            double? BasePercentage = (Jurisdiction?.GetTopParent().Population * 1.0) / US_POPULATION * 100;
+            Taxes.Jurisdiction? J = Jurisdiction?.GetTopParent();
+            if (J is null || J.Type != Taxes.JurisdictionType.COUNTRY) {
+                Console.WriteLine($"Could not find {Name}'s parent jurisdiction or the parent jurisdiction found was not a country: \"{J?.Name}\" was found");
+                //throw new InvalidOperationException("Cannot calculate base percentage. Jurisdiction was not found or was not a country.");
+            }
+            double? BasePercentage = (J?.GetTopParent().Population * 1.0) / US_POPULATION * 100;
             
             //Buildings and Mergers
             if (RLENetYearly > 10000000000) {
