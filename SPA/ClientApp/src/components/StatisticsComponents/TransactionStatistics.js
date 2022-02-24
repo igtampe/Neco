@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import CommonStatisticsDisplay from "./CommonStatisticsDisplay";
 import { Skeleton } from '@mui/material'
-import { Chart, BarSeries, Tooltip, Title, Legend, ArgumentAxis, ValueAxis } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, BarSeries, Tooltip, Title, ArgumentAxis, ValueAxis } from '@devexpress/dx-react-chart-material-ui';
 import { EventTracker, Stack } from "@devexpress/dx-react-chart";
 
 const Months = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
