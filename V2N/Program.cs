@@ -8,7 +8,7 @@ namespace Igtampe.Neco.V2N {
         [STAThread]
         static void Main() {
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            Application.Run(new MainForm() { Icon=Properties.Resources.V2N });
         }
     }
 }

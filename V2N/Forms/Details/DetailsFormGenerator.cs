@@ -25,7 +25,7 @@ namespace Igtampe.Neco.V2N.Forms.Details {
             };
 
             //Return the thing:
-            return new($"{VUser.Name} ({VUser.ID})", $"{(VUser.IsGov ? "Government Account" : VUser.IsCorp ? "Corporate Account" : "Personal Account")}", Details, DataSources);
+            return new($"{VUser.Name} ({VUser.ID})", $"{(VUser.IsGov ? "Government Account" : VUser.IsCorp ? "Corporate Account" : "Personal Account")}", Details, DataSources) { Icon = Properties.Resources.V2N };
 
         }
 
@@ -42,7 +42,7 @@ namespace Igtampe.Neco.V2N.Forms.Details {
             };
 
             //Return the thing:
-            return new($"{NUser.Name} ({NUser.ID})", $"{(NUser.IsGov ? "Government Account" : "Standard Account")}", Details, DataSources);
+            return new($"{NUser.Name} ({NUser.ID})", $"{(NUser.IsGov ? "Government Account" : "Standard Account")}", Details, DataSources) { Icon = Properties.Resources.V2N};
 
         }
     }

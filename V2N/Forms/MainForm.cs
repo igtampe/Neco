@@ -102,7 +102,7 @@ namespace Igtampe.Neco.V2N.Forms {
 
             Enabled = false;
 
-            ProgressForm LF = new();
+            ProgressForm LF = new() { Icon = Icon };
             LF.Show();
 
             if (!Directory.Exists(ViBEUsersFolderBox.Text)) { MessageBox.Show("ViBE Users folder was not found", "Not found", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
@@ -297,7 +297,7 @@ namespace Igtampe.Neco.V2N.Forms {
             List<Common.User> NewNecoUsers = new();
             
             Enabled = false;
-            ProgressForm LF = new();
+            ProgressForm LF = new() { Icon = Icon };
             LF.Show();
 
             try {
@@ -337,7 +337,7 @@ namespace Igtampe.Neco.V2N.Forms {
         private async void NecoUsersSaveBTN_Click(object sender, EventArgs e) {
 
             Enabled = false;
-            ProgressForm LF = new();
+            ProgressForm LF = new() { Icon = Icon };
             LF.Show();
 
             double PerUserIncrement = 1.0 / NecoUsers.Count;
