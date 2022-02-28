@@ -1,4 +1,7 @@
 #Add libgdiplus
 libgdiplus
 
+#Add NodeJS. Will this work?
+nodejs npm
+
 #I hope this works to fix landview
