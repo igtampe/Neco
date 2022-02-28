@@ -30,5 +30,10 @@ namespace Igtampe.Neco.Common.Taxes {
         /// <summary>Jurisdiction this bracket belongs to</summary>
         [JsonIgnore]
         public Jurisdiction? Jurisdiction { get; set; }
+
+        /// <summary>Returns a string representation of this bracket</summary>
+        /// <returns></returns>
+        public override string ToString() => $"Tax Bracket {Name} ({ID}): {Rate*100}% from {Start} to {End}";
+
     }
 }

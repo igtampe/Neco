@@ -62,6 +62,10 @@ namespace Igtampe.Neco.Common.Taxes {
             IsEmpty = true
         };
 
+        /// <summary>Returns a string representation of this tax report</summary>
+        /// <returns></returns>
+        public override string ToString() => $"Tax Report {ID} for {Account?.ID ?? "Unknown Account"} generated on {DateGenerated}";
+
         /// <summary>Generates a Tax Report</summary>
         /// <param name="Account">Account with all Income Items included, and Country and Jurisdiction</param>
         /// <param name="Transactions">Transactions for the tax period to calculate which should include Accounts and their owners</param>
