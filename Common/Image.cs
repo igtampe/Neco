@@ -14,5 +14,9 @@ namespace Igtampe.Neco.Common {
 
         /// <summary>MIME Type of this image (image/png)</summary>
         public string Type { get; set; } = "";
+
+        /// <summary>Gives basic information of this Image</summary>
+        /// <returns></returns>
+        public override string ToString() => $"Image \'{ID}\' ({Type})";
     }
 }

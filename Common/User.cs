@@ -47,5 +47,9 @@ namespace Igtampe.Neco.Common {
 
         /// <summary>Generator for a UserID </summary>
         public override IDGenerator<string> IDGenerator => Gen;
+
+        /// <summary>Returns a string representation of this user</summary>
+        /// <returns></returns>
+        public override string ToString() => $"User {Name} ({ID})";
     }
 }

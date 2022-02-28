@@ -47,5 +47,9 @@ namespace Igtampe.Neco.Common.Income {
 
         /// <summary>Total income of this item</summary>
         public virtual long Income() => MiscIncome;
+
+        /// <summary>Returns a string representation of this incomeitem</summary>
+        /// <returns></returns>
+        public override string ToString() => $"IncomeItem {Name} ({ID}) of type {Type}";
     }
 }

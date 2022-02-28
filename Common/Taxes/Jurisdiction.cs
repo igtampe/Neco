@@ -55,7 +55,7 @@ namespace Igtampe.Neco.Common.Taxes {
         /// <returns></returns>
         public Jurisdiction GetTopParent() {
             Jurisdiction? J = this;
-            
+
             do {
 
                 if (J.ParentJurisdiction is null) { return J; }
@@ -77,5 +77,10 @@ namespace Igtampe.Neco.Common.Taxes {
 
         /// <summary>Generator for Jurisdiction IDs</summary>
         public override IDGenerator<string> IDGenerator => Gen;
+
+        /// <summary>Returns a string representation of this Jurisdiction</summary>
+        /// <returns></returns>
+        public override string ToString() => $"Jurisdiction {Name} ({ID}) of type {Type}";
+
     }
 }

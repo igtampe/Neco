@@ -46,5 +46,9 @@ namespace Igtampe.Neco.Common.Banking {
         [JsonIgnore]
         public override IDGenerator<string> IDGenerator => gen;
 
+        /// <summary>Returns a string representation of this account</summary>
+        /// <returns></returns>
+        public override string ToString() => $"Account {Name} ({ID})";
+
     }
 }

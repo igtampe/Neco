@@ -14,5 +14,9 @@
         /// <summary>Generates a hashcode for this identifiable</summary>
         /// <returns>The hashcode of the ID</returns>
         public override int GetHashCode() => ID is null ? base.GetHashCode() : ID.GetHashCode();
+
+        /// <summary>Turns this identifiable into a string</summary>
+        /// <returns>The ID of the identifiable tostring</returns>
+        public override string ToString() => ID?.ToString() ?? "Unknown Identifiable";
     }
 }

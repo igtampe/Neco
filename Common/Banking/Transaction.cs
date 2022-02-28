@@ -21,5 +21,10 @@ namespace Igtampe.Neco.Common.Banking {
         /// <summary>Name of this transaction</summary>
         public string Name { get; set; } = "";
 
+
+        /// <summary>Returns a string representation of this transaction</summary>
+        /// <returns></returns>
+        public override string ToString() => $"Transaction {ID}: {Origin?.ID ?? "Unknown Account"}==[{Amount}]==>{Destination?.ID ?? "Unknown Account"} on {Date}";
+
     }
 }
