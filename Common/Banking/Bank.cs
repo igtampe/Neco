@@ -15,7 +15,6 @@ namespace Igtampe.Neco.Common.Banking {
         [JsonIgnore]
         public List<Account> Accounts { get; set; } = new();
 
-
         /// <summary>Returns a string representation of this Bank</summary>
         /// <returns></returns>
         public override string ToString() => $"Bank {Name} ({ID})";
