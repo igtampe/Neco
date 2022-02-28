@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Igtampe.Neco.V2N.Forms.Details {
+﻿namespace Igtampe.Neco.V2N.Forms.Details {
     public static class DetailsFormGenerator {
 
         public static DetailsForm GenerateDetailsForm(ViBE.User VUser) {
