@@ -29,7 +29,7 @@ const Hamburger = (props) => {
     return (
 
       <ListItem button key={props.text} onClick={() => props.PushTo(props.url)}>
-        <ListItemIcon><img src={"/images/clear/" + (props.DarkMode ? "white/" : "") + props.image} alt={props.imageAlt} width="30px" style={{ margin: "5px", marginLeft: "10px" }} /></ListItemIcon>
+        <ListItemIcon><img src={"/Images/Clear/" + (props.DarkMode ? "white/" : "") + props.image} alt={props.imageAlt} width="30px" style={{ margin: "5px", marginLeft: "10px" }} /></ListItemIcon>
         <ListItemText>{props.text}</ListItemText>
       </ListItem>
     );
@@ -318,7 +318,7 @@ export default function ButtonAppBar(props) {
         <Toolbar>
           <IconButton onClick={() => { setMenuOpen(true) }} style={{ marginRight: "15px" }}><MenuIcon /></IconButton>
           <a href="/">
-            <img src={props.DarkMode ? "necoborderlesswhite.png" : "necoborderlessblack.png"} alt="Neco logo" height="50" /></a>
+            <img src={props.DarkMode ? "NecoBorderlessWhite.png" : "NecoBorderlessBlack.png"} alt="Neco logo" height="50" /></a>
           <Typography variant="h6" className={classes.title} style={{ marginLeft: "10px", fontFamily: 'DM Serif Display' }}> </Typography>
           {
             props.Session
