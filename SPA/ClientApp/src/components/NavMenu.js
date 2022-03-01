@@ -49,7 +49,7 @@ const Hamburger = (props) => {
         <List>
           <ListItem key="Logo">
             <div style={{ textAlign: 'center', width: '100%' }}>
-              <img src={props.DarkMode ? "necoborderlesswhite.png" : "necoborderlessblack.png"} alt="Neco logo" height="50" />
+              <img src={props.DarkMode ? "NecoBorderlessWhite.png" : "NecoBorderlessBlack.png"} alt="Neco logo" height="50" />
             </div>
           </ListItem>
         </List>
@@ -60,7 +60,7 @@ const Hamburger = (props) => {
             ? <>
               <Divider />
               <List>
-                <GenerateListItem text='Accounts' url='/Accounts' image='bank.png' imageAlt='bank' DarkMode={props.DarkMode} PushTo={PushTo} />
+                <GenerateListItem text='Accounts' url='/Accounts' image='Bank.png' imageAlt='bank' DarkMode={props.DarkMode} PushTo={PushTo} />
                 <GenerateListItem text='Income' url='/Income' image='Income.png' imageAlt='Income' DarkMode={props.DarkMode} PushTo={PushTo} />
                 {
                   props.User && (props.User.isAdmin || props.UserisSdc)
@@ -85,7 +85,7 @@ const Hamburger = (props) => {
               </List>
             </>
             : <List>
-              <GenerateListItem text='Login' url='/Login' image='BlankPerson.png' imageAlt='Person' DarkMode={props.DarkMode} PushTo={PushTo} />
+              <GenerateListItem text='Login' url='/Login' image='Blankperson.png' imageAlt='Person' DarkMode={props.DarkMode} PushTo={PushTo} />
               <GenerateListItem text='Register' url='/Register' image='Add.png' imageAlt='Add' DarkMode={props.DarkMode} PushTo={PushTo} />
             </List>
         }
