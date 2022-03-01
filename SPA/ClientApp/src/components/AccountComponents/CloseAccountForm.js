@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, TextField } from "@mui/material";
 import AlertSnackbar from "../AlertSnackbar";
 import { GenerateDelete } from '../../RequestOptionGenerator'
+import { APIURL } from "../../App";
 
 export default function CloseAccountForm(props) {
 
