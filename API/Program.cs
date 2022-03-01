@@ -3,6 +3,7 @@ using Igtampe.Neco.Data;
 using Igtampe.Neco.Common;
 
 var builder = WebApplication.CreateBuilder(args);
+var CORS = "CORS";
 
 // Add services to the container.
 
@@ -29,6 +30,10 @@ builder.Services.AddSwaggerGen(options => {
 
 builder.Services.AddDbContext<NecoContext>();
 
+builder.Services.AddCors(options => {
+    options.AddPolicy(name: CORS, builder => builder.WithOrigins("https://necon.herokuapp.com/"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,6 +42,8 @@ if (app.Environment.IsDevelopment()) {
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/V2/swagger.json", "Neco API"));
     app.UseDeveloperExceptionPage();
 }
+
+app.UseCors(CORS);
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
