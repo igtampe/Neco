@@ -4,6 +4,7 @@ import { EventTracker } from "@devexpress/dx-react-chart";
 import { Chart, PieSeries, Title, Tooltip } from "@devexpress/dx-react-chart-material-ui";
 import { Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import React, { useState } from "react";
+import { APIURL } from "../../App";
 import CommonStatisticsDisplay, { GraphAndListStatisticsDisplay } from "./CommonStatisticsDisplay";
 
 function WealthOverallStatistics(props) {
@@ -129,7 +130,7 @@ function JurisdictionStatistics(props) {
 
         setLoading(true)
 
-        fetch('/API/Statistics/Jurisdictions')
+        fetch(APIURL + '/API/Statistics/Jurisdictions')
             .then(R => R.json())
             .then(data => {
 
@@ -234,7 +235,7 @@ export default function WealthStatistics(props) {
 
         setLoading(true)
 
-        fetch('/API/Statistics/Banks')
+        fetch(APIURL + '/API/Statistics/Banks')
             .then(R => R.json())
             .then(data => {
 

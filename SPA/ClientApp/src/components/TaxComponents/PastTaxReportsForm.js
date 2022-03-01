@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { GenerateGet } from '../../RequestOptionGenerator'
 import { FileOpen } from "@mui/icons-material";
 import TaxReportForm from "./TaxReportForm";
+import { APIURL } from "../../App";
 
 function TaxReportRow(props) {
 
@@ -31,7 +32,7 @@ export default function PastTaxReportsForm(props) {
     if (!reports && !loading && props.open) {
         setLoading(true)
 
-        var url = '/API/Taxes/Reports?ID=' + props.account.id
+        var url = APIURL + '/API/Taxes/Reports?ID=' + props.account.id
 
         fetch(url, GenerateGet(props.Session))
             .then(response => response.json())

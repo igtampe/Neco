@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { TextField, Button, Typography, CircularProgress, Container, Dialog, DialogTitle, DialogContent, DialogActions, Card, CardContent, Divider } from '@mui/material';
 import AlertSnackbar from "../AlertSnackbar";
+import { APIURL } from "../../App";
 
 // react.school/material-ui
 
@@ -103,7 +104,7 @@ export default function RegisterForm(props) {
         };
 
 
-        fetch("API/Users/register", requestOptions)
+        fetch(APIURL + "/API/Users/register", requestOptions)
             .then(response => {
                 SetLoginInProgress(false);
                 return response.json(); 

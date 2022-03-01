@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { TextField, Button, Typography, CircularProgress, Container } from '@mui/material';
 import Cookies from 'universal-cookie';
 import AlertSnackbar from "../AlertSnackbar";
+import { APIURL } from "../../App";
 
 // react.school/material-ui
 
@@ -35,7 +36,7 @@ export default function LoginForm(props) {
         };
 
 
-        fetch("API/Users", requestOptions)
+        fetch(APIURL + "/API/Users", requestOptions)
             .then(response => {
                 SetLoginInProgress(false);
                 return response.text(); 

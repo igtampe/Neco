@@ -4,6 +4,7 @@ import {
     InputLabel, MenuItem, Select, TextField
 } from "@mui/material";
 import AlertSnackbar from "../../AlertSnackbar";
+import { APIURL } from "../../../App";
 
 export function IncomeTypeSelect(props) {
     return (
@@ -76,10 +77,10 @@ export default function BracketEditor(props) {
 
         if (props.bracket) {
             requestOptions = { method: 'PUT' };
-            url = "API/Taxes/brackets/" + props.bracket.id
+            url = APIURL + "/API/Taxes/brackets/" + props.bracket.id
         } else {
             requestOptions = { method: 'POST', };
-            url = "API/Taxes/Brackets?Jurisdiction=" + props.JurisdictionID
+            url = APIURL + "/API/Taxes/Brackets?Jurisdiction=" + props.JurisdictionID
         }
 
         requestOptions = {

@@ -10,6 +10,7 @@ import NecoHeader from "./NecoHeader";
 import TaxReportForm from "./TaxComponents/TaxReportForm";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PastTaxReportsForm from "./TaxComponents/PastTaxReportsForm";
+import {APIURL} from '../App'
 
 function AccountSelectMenuItem(props) {
 
@@ -22,7 +23,7 @@ function AccountSelectMenuItem(props) {
                         <img src={Accountheaders[props.account.incomeType]} alt={'Account Type Header'} height='20px' /></td>
                 </tr>
                 <tr><td>{FormatAccountID(props.account.id)}</td></tr>
-            </table>
+            </table>10px
         </Box>
     )
 }
@@ -36,7 +37,7 @@ export function AccountSelect(props) {
     if (!accounts && !loading) {
         setLoading(true)
 
-        fetch('/API/Bank/Accounts', GenerateGet(props.Session))
+        fetch(APIURL + '/API/Bank/Accounts', GenerateGet(props.Session))
             .then(response => response.json())
             .then(data => {
                 if (data.error || data.errors) { return; }

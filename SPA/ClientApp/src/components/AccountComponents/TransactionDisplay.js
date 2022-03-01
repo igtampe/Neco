@@ -4,6 +4,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt'
 import { GenerateGet } from "../../RequestOptionGenerator";
 import { Search } from "@mui/icons-material";
 import ReceiptDialog from "./ReceiptDIalog";
+import { APIURL } from "../../App";
 
 function TransactionRow(props){
 
@@ -77,7 +78,7 @@ export default function TransactionDisplay(props){
         //Time to load
         setLoading(true)
 
-        var url = '/API/Bank/Accounts/' + props.accountID + '/Transactions'
+        var url = APIURL + '/API/Bank/Accounts/' + props.accountID + '/Transactions'
         
         if(props.mini){url=url+"?Take=3&Sort=0"} //this should be the ONLY prop in mini
         else { url=url+'?Type='+ transactionType +'&Sort=' + sort }

@@ -3,6 +3,7 @@ import { IconButton, Table, TableContainer, TableHead, TableRow, TableCell, Tabl
 import OpenIcon from '@mui/icons-material/FileOpen'
 import { GenerateGet} from "../../RequestOptionGenerator";
 import IncomeApprovalForm from "./IncomeItemApprovalForm";
+import { APIURL } from "../../App";
 
 export const ItemTypes = ['Apartment','Hotel','Business','Corporation','Airline']
 
@@ -42,7 +43,7 @@ export default function SDCFeedDisplay  (props) {
 
         setLoading(true)
 
-        fetch('/API/Income/SDC/'+ (props.approved ? "A" : "Una") +'pproved', GenerateGet(props.Session)) //This actually isn't authenticated pero sabes que zoop.
+        fetch(APIURL + '/API/Income/SDC/'+ (props.approved ? "A" : "Una") +'pproved', GenerateGet(props.Session)) //This actually isn't authenticated pero sabes que zoop.
             .then(response => { return (response.json()) })
             .then(data => {
 

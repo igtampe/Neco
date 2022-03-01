@@ -5,6 +5,7 @@ import { LibraryBooks } from "@mui/icons-material";
 import AlertSnackbar from "../AlertSnackbar";
 import { GenerateJSONPost } from "../../RequestOptionGenerator";
 import ReceiptDialog from "./ReceiptDIalog";
+import { APIURL } from "../../App";
 
 
 export default function SendMonet(props) {
@@ -70,7 +71,7 @@ export default function SendMonet(props) {
             return;
         }
 
-        fetch('API/Bank/Transaction', GenerateJSONPost(props.Session, request))
+        fetch(APIURL + '/API/Bank/Transaction', GenerateJSONPost(props.Session, request))
             .then(response => response.json())
             .then(data => {
                 if (data.error) {

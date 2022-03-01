@@ -9,6 +9,7 @@ import { CircularProgress } from "@mui/material";
 import { GenerateGet } from "../../../RequestOptionGenerator";
 import { JurisdictionTypeSelect } from "./JurisdictionDisplay";
 import BracketDisplay from "./BracketDisplay";
+import { APIURL } from "../../../App";
 
 //Requires jurisdictions, setJurisdictions, type, jurisdiction, setJurisdiction.
 export function JurisdictionSelect(props) {
@@ -21,7 +22,7 @@ export function JurisdictionSelect(props) {
 
         setLoading(true)
 
-        var URL = '/API/Taxes/Jurisdictions?Type=' + (props.type-1)
+        var URL = APIURL + '/API/Taxes/Jurisdictions?Type=' + (props.type-1)
 
         fetch(URL, GenerateGet(props.Session)) //This actually isn't authenticated pero sabes que zoop.
             .then(response => { return (response.json()) })
@@ -121,10 +122,10 @@ export default function JurisdictionEditor(props) {
 
         if (props.jurisdiction) {
             requestOptions = { method: 'PUT' };
-            url = "API/Taxes/Jurisdiction/" + props.jurisdiction.id
+            url = APIURL + "/API/Taxes/Jurisdiction/" + props.jurisdiction.id
         } else {
             requestOptions = { method: 'POST', };
-            url = "API/Taxes/Jurisdiction"
+            url = APIURL + "/API/Taxes/Jurisdiction"
         }
 
         requestOptions = {

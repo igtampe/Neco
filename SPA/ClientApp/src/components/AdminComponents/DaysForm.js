@@ -6,6 +6,7 @@ import {
 import { GenerateJSONPost } from "../../RequestOptionGenerator";
 import AccountIncomeStatistics from "../StatisticsComponents/AccountIncomeStatistics";
 import TaxStatistics from "../StatisticsComponents/TaxStatistics";
+import { APIURL } from "../../App";
 
 export default function DaysForm(props) {
 
@@ -27,7 +28,7 @@ export default function DaysForm(props) {
         setInProgress(true)
 
         //Send the request 
-        var url = `API/Income/IncomeDay?Force=${incomeForce}`;
+        var url = APIURL + `/API/Income/IncomeDay?Force=${incomeForce}`;
 
         fetch(url, GenerateJSONPost(props.Session))
             .then(response => { return response.json() })
@@ -52,7 +53,7 @@ export default function DaysForm(props) {
         setInProgress(true)
 
         //Send the request 
-        var url = `API/Taxes/TaxDay?Force=${taxForce}`;
+        var url = APIURL + `/API/Taxes/TaxDay?Force=${taxForce}`;
 
         fetch(url, GenerateJSONPost(props.Session))
             .then(response => { return response.json() })

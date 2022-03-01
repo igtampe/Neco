@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogContentText, Grid, Divider, CircularProgress, Card, CardContent, DialogTitle, Button } from "@mui/material";
 import React, { useState } from "react";
+import { APIURL } from "../../App";
 import { GenerateGet } from "../../RequestOptionGenerator";
 
 function ReportCard(props) {
@@ -32,7 +33,7 @@ export default function TaxReportForm(props) {
 
         setLoading(true)
 
-        fetch('/API/Taxes/GenerateReport?AccountID=' + props.account.id, GenerateGet(props.Session))
+        fetch(APIURL + '/API/Taxes/GenerateReport?AccountID=' + props.account.id, GenerateGet(props.Session))
             .then(response => response.json())
             .then(data => {
                 if (data.error || data.errors) { return; }

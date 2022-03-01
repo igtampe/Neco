@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogContentText, Grid, Alert } from "@mui/material";
 import React from "react";
+import { APIURL } from "../../App";
 
 
 export default function ReceiptDialog(props) {
@@ -24,7 +25,7 @@ export default function ReceiptDialog(props) {
 
                             }
                             <Grid item xs={12} textAlign={'center'}>
-                                <img src={'/API/Cert/Transaction/' + props.transactionID} alt={'Receipt for transaction ' + props.transactionID} />
+                                <img src={APIURL + '/API/Cert/Transaction/' + props.transactionID} alt={'Receipt for transaction ' + props.transactionID} />
                             </Grid>
                         </Grid>
                     </DialogContentText>

@@ -9,6 +9,7 @@ import TransactionsDialog from "./TransactionsDialog";
 import SendMonet from "./SendMonet";
 import OwnerForm from "./OwnerForm";
 import CloseAccountForm from "./CloseAccountForm";
+import { APIURL } from "../../App";
 
 export const Accountheaders = [
     "/AccountHeaders/Personal.png", "/AccountHeaders/Corp.png",
@@ -107,7 +108,7 @@ export default function AccountDisplay(props) {
     if (!props.accounts && props.setAccounts && !loading) {
         setLoading(true);
 
-        fetch('/API/Bank/Accounts', GenerateGet(props.Session))
+        fetch(APIURL + '/API/Bank/Accounts', GenerateGet(props.Session))
             .then(response => response.json())
             .then(data => {
                 if (data.errors || data.error) { return; }

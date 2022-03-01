@@ -1,6 +1,7 @@
 import { Search } from "@mui/icons-material";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TableContainer, Table, TableHead, TableRow, TableCell, Box, TextField, IconButton, Paper, TableBody, CircularProgress } from "@mui/material";
 import React, { useState } from "react";
+import { APIURL } from "../../App";
 import { GenerateGet } from '../../RequestOptionGenerator'
 import { IncomeTypes } from '../AdminComponents/JurisdictionComponents/BracketDisplay'
 import { IncomeTypeSelect } from "../AdminComponents/JurisdictionComponents/BracketEditor";
@@ -34,9 +35,9 @@ export default function AccountPicker(props) {
         setLoading(true)
 
         var url;
-        if (props.self) { url = '/API/Bank/Accounts' }
+        if (props.self) { url = APIURL + '/API/Bank/Accounts' }
         else {
-            url = '/API/Bank/Accounts/Dir?Type=' + type
+            url = APIURL + '/API/Bank/Accounts/Dir?Type=' + type
             if (query !== "") { url = url + '&Query=' + query }
         }
 

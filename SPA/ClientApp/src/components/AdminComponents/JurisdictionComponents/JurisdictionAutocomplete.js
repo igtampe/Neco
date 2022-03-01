@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Autocomplete,TextField } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { GenerateGet } from "../../../RequestOptionGenerator";
+import { APIURL } from "../../../App";
 
 export const JurisdictionTypes = [ "Countries", "States", "Counties", "Cities" ]
 
@@ -15,7 +16,7 @@ export function JurisdictionAutoComplete(props) {
     if (!jurisdictions && !loading) {
         setLoading(true)
 
-        var URL = '/API/Taxes/Jurisdictions'
+        var URL = APIURL + '/API/Taxes/Jurisdictions'
 
         fetch(URL, GenerateGet(props.Session)) //This actually isn't authenticated pero sabes que zoop.
             .then(response => { return (response.json()) })

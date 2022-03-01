@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 import Cookies from 'universal-cookie';
 import AlertSnackbar from "./AlertSnackbar";
+import { APIURL } from "../App";
 
 const cookies = new Cookies();
 
@@ -37,7 +38,7 @@ export default function PicturePicker(props) {
         body: event.target.result
       };
   
-      fetch("API/Images", requestOptions)
+      fetch(APIURL + "/API/Images", requestOptions)
         .then(response => {
           if (!response.ok) { console.error(response); }
           return response.text()
@@ -46,7 +47,7 @@ export default function PicturePicker(props) {
           console.log(data)
           if(data.includes('-')){
             //Assume we got an ID
-            props.setImageURL('API/Images/' + data.substring(1).substring(0,data.length-2))
+            props.setImageURL(APIURL + '/API/Images/' + data.substring(1).substring(0,data.length-2))
             handleClose();
             setResult({severity:'success', text:'Image uploaded!'})
             setSnackOpen(true)

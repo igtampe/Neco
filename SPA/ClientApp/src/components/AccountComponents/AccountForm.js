@@ -4,6 +4,7 @@ import { GenerateGet, GenerateJSONPost, GenerateJSONPut } from "../../RequestOpt
 import { IncomeTypeSelect } from "../AdminComponents/JurisdictionComponents/BracketEditor";
 import { JurisdictionAutoComplete } from "../AdminComponents/JurisdictionComponents/JurisdictionAutocomplete";
 import AlertSnackbar from "../AlertSnackbar";
+import {APIURL} from '../../App'
 
 export function BankSelect(props){
 
@@ -13,7 +14,7 @@ export function BankSelect(props){
     if (!banks && !loading) { 
         setLoading(true)
 
-        var URL = '/API/Bank'
+        var URL = APIURL + '/API/Bank'
 
         fetch(URL, GenerateGet(props.Session)) //This actually isn't authenticated pero sabes que zoop.
             .then(response => { return (response.json()) })
@@ -102,7 +103,7 @@ export default function AccountForm(props){
         setInProgress(true)
 
         var RequestOptions;
-        var URL = '/API/Bank/Accounts'
+        var URL = APIURL + '/API/Bank/Accounts'
         if(props.account){
             RequestOptions=GenerateJSONPut(props.Session,request)
             URL=URL+'/'+props.account.id

@@ -5,6 +5,7 @@ import DelIcon from '@mui/icons-material/Delete'
 import BracketEditor from "./BracketEditor";
 import DeleteConfirm from "../../Subcomponents/DeleteConfirm";
 import { GenerateDelete } from "../../../RequestOptionGenerator";
+import { APIURL } from "../../../App";
 
 export const IncomeTypes = [ "Personal","Corporate","Government", "Charity" ]
 
@@ -21,7 +22,7 @@ function BracketRow(props){
         setDeleting(true)
 
         //send the fetch y lo que sea
-        fetch('API/Taxes/Brackets/' + props.B.id,GenerateDelete(props.Session))
+        fetch(APIURL + '/API/Taxes/Brackets/' + props.B.id,GenerateDelete(props.Session))
         .then(r=>r.json())
         .then(data=>{
 
@@ -77,7 +78,7 @@ export default function BracketDisplay(props){
         //Time to load
         setLoading(true)
 
-        fetch('/API/Taxes/Jurisdiction/' + props.JurisdictionID + '/Brackets') //actually we can just fetch normally no?
+        fetch(APIURL + '/API/Taxes/Jurisdiction/' + props.JurisdictionID + '/Brackets') //actually we can just fetch normally no?
         .then(response=>response.json())
         .then(data=>{
 

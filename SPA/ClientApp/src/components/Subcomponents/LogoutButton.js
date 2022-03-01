@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import Cookies from 'universal-cookie';
 import {Logout} from '@mui/icons-material'
+import { APIURL } from "../../App";
 
 const cookies = new Cookies();
 
@@ -18,7 +19,7 @@ export default function LogoutButton() {
           body : "\"" + cookies.get('SessionID') + "\""
         };
     
-        fetch("API/Users/Out",requestOptions).then( response => {
+        fetch(APIURL + "/API/Users/Out",requestOptions).then( response => {
           cookies.remove("SessionID")
           history.go("/Login")
         })

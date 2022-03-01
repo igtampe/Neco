@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { GenerateGet } from "../../RequestOptionGenerator";
 import { Chart, PieSeries, Tooltip } from '@devexpress/dx-react-chart-material-ui';
 import { EventTracker } from "@devexpress/dx-react-chart";
+import { APIURL } from "../../App";
 
 function IncomeSummaryCard(props) {
 
@@ -89,7 +90,7 @@ export default function IncomeSummaryDisplay(props) {
     if (props.open && props.account && !props.summary && !loading) {
 
         setLoading(true)
-        fetch('/API/Income?AccountID=' + props.account.id, GenerateGet(props.Session))
+        fetch(APIURL + '/API/Income?AccountID=' + props.account.id, GenerateGet(props.Session))
             .then(response => response.json())
             .then(data => {
 

@@ -1,5 +1,6 @@
 import { CircularProgress, Divider, Grid, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Checkbox, FormControlLabel } from "@mui/material";
 import React, { useState } from "react";
+import { APIURL } from "../../App";
 import { GenerateGet, GenerateJSONPut } from "../../RequestOptionGenerator";
 import AlertSnackbar from "../AlertSnackbar";
 import { ItemTypes } from "./SDCFeedDisplay";
@@ -8,18 +9,18 @@ export default function IncomeApprovalForm(props) {
 
     //We have to do this again que lindo :dancing emoji:
     const DetailsBaseUrl = props.airline
-        ? "/API/Income/Airlines"
+        ? APIURL + "/API/Income/Airlines"
         : props.corporation
-            ? "/API/Income/Corporations"
+            ? APIURL + "/API/Income/Corporations"
             : props.business
-                ? "/API/Income/Businesses"
+                ? APIURL + "/API/Income/Businesses"
                 : props.hotel
-                    ? "/API/Income/Hotels"
+                    ? APIURL + "/API/Income/Hotels"
                     : props.apartment
-                        ? "/API/Income/Apartments"
+                        ? APIURL + "/API/Income/Apartments"
                         : undefined
 
-    const ApproveUrl = '/API/Income/SDC/'
+    const ApproveUrl = APIURL + '/API/Income/SDC/'
 
     //This massive item will be usable for *ANYTHING*
     const [item, setItem] = useState({

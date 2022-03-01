@@ -23,7 +23,7 @@ export default function CloseAccountForm(props) {
         setInProgress(true)
 
         //Add newOwner
-        fetch('/API/Bank/Accounts/' + props.accountID, GenerateDelete(props.Session))
+        fetch(APIURL + '/API/Bank/Accounts/' + props.accountID, GenerateDelete(props.Session))
             .then(response => response.json())
             .then(data => {
                 

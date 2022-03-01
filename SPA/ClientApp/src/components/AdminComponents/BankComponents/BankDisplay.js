@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 import BankEditor from "./BankEditor";
+import { APIURL } from "../../../App";
 
 function BankRow(props) {
 
@@ -51,7 +52,7 @@ export default function BankDisplay(props) {
 
         setLoading(true)
 
-        var URL = '/API/Bank'
+        var URL = APIURL + '/API/Bank'
         if (query !== "") { URL = URL + '?Query=' + query }
 
         fetch(URL).then(response =>response.json())

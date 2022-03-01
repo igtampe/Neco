@@ -3,6 +3,7 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Button, CircularProg
 import Cookies from 'universal-cookie';
 import AlertSnackbar from "../AlertSnackbar";
 import { GenerateJSONPut } from "../../RequestOptionGenerator";
+import { APIURL } from "../../App";
 
 const cookies = new Cookies();
 
@@ -48,7 +49,7 @@ export default function PasswordChangeButton(props) {
             "new": NewPassword
         })
         
-        fetch("API/Users", requestOptions)
+        fetch(APIURL + "/API/Users", requestOptions)
             .then(response => {
                 setInProgress(false);
                 return response.text()

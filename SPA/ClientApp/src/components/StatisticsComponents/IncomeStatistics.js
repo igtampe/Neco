@@ -5,6 +5,7 @@ import CommonStatisticsDisplay, { GraphAndListStatisticsDisplay } from "./Common
 import { EventTracker } from "@devexpress/dx-react-chart";
 import { Chart, PieSeries, Title, Tooltip } from "@devexpress/dx-react-chart-material-ui";
 import { Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { APIURL } from "../../App";
 
 const IncomeOverallPane = (props) => {
     return (<>
@@ -31,7 +32,7 @@ function IncomeStatisticsPane(url, title, horizontal, setOverall) {
 
             if (!stats && !loading) {
                 setLoading(true)
-                fetch('/API/Statistics/Income' + (url ? `/${url}` : ''))
+                fetch(APIURL + '/API/Statistics/Income' + (url ? `/${url}` : ''))
                     .then(r => r.json()).then(data => {
 
                         if (data.error || data.errors) { return; }

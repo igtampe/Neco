@@ -4,6 +4,7 @@ import {
 } from "@mui/material";
 import AlertSnackbar from "../../AlertSnackbar";
 import PicturePicker from "../../PicturePicker";
+import { APIURL } from "../../../App";
 
 export default function BankEditor(props) {
 
@@ -53,7 +54,7 @@ export default function BankEditor(props) {
             body: JSON.stringify({ name: name, imageURL: imageURL })        
         };
 
-        var url= "API/Bank/" + id;
+        var url= APIURL + "/API/Bank/" + id;
         
         console.log(requestOptions.body)
 

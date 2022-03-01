@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { GenerateJSONPut } from "../../../RequestOptionGenerator";
 import AlertSnackbar from "../../AlertSnackbar";
 import {Password} from '@mui/icons-material'
+import { APIURL } from "../../../App";
 
 function ResetPassForm(props){
 
@@ -26,7 +27,7 @@ function ResetPassForm(props){
         //Grab the ID and pin and create a tiny itty bitty object
         const requestOptions = GenerateJSONPut(props.Session,{ "new": newPass})
         
-        fetch('API/Users/' + props.user.id + '/reset', requestOptions)
+        fetch(APIURL + '/API/Users/' + props.user.id + '/reset', requestOptions)
             .then(response => {
                 return response.text()
             }).then(data => {
@@ -87,7 +88,7 @@ function UserRow(props) {
 
         CRR = { ...CRR, ...newvals };
 
-        fetch('/API/Users/' + user.id + '/Roles', GenerateJSONPut(props.Session, CRR))
+        fetch(APIURL + '/API/Users/' + user.id + '/Roles', GenerateJSONPut(props.Session, CRR))
             .then(response => response.json())
             .then(data => {
 
@@ -158,7 +159,7 @@ export default function BankDisplay(props) {
 
         setLoading(true)
 
-        var URL = '/API/Users/Dir'
+        var URL = APIURL + '/API/Users/Dir'
         if (query !== "") { URL = URL + '?Query=' + query }
 
         fetch(URL).then(response => response.json())

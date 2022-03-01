@@ -5,6 +5,7 @@ import CommonStatisticsDisplay from "./CommonStatisticsDisplay";
 import { EventTracker } from "@devexpress/dx-react-chart";
 import { Chart, PieSeries, Title, Tooltip } from "@devexpress/dx-react-chart-material-ui";
 import { Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { APIURL } from "../../App";
 
 export default function AccountIncomeStatistics(props){
 
@@ -19,7 +20,7 @@ export default function AccountIncomeStatistics(props){
         }
 
         setLoading(true)
-        fetch('/API/Statistics/Income/Accounts')
+        fetch(APIURL + '/API/Statistics/Income/Accounts')
             .then(r => r.json()).then(data => {
 
                 if (data.error || data.errors) { return; }

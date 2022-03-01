@@ -5,6 +5,7 @@ import CommonStatisticsDisplay from "./CommonStatisticsDisplay";
 import { Skeleton } from '@mui/material'
 import { Chart, BarSeries, Tooltip, Title, ArgumentAxis, ValueAxis } from '@devexpress/dx-react-chart-material-ui';
 import { EventTracker, Stack } from "@devexpress/dx-react-chart";
+import { APIURL } from "../../App";
 
 const Months = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
@@ -17,7 +18,7 @@ function TransactionOverallStatistics(props) {
 
         setLoading(true)
 
-        fetch('/API/Statistics/Transactions')
+        fetch(APIURL + '/API/Statistics/Transactions')
             .then(R => R.json())
             .then(data => {
 
@@ -132,7 +133,7 @@ export default function TransactionStatistics(props) {
 
         setLoading(true)
 
-        fetch('/API/Statistics/Transactions/Monthly')
+        fetch(APIURL + '/API/Statistics/Transactions/Monthly')
             .then(R => R.json())
             .then(data => {
 

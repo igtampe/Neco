@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 import { GenerateGet } from '../../../RequestOptionGenerator'
 import JurisdictionEditor from "./JurisdictionEditor";
+import { APIURL } from "../../../App";
 
 //Requires type, settype, setcollection
 export function JurisdictionTypeSelect(props) {
@@ -72,7 +73,7 @@ export default function JurisdictionDisplay(props) {
 
         setLoading(true)
 
-        var URL = '/API/Taxes/Jurisdictions?Type=' + type
+        var URL = APIURL + '/API/Taxes/Jurisdictions?Type=' + type
         if (query !== "") { URL = URL + '&Query=' + query }
 
         fetch(URL, GenerateGet(props.Session)) //This actually isn't authenticated pero sabes que zoop.

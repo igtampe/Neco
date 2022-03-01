@@ -3,6 +3,7 @@ import {
     Alert,
     Button, CircularProgress, Container, Grid, TextField, Typography
 } from "@mui/material";
+import { APIURL } from "../../App";
 
 export default function NTAForm(props) {
 
@@ -28,7 +29,7 @@ export default function NTAForm(props) {
 
         //Send the request 
         var requestOptions = { method: 'PUT', headers: { 'Content-Type': 'application/json', 'SessionID': props.Session } };
-        var url = "API/Bank/Accounts/" + id + '/NTA?Amount=' + amount;
+        var url = APIURL + "/API/Bank/Accounts/" + id + '/NTA?Amount=' + amount;
 
         fetch(url, requestOptions)
             .then(response => { return response.json() })

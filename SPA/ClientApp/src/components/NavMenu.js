@@ -13,6 +13,7 @@ import { GenerateDelete, GenerateGet, GenerateJSONPut } from "../RequestOptionGe
 import AlertSnackbar from "./AlertSnackbar";
 import { Delete } from "@mui/icons-material";
 import PicturePicker from "./PicturePicker";
+import { APIURL } from "../App";
 
 // react.school/material-ui
 
@@ -151,7 +152,7 @@ const UserButton = (props) => {
 
     setLoading(true)
 
-    fetch('API/Users/Notifs', GenerateGet(props.Session))
+    fetch(APIURL + '/API/Users/Notifs', GenerateGet(props.Session))
       .then(response => response.json())
       .then(data => {
         if (data.error) { } //do nothing
@@ -167,7 +168,7 @@ const UserButton = (props) => {
 
     setDeleting(true)
 
-    fetch('/API/Users/Notifs/' + notifid, GenerateDelete(props.Session))
+    fetch(APIURL + '/API/Users/Notifs/' + notifid, GenerateDelete(props.Session))
       .then(response => response.json())
       .then(data => {
         if (data.error) {
@@ -196,7 +197,7 @@ const UserButton = (props) => {
 
     //ok we have a new image
     
-    fetch('/API/Users/image',GenerateJSONPut(props.Session,e))
+    fetch(APIURL + '/API/Users/image',GenerateJSONPut(props.Session,e))
     .then(response=> response.ok)
     .then( data=> {
       console.log("ok it happeneds")

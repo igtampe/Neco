@@ -4,6 +4,7 @@ import { GenerateGet, GenerateJSONPost, GenerateDelete } from '../../RequestOpti
 import DeleteIcon from '@mui/icons-material/Clear'
 import AddIcon from '@mui/icons-material/Add'
 import AlertSnackbar from "../AlertSnackbar";
+import { APIURL } from "../../App";
 
 function OwnerRow(props) {
 
@@ -121,7 +122,7 @@ export default function OwnerForm(props) {
     const [result, setResult] = useState({ severity: "success", text: "idk" })
     const [SnackOpen, setSnackOpen] = useState(false);
 
-    const baseurl='/API/Bank/Accounts/'+props.account.id+'/Owners' ;
+    const baseurl=APIURL + '/API/Bank/Accounts/'+props.account.id+'/Owners' ;
 
     if (!owners && !loading) {
         setLoading(true)

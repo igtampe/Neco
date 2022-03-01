@@ -17,13 +17,11 @@ import StatisticsComponent from './components/Statistics';
 import SDCComponent from './components/SDC';
 import AdminComponent from './components/Admin';
 
-export const target = process.env.APIURL
-  ? process.env.APIURL
-  : process.env.ASPNETCORE_HTTPS_PORT
+export const APIURL = process.env.ASPNETCORE_HTTPS_PORT
     ? `https://localhost:${process.env.ASPNETCORE_HTTPS_PORT}`
     : process.env.ASPNETCORE_URLS
       ? process.env.ASPNETCORE_URLS.split(';')[0]
-      : 'http://localhost:39327';
+      : 'https://necoapi.herokuapp.com';
 
 const cookies = new Cookies();
 
@@ -115,7 +113,7 @@ export default function App() {
     //Well, time to get the user
 
     setLoading(true);
-    fetch("API/Users", GenerateGet(Session))
+    fetch(APIURL + "/API/Users", GenerateGet(Session))
       .then(response => {
         if (!response.ok) {
           setInvalidSession(true)
@@ -191,7 +189,7 @@ export default function App() {
               } </> : <Redirect to='/Login'/> }
         </Route>
         <Footer/>
-        <>Connected to {target}</>
+        <>Connected to {APIURL}</>
       </Layout>
     </ThemeProvider>
   );

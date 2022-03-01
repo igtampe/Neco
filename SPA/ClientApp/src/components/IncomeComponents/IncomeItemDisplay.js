@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { GenerateDelete, GenerateGet } from '../../RequestOptionGenerator'
 import DeleteConfirm from "../Subcomponents/DeleteConfirm";
 import IncomeForm from './IncomeItemForm'
+import { APIURL } from "../../App";
 
 //Requires type, settype, setcollection
 export function IncomeItemSortSelect(props) {
@@ -118,15 +119,15 @@ export default function IncomeItemDisplay(props) {
                         : undefined
 
     const baseUrl = props.airline
-        ? "/API/Income/Airlines"
+        ? APIURL + "/API/Income/Airlines"
         : props.corporation
-            ? "/API/Income/Corporations"
+            ? APIURL + "/API/Income/Corporations"
             : props.business
-                ? "/API/Income/Businesses"
+                ? APIURL + "/API/Income/Businesses"
                 : props.hotel
-                    ? "/API/Income/Hotels"
+                    ? APIURL + "/API/Income/Hotels"
                     : props.apartment
-                        ? "/API/Income/Apartments"
+                        ? APIURL + "/API/Income/Apartments"
                         : undefined
 
 
