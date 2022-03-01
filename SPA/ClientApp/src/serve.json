@@ -1,0 +1,6 @@
+{
+    "redirects": [
+      { "source": "/API", "destination": "http://necoapi.herokuapp.com/" }
+    ]
+  }
+  
