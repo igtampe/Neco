@@ -78,8 +78,6 @@
     ]
   },
   "proxy": {
-    "/api": {
-      "target": "https://necoapi.herokuapp.com/"
-    }
+    "/api": { "target": "https://necoapi.herokuapp.com/" }
   }
 }
