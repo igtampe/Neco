@@ -17,6 +17,14 @@ import StatisticsComponent from './components/Statistics';
 import SDCComponent from './components/SDC';
 import AdminComponent from './components/Admin';
 
+const target = env.APIURL
+  ? env.APIURL
+  : env.ASPNETCORE_HTTPS_PORT
+    ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}`
+    : env.ASPNETCORE_URLS
+      ? env.ASPNETCORE_URLS.split(';')[0]
+      : 'http://localhost:39327';
+
 const cookies = new Cookies();
 
 const lightTheme = createTheme({
@@ -183,6 +191,7 @@ export default function App() {
               } </> : <Redirect to='/Login'/> }
         </Route>
         <Footer/>
+        <>Connected to {target}</>
       </Layout>
     </ThemeProvider>
   );

@@ -53,7 +53,7 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "start": "cd build && serve",
+    "start": "serve -s build",
     "build": "rimraf ./build && react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
