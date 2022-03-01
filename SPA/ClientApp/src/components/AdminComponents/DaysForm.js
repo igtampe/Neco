@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import {
     Alert,
-    Button, Checkbox, CircularProgress, Container, FormControlLabel, Grid, LinearProgress, TextField, Typography
+    Button, Checkbox, Container, FormControlLabel, Grid, LinearProgress, Typography
 } from "@mui/material";
 import { GenerateJSONPost } from "../../RequestOptionGenerator";
 import AccountIncomeStatistics from "../StatisticsComponents/AccountIncomeStatistics";
 import TaxStatistics from "../StatisticsComponents/TaxStatistics";
 
 export default function DaysForm(props) {
-
-    const [id, setID] = useState("")
-    const [amount, setAmount] = useState(0);
 
     const [incomeForce, setIncomeForce] = useState(false)
     const [taxForce, setTaxForce] = useState(false)
