@@ -31,7 +31,12 @@ builder.Services.AddSwaggerGen(options => {
 builder.Services.AddDbContext<NecoContext>();
 
 builder.Services.AddCors(options => {
-    options.AddPolicy(name: CORS, builder => builder.WithOrigins("https://necon.herokuapp.com/"));
+    options.AddPolicy(name: CORS,
+    builder => {
+        builder.AllowAnyHeader();
+        builder.AllowAnyMethod();
+        builder.AllowAnyOrigin();
+    });
 });
 
 var app = builder.Build();
