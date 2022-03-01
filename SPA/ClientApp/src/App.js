@@ -189,7 +189,6 @@ export default function App() {
               } </> : <Redirect to='/Login'/> }
         </Route>
         <Footer/>
-        <>Connected to {APIURL}</>
       </Layout>
     </ThemeProvider>
   );
