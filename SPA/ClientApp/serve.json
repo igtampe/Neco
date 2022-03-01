@@ -1,6 +1,12 @@
 {
   "rewrites": [
-    { "source": "API/**", "destination": "http://necoapi.herokuapp.com/" }
+    {
+      "source": "/API/:path*",
+      "destination": "https://necoapi.herokuapp.com/API/:path*"
+    },
+    {
+      "source": "/API/:path*/",
+      "destination": "https://necoapi.herokuapp.com/API/:path*/"
+    }
   ]
 }
-  
