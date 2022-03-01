@@ -17,12 +17,12 @@ import StatisticsComponent from './components/Statistics';
 import SDCComponent from './components/SDC';
 import AdminComponent from './components/Admin';
 
-const target = env.APIURL
-  ? env.APIURL
-  : env.ASPNETCORE_HTTPS_PORT
-    ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}`
-    : env.ASPNETCORE_URLS
-      ? env.ASPNETCORE_URLS.split(';')[0]
+export const target = process.env.APIURL
+  ? process.env.APIURL
+  : process.env.ASPNETCORE_HTTPS_PORT
+    ? `https://localhost:${process.env.ASPNETCORE_HTTPS_PORT}`
+    : process.env.ASPNETCORE_URLS
+      ? process.env.ASPNETCORE_URLS.split(';')[0]
       : 'http://localhost:39327';
 
 const cookies = new Cookies();
