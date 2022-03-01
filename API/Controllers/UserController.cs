@@ -114,11 +114,14 @@ namespace Igtampe.Neco.API.Controllers {
                 return Unauthorized(ErrorResult.ForbiddenRoles("Admin"));
             }
 
-            if ((await DB.User.CountAsync(U => U.IsAdmin)) == 1) { return BadRequest(ErrorResult.BadRequest("Cannot remove only admin"));}
             if (S.UserID == ID && !Request.IsAdmin) { return BadRequest(ErrorResult.BadRequest("Cannot un-admin yourself!")); }
 
             User? U = await DB.User.FirstOrDefaultAsync(U => U.ID == ID);
             if (U is null) { return NotFound("User was not found"); }
+
+            //If the user is an admin, and is requested not to be an admin, and is the ONE remaining admin in the entire server
+            if (U.IsAdmin && !Request.IsAdmin && 
+                (await DB.User.CountAsync(U => U.IsAdmin)) == 1) { return BadRequest(ErrorResult.BadRequest("Cannot remove only admin")); } //Don't
 
             U.IsAdmin = Request.IsAdmin;
             U.IsUploader = Request.IsUploader;
