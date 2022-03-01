@@ -58,7 +58,7 @@
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/",
-    "heroku-postbuild": "cp serve.json build/ && npm run build"
+    "heroku-postbuild": "npm run build && cp serve.json build/"
   },
   "eslintConfig": {
     "extends": [
