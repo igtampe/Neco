@@ -1,6 +1,6 @@
 {
-    "redirects": [
-      { "source": "/API", "destination": "http://necoapi.herokuapp.com/" }
-    ]
-  }
+  "rewrites": [
+    { "source": "API/**", "destination": "http://necoapi.herokuapp.com/" }
+  ]
+}
   
