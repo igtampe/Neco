@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Neco.API</name>
+        <name>API</name>
     </assembly>
     <members>
         <member name="T:Igtampe.Neco.API.Controllers.TransactionType">
