@@ -349,13 +349,18 @@ namespace Igtampe.Neco.V2N.Forms {
 
                     LF.SetPercentage(Progress);
                     Progress += PerUserIncrement;
-                    LF.UpdateStatus($"Verifying and preparing to save {User.ID}");
+                    LF.UpdateStatus($"Verifying and preparing to save {User.ID}");                    
+
+                    
 
                     //Set proper IDs for the accounts
                     for (int i = 0; i < User.Accounts.Count; i++) {
-                        while (await DB!.Account.AnyAsync(A => A.ID == User.Accounts[i].ID)) { 
-                            User.Accounts[i].ID = User.Accounts[i].IDGenerator.Generate(); 
-                        }
+
+                        var X = DB!.Attach(User.Accounts[i].Bank!);
+                        DB!.Attach(User.Accounts[i].Jurisdiction!);
+
+                        //I'm guessing something becomes delinked when we do things so... what?
+                        while (await DB!.Account.AnyAsync(A => A.ID == User.Accounts[i].ID)) { User.Accounts[i].ID = User.Accounts[i].IDGenerator.Generate(); }
                     }
 
                     Common.User? Existing = await DB!.User.FirstOrDefaultAsync(A => A.ID == User.ID);
@@ -372,11 +377,12 @@ namespace Igtampe.Neco.V2N.Forms {
 
                 int Result = 0;
 
-                if (MessageBox.Show($"Changes are ready to proceed. Do it?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
-                    DB!.AddRange(NecoUsers);
-                    Result = await DB!.SaveChangesAsync();
-                    MessageBox.Show($"{Result} Change(s) executed. You can now close the V2N", "Cool beans", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                LF.SetPercentage(-1);
+                LF.UpdateStatus("Saving to the DB");
+
+                DB!.AddRange(NecoUsers);
+                Result = await DB!.SaveChangesAsync();
+                MessageBox.Show($"{Result} Change(s) executed. You can now close the V2N", "Cool beans", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch (Exception E) { new ExceptionForm(E).ShowDialog(); }
 
             LF.Close();
