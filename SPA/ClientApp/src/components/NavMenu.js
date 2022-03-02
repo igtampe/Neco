@@ -222,7 +222,7 @@ const UserButton = (props) => {
     <div>
       <Button onClick={handleClick} style={{ textTransform: 'none' }}>
         <Badge badgeContent={notifs ? notifs.length : 0} color="secondary">
-          <img src={props.User.imageURL === "" ? "/images/blankperson.png" : props.User.imageURL} alt="Profile" width="30px" style={{ margin: "5px", marginLeft: "10px" }} />
+          <img src={props.User.imageURL === "" ? "/Images/Blankperson.png" : props.User.imageURL} alt="Profile" width="30px" style={{ margin: "5px", marginLeft: "10px" }} />
         </Badge>
 
       </Button>
@@ -291,7 +291,7 @@ const UserButton = (props) => {
 
       <AlertSnackbar open={snackOpen} setOpen={setSnackOpen} result={result} />
 
-      <PicturePicker open={pickerOpen} setOpen={setPickerOpen} imageURL={props.User.imageUrl} setImageURL={setImageURL} defaultImage={"/images/Blankperson.png"}/>
+      <PicturePicker open={pickerOpen} setOpen={setPickerOpen} imageURL={props.User.imageUrl} setImageURL={setImageURL} defaultImage={"/Images/Blankperson.png"}/>
 
     </div>
   );

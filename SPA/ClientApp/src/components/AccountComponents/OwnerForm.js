@@ -41,7 +41,7 @@ function OwnerRow(props) {
 
     return (<>
         <TableRow>
-            <TableCell width={'50px'}><img src={props.O.imageURL === "" ? "/images/blankPerson.png": props.O.imageURL} alt={'PFP'} height={'50px'}/></TableCell>
+            <TableCell width={'50px'}><img src={props.O.imageURL === "" ? "/Images/Blankperson.png": props.O.imageURL} alt={'PFP'} height={'50px'}/></TableCell>
             <TableCell width={'120px'}>{props.O.id}</TableCell>
             <TableCell>{props.O.name}</TableCell>
             <TableCell width={'70px'}> 
