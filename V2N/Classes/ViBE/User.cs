@@ -29,7 +29,7 @@ namespace Igtampe.ViBE {
         /// <summary>Checks if this user has any accounts. Checks returns true if at least one of the balances is not null </summary>
         public bool HasAccounts => !(UMSNB is null && GBANK is null && RIVER is null);
 
-        public long TotalWealth => UMSNB ?? 0 + GBANK ?? 0 + RIVER ?? 0;
+        public long TotalWealth => ((UMSNB ?? 0) + (GBANK ?? 0) + (RIVER ?? 0));
 
         /// <summary>List of <see cref="IncomeItem"/>s associated to this User</summary>
         public List<IncomeItem> IncomeItems { get; set; } = new();
