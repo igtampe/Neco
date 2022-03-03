@@ -45,24 +45,24 @@ namespace Igtampe.Neco.Common.Income {
                 Console.WriteLine($"Could not find {Name}'s parent jurisdiction or the parent jurisdiction found was not a country: \"{J?.Name}\" was found");
                 //throw new InvalidOperationException("Cannot calculate base percentage. Jurisdiction was not found or was not a country.");
             }
-            double? BasePercentage = (J?.GetTopParent().Population * 1.0) / US_POPULATION * 100;
+            double? BasePercentage = (J?.GetTopParent().Population * 1.0) / US_POPULATION * 1000;
             
             //Buildings and Mergers
             if (RLENetYearly > 10000000000) {
-                BasePercentage += .0005 * Buildings;
-                BasePercentage += .001 * Mergers;
+                BasePercentage += .005 * Buildings;
+                BasePercentage += .01 * Mergers;
             } else if (RLENetYearly > 3000000000) { 
-                BasePercentage += .001 * Buildings;
-                BasePercentage += .0015 * Mergers;
+                BasePercentage += .01 * Buildings;
+                BasePercentage += .015 * Mergers;
             } else { 
-                BasePercentage += .0015 * Buildings;
-                BasePercentage += .002 * Mergers;
+                BasePercentage += .015 * Buildings;
+                BasePercentage += .02 * Mergers;
             }
 
             //Other boosters
-            if (MetroAds) { BasePercentage += .001; }
-            if(AirportAds) { BasePercentage += .003; }
-            if (International) { BasePercentage += .005; }
+            if (MetroAds) { BasePercentage += .01; }
+            if(AirportAds) { BasePercentage += .03; }
+            if (International) { BasePercentage += .05; }
 
             return BasePercentage ?? 0;
 
@@ -70,6 +70,6 @@ namespace Igtampe.Neco.Common.Income {
 
         /// <summary>Gets the Income of this corporation</summary>
         /// <returns></returns>
-        public override long Income() => base.Income() + Convert.ToInt64(GetIncomePercentage() * (RLENetYearly / 12));
+        public override long Income() => base.Income() + Convert.ToInt64(GetIncomePercentage() * (RLENetYearly));
     }
 }
