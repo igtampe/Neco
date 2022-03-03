@@ -179,7 +179,7 @@ namespace Igtampe.Neco.Common.Taxes {
                 TR.CSVReport += string.Join(',', J.Name, IncomeBreakdownDictionary[J], Result.Item2 != null ? Result.Item2.Name : "NO TAX",
                                                  Result.Item2 != null ? Result.Item2.Rate : 0.0, Result.Item1, "\n");
                 
-                TR.TextReport += $"{J.Name} TAX : {Result.Item1:n0} ({Result.Item2?.Name} ({Result.Item2?.Rate/100}%))\n";
+                TR.TextReport += $"{J.Name} TAX : {Result.Item1:n0} ({Result.Item2?.Name} ({Result.Item2?.Rate*100}%))\n";
 
                 TR.GrandTotalTax += Result.Item1;
             }
