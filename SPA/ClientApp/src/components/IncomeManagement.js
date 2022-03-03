@@ -23,7 +23,7 @@ function AccountSelectMenuItem(props) {
                         <img src={Accountheaders[props.account.incomeType]} alt={'Account Type Header'} height='20px' /></td>
                 </tr>
                 <tr><td>{FormatAccountID(props.account.id)}</td></tr>
-            </table>10px
+            </table>
         </Box>
     )
 }
