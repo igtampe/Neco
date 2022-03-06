@@ -18,7 +18,7 @@ namespace Igtampe.Neco.Common.Assets {
     };
 
     /// <summary>Any physically existing asset a Neco account can own</summary>
-    public class Asset : AutomaticallyGeneratableIdentifiable, Nameable, Describable {
+    public class Asset : AutomaticallyGeneratableIdentifiable, Nameable, Describable, Dateable {
 
         /// <summary>Type of this asset is. Helps the frontend determine what this is</summary>
         [NotMapped]
@@ -33,6 +33,12 @@ namespace Igtampe.Neco.Common.Assets {
         /// <summary>Status of this asset</summary>
         public AssetStatus Status { get; set; } = AssetStatus.UNPROCESSED;
 
+        /// <summary>Date this asset was created</summary>
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+
+        /// <summary>Date this asset was last updated</summary>
+        public DateTime DateUpdated { get; set; } = DateTime.UtcNow;
+
         /// <summary>ID of the owner (for the frontend)</summary>
         [NotMapped]
         public string AccountID => Owner?.ID ?? "";
@@ -44,6 +50,5 @@ namespace Igtampe.Neco.Common.Assets {
         /// <summary>Income Items related to this asset</summary>
         [JsonIgnore]
         public List<IncomeItem> RelatedIncomeItems { get; set; } = new();
-
     }
 }
