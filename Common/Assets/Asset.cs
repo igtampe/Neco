@@ -22,7 +22,7 @@ namespace Igtampe.Neco.Common.Assets {
 
         /// <summary>Type of this asset is. Helps the frontend determine what this is</summary>
         [NotMapped]
-        public virtual int Type { get; set; } = -1;
+        public virtual int Type => -1;
 
         /// <summary>Name of this Asset</summary>
         public string Name { get; set; } = "";

@@ -16,6 +16,9 @@ namespace Igtampe.Neco.Common.Assets {
         /// <summary>Z Coordinates</summary>
         public int Z { get; set; } = 0;
 
+        /// <summary>Teleport command to this coordinate</summary>
+        public string TeleportCommand => $"/tp @p {X} {Y} {Z}";
+
         /// <summary>Creates a set of coordinates</summary>
         /// <param name="X"></param>
         /// <param name="Y"></param>
@@ -51,6 +54,10 @@ namespace Igtampe.Neco.Common.Assets {
 
     /// <summary>An ownable building</summary>
     public class Building : Asset, Locatable {
+
+        /// <summary>Type of this asset is. Helps the frontend determine what this is</summary>
+        [NotMapped]
+        public override int Type => 0;
 
         /// <summary>Type of this building</summary>
         public BuildingTypes BuildingType { get; set; } = BuildingTypes.OTHER;
