@@ -3,6 +3,7 @@ using Igtampe.Neco.Common;
 using Igtampe.Neco.Common.Taxes;
 using Igtampe.Neco.Common.Income;
 using Igtampe.Neco.Common.Banking;
+using Igtampe.Neco.Common.Assets;
 
 namespace Igtampe.Neco.Data {
 
@@ -52,6 +53,12 @@ namespace Igtampe.Neco.Data {
         public DbSet<Notification> Notification { get; set; }
 
         public DbSet<Image> Image { get; set; }
+
+        public DbSet<Asset> Asset { get; set; }
+
+        public DbSet<Building> Building { get; set; }
+
+        public DbSet<Unit> Unit { get; set; }
 
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
