@@ -10,6 +10,5 @@ namespace Igtampe.Neco.Common.Assets {
 
         /// <summary>Building this unit belongs to</summary>
         public Building? Building { get; set; }
-
     }
 }
