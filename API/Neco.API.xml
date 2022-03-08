@@ -4,6 +4,117 @@
         <name>API</name>
     </assembly>
     <members>
+        <member name="T:Igtampe.Neco.API.Controllers.AssetController">
+            <summary>Controller that handles User operations</summary>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.#ctor(Igtampe.Neco.Data.NecoContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.Index(System.Nullable{System.Int32},System.Nullable{Igtampe.Neco.API.Controllers.IncomeItemSortType},System.Nullable{Igtampe.Neco.Common.Assets.AssetStatus},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Get a list of all assets in the Neco DB</summary>
+            <param name="Type">Type (Building = 0, 1 = Unit)</param>
+            <param name="Sort">Sort order of the returned list</param>
+            <param name="Status">Status of the assets</param>
+            <param name="Query">Search query for the name or description</param>
+            <param name="Skip">Amount to skip</param>
+            <param name="Take">Amount to take</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.IndexByAccount(System.String,System.Nullable{System.Int32},System.Nullable{Igtampe.Neco.API.Controllers.IncomeItemSortType},System.Nullable{Igtampe.Neco.Common.Assets.AssetStatus},System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Get a list of all assets an account owns</summary>
+            <param name="Account">Account to search for</param>
+            <param name="Type">Type (Building = 0, 1 = Unit)</param>
+            <param name="Sort">Sort order of the returned list</param>
+            <param name="Status">Status of the assets</param>
+            <param name="Query">Search query for the name or description</param>
+            <param name="Skip">Amount to skip</param>
+            <param name="Take">Amount to take</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.IndexByIncomeItem(System.Guid)">
+            <summary>Get a list of all assets an account owns</summary>
+            <param name="IncomeItem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.BuildingsWithUnitsForSale(System.Nullable{Igtampe.Neco.API.Controllers.IncomeItemSortType})">
+            <summary>Gets a list of buildings that are for sale, or that have units for sale</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.GetAsset(System.Guid)">
+            <summary>Gets a specific Asset</summary>
+            <param name="AssetID">ID of the asset to retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.GetBuildingDirectory(System.Guid)">
+            <summary>Gets a building's list of units</summary>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.CreateBuilding(System.Nullable{System.Guid},Igtampe.Neco.API.Requests.BuildingRequest,System.String)">
+            <summary>Creates a building under given accountID</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <param name="AccountID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.CreateUnit(System.Nullable{System.Guid},Igtampe.Neco.API.Requests.UnitRequest,System.String,System.Guid)">
+            <summary>Creates a unit in a building</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <param name="AccountID"></param>
+            <param name="BuildingID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.UpdateBuilding(System.Nullable{System.Guid},Igtampe.Neco.API.Requests.BuildingRequest,System.String,System.Guid)">
+            <summary></summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <param name="AccountID"></param>
+            <param name="BuildingID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.UpdateUnit(System.Nullable{System.Guid},Igtampe.Neco.API.Requests.BuildingRequest,System.String,System.Guid,System.Guid)">
+            <summary>Updates a Unit's details</summary>
+            <param name="SessionID"></param>
+            <param name="Request"></param>
+            <param name="AccountID"></param>
+            <param name="BuildingID"></param>
+            <param name="UnitID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.GetIncomeItems(System.Guid)">
+            <summary>Gets incomeitems related to this asset</summary>
+            <param name="AssetID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.AddIncomeItem(System.Nullable{System.Guid},System.Guid,System.Guid)">
+            <summary>Adds a given incomeitem to the list of related income items of this asset</summary>
+            <param name="SessionID"></param>
+            <param name="AssetID"></param>
+            <param name="IncomeItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.DelIncomeItem(System.Nullable{System.Guid},System.Guid,System.Guid)">
+            <summary>Deletes an income item from the list of related income items of this asset</summary>
+            <param name="SessionID"></param>
+            <param name="AssetID"></param>
+            <param name="IncomeItemID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.TransferAssetOwnership(System.Nullable{System.Guid},System.Guid,System.String)">
+            <summary>Transfer an asset from its current owner to a new owner</summary>
+            <param name="SessionID"></param>
+            <param name="AssetID"></param>
+            <param name="NewAccountID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Igtampe.Neco.API.Controllers.AssetController.DeleteAsset(System.Nullable{System.Guid},System.Guid)">
+            <summary>Deletes an asset from the Neco DB</summary>
+            <param name="SessionID"></param>
+            <param name="AssetID"></param>
+            <returns></returns>
+        </member>
         <member name="T:Igtampe.Neco.API.Controllers.TransactionType">
             <summary>Type of transaction from the perspective of an executor</summary>
         </member>
@@ -845,6 +956,40 @@
             <summary>
               Looks up a localized resource of type System.Byte[].
             </summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.AssetRequest`1">
+            <summary>Abstract class for any requests relating to Assets</summary>
+            <typeparam name="E"></typeparam>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AssetRequest`1.Name">
+            <summary>Name of this asset</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AssetRequest`1.Description">
+            <summary>Description of this asset</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.AssetRequest`1.Status">
+            <summary>Status of this asset</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.BuildingRequest">
+            <summary>Request to create or update building data</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BuildingRequest.BuildingType">
+            <summary>Type of this building</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BuildingRequest.Address">
+            <summary>Address of this building</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BuildingRequest.JurisdictionID">
+            <summary>Jurisdiction this building is in</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BuildingRequest.Coordinates">
+            <summary>Coordinates of this Building</summary>
+        </member>
+        <member name="P:Igtampe.Neco.API.Requests.BuildingRequest.Beds">
+            <summary>Number of beds in this building</summary>
+        </member>
+        <member name="T:Igtampe.Neco.API.Requests.UnitRequest">
+            <summary>Request relating to creating or updating a unit</summary>
         </member>
         <member name="T:Igtampe.Neco.API.Requests.AccountRequest">
             <summary>Request relating to editing or creating a bank account</summary>
