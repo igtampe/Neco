@@ -79,6 +79,8 @@ namespace Igtampe.Neco.API.Controllers {
             public long TotalIncome { get; set; } = 0;
             public int Count { get; set; } = 0;
 
+            public IncomeItemSummary() { }
+
             public static async Task<IncomeItemSummary> CreateSummary<E>(IQueryable<E> Set, string Account) where E : IncomeItem{
                 //what a disaster
                 List<E> TheList = await Set.Include(A => A.Jurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction).ThenInclude(A => A!.ParentJurisdiction)
@@ -155,6 +157,8 @@ namespace Igtampe.Neco.API.Controllers {
         internal struct IncomeReport {
             public List<IncomeReportItem> Breakdown { get; set; } = new();
             public long TotalIncome => Breakdown.Sum(A => A.Income);
+
+            public IncomeReport() { }
         }
 
         [NonAction]
