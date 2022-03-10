@@ -1,6 +1,7 @@
 ﻿using Igtampe.Neco.Common.IDGenerators;
 using Igtampe.Neco.Common.Income;
 using Igtampe.Neco.Common.Taxes;
+using Igtampe.Neco.Common.Assets;
 using System.Text.Json.Serialization;
 
 namespace Igtampe.Neco.Common.Banking {
@@ -41,6 +42,10 @@ namespace Igtampe.Neco.Common.Banking {
         /// <summary>List of all incomeitems tied to this bank account (used for tax reporting)</summary>
         [JsonIgnore]
         public List<IncomeItem> IncomeItems { get; set; } = new();
+
+        /// <summary>List of all assets tied to this bank account</summary>
+        [JsonIgnore]
+        public List<Asset> Assets { get; set; } = new();
 
         /// <summary>ID Generator for bank accounts</summary>
         [JsonIgnore]

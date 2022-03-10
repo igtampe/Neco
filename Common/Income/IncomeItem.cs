@@ -1,5 +1,6 @@
 ﻿using Igtampe.Neco.Common.Taxes;
 using Igtampe.Neco.Common.Banking;
+using Igtampe.Neco.Common.Assets;
 using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -47,6 +48,10 @@ namespace Igtampe.Neco.Common.Income {
 
         /// <summary>Total income of this item</summary>
         public virtual long Income() => MiscIncome;
+
+        /// <summary>Assets related to this income item (IE Buildings a corporation owns)</summary>
+        [JsonIgnore]
+        public List<Asset> RelatedAssets { get; set; } = new();
 
         /// <summary>Returns a string representation of this incomeitem</summary>
         /// <returns></returns>
