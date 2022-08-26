@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Igtampe.Neco.Data.Migrations
 {
     [DbContext(typeof(NecoContext))]
-    [Migration("20220205223450_IncomeItemAccessSimplify")]
-    partial class IncomeItemAccessSimplify
+    [Migration("20220826011505_everything")]
+    partial class everything
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,54 @@ namespace Igtampe.Neco.Data.Migrations
                     b.HasIndex("OwnersID");
 
                     b.ToTable("AccountUser (Dictionary<string, object>)");
+                });
+
+            modelBuilder.Entity("AssetIncomeItem", b =>
+                {
+                    b.Property<Guid>("RelatedAssetsID")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RelatedIncomeItemsID")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("RelatedAssetsID", "RelatedIncomeItemsID");
+
+                    b.HasIndex("RelatedIncomeItemsID");
+
+                    b.ToTable("AssetIncomeItem (Dictionary<string, object>)");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Assets.Asset", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OwnerID")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("OwnerID");
+
+                    b.ToTable("Asset");
                 });
 
             modelBuilder.Entity("Igtampe.Neco.Common.Banking.Account", b =>
@@ -360,6 +408,48 @@ namespace Igtampe.Neco.Data.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Igtampe.Neco.Common.Assets.Building", b =>
+                {
+                    b.HasBaseType("Igtampe.Neco.Common.Assets.Asset");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Beds")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("BuildingType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("JurisdictionID")
+                        .HasColumnType("text");
+
+                    b.Property<int>("X")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Y")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Z")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("JurisdictionID");
+
+                    b.ToTable("Building");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Assets.Unit", b =>
+                {
+                    b.HasBaseType("Igtampe.Neco.Common.Assets.Asset");
+
+                    b.Property<Guid?>("BuildingID")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("BuildingID");
+
+                    b.ToTable("Unit");
+                });
+
             modelBuilder.Entity("Igtampe.Neco.Common.Income.Apartment", b =>
                 {
                     b.HasBaseType("Igtampe.Neco.Common.Income.IncomeItem");
@@ -495,6 +585,30 @@ namespace Igtampe.Neco.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AssetIncomeItem", b =>
+                {
+                    b.HasOne("Igtampe.Neco.Common.Assets.Asset", null)
+                        .WithMany()
+                        .HasForeignKey("RelatedAssetsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Igtampe.Neco.Common.Income.IncomeItem", null)
+                        .WithMany()
+                        .HasForeignKey("RelatedIncomeItemsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Assets.Asset", b =>
+                {
+                    b.HasOne("Igtampe.Neco.Common.Banking.Account", "Owner")
+                        .WithMany("Assets")
+                        .HasForeignKey("OwnerID");
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("Igtampe.Neco.Common.Banking.Account", b =>
                 {
                     b.HasOne("Igtampe.Neco.Common.Banking.Bank", "Bank")
@@ -591,6 +705,36 @@ namespace Igtampe.Neco.Data.Migrations
                     b.Navigation("Account");
                 });
 
+            modelBuilder.Entity("Igtampe.Neco.Common.Assets.Building", b =>
+                {
+                    b.HasOne("Igtampe.Neco.Common.Assets.Asset", null)
+                        .WithOne()
+                        .HasForeignKey("Igtampe.Neco.Common.Assets.Building", "ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Igtampe.Neco.Common.Taxes.Jurisdiction", "Jurisdiction")
+                        .WithMany()
+                        .HasForeignKey("JurisdictionID");
+
+                    b.Navigation("Jurisdiction");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Assets.Unit", b =>
+                {
+                    b.HasOne("Igtampe.Neco.Common.Assets.Building", "Building")
+                        .WithMany("Units")
+                        .HasForeignKey("BuildingID");
+
+                    b.HasOne("Igtampe.Neco.Common.Assets.Asset", null)
+                        .WithOne()
+                        .HasForeignKey("Igtampe.Neco.Common.Assets.Unit", "ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Building");
+                });
+
             modelBuilder.Entity("Igtampe.Neco.Common.Income.Apartment", b =>
                 {
                     b.HasOne("Igtampe.Neco.Common.Income.IncomeItem", null)
@@ -638,6 +782,8 @@ namespace Igtampe.Neco.Data.Migrations
 
             modelBuilder.Entity("Igtampe.Neco.Common.Banking.Account", b =>
                 {
+                    b.Navigation("Assets");
+
                     b.Navigation("IncomeItems");
                 });
 
@@ -658,6 +804,11 @@ namespace Igtampe.Neco.Data.Migrations
             modelBuilder.Entity("Igtampe.Neco.Common.User", b =>
                 {
                     b.Navigation("Notifications");
+                });
+
+            modelBuilder.Entity("Igtampe.Neco.Common.Assets.Building", b =>
+                {
+                    b.Navigation("Units");
                 });
 #pragma warning restore 612, 618
         }
