@@ -30,6 +30,9 @@ namespace Igtampe.Neco.Data {
         /// <param name="DBURL"></param>
         /// <returns></returns>
         public static string ConvertPostgresURLToConnectionString(string DBURL) {
+
+            if (DBURL.ToLower().StartsWith("host")) { return DBURL; }
+
             //OK so now we have this
             //postgres://user:password@host:port/database
 
@@ -67,5 +70,9 @@ namespace Igtampe.Neco.Data {
                         TrustServerCertificate=True;
                     ";
         }
+
+        
+
+
     }
 }
